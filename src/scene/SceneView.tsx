@@ -11,7 +11,11 @@ export const cameraTransform = (scene: Scene, t: number) => {
   const cam = scene.camera ?? {};
   const k = easeInOut((t - scene.start) / Math.max(0.01, scene.end - scene.start));
   const zoom = cam.zoom ? lerp(cam.zoom[0], cam.zoom[1], k) : 1;
-  const focus = cam.pan ? [lerp(cam.pan[0][0], cam.pan[1][0], k), lerp(cam.pan[0][1], cam.pan[1][1], k)] : cam.focus ?? [960, 540];
+  const raw = cam.pan ? [lerp(cam.pan[0][0], cam.pan[1][0], k), lerp(cam.pan[0][1], cam.pan[1][1], k)] : cam.focus ?? [960, 540];
+  // never show past the stage edges
+  const hw = 960 / Math.max(1, zoom);
+  const hh = 540 / Math.max(1, zoom);
+  const focus = [clamp(raw[0], hw, 1920 - hw), clamp(raw[1], hh, 1080 - hh)];
   let sx = 0;
   let sy = 0;
   for (const s of cam.shake ?? []) {

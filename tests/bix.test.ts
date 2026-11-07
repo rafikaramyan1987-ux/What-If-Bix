@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { bixStateAt, resolveCues } from '../src/bix/motion';
 import { ACTIONS, actionPose } from '../src/bix/poses';
 import { earthSpin } from '../src/scene/props';
+import { cameraTransform } from '../src/scene/SceneView';
 
 describe('Bix rig', () => {
   it('every action yields finite pose values', () => {
@@ -22,5 +23,12 @@ describe('Bix rig', () => {
     const a = earthSpin(5, 1, 2);
     expect(earthSpin(9, 1, 2)).toBeCloseTo(a);
     expect(earthSpin(1, 1, 2)).toBe(1);
+  });
+});
+
+describe('camera', () => {
+  it('clamps focus so the stage edge never shows', () => {
+    const scene = { id: 's', start: 0, end: 4, background: { type: 'space' }, props: [], bix: [], texts: [], chips: [], camera: { zoom: [1, 1] as [number, number], focus: [700, 560] as [number, number] } };
+    expect(cameraTransform(scene, 1)).toContain('translate(-960 -540)');
   });
 });

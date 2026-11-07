@@ -24,7 +24,7 @@ scenes:
     bixStart: [820, 820]
     bixScale: 1.0
     props:
-      - { type: wifi, x: 1450, y: 330, s: 1.3, crossAt: "@vanished" }
+      - { type: wifi, x: 1560, y: 520, s: 1.3, crossAt: "@vanished" }
       - { type: phone, x: 1130, y: 560, s: 0.85, rot: 8, screen: video, switchAt: "@All", screen2: nosignal }
     bix:
       - { at: 0, action: idle, hold: phone }

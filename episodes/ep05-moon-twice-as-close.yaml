@@ -22,7 +22,7 @@ scenes:
     bixStart: [760, 820]
     props:
       - { type: tree, x: 300, y: 820, s: 0.9 }
-      - { type: moon, x: 1250, y: 330, at: "@twice", dur: 1.6, grow: [90, 190] }
+      - { type: moon, x: 1350, y: 480, at: "@twice", dur: 1.6, grow: [90, 190] }
     bix:
       - { at: 0, action: idle }
       - { at: "@twice", action: shock }
@@ -81,7 +81,7 @@ scenes:
       - { at: "@walks", action: walk, from: [760, 820], to: [880, 820], dur: 1.2 }
       - { at: "@sleep", action: sleepy, hold: pillow }
     texts:
-      - { at: "@wide", text: "2× WIDER", style: label, x: 560, y: 260, color: "#5ad1c4" }
+      - { at: "@wide", until: "@four", text: "2× WIDER", style: label, x: 560, y: 260, color: "#5ad1c4" }
       - { at: "@four", text: "4× AREA", style: big, x: 560, y: 380 }
       - { at: "@sunlight", text: "≈ 4× brighter full Moon", style: note, x: 560, y: 470 }
     narration: "Yes. Twice as close means twice as *wide*. But the area you see grows with the square, so the Moon would cover four times as much sky, and bounce about four times as much sunlight our way. Full Moon nights would be far brighter. Great for night walks. Bad news for anyone who needs total darkness to sleep."

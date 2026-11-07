@@ -83,7 +83,7 @@ export const EndScreenArt: React.FC<{ t: number; background?: Spec; dur?: number
   return (
     <g>
       <Background spec={background ?? { type: 'space', tint: 'purple' }} t={t} />
-      <rect width={1920} height={1080} fill="#000" opacity={0.18} />
+      <rect width={1920} height={1080} fill={C.space1} opacity={0.55} />
       <text x={960} y={150} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={110 * popIn(t / 0.4)} fill={C.yellow} stroke={C.ink} strokeWidth={14}
         paintOrder="stroke">MORE WHAT IFS?</text>
       {slot(480, 'WATCH NEXT', (t - 0.3) / 0.4)}
