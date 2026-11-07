@@ -157,19 +157,19 @@ export const Banner: React.FC = () => {
         <rect width={2560} height={1440} fill="url(#bnbg)" />
         <Doodles t={0} seed={9} w={2560} h={1440} count={40} />
         {/* Earth, Moon, a satellite: the channel's recurring cast of objects */}
-        <g transform="translate(2050 720)">
+        <g transform="translate(2170 720)">
           <circle r={210} fill={C.ocean} stroke={C.ink} strokeWidth={10} />
           <path d="M -120 -90 q 80 -30 120 30 q -20 80 -110 50 Z M 40 40 q 90 -10 110 60 q -60 60 -120 10 Z" fill={C.land} stroke={C.landDark} strokeWidth={6} />
         </g>
-        <g transform="translate(2290 520)">
+        <g transform="translate(2400 500)">
           <circle r={70} fill="#e3e4ee" stroke={C.ink} strokeWidth={8} />
           <circle cx={-20} cy={-14} r={16} fill="#c4c6d6" />
         </g>
-        <text x={1280} y={700} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={190} fill={C.yellow} stroke={C.ink} strokeWidth={22} paintOrder="stroke"
-          transform="rotate(-3 1280 700)">WHAT IF BIX</text>
-        <text x={1280} y={810} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={64} fill={C.white} stroke={C.ink} strokeWidth={10}
+        <text x={1350} y={700} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={176} fill={C.yellow} stroke={C.ink} strokeWidth={22} paintOrder="stroke"
+          transform="rotate(-3 1350 700)">WHAT IF BIX</text>
+        <text x={1350} y={810} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={64} fill={C.white} stroke={C.ink} strokeWidth={10}
           paintOrder="stroke">Absurd questions. Real science.</text>
-        <Bix x={620} y={900} scale={1.2} facing={1} pose={o.pose} face={o.face} t={1} shadow={false} />
+        <Bix x={560} y={900} scale={1.15} facing={1} pose={o.pose} face={o.face} t={1} shadow={false} />
       </svg>
     </AbsoluteFill>
   );
