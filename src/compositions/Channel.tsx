@@ -88,11 +88,11 @@ export const EndScreenArt: React.FC<{ t: number; background?: Spec; dur?: number
         paintOrder="stroke">MORE WHAT IFS?</text>
       {slot(480, 'WATCH NEXT', (t - 0.3) / 0.4)}
       {slot(1440, 'BIX RECOMMENDS', (t - 0.5) / 0.4)}
-      <g transform={`translate(960 ${845}) scale(${popIn((t - 0.7) / 0.4)})`}>
-        <circle r={118} fill="#00000033" stroke="#ffffff" strokeWidth={8} strokeDasharray="22 14" />
+      <g transform={`translate(960 ${800}) scale(${popIn((t - 0.7) / 0.4)})`}>
+        <circle r={100} fill="#00000033" stroke="#ffffff" strokeWidth={8} strokeDasharray="22 14" />
         <text y={14} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={34} fill="#fff">SUBSCRIBE</text>
       </g>
-      <Bix x={960} y={705} scale={0.62} facing={cur.facing} pose={o.pose} face={o.face} emote="none" t={t} airborne={o.pose.bob} />
+      <Bix x={960} y={690} scale={0.6} facing={cur.facing} pose={o.pose} face={o.face} emote="none" t={t} airborne={o.pose.bob} />
       {t > dur - 0.6 && <rect width={1920} height={1080} fill="#000" opacity={clamp((t - (dur - 0.6)) / 0.6)} />}
     </g>
   );

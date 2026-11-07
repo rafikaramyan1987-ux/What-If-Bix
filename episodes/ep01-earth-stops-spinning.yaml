@@ -380,7 +380,7 @@ scenes:
       - { at: "@added", action: point }
       - { at: "@computers", action: facepalm }
     texts:
-      - { at: "@milliseconds", text: "± milliseconds", style: note, x: 380, y: 455 }
+      - { at: "@milliseconds", text: "± milliseconds", style: note, x: 760, y: 560 }
     narration: "Here's the wild part: Earth's spin really does change, just a tiny bit. Tides, earthquakes and melting ice nudge the length of a day by milliseconds. In 2020, Earth even clocked some of its shortest days ever measured. To keep clocks honest, scientists have added 27 leap seconds since 1972. And they plan to stop by 2035, partly because leap seconds keep confusing computers."
 
   - id: wrap-up
