@@ -27,7 +27,7 @@ and held props.
 | `thumbnail.png` | 1280×720 thumbnail |
 | `frames/` | stills from the video |
 | `bix-character-sheet.png` | all core actions |
-| `voice-options.mp3` | six free LibriTTS narrator voices (speaker ids 437, 368, 253, 92, 322, 23). The sample uses **437**. |
+| `voice-options.mp3` | six free LibriTTS narrator voices (speaker ids 437, 368, 253, 92, 322, 23). The sample uses **92** (chosen). |
 
 ## How it works
 

@@ -10,7 +10,7 @@ targetDuration: 30
 voice:
   provider: piper
   model: en-us-libritts-high
-  speaker: 437
+  speaker: 92
   lengthScale: 0.92
 music:
   style: curious
