@@ -4,6 +4,7 @@ import './fonts';
 import { CharacterSheet } from './compositions/CharacterSheet';
 import { calculateEpisodeMetadata, Episode } from './compositions/Episode';
 import { Thumbnail } from './compositions/Thumbnail';
+import { Avatar, Banner, EndScreenTemplate, IntroSting } from './compositions/Channel';
 import { Manifest, ThumbnailProps } from './types';
 
 const demo: Manifest = {
@@ -23,6 +24,10 @@ export const Root: React.FC = () => (
     <Composition id="Episode" component={Episode} defaultProps={demo} calculateMetadata={calculateEpisodeMetadata}
       durationInFrames={120} fps={30} width={1920} height={1080} />
     <Composition id="Thumbnail" component={Thumbnail} defaultProps={demoThumb} durationInFrames={1} fps={30} width={1280} height={720} />
+ <Composition id="IntroSting" component={IntroSting} durationInFrames={60} fps={30} width={1920} height={1080} />
+    <Composition id="EndScreen" component={EndScreenTemplate} durationInFrames={600} fps={30} width={1920} height={1080} />
+    <Composition id="Avatar" component={Avatar} durationInFrames={1} fps={30} width={800} height={800} />
+    <Composition id="Banner" component={Banner} durationInFrames={1} fps={30} width={2560} height={1440} />
     <Composition id="CharacterSheet" component={CharacterSheet} durationInFrames={90} fps={30} width={1920} height={1080} />
   </>
 );

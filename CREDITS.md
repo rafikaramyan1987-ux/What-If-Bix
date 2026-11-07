@@ -6,9 +6,9 @@ and no real people's likenesses are used.
 
 | Asset | Source | License | Notes |
 |---|---|---|---|
-| Bix character, backgrounds, props, diagrams, thumbnails | Drawn procedurally in `src/` (SVG/React) | Original work, owned by the channel | — |
+| Bix character, supporting characters, backgrounds, props, diagrams, thumbnails, logo/avatar, banner, intro, end screen | Drawn procedurally in `src/` (SVG/React) | Original work, owned by the channel | — |
 | Background music | Synthesized by `pipeline/audio_assets.py` (oscillators, Karplus-Strong strings, noise drums) | **CC0** (original, generated) | No samples used |
-| Sound effects (whoosh, pop, boing, screech, boom, ding, tick, rumble, wind, splash, thud, sparkle, swish, zip) | Synthesized by `pipeline/audio_assets.py` | **CC0** (original, generated) | No samples used |
+| Sound effects (whoosh, pop, boing, screech, boom, ding, tick, rumble, wind, splash, thud, sparkle, swish, zip) and the channel intro sting | Synthesized by `pipeline/audio_assets.py` | **CC0** (original, generated) | No samples used |
 | Narration voice (default) | [Piper](https://github.com/rhasspy/piper) TTS, voice `en-us-libritts-high`, trained on [LibriTTS](http://www.openslr.org/60/) | Piper: MIT · LibriTTS data: **CC BY 4.0** | Attribution line for YouTube descriptions: *"Narration voice: Piper TTS (LibriTTS, CC BY 4.0)."* |
 | Fonts: Fredoka, Lilita One | Google Fonts via [Fontsource](https://fontsource.org) npm packages | SIL Open Font License 1.1 | Bundled at render time |
 | Rendering | [Remotion](https://www.remotion.dev) | Remotion License (free for individuals and companies ≤ 3 people; larger companies need a company license) | — |

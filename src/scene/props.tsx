@@ -4,6 +4,7 @@ import { Spec } from '../types';
 import { clamp, easeOut, num, popIn, rng, smooth, str, vec } from '../util';
 import { Held } from '../props/Held';
 import { GROUND_Y } from './backgrounds';
+import { PROPS2 } from './props2';
 
 export type PropProps = { spec: Spec; t: number };
 
@@ -362,6 +363,7 @@ export const PROPS: Record<string, React.FC<PropProps>> = {
   flyer: Flyer,
   puff: Puff,
   ring: Ring,
+  ...PROPS2,
 };
 
 export const Prop: React.FC<PropProps> = ({ spec, t }) => {

@@ -242,11 +242,31 @@ def sfx_zip(rng):
     return fade(norm(lowpass(x, 5000), 0.35))
 
 
+def sfx_sting(rng):
+    """2-second channel sting: rising marimba arpeggio, a thump and a sparkle tail."""
+    n = int(2.0 * SR)
+    out = np.zeros(n)
+    notes = [60, 64, 67, 72, 76, 79]
+    for i, m in enumerate(notes):
+        k = int((0.05 + i * 0.075) * SR)
+        x = marimba(midi_hz(m), 0.9)
+        out[k:k + len(x)] += x[: n - k] * (0.5 + i * 0.08)
+    k = int(0.5 * SR)
+    th = sfx_thud(rng)
+    out[k:k + len(th)] += th[: n - k] * 0.6
+    sp = sfx_sparkle(rng)
+    k = int(0.62 * SR)
+    out[k:k + len(sp)] += sp[: n - k] * 0.8
+    chord = sum(np.sin(2 * np.pi * midi_hz(m) * np.arange(n - int(0.5 * SR)) / SR) for m in (72, 76, 79))
+    out[int(0.5 * SR):] += chord * exp_decay(len(chord), 0.5) * 0.15
+    return fade(norm(out, 0.85), 0.002, 0.3)
+
+
 SFX = {
     "whoosh": sfx_whoosh, "pop": sfx_pop, "boing": sfx_boing, "screech": sfx_screech,
     "boom": sfx_boom, "ding": sfx_ding, "tick": sfx_tick, "rumble": sfx_rumble,
     "wind": sfx_wind, "splash": sfx_splash, "thud": sfx_thud, "sparkle": sfx_sparkle,
-    "swish": sfx_swish, "zip": sfx_zip,
+    "swish": sfx_swish, "zip": sfx_zip, "sting": sfx_sting,
 }
 
 

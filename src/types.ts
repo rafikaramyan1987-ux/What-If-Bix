@@ -41,6 +41,10 @@ export type Scene = {
   chips: ChipSpec[];
   camera?: CameraSpec;
   transition?: Transition;
+  /** Special generated scenes: the channel intro sting and the end screen. */
+  kind?: 'intro' | 'endscreen';
+  /** Shorts: fixed horizontal crop centre for this scene (default: follow Bix). */
+  focus?: number;
 };
 
 export type CaptionWord = { text: string; start: number; end: number; emphasis?: boolean };
@@ -60,6 +64,8 @@ export type Manifest = {
   reframe?: { at: number; x: number; zoom?: number }[];
   /** Offset when rendering a slice of the episode (Shorts). */
   timeOffset?: number;
+  /** Shorts: banner text at the top. */
+  hook?: string;
 };
 
 export type ThumbnailProps = {

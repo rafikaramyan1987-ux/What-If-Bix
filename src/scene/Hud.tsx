@@ -109,7 +109,7 @@ export const Chip: React.FC<{ spec: ChipSpec; t: number; x?: number; y?: number;
 export type CaptionLayout = { y: number; size: number; maxWidth: number; centerX: number };
 
 export const LONG_CAPTIONS: CaptionLayout = { y: 985, size: 62, maxWidth: 1500, centerX: 960 };
-export const SHORT_CAPTIONS: CaptionLayout = { y: 1340, size: 92, maxWidth: 940, centerX: 540 };
+export const SHORT_CAPTIONS: CaptionLayout = { y: 1640, size: 88, maxWidth: 960, centerX: 540 };
 
 /** Word-by-word captions: the current page is shown, the spoken word pops in yellow. */
 export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: CaptionLayout }> = ({ pages, t, layout }) => {

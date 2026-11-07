@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 // What If Bix — episode builder.
 //
-//   node pipeline/build.mjs <episode.yaml> [--only long,thumb,frames] [--out out] [--frames 2,9.5,20]
+//   node pipeline/build.mjs <episode.yaml> [--only long,shorts,thumb,meta,frames] [--out out] [--frames 2,9.5,20]
 //
 // Steps: parse script -> TTS (+word timings) -> timeline/manifest -> music & SFX
-// -> audio mix -> Remotion render (silent) -> mux audio -> thumbnail -> stills.
+// -> audio mix -> Remotion render (silent) -> mux audio -> Shorts -> thumbnail
+// -> metadata (title, description, tags, chapters) + SRT captions -> stills.
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -12,6 +13,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { loadEpisode } from './lib/script.mjs';
 import { buildTimeline, planNarration } from './lib/timeline.mjs';
+import { buildMetadata, buildShortManifests, buildSrt, metadataMarkdown } from './lib/metadata.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PY = process.env.PYTHON ?? 'python3';
@@ -26,7 +28,7 @@ if (!file) {
   console.error('usage: node pipeline/build.mjs <episode.yaml> [--only long,thumb,frames] [--out out]');
   process.exit(2);
 }
-const only = new Set((flag('only', 'long,thumb,frames')).split(','));
+const only = new Set((flag('only', 'long,shorts,thumb,meta')).split(','));
 const outRoot = path.resolve(flag('out', path.join(ROOT, 'out')));
 
 const log = (...m) => console.log('[bix]', ...m);
@@ -61,8 +63,10 @@ const main = async () => {
   // 1. narration
   const plan = planNarration(ep);
   const voice = { provider: 'piper', ...(ep.voice ?? {}) };
-  if (voice.provider === 'piper') voice.model = resolveVoiceModel(voice);
+  // BIX_TTS_PROVIDER=elevenlabs|openai switches to a paid voice (API key from the environment).
   if (process.env.BIX_TTS_PROVIDER) voice.provider = process.env.BIX_TTS_PROVIDER;
+  if (voice.provider === 'piper') voice.model = resolveVoiceModel(voice);
+  if (process.env.BIX_VOICE_ID) voice.voiceId = process.env.BIX_VOICE_ID;
   const job = {
     voice,
     outDir: path.join(build, 'tts'),
@@ -81,7 +85,7 @@ const main = async () => {
 
   // 3. music + sfx (synthesized, deterministic)
   const sfxDir = path.join(ROOT, 'build', '_sfx');
-  if (!fs.existsSync(path.join(sfxDir, 'zip.wav'))) run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'sfx', sfxDir]);
+  if (!fs.existsSync(path.join(sfxDir, 'sting.wav'))) run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'sfx', sfxDir]);
   const music = ep.music ?? { style: 'curious' };
   const musicFile = path.join(build, `music-${music.style}.wav`);
   run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'music', music.style, String(manifest.duration + 1), musicFile, '--seed', String(music.seed ?? 7)]);
@@ -104,7 +108,8 @@ const main = async () => {
   const { bundle } = await import('@remotion/bundler');
   const { renderMedia, renderStill, selectComposition } = await import('@remotion/renderer');
   const browserExecutable = findBrowser();
-  const serveUrl = await bundle({ entryPoint: path.join(ROOT, 'src', 'index.ts') });
+  const needsRender = ['long', 'shorts', 'thumb', 'frames'].some((k) => only.has(k));
+  const serveUrl = needsRender ? await bundle({ entryPoint: path.join(ROOT, 'src', 'index.ts') }) : '';
   const concurrency = Math.max(1, Math.min(os.cpus().length, 8));
 
   if (only.has('long')) {
@@ -123,6 +128,29 @@ const main = async () => {
     run('ffmpeg', ['-y', '-v', 'error', '-i', silent, '-i', mixFile, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
       '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', final]);
     log(`video -> ${path.relative(ROOT, final)}`);
+  }
+
+  const shorts = buildShortManifests(ep, manifest);
+  if (only.has('shorts') && shorts.length) {
+    fs.mkdirSync(path.join(out, 'shorts'), { recursive: true });
+    for (const s of shorts) {
+      const d = s.manifest.duration;
+      if (d < 30 || d > 60) log(`WARNING short ${s.short.id} is ${d.toFixed(1)} s (YouTube Shorts: ≤ 60 s, aim 30–55 s)`);
+      const comp = await selectComposition({ serveUrl, id: 'Episode', inputProps: s.manifest, browserExecutable });
+      const silent = path.join(build, `short-${s.short.id}-silent.mp4`);
+      await renderMedia({
+        composition: comp, serveUrl, codec: 'h264', outputLocation: silent, inputProps: s.manifest,
+        browserExecutable, concurrency, crf: 18, muted: true, pixelFormat: 'yuv420p',
+      });
+      const audio = path.join(build, `short-${s.short.id}.wav`);
+      run('ffmpeg', ['-y', '-v', 'error', '-ss', s.start.toFixed(3), '-t', d.toFixed(3), '-i', mixFile,
+        '-af', `afade=t=in:d=0.12,afade=t=out:st=${Math.max(0, d - 0.6).toFixed(3)}:d=0.6`, audio]);
+      const final = path.join(out, 'shorts', `${s.short.id}.mp4`);
+      run('ffmpeg', ['-y', '-v', 'error', '-i', silent, '-i', audio, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
+        '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', final]);
+      fs.writeFileSync(path.join(out, 'shorts', `${s.short.id}.en.srt`), buildSrt(s.manifest.captions, s.start));
+      log(`short ${s.short.id} (${d.toFixed(1)} s) -> ${path.relative(ROOT, final)}`);
+    }
   }
 
   if (only.has('thumb') && ep.thumbnail) {
@@ -146,6 +174,13 @@ const main = async () => {
     log(`frames -> ${path.relative(ROOT, path.join(out, 'frames'))}`);
   }
 
+  if (only.has('meta')) {
+    const meta = buildMetadata(ep, manifest, shorts);
+    fs.writeFileSync(path.join(out, 'metadata.json'), JSON.stringify(meta, null, 2));
+    fs.writeFileSync(path.join(out, 'metadata.md'), metadataMarkdown(meta));
+    fs.writeFileSync(path.join(out, `${ep.id}.en.srt`), buildSrt(manifest.captions));
+    log(`metadata -> ${path.relative(ROOT, path.join(out, 'metadata.md'))}`);
+  }
   fs.writeFileSync(path.join(out, 'manifest.json'), JSON.stringify(manifest, null, 1));
   if (ep.sources) fs.writeFileSync(path.join(out, 'sources.txt'), ep.sources.map((s) => `- ${s}`).join('\n') + '\n');
   log('done');

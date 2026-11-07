@@ -1,0 +1,76 @@
+name: Render episode
+
+# Run from the Actions tab: "Render episode" -> "Run workflow".
+# Pick the episode script; the MP4s, Shorts, thumbnail, captions and metadata
+# are attached to the run as a downloadable artifact.
+on:
+  workflow_dispatch:
+    inputs:
+      episode:
+        description: "Episode script (path in the repo)"
+        required: true
+        default: episodes/ep01-earth-stops-spinning.yaml
+      outputs:
+        description: "What to build (comma list of long, shorts, thumb, meta, frames)"
+        required: true
+        default: long,shorts,thumb,meta
+      tts_provider:
+        description: "Narration voice provider"
+        type: choice
+        options: [piper, elevenlabs, openai]
+        default: piper
+      channel_assets:
+        description: "Also render channel assets (avatar, banner, intro, end screen)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      EPISODE: ${{ inputs.episode }}
+      OUTPUTS: ${{ inputs.outputs }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-factory
+      - name: Validate script
+        run: node pipeline/validate.mjs "$EPISODE"
+      - name: Episode id
+        id: ep
+        run: echo "id=$(node -e "import('./pipeline/lib/script.mjs').then(m => console.log(m.loadEpisode(process.argv[1]).id))" "$EPISODE")" >> "$GITHUB_OUTPUT"
+      - name: Render
+        run: node pipeline/build.mjs "$EPISODE" --only "$OUTPUTS" --out out
+        env:
+          BIX_TTS_PROVIDER: ${{ inputs.tts_provider != 'piper' && inputs.tts_provider || '' }}
+          BIX_VOICE_ID: ${{ vars.BIX_VOICE_ID }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.ep.outputs.id }}
+          path: |
+            out/${{ steps.ep.outputs.id }}
+            !out/${{ steps.ep.outputs.id }}/manifest.json
+          retention-days: 30
+      - name: Channel assets
+        if: ${{ inputs.channel_assets }}
+        run: node pipeline/channel.mjs out/channel
+      - uses: actions/upload-artifact@v4
+        if: ${{ inputs.channel_assets }}
+        with:
+          name: channel-assets
+          path: out/channel
+          retention-days: 30
+      - name: Summary
+        run: |
+          {
+            echo "### Rendered \`${{ steps.ep.outputs.id }}\`"
+            echo
+            echo "Download the **${{ steps.ep.outputs.id }}** artifact below. Upload steps are in the README."
+            echo
+            ls -la "out/${{ steps.ep.outputs.id }}" | sed 's/^/    /'
+          } >> "$GITHUB_STEP_SUMMARY"

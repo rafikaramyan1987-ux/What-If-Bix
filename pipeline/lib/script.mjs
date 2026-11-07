@@ -2,12 +2,9 @@
 import fs from 'node:fs';
 import YAML from 'yaml';
 
-export const BIX_ACTIONS = [
-  'idle', 'walk', 'run', 'jump', 'fly', 'point', 'shock', 'laugh', 'think',
-  'shrug', 'wave', 'tumble', 'facepalm', 'sleepy', 'cheer', 'float', 'sit', 'present',
-];
-export const BACKGROUNDS = ['space', 'sky', 'land', 'plain', 'lab', 'city', 'night-city', 'bedroom', 'ocean', 'moon'];
-export const SFX = ['whoosh', 'pop', 'boing', 'screech', 'boom', 'ding', 'tick', 'rumble', 'wind', 'splash', 'thud', 'sparkle', 'swish', 'zip'];
+import { BACKGROUNDS, BIX_ACTIONS, CHIP_ICONS, ITEMS, MUSIC_STYLES, PROPS, SFX, TEXT_STYLES, TRANSITIONS } from './vocab.mjs';
+
+export { BACKGROUNDS, BIX_ACTIONS, PROPS, SFX };
 
 const SENTENCE_END = /([.!?]["'”’)\]]*|\.\.\.|…)$/;
 
@@ -114,11 +111,35 @@ export const validateEpisode = (ep, file = 'episode') => {
     if (typeof s.narration !== 'string' || !s.narration.trim()) fail(file, `${where}: narration is required`);
     for (const c of s.bix ?? []) {
       if (!BIX_ACTIONS.includes(c.action)) fail(file, `${where}: unknown Bix action "${c.action}"`);
+      if (c.hold && !ITEMS.includes(c.hold)) fail(file, `${where}: unknown held item "${c.hold}"`);
     }
+    for (const p of s.props ?? []) {
+      if (!PROPS.includes(p.type)) fail(file, `${where}: unknown prop "${p.type}"`);
+      if ((p.type === 'item' || p.type === 'flyer') && p.item && !ITEMS.includes(p.item)) fail(file, `${where}: unknown item "${p.item}"`);
+      for (const a of p.actions ?? []) if (!BIX_ACTIONS.includes(a.action)) fail(file, `${where}: unknown pal action "${a.action}"`);
+      if (p.action && !BIX_ACTIONS.includes(p.action)) fail(file, `${where}: unknown pal action "${p.action}"`);
+    }
+    for (const tx of s.texts ?? []) {
+      if (tx.style && !TEXT_STYLES.includes(tx.style)) fail(file, `${where}: unknown text style "${tx.style}"`);
+      if (typeof tx.text !== 'string') fail(file, `${where}: text entries need "text"`);
+    }
+    for (const c of s.chips ?? []) {
+      if (!c.label) fail(file, `${where}: chips need a label`);
+      if (c.icon && !CHIP_ICONS.includes(c.icon)) fail(file, `${where}: unknown chip icon "${c.icon}"`);
+    }
+    if (s.transition && !TRANSITIONS.includes(s.transition)) fail(file, `${where}: unknown transition "${s.transition}"`);
     for (const fx of s.sfx ?? []) {
       if (!SFX.includes(fx.name)) fail(file, `${where}: unknown sfx "${fx.name}"`);
     }
   });
+  if (ep.music?.style && !MUSIC_STYLES.includes(ep.music.style)) fail(file, `unknown music style "${ep.music.style}"`);
+  for (const sh of ep.shorts ?? []) {
+    if (!sh.id || !sh.title || !sh.from || !sh.to) fail(file, 'shorts need id, title, from, to');
+    const a = ep.scenes.findIndex((s) => s.id === sh.from);
+    const b = ep.scenes.findIndex((s) => s.id === sh.to);
+    if (a < 0 || b < 0 || b < a) fail(file, `short ${sh.id}: from/to must be scene ids in order`);
+  }
+  if (ep.introAfter && !ids.has(ep.introAfter)) fail(file, `introAfter "${ep.introAfter}" is not a scene id`);
   if (ep.sources !== undefined && !Array.isArray(ep.sources)) fail(file, 'sources must be a list');
   return true;
 };

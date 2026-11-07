@@ -4,9 +4,29 @@ import { normWord, parseNarration, segmentUnits } from './script.mjs';
 // Keys whose numeric values are scene-relative times (converted to absolute).
 const TIME_KEYS = new Set(['at', 'until', 'stopAt', 'windAt', 'roofAt', 'hoverUntil', 'shake']);
 
+export const INTRO_SECONDS = 2;
+export const ENDSCREEN_SECONDS = 20;
+
+/**
+ * Scenes in render order. Full episodes (those with an `outro`) get the channel
+ * intro sting after `introAfter` (default: the first scene) and a 20 s end screen.
+ */
+export const expandScenes = (ep) => {
+  if (!ep.outro) return ep.scenes;
+  const idx = ep.introAfter ? ep.scenes.findIndex((s) => s.id === ep.introAfter) : 0;
+  const intro = {
+    id: '_intro', kind: 'intro', background: { type: 'plain' }, narration: '', minDuration: INTRO_SECONDS, lead: 0, tail: 0, hold: 0,
+  };
+  const end = {
+    id: '_endscreen', kind: 'endscreen', background: ep.outro.background ?? { type: 'space' }, narration: ep.outro.narration,
+    minDuration: ENDSCREEN_SECONDS, lead: 0.9, tail: 0, transition: 'fade',
+  };
+  return [...ep.scenes.slice(0, idx + 1), intro, ...ep.scenes.slice(idx + 1), end];
+};
+
 /** Prepare TTS segments for every scene. */
 export const planNarration = (ep) =>
-  ep.scenes.map((s, si) => {
+  expandScenes(ep).map((s, si) => {
     const units = parseNarration(s.narration);
     const segs = segmentUnits(units).map((g, gi) => ({ id: `s${si}_${gi}`, ...g }));
     return { scene: s.id, units, segments: segs };
@@ -130,7 +150,8 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
   const narration = [];
   const sfx = [];
   let cursor = 0;
-  ep.scenes.forEach((s, si) => {
+  const all = expandScenes(ep);
+  all.forEach((s, si) => {
     const start = cursor;
     let t = start + (si === 0 ? leadFirst : s.lead ?? lead);
     const sceneWords = [];
@@ -150,6 +171,7 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
     const narrEnd = t;
     let end = narrEnd + (s.tail ?? tailDefault) + (s.hold ?? 0);
     if (s.minDuration) end = Math.max(end, start + s.minDuration);
+    if (s.kind === 'intro') end = start + INTRO_SECONDS;
     cursor = end;
     scenes.push({ src: s, start, end, words: sceneWords });
     words.push(...sceneWords);
@@ -177,7 +199,11 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
       chips: r(s.chips),
       camera: s.camera ? resolveDeep(s.camera, ctx) : undefined,
       transition: si === 0 ? 'cut' : s.transition ?? 'cut',
+      ...(s.kind ? { kind: s.kind } : {}),
+      ...(typeof s.focus === 'number' ? { focus: s.focus } : Array.isArray(s.focus) ? { focus: s.focus[0] } : {}),
+      ...(s.chapter ? { chapter: s.chapter } : {}),
     };
+    if (s.kind === 'intro') sfx.push({ name: 'sting', at: start, gain: 0.8 });
     const explicit = r(s.sfx);
     const auto = s.autoSfx === false ? [] : AUTO_SFX(scene);
     sfx.push(...auto, ...explicit);

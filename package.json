@@ -7,6 +7,9 @@
   "scripts": {
     "studio": "remotion studio src/index.ts",
     "build:episode": "node pipeline/build.mjs",
+    "validate": "node pipeline/validate.mjs --all",
+    "channel": "node pipeline/channel.mjs",
+    "gallery": "node pipeline/gallery.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
@@ -27,5 +30,8 @@
     "@types/react": "^19.3.0",
     "typescript": "^7.0.2",
     "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

@@ -162,6 +162,34 @@ const Brow: React.FC<{ side: -1 | 1; face: Face }> = ({ side, face }) => {
   return <path d={`M ${xi} ${base + innerDrop} Q ${(xi + xo) / 2} ${base - 3} ${xo} ${base + 1}`} fill="none" stroke={C.ink} strokeWidth={5} strokeLinecap="round" />;
 };
 
+const PalEyes: React.FC<{ face: Face; blink: boolean }> = ({ face, blink }) => {
+  const closed = blink || face.eyes === 'closed';
+  return (
+    <g>
+      {[-16, 18].map((x) =>
+        closed || face.eyes === 'happy' ? (
+          <path key={x} d={`M ${x - 7} 6 Q ${x} ${face.eyes === 'happy' ? -3 : 10} ${x + 7} 6`} fill="none" stroke={C.ink} strokeWidth={4.5} strokeLinecap="round" />
+        ) : (
+          <circle key={x} cx={x + face.look[0] * 3} cy={4 + face.look[1] * 3} r={face.eyes === 'wide' ? 8 : 5.5} fill={face.eyes === 'wide' ? '#fff' : C.ink}
+            stroke={C.ink} strokeWidth={face.eyes === 'wide' ? 4 : 0} />
+        ),
+      )}
+    </g>
+  );
+};
+
+/** Generic supporting character head: no beanie, no glasses, a coloured hair tuft. */
+export const PalHead: React.FC<{ face: Face; blink: boolean; hair: string }> = ({ face, blink, hair }) => (
+  <g>
+    <circle cx={0} cy={0} r={R} fill={C.white} stroke={C.ink} strokeWidth={5} />
+    <path d="M -40 -22 Q -36 -54 0 -52 Q 34 -54 42 -20 Q 20 -38 -4 -30 Q -22 -40 -40 -22 Z" fill={hair} stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+    <PalEyes face={face} blink={blink} />
+    <g transform="translate(3 -2)">
+      <Mouth kind={face.mouth} />
+    </g>
+  </g>
+);
+
 export const Head: React.FC<{ face: Face; beanie: number; blink: boolean }> = ({ face, beanie, blink }) => (
   <g>
     <circle cx={0} cy={0} r={R} fill={C.white} stroke={C.ink} strokeWidth={5} />
@@ -255,9 +283,15 @@ export type BixProps = {
   shadow?: boolean;
   airborne?: number;
   seed?: number;
+  /** 'pal' draws a generic extra (no beanie/glasses) with coloured limbs. */
+  variant?: 'bix' | 'pal';
+  color?: string;
+  hair?: string;
 };
 
-export const Bix: React.FC<BixProps> = ({ x, y, scale = 1, facing = 1, pose, face, emote = 'none', t, hold, shadow = true, airborne = 0, seed = 0 }) => {
+export const Bix: React.FC<BixProps> = ({ x, y, scale = 1, facing = 1, pose, face, emote = 'none', t, hold, shadow = true, airborne = 0, seed = 0, variant = 'bix', color, hair = '#6b4a2b' }) => {
+  const nearC = variant === 'pal' ? color ?? '#bfe3ff' : C.white;
+  const farC = variant === 'pal' ? color ?? '#bfe3ff' : C.far;
   const r = rig(pose);
   const blink = isBlinking(t, seed);
   const rotC = r.hip;
@@ -272,22 +306,24 @@ export const Bix: React.FC<BixProps> = ({ x, y, scale = 1, facing = 1, pose, fac
       )}
       <g transform={`translate(${x} ${y}) scale(${scale * facing} ${scale}) scale(${1 / Math.sqrt(sq)} ${sq})`}>
         <g transform={`rotate(${pose.rot} ${rotC[0]} ${rotC[1]})`}>
-          <Limb points={pts(r.hip, r.legF.knee, r.legF.ankle)} fill={C.far} />
-          <Foot ankle={r.legF.ankle} toe={r.legF.toe} fill={C.far} />
-          <Limb points={pts(r.shoulder, r.far.elbow, r.far.hand)} fill={C.far} />
-          <Hand p={r.far.hand} fill={C.far} />
-          <Limb points={pts(r.legN.ankle, r.legN.knee, r.hip, r.neck)} />
-          <Foot ankle={r.legN.ankle} toe={r.legN.toe} fill={C.white} />
-          <g transform={`translate(${r.head[0]} ${r.head[1]}) rotate(${r.headAngle}) scale(1.12) translate(0 -5)`}>
-            <Head face={face} beanie={pose.beanie} blink={blink} />
+          <g opacity={variant === 'pal' ? 0.85 : 1}>
+            <Limb points={pts(r.hip, r.legF.knee, r.legF.ankle)} fill={farC} />
+            <Foot ankle={r.legF.ankle} toe={r.legF.toe} fill={farC} />
+            <Limb points={pts(r.shoulder, r.far.elbow, r.far.hand)} fill={farC} />
+            <Hand p={r.far.hand} fill={farC} />
           </g>
-          <Limb points={pts(r.shoulder, r.near.elbow, r.near.hand)} />
+          <Limb points={pts(r.legN.ankle, r.legN.knee, r.hip, r.neck)} fill={nearC} />
+          <Foot ankle={r.legN.ankle} toe={r.legN.toe} fill={nearC} />
+          <g transform={`translate(${r.head[0]} ${r.head[1]}) rotate(${r.headAngle}) scale(1.12) translate(0 -5)`}>
+            {variant === 'pal' ? <PalHead face={face} blink={blink} hair={hair} /> : <Head face={face} beanie={pose.beanie} blink={blink} />}
+          </g>
+          <Limb points={pts(r.shoulder, r.near.elbow, r.near.hand)} fill={nearC} />
           {hold && (
             <g transform={`translate(${r.near.hand[0]} ${r.near.hand[1]})`}>
               <Held kind={hold} />
             </g>
           )}
-          <Hand p={r.near.hand} fill={C.white} />
+          <Hand p={r.near.hand} fill={nearC} />
         </g>
       </g>
       {emote !== 'none' && (

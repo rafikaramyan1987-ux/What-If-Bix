@@ -1,0 +1,741 @@
+import React from 'react';
+import { Bix } from '../bix/Bix';
+import { actionPose, BixAction } from '../bix/poses';
+import { C, FONT, TITLE_FONT } from '../theme';
+import { Spec } from '../types';
+import { clamp, easeInOut, easeOut, formatNumber, num, popIn, rng, smooth, str, vec } from '../util';
+import { Held } from '../props/Held';
+import { GROUND_Y } from './backgrounds';
+
+type PP = { spec: Spec; t: number };
+const appearK = (spec: Spec, t: number, d = 0.35) => (spec.at === undefined ? 1 : popIn((t - num(spec.at, 0)) / d));
+const started = (spec: Spec, t: number) => spec.at === undefined || t >= num(spec.at, 0);
+const arr = <T,>(v: unknown, d: T[]): T[] => (Array.isArray(v) ? (v as T[]) : d);
+const PAL_COLORS = ['#ffb3c7', '#bfe3ff', '#c8f7c5', '#ffe08a', '#d9c7ff', '#ffc89e', '#a8f0e8'];
+const HAIRS = ['#6b4a2b', '#2b2b2b', '#e0a53a', '#b4402a', '#7a5cff', '#3b8c4a'];
+
+/** Action at time t from a list of {at, action} cues. */
+const actionAt = (cues: { at: number; action: BixAction }[], t: number, def: BixAction) => {
+  let cur = { at: 0, action: def };
+  for (const c of cues) if (c.at <= t) cur = c;
+  return cur;
+};
+
+// ---------------------------------------------------------------- people
+
+/** One generic extra character with timed actions and optional movement. */
+export const Pal: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const cues = arr<{ at: number; action: BixAction }>(spec.actions, []);
+  const cur = actionAt(cues, t, str(spec.action, 'idle') as BixAction);
+  const o = actionPose(cur.action, t - cur.at, t + num(spec.seed, 0), { panic: num(spec.panic, 0) });
+  let [x, y] = [num(spec.x, 960), num(spec.y, GROUND_Y)];
+  if (spec.to) {
+    const [x1, y1] = vec(spec.from, [x, y]);
+    const [x2, y2] = vec(spec.to, [x, y]);
+    const k = clamp((t - num(spec.moveAt, num(spec.at, 0))) / num(spec.dur, 1));
+    x = x1 + (x2 - x1) * k;
+    y = y1 + (y2 - y1) * k;
+  }
+  return (
+    <Bix variant="pal" x={x} y={y} scale={num(spec.s, 0.8) * appearK(spec, t)} facing={num(spec.facing, -1) as 1 | -1} pose={o.pose} face={o.face}
+      emote={spec.emote === false ? 'none' : o.emote} t={t} color={str(spec.color, PAL_COLORS[num(spec.seed, 1) % PAL_COLORS.length])}
+      hair={str(spec.hair, HAIRS[num(spec.seed, 1) % HAIRS.length])} hold={spec.hold as string | undefined} airborne={o.pose.bob} seed={num(spec.seed, 0)} />
+  );
+};
+
+/** A crowd of small generic people. jumpAt makes everyone jump (sync: true = all at once). */
+export const Crowd: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const r = rng(num(spec.seed, 5));
+  const n = num(spec.count, 24);
+  const rows = num(spec.rows, 3);
+  const x0 = num(spec.x, 960);
+  const y0 = num(spec.y, GROUND_Y);
+  const w = num(spec.w, 1600);
+  const s = num(spec.s, 0.42);
+  const jumpAt = typeof spec.jumpAt === 'number' ? spec.jumpAt : undefined;
+  const cheerAt = typeof spec.cheerAt === 'number' ? spec.cheerAt : undefined;
+  const panicAt = typeof spec.panicAt === 'number' ? spec.panicAt : undefined;
+  const people = Array.from({ length: n }, (_, i) => ({
+    row: i % rows, x: x0 - w / 2 + r() * w, jitter: r() * 0.35, c: PAL_COLORS[i % PAL_COLORS.length], h: HAIRS[i % HAIRS.length], f: r() > 0.5 ? 1 : -1,
+  })).sort((a, b) => a.row - b.row);
+  return (
+    <g>
+      {people.map((p, i) => {
+        const off = spec.sync === true ? 0 : p.jitter;
+        let action: BixAction = 'idle';
+        let lt = t;
+        if (jumpAt !== undefined && t >= jumpAt + off) { action = 'jump'; lt = t - jumpAt - off; }
+        if (cheerAt !== undefined && t >= cheerAt + off) { action = 'cheer'; lt = t - cheerAt; }
+        if (panicAt !== undefined && t >= panicAt + off) { action = 'shock'; lt = t - panicAt - off; }
+        const o = actionPose(action, lt, t + i * 0.37);
+        const rs = s * (0.82 + 0.09 * p.row);
+        return (
+          <Bix key={i} variant="pal" x={p.x} y={y0 - 34 * (rows - 1 - p.row)} scale={rs} facing={p.f as 1 | -1} pose={o.pose} face={o.face} emote="none"
+            t={t + i} color={p.c} hair={p.h} airborne={o.pose.bob} seed={i} />
+        );
+      })}
+    </g>
+  );
+};
+
+// ---------------------------------------------------------------- charts & diagrams
+
+/** Animated bar chart. values/labels arrays; bars grow from `at`. */
+export const Bars: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const values = arr<number>(spec.values, [1, 2, 3]);
+  const labels = arr<string>(spec.labels, []);
+  const colors = arr<string>(spec.colors, [C.teal, C.yellow, C.pink, C.purple, C.orange, C.green]);
+  const x = num(spec.x, 960);
+  const y = num(spec.y, 760);
+  const w = num(spec.w, 900);
+  const h = num(spec.h, 420);
+  const max = num(spec.max, Math.max(...values));
+  const bw = (w / values.length) * 0.62;
+  const unit = str(spec.unit, '');
+  return (
+    <g transform={`translate(${x - w / 2} ${y})`}>
+      <line x1={-20} y1={0} x2={w + 20} y2={0} stroke={C.ink} strokeWidth={7} strokeLinecap="round" />
+      {values.map((v, i) => {
+        const k = easeOut((t - num(spec.at, 0) - i * 0.15) / 0.8);
+        const bh = (v / max) * h * k;
+        const cx = (i + 0.5) * (w / values.length);
+        return (
+          <g key={i}>
+            <rect x={cx - bw / 2} y={-bh} width={bw} height={bh} rx={10} fill={colors[i % colors.length]} stroke={C.ink} strokeWidth={6} />
+            {k > 0.2 && (
+              <text x={cx} y={-bh - 18} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={42} fill={C.white} stroke={C.ink} strokeWidth={8}
+                paintOrder="stroke">{formatNumber(v * k, num(spec.decimals, 0))}{unit}</text>
+            )}
+            {labels[i] && (
+              <text x={cx} y={56} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={36} fill={C.white} stroke={C.ink} strokeWidth={7}
+                paintOrder="stroke">{labels[i]}</text>
+            )}
+          </g>
+        );
+      })}
+    </g>
+  );
+};
+
+/** Analog clock; time "hh:mm", speed = hours per second. */
+export const Clock: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const [hh, mm] = str(spec.time, '12:00').split(':').map(Number);
+  const speed = num(spec.speed, 0);
+  const lt = Math.max(0, t - num(spec.at, 0));
+  const minutes = hh * 60 + (mm || 0) + speed * lt * 60;
+  const R = num(spec.r, 110);
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 400)}) scale(${appearK(spec, t)})`}>
+      <circle r={R} fill="#ffffff" stroke={C.ink} strokeWidth={R * 0.09} />
+      {Array.from({ length: 12 }, (_, i) => (
+        <line key={i} x1={0} y1={-R * 0.82} x2={0} y2={-R * 0.7} stroke={C.ink} strokeWidth={R * 0.05} transform={`rotate(${i * 30})`} strokeLinecap="round" />
+      ))}
+      <line x1={0} y1={0} x2={0} y2={-R * 0.5} stroke={C.ink} strokeWidth={R * 0.1} strokeLinecap="round" transform={`rotate(${(minutes / 720) * 360})`} />
+      <line x1={0} y1={0} x2={0} y2={-R * 0.75} stroke={C.red} strokeWidth={R * 0.06} strokeLinecap="round" transform={`rotate(${(minutes % 60) * 6})`} />
+      <circle r={R * 0.08} fill={C.ink} />
+    </g>
+  );
+};
+
+/** Tear-off calendar counting from `from` to `to` over `dur` seconds. */
+export const Calendar: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const from = num(spec.from, 1);
+  const to = num(spec.to, from);
+  const k = easeInOut((t - num(spec.at, 0)) / num(spec.dur, 1));
+  const day = Math.round(from + (to - from) * k);
+  const label = str(spec.label, 'DAY');
+  const flip = ((from + (to - from) * k) % 1);
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 400)}) scale(${num(spec.s, 1) * appearK(spec, t)}) rotate(${num(spec.rot, -4)})`}>
+      <rect x={-130} y={-140} width={260} height={280} rx={22} fill="#ffffff" stroke={C.ink} strokeWidth={9} />
+      <rect x={-130} y={-140} width={260} height={84} rx={22} fill={str(spec.color, C.red)} stroke={C.ink} strokeWidth={9} />
+      <text x={0} y={-82} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={52} fill="#fff">{label}</text>
+      <text x={0} y={100} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={150} fill={C.ink}>{day}</text>
+      {flip > 0.05 && flip < 0.6 && <path d={`M -126 -52 L 126 -52 L 126 ${-52 + 180 * (1 - flip)} Q 0 ${-20 + 150 * (1 - flip)} -126 ${-52 + 180 * (1 - flip)} Z`} fill="#f2f2f2" stroke={C.ink} strokeWidth={5} />}
+    </g>
+  );
+};
+
+/** Needle gauge (0..max) animating from -> to. */
+export const Gauge: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const max = num(spec.max, 100);
+  const v = num(spec.from, 0) + (num(spec.to, 50) - num(spec.from, 0)) * easeOut((t - num(spec.at, 0)) / num(spec.dur, 1.2));
+  const R = num(spec.r, 160);
+  const ang = -120 + (clamp(v / max) * 240);
+  const wob = v / max > 0.95 ? 4 * Math.sin(t * 40) : 0;
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 500)}) scale(${appearK(spec, t)})`}>
+      <path d={`M ${-R * 0.87} ${R * 0.5} A ${R} ${R} 0 1 1 ${R * 0.87} ${R * 0.5}`} fill="#ffffff" stroke={C.ink} strokeWidth={10} />
+      <path d={`M ${R * 0.43} ${-R * 0.75} A ${R * 0.86} ${R * 0.86} 0 0 1 ${R * 0.75} ${R * 0.43}`} fill="none" stroke={C.red} strokeWidth={R * 0.12} />
+      <path d={`M ${-R * 0.75} ${R * 0.43} A ${R * 0.86} ${R * 0.86} 0 0 1 ${-R * 0.43} ${-R * 0.75}`} fill="none" stroke={C.green} strokeWidth={R * 0.12} />
+      <line x1={0} y1={0} x2={0} y2={-R * 0.78} stroke={C.ink} strokeWidth={10} strokeLinecap="round" transform={`rotate(${ang + wob})`} />
+      <circle r={16} fill={C.ink} />
+      <text y={R * 0.95} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={R * 0.26} fill={C.white} stroke={C.ink} strokeWidth={8} paintOrder="stroke">{str(spec.label, '')}</text>
+    </g>
+  );
+};
+
+/** Whiteboard / poster with lines revealed one after another. */
+export const Board: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const lines = arr<string>(spec.lines, []);
+  const w = num(spec.w, 760);
+  const size = num(spec.size, 48);
+  const h = num(spec.h, 120 + lines.length * size * 1.35);
+  const step = num(spec.step, 0.6);
+  const at = num(spec.at, 0);
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 420)}) scale(${appearK(spec, t)}) rotate(${num(spec.rot, -1.5)})`}>
+      <rect x={-w / 2 + 10} y={-h / 2 + 12} width={w} height={h} rx={20} fill={C.ink} opacity={0.3} />
+      <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={20} fill={str(spec.color, '#ffffff')} stroke={C.ink} strokeWidth={8} />
+      {spec.title !== undefined && (
+        <text x={0} y={-h / 2 + 70} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={size * 1.15} fill={C.purple}>{str(spec.title, '')}</text>
+      )}
+      {lines.map((l, i) => {
+        const k = clamp((t - at - 0.3 - i * step) / 0.25);
+        return (
+          <text key={i} x={-w / 2 + 50} y={-h / 2 + (spec.title !== undefined ? 150 : 80) + i * size * 1.35} fontFamily={FONT} fontWeight={600} fontSize={size}
+            fill={C.ink} opacity={k} transform={`translate(${(1 - k) * -20} 0)`}>{l}</text>
+        );
+      })}
+    </g>
+  );
+};
+
+/** Horizontal timeline with labelled marks; progress dot travels across. */
+export const Timeline: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const marks = arr<{ pos: number; label: string }>(spec.marks, []);
+  const x = num(spec.x, 960);
+  const y = num(spec.y, 300);
+  const w = num(spec.w, 1400);
+  const p = clamp((t - num(spec.at, 0)) / num(spec.dur, 3));
+  return (
+    <g transform={`translate(${x - w / 2} ${y})`}>
+      <line x1={0} y1={0} x2={w} y2={0} stroke={C.ink} strokeWidth={22} strokeLinecap="round" />
+      <line x1={0} y1={0} x2={w} y2={0} stroke="#ffffff" strokeWidth={12} strokeLinecap="round" />
+      <line x1={0} y1={0} x2={w * p} y2={0} stroke={C.yellow} strokeWidth={12} strokeLinecap="round" />
+      {marks.map((m, i) => (
+        <g key={i} transform={`translate(${m.pos * w} 0)`} opacity={p >= m.pos - 0.02 ? 1 : 0.45}>
+          <circle r={20} fill={p >= m.pos ? C.yellow : '#fff'} stroke={C.ink} strokeWidth={6} />
+          <text y={i % 2 ? 76 : -40} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={38} fill="#fff" stroke={C.ink} strokeWidth={8} paintOrder="stroke">{m.label}</text>
+        </g>
+      ))}
+    </g>
+  );
+};
+
+/** Seismograph trace with a spike at spikeAt. */
+export const Seismo: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const w = num(spec.w, 700);
+  const h = num(spec.h, 220);
+  const spike = typeof spec.spikeAt === 'number' ? spec.spikeAt : 1e9;
+  const amp = num(spec.amp, 1);
+  const n = 140;
+  const d = Array.from({ length: n }, (_, i) => {
+    const tt = t - (n - i) * 0.02;
+    const big = tt > spike ? Math.exp(-(tt - spike) * 1.5) * amp : 0;
+    const v = Math.sin(tt * 37) * 0.04 + Math.sin(tt * 91) * 0.03 + big * Math.sin(tt * 60) * 0.9;
+    return `${i ? 'L' : 'M'} ${(i / (n - 1)) * w} ${h / 2 - v * h * 0.5}`;
+  }).join(' ');
+  return (
+    <g transform={`translate(${num(spec.x, 960) - w / 2} ${num(spec.y, 300) - h / 2}) scale(1)`}>
+      <rect width={w} height={h} rx={16} fill="#fffdf2" stroke={C.ink} strokeWidth={7} />
+      {Array.from({ length: 6 }, (_, i) => <line key={i} x1={0} y1={(i + 1) * h / 7} x2={w} y2={(i + 1) * h / 7} stroke="#e6dcc0" strokeWidth={3} />)}
+      <path d={d} fill="none" stroke={C.red} strokeWidth={5} strokeLinejoin="round" />
+    </g>
+  );
+};
+
+// ---------------------------------------------------------------- tech
+
+const Screen: React.FC<{ kind: string; t: number }> = ({ kind, t }) => {
+  switch (kind) {
+    case 'wifi':
+      return <WifiIcon bars={3} s={0.9} />;
+    case 'nosignal':
+      return (
+        <g>
+          <WifiIcon bars={0} s={0.9} />
+          <line x1={-50} y1={-60} x2={50} y2={40} stroke={C.red} strokeWidth={12} strokeLinecap="round" />
+        </g>
+      );
+    case 'loading':
+      return (
+        <g transform={`rotate(${t * 300})`}>
+          {Array.from({ length: 8 }, (_, i) => <circle key={i} cx={0} cy={-44} r={9} fill={C.ink} opacity={(i + 1) / 8} transform={`rotate(${i * 45})`} />)}
+        </g>
+      );
+    case 'chat':
+      return (
+        <g>
+          <rect x={-70} y={-110} width={110} height={44} rx={18} fill="#ffffff" stroke={C.ink} strokeWidth={4} />
+          <rect x={-40} y={-50} width={110} height={44} rx={18} fill={C.teal} stroke={C.ink} strokeWidth={4} />
+          <rect x={-70} y={10} width={90} height={44} rx={18} fill="#ffffff" stroke={C.ink} strokeWidth={4} />
+        </g>
+      );
+    case 'map':
+      return (
+        <g>
+          <rect x={-80} y={-130} width={160} height={260} fill="#c8f7c5" />
+          <path d="M -80 -40 L 80 20 M -20 -130 L 10 130" stroke="#ffffff" strokeWidth={16} />
+          <path d="M 0 -30 q -26 -2 -26 -28 a 26 26 0 1 1 52 0 q 0 26 -26 28 Z" fill={C.red} stroke={C.ink} strokeWidth={4} />
+        </g>
+      );
+    case 'error':
+      return (
+        <g>
+          <path d="M 0 -70 L 64 44 L -64 44 Z" fill={C.yellow} stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+          <text y={30} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={80} fill={C.ink}>!</text>
+        </g>
+      );
+    case 'video':
+      return (
+        <g>
+          <rect x={-80} y={-60} width={160} height={110} rx={10} fill={C.ink} />
+          <path d="M -18 -26 L 26 -3 L -18 20 Z" fill="#fff" />
+        </g>
+      );
+    default:
+      return null;
+  }
+};
+
+export const WifiIcon: React.FC<{ bars: number; s?: number; color?: string }> = ({ bars, s = 1, color = C.ink }) => (
+  <g transform={`scale(${s})`}>
+    {[0, 1, 2].map((i) => (
+      <path key={i} d={`M ${-30 - i * 26} ${-i * 26 - 10} A ${42 + i * 37} ${42 + i * 37} 0 0 1 ${30 + i * 26} ${-i * 26 - 10}`} fill="none"
+        stroke={color} strokeWidth={14} strokeLinecap="round" opacity={bars > i ? 1 : 0.18} />
+    ))}
+    <circle cx={0} cy={20} r={13} fill={color} />
+  </g>
+);
+
+export const Phone: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  let screen = str(spec.screen, 'wifi');
+  if (typeof spec.switchAt === 'number' && t >= spec.switchAt) screen = str(spec.screen2, 'nosignal');
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 450)}) scale(${num(spec.s, 1) * appearK(spec, t)}) rotate(${num(spec.rot, 6)})`}>
+      <rect x={-110} y={-200} width={220} height={400} rx={36} fill={C.ink} />
+      <rect x={-94} y={-170} width={188} height={340} rx={18} fill="#e8f6ff" />
+      <rect x={-30} y={-190} width={60} height={10} rx={5} fill="#444" />
+      <Screen kind={screen} t={t} />
+    </g>
+  );
+};
+
+export const Wifi: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const crossed = typeof spec.crossAt === 'number' && t >= spec.crossAt;
+  const k = crossed ? popIn((t - num(spec.crossAt, 0)) / 0.3) : 0;
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 400)}) scale(${num(spec.s, 1.6) * appearK(spec, t)})`}>
+      <circle r={110} fill="#ffffff" stroke={C.ink} strokeWidth={8} />
+      <g transform="translate(0 20)">
+        <WifiIcon bars={crossed ? 0 : num(spec.bars, 3)} color={crossed ? C.grey : C.teal} />
+      </g>
+      {crossed && <line x1={-80 * k} y1={-80 * k} x2={80 * k} y2={80 * k} stroke={C.red} strokeWidth={18} strokeLinecap="round" />}
+    </g>
+  );
+};
+
+/** Data-center racks with blinking LEDs; after failAt the LEDs go red. */
+export const Server: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const n = num(spec.count, 3);
+  const failed = typeof spec.failAt === 'number' && t >= spec.failAt;
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, GROUND_Y)}) scale(${num(spec.s, 1) * appearK(spec, t)})`}>
+      {Array.from({ length: n }, (_, i) => (
+        <g key={i} transform={`translate(${(i - (n - 1) / 2) * 170} 0)`}>
+          <rect x={-70} y={-420} width={140} height={420} rx={12} fill="#2b2f4a" stroke={C.ink} strokeWidth={7} />
+          {Array.from({ length: 8 }, (_, j) => {
+            const on = failed ? Math.sin(t * 6 + j) > 0 : Math.sin(t * (9 + j) + i * 3 + j) > -0.2;
+            return (
+              <g key={j}>
+                <rect x={-54} y={-400 + j * 50} width={108} height={36} rx={6} fill="#3d4266" />
+                <circle cx={38} cy={-382 + j * 50} r={6} fill={failed ? C.red : C.green} opacity={on ? 1 : 0.25} />
+                <circle cx={20} cy={-382 + j * 50} r={6} fill={failed ? C.red : C.teal} opacity={on ? 0.3 : 1} />
+              </g>
+            );
+          })}
+        </g>
+      ))}
+    </g>
+  );
+};
+
+/** Cable along points (e.g. undersea). Grows from at; cutAt shows a spark and a gap. */
+export const Cable: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const pts = arr<[number, number]>(spec.points, [[100, 600], [1800, 600]]);
+  const d = pts.map((p, i) => `${i ? 'L' : 'M'} ${p[0]} ${p[1]}`).join(' ');
+  const k = easeOut((t - num(spec.at, 0)) / num(spec.grow, 1));
+  const cut = typeof spec.cutAt === 'number' && t >= spec.cutAt;
+  const mid = pts[Math.floor(pts.length / 2)];
+  const pulse = (t * 0.6) % 1;
+  return (
+    <g>
+      <path d={d} fill="none" stroke={C.ink} strokeWidth={18} strokeLinecap="round" strokeLinejoin="round" pathLength={1} strokeDasharray={`${k} 1`} />
+      <path d={d} fill="none" stroke={str(spec.color, C.yellow)} strokeWidth={9} strokeLinecap="round" strokeLinejoin="round" pathLength={1}
+        strokeDasharray={`${k} 1`} />
+      {!cut && k >= 1 && <path d={d} fill="none" stroke="#ffffff" strokeWidth={9} pathLength={1} strokeDasharray="0.03 1" strokeDashoffset={-pulse} strokeLinecap="round" />}
+      {cut && (
+        <g transform={`translate(${mid[0]} ${mid[1]})`}>
+          <rect x={-40} y={-30} width={80} height={60} fill={str(spec.gapColor, C.ocean)} />
+          {Array.from({ length: 8 }, (_, i) => (
+            <line key={i} x1={0} y1={0} x2={0} y2={-30 - 20 * Math.sin(t * 20 + i)} stroke={C.yellow} strokeWidth={6} strokeLinecap="round" transform={`rotate(${i * 45})`} />
+          ))}
+        </g>
+      )}
+    </g>
+  );
+};
+
+/** Satellite or space station. kind: satellite | station. */
+export const Satellite: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const station = spec.kind === 'station';
+  let [x, y] = [num(spec.x, 960), num(spec.y, 300)];
+  if (spec.to) {
+    const [x1, y1] = vec(spec.from, [x, y]);
+    const [x2, y2] = vec(spec.to, [x, y]);
+    const k = clamp((t - num(spec.at, 0)) / num(spec.dur, 4));
+    x = x1 + (x2 - x1) * k;
+    y = y1 + (y2 - y1) * k;
+  }
+  return (
+    <g transform={`translate(${x} ${y}) scale(${num(spec.s, 1) * appearK(spec, t)}) rotate(${num(spec.rot, -12) + num(spec.spin, 0) * t})`}>
+      {station ? (
+        <>
+          <rect x={-220} y={-8} width={440} height={16} fill={C.grey} stroke={C.ink} strokeWidth={5} />
+          {[-190, -120, 120, 190].map((px) => <rect key={px} x={px - 28} y={-90} width={56} height={180} fill="#3a5bd9" stroke={C.ink} strokeWidth={5} />)}
+          <rect x={-60} y={-36} width={120} height={72} rx={18} fill="#ffffff" stroke={C.ink} strokeWidth={6} />
+        </>
+      ) : (
+        <>
+          <rect x={-150} y={-30} width={100} height={60} fill="#3a5bd9" stroke={C.ink} strokeWidth={5} />
+          <rect x={50} y={-30} width={100} height={60} fill="#3a5bd9" stroke={C.ink} strokeWidth={5} />
+          <rect x={-50} y={-40} width={100} height={80} rx={12} fill={C.yellow} stroke={C.ink} strokeWidth={6} />
+          <path d="M 0 -40 L 0 -70 M -20 -88 Q 0 -60 20 -88" stroke={C.ink} strokeWidth={6} fill="none" />
+        </>
+      )}
+    </g>
+  );
+};
+
+// ---------------------------------------------------------------- moon, sun, water
+
+export const Moon: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const grow = arr<number>(spec.grow, []);
+  const k = grow.length === 2 ? easeInOut((t - num(spec.at, 0)) / num(spec.dur, 2)) : 0;
+  const R = grow.length === 2 ? grow[0] + (grow[1] - grow[0]) * k : num(spec.r, 120);
+  const face = str(spec.face, 'none');
+  return (
+    <g transform={`translate(${num(spec.x, 1500)} ${num(spec.y, 260)}) scale(${grow.length === 2 ? 1 : appearK(spec, t)})`}>
+      <circle r={R * 1.15} fill="#ffffff" opacity={0.08} />
+      <circle r={R} fill="#e3e4ee" stroke={C.ink} strokeWidth={Math.max(5, R * 0.04)} />
+      {[[-0.35, -0.3, 0.22], [0.3, 0.1, 0.16], [-0.1, 0.45, 0.12], [0.45, -0.45, 0.1], [-0.55, 0.2, 0.09]].map(([x, y, r], i) => (
+        <circle key={i} cx={x * R} cy={y * R} r={r * R} fill="#c4c6d6" stroke="#a9abbd" strokeWidth={R * 0.02} />
+      ))}
+      {face !== 'none' && (
+        <g transform={`scale(${R / 150})`}>
+          <circle cx={-45} cy={-10} r={face === 'shock' ? 16 : 9} fill={face === 'shock' ? '#fff' : C.ink} stroke={C.ink} strokeWidth={5} />
+          <circle cx={45} cy={-10} r={face === 'shock' ? 16 : 9} fill={face === 'shock' ? '#fff' : C.ink} stroke={C.ink} strokeWidth={5} />
+          {face === 'shock' ? <ellipse cx={0} cy={45} rx={16} ry={20} fill={C.mouth} stroke={C.ink} strokeWidth={5} /> :
+            <path d="M -30 35 Q 0 60 30 35" stroke={C.ink} strokeWidth={8} fill="none" strokeLinecap="round" />}
+        </g>
+      )}
+    </g>
+  );
+};
+
+export const Sun: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const R = num(spec.r, 140);
+  return (
+    <g transform={`translate(${num(spec.x, 300)} ${num(spec.y, 300)}) scale(${appearK(spec, t)})`}>
+      {Array.from({ length: 14 }, (_, i) => (
+        <path key={i} d={`M -${R * 0.12} ${-R * 1.12} L 0 ${-R * 1.45} L ${R * 0.12} ${-R * 1.12} Z`} fill={C.orange} transform={`rotate(${i * (360 / 14) + t * 10})`} />
+      ))}
+      <circle r={R} fill={C.sun} stroke={C.ink} strokeWidth={8} />
+      {spec.face !== false && (
+        <g transform={`scale(${R / 140})`}>
+          <path d="M -60 -10 q 20 -20 40 0 M 20 -10 q 20 -20 40 0" stroke={C.ink} strokeWidth={9} fill="none" strokeLinecap="round" />
+          <path d="M -40 40 q 40 30 80 0" stroke={C.ink} strokeWidth={9} fill="none" strokeLinecap="round" />
+        </g>
+      )}
+    </g>
+  );
+};
+
+/** Dashed orbit ellipse with a body circling it. */
+export const Orbit: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const x = num(spec.x, 960);
+  const y = num(spec.y, 540);
+  const rx = num(spec.rx, 500);
+  const ry = num(spec.ry, 180);
+  const a = ((t - num(spec.at, 0)) / num(spec.period, 6)) * Math.PI * 2 + num(spec.phase, 0);
+  const bx = x + Math.cos(a) * rx;
+  const by = y + Math.sin(a) * ry;
+  const body = str(spec.body, 'moon');
+  return (
+    <g opacity={clamp((t - num(spec.at, 0)) / 0.4)}>
+      <ellipse cx={x} cy={y} rx={rx} ry={ry} fill="none" stroke={str(spec.color, '#ffffff')} strokeWidth={5} strokeDasharray="18 16" opacity={0.7} />
+      {body === 'moon' && <Moon spec={{ type: 'moon', x: bx, y: by, r: num(spec.r, 40) }} t={t} />}
+      {body === 'dot' && <circle cx={bx} cy={by} r={num(spec.r, 14)} fill={C.yellow} stroke={C.ink} strokeWidth={4} />}
+      {body === 'satellite' && <Satellite spec={{ type: 'satellite', x: bx, y: by, s: num(spec.r, 40) / 120 }} t={t} />}
+    </g>
+  );
+};
+
+/** Water level rising/falling between y levels (tides, floods). */
+export const Tide: React.FC<PP> = ({ spec, t }) => {
+  const x0 = num(spec.x0, 0);
+  const x1 = num(spec.x1, 1920);
+  const k = easeInOut((t - num(spec.at, 0)) / num(spec.dur, 2));
+  const level = num(spec.from, 900) + (num(spec.to, 700) - num(spec.from, 900)) * (spec.at === undefined ? 1 : k);
+  const waves = Array.from({ length: Math.ceil((x1 - x0) / 80) + 2 }, (_, i) => {
+    const x = x0 + i * 80 - 80 + ((t * 40) % 80);
+    return `q 20 -14 40 0 t 40 0`;
+  }).join(' ');
+  return (
+    <g>
+      <clipPath id={`tide${x0}${x1}`}>
+        <rect x={x0} y={0} width={x1 - x0} height={1200} />
+      </clipPath>
+      <g clipPath={`url(#tide${x0}${x1})`}>
+        <path d={`M ${x0 - 80 + ((t * 40) % 80)} ${level} ${waves} L ${x1 + 200} 1200 L ${x0 - 200} 1200 Z`} fill={C.ocean} stroke={C.ink} strokeWidth={6} opacity={0.92} />
+      </g>
+      {spec.marker === true && (
+        <g>
+          <line x1={x1 - 120} y1={num(spec.from, 900)} x2={x1 - 40} y2={num(spec.from, 900)} stroke={C.ink} strokeWidth={6} strokeDasharray="12 8" />
+        </g>
+      )}
+    </g>
+  );
+};
+
+/** Spinning storm swirl. */
+export const Hurricane: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const R = num(spec.r, 200);
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 400)}) scale(${appearK(spec, t, 0.6)}) rotate(${-t * num(spec.speed, 120)})`}>
+      {[0, 1, 2, 3].map((i) => (
+        <path key={i} d={`M 0 0 Q ${R * 0.6} ${-R * 0.1} ${R} ${R * 0.5}`} fill="none" stroke="#ffffff" strokeWidth={R * 0.14} strokeLinecap="round" opacity={0.92}
+          transform={`rotate(${i * 90})`} />
+      ))}
+      <circle r={R * 0.14} fill={C.sky1} stroke="#ffffff" strokeWidth={8} />
+    </g>
+  );
+};
+
+// ---------------------------------------------------------------- misc
+
+/** Brain icon with a state: ok | tired | fried. */
+export const Brain: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  let state = str(spec.state, 'ok');
+  if (typeof spec.stateAt === 'number' && t >= spec.stateAt) state = str(spec.state2, 'tired');
+  const fill = state === 'fried' ? '#ffb07a' : state === 'tired' ? '#e8b4d0' : '#ffb3c7';
+  const shake = state === 'fried' ? 3 * Math.sin(t * 40) : 0;
+  return (
+    <g transform={`translate(${num(spec.x, 960) + shake} ${num(spec.y, 400)}) scale(${num(spec.s, 1) * appearK(spec, t)})`}>
+      <path d="M -120 20 C -170 -10 -150 -110 -80 -110 C -60 -160 20 -160 40 -120 C 110 -140 160 -70 130 -20 C 170 30 120 100 60 80 C 20 120 -60 120 -80 80 C -140 90 -160 50 -120 20 Z"
+        fill={fill} stroke={C.ink} strokeWidth={9} strokeLinejoin="round" />
+      <path d="M -60 -80 q 20 30 0 60 M 10 -110 q -20 40 10 70 M 70 -60 q -30 20 -10 60 M -100 10 q 40 0 50 40" fill="none" stroke={C.ink} strokeWidth={6} strokeLinecap="round" opacity={0.6} />
+      {state === 'tired' && <path d="M -40 30 l 25 0 M 25 30 l 25 0" stroke={C.ink} strokeWidth={7} strokeLinecap="round" />}
+      {state === 'ok' && <><circle cx={-28} cy={30} r={8} fill={C.ink} /><circle cx={36} cy={30} r={8} fill={C.ink} /></>}
+      {state === 'fried' && (
+        <>
+          <path d="M -45 20 l 20 20 m 0 -20 l -20 20 M 25 20 l 20 20 m 0 -20 l -20 20" stroke={C.ink} strokeWidth={7} strokeLinecap="round" />
+          {[0, 1, 2].map((i) => {
+            const k = (t * 0.8 + i / 3) % 1;
+            return <circle key={i} cx={-60 + i * 60} cy={-150 - k * 120} r={22 + k * 20} fill="#9aa0b5" opacity={0.7 * (1 - k)} />;
+          })}
+        </>
+      )}
+    </g>
+  );
+};
+
+/** Static item (sandwich, mug, phone, clipboard, pillow, laptop, book, coin). */
+export const Item: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const bob = spec.float === true ? 10 * Math.sin(t * 2.5) : 0;
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 500) + bob}) rotate(${num(spec.rot, 0)}) scale(${num(spec.s, 2) * appearK(spec, t)})`}>
+      <Held kind={str(spec.item, 'sandwich')} />
+    </g>
+  );
+};
+
+/** Comic starburst with text. */
+export const Burst: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  if (typeof spec.until === 'number' && t > spec.until) return null;
+  const R = num(spec.r, 160);
+  const n = 14;
+  const d = Array.from({ length: n * 2 }, (_, i) => {
+    const a = (i / (n * 2)) * Math.PI * 2;
+    const rr = i % 2 ? R * 0.68 : R;
+    return `${i ? 'L' : 'M'} ${Math.cos(a) * rr} ${Math.sin(a) * rr}`;
+  }).join(' ');
+  const text = str(spec.text, 'POW!');
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 400)}) scale(${num(spec.s, 1) * appearK(spec, t, 0.25)}) rotate(${num(spec.rot, -8) + Math.sin(t * 8) * 2})`}>
+      <path d={`${d} Z`} fill={str(spec.color, C.yellow)} stroke={C.ink} strokeWidth={9} strokeLinejoin="round" />
+      <text y={R * 0.16} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={Math.min(R * 0.55, (R * 2.4) / Math.max(3, text.length))} fill={C.ink}>{text}</text>
+    </g>
+  );
+};
+
+/** Generic icon: warning, check, cross, heart, bulb, coin, globe, question. */
+export const Icon: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const kind = str(spec.icon, 'warning');
+  let body: React.ReactNode = null;
+  switch (kind) {
+    case 'warning':
+      body = (<><path d="M 0 -90 L 85 60 L -85 60 Z" fill={C.yellow} stroke={C.ink} strokeWidth={9} strokeLinejoin="round" /><text y={45} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={110} fill={C.ink}>!</text></>);
+      break;
+    case 'check':
+      body = (<><circle r={80} fill={C.green} stroke={C.ink} strokeWidth={9} /><path d="M -38 0 L -10 30 L 42 -28" fill="none" stroke="#fff" strokeWidth={18} strokeLinecap="round" strokeLinejoin="round" /></>);
+      break;
+    case 'cross':
+      body = (<><circle r={80} fill={C.red} stroke={C.ink} strokeWidth={9} /><path d="M -32 -32 L 32 32 M 32 -32 L -32 32" stroke="#fff" strokeWidth={18} strokeLinecap="round" /></>);
+      break;
+    case 'heart':
+      body = <path d="M 0 70 C -120 -10 -70 -110 0 -50 C 70 -110 120 -10 0 70 Z" fill={C.red} stroke={C.ink} strokeWidth={9} strokeLinejoin="round" />;
+      break;
+    case 'bulb':
+      body = (<><circle cy={-20} r={62} fill={C.yellow} stroke={C.ink} strokeWidth={9} /><rect x={-30} y={38} width={60} height={42} rx={8} fill={C.grey} stroke={C.ink} strokeWidth={7} /></>);
+      break;
+    case 'coin':
+      body = (<><circle r={75} fill={C.yellow} stroke={C.ink} strokeWidth={9} /><text y={32} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={90} fill={C.orange}>$</text></>);
+      break;
+    case 'globe':
+      body = (<><circle r={75} fill={C.ocean} stroke={C.ink} strokeWidth={9} /><path d="M -30 -50 q 30 10 20 40 q -30 10 -40 -20 Z M 20 10 q 30 0 25 40 q -25 5 -35 -20 Z" fill={C.land} /></>);
+      break;
+    case 'question':
+      body = (<><circle r={75} fill={C.purple} stroke={C.ink} strokeWidth={9} /><text y={35} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={100} fill="#fff">?</text></>);
+      break;
+  }
+  return <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 400)}) scale(${num(spec.s, 1) * appearK(spec, t)})`}>{body}</g>;
+};
+
+/** Simple car or plane moving from -> to. kind: car | plane | bus. */
+export const Vehicle: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const [x1, y1] = vec(spec.from, [-300, GROUND_Y]);
+  const [x2, y2] = vec(spec.to, [2200, GROUND_Y]);
+  const k = clamp((t - num(spec.at, 0)) / num(spec.dur, 3));
+  const x = x1 + (x2 - x1) * k;
+  const y = y1 + (y2 - y1) * k;
+  const dir = x2 >= x1 ? 1 : -1;
+  const color = str(spec.color, C.red);
+  const kind = str(spec.kind, 'car');
+  return (
+    <g transform={`translate(${x} ${y}) scale(${num(spec.s, 1) * dir} ${num(spec.s, 1)})`}>
+      {kind === 'plane' ? (
+        <>
+          <path d="M -150 -10 Q -150 -40 -110 -40 L 120 -40 Q 170 -30 170 0 Q 160 20 120 20 L -120 20 Q -150 20 -150 -10 Z" fill="#ffffff" stroke={C.ink} strokeWidth={6} />
+          <path d="M -20 -10 L -80 -110 L -40 -110 L 50 -10 Z M -20 10 L -70 80 L -35 80 L 40 10 Z M -150 -30 L -170 -90 L -130 -90 L -110 -35 Z" fill={color} stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+          {[0, 1, 2, 3].map((i) => <circle key={i} cx={20 + i * 26} cy={-14} r={7} fill="#9fe1ff" stroke={C.ink} strokeWidth={3} />)}
+        </>
+      ) : (
+        <>
+          <path d={kind === 'bus' ? 'M -170 -150 L 150 -150 Q 175 -150 175 -120 L 175 -30 L -170 -30 Z' : 'M -140 -50 L -90 -110 L 60 -110 L 110 -50 L 150 -50 Q 165 -48 165 -30 L -150 -30 Q -150 -50 -140 -50 Z'}
+            fill={color} stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+          <path d={kind === 'bus' ? 'M -150 -130 L 150 -130 L 150 -80 L -150 -80 Z' : 'M -75 -95 L 50 -95 L 85 -55 L -105 -55 Z'} fill="#9fe1ff" stroke={C.ink} strokeWidth={5} />
+          {[-90, 100].map((wx) => <g key={wx} transform={`translate(${wx} -30) rotate(${t * 720})`}><circle r={30} fill={C.ink} /><circle r={11} fill={C.grey} /><rect x={-3} y={-24} width={6} height={14} fill="#fff" /></g>)}
+        </>
+      )}
+    </g>
+  );
+};
+
+/** Confetti shower. */
+export const Confetti: React.FC<PP> = ({ spec, t }) => {
+  const at = num(spec.at, 0);
+  const dur = num(spec.dur, 3);
+  if (t < at || t > at + dur) return null;
+  const r = rng(num(spec.seed, 31));
+  const cols = [C.yellow, C.pink, C.teal, C.purple, C.orange, C.green];
+  return (
+    <g>
+      {Array.from({ length: num(spec.count, 80) }, (_, i) => {
+        const x = r() * 1920;
+        const sp = 300 + r() * 400;
+        const y = -40 + (t - at) * sp + r() * -300;
+        return <rect key={i} x={x + 30 * Math.sin(t * 3 + i)} y={y} width={16} height={26} rx={3} fill={cols[i % cols.length]} transform={`rotate(${t * 300 + i * 40} ${x} ${y})`} />;
+      })}
+    </g>
+  );
+};
+
+/** Ground crack spreading from x. */
+export const Crack: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const k = easeOut((t - num(spec.at, 0)) / 0.5);
+  const x = num(spec.x, 960);
+  const y = num(spec.y, GROUND_Y + 30);
+  const w = num(spec.w, 600) * k;
+  return (
+    <path d={`M ${x - w / 2} ${y} L ${x - w / 4} ${y + 18} L ${x - w / 8} ${y - 6} L ${x} ${y + 26} L ${x + w / 8} ${y} L ${x + w / 4} ${y + 22} L ${x + w / 2} ${y + 4}`}
+      fill="none" stroke={C.ink} strokeWidth={9} strokeLinejoin="round" strokeLinecap="round" />
+  );
+};
+
+/** Tall building (optional sway / shake at shakeAt). */
+export const Building: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const w = num(spec.w, 220);
+  const h = num(spec.h, 600);
+  const shakeAt = typeof spec.shakeAt === 'number' ? spec.shakeAt : undefined;
+  const shake = shakeAt !== undefined && t >= shakeAt ? Math.exp(-(t - shakeAt) * 1.2) * 6 * Math.sin((t - shakeAt) * 22) : 0;
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, GROUND_Y)}) skewX(${shake})`}>
+      <rect x={-w / 2} y={-h} width={w} height={h} fill={str(spec.color, '#8fb8ff')} stroke={C.ink} strokeWidth={7} />
+      {Array.from({ length: Math.floor(h / 70) }, (_, row) =>
+        Array.from({ length: Math.floor(w / 55) }, (_, col) => (
+          <rect key={`${row}-${col}`} x={-w / 2 + 18 + col * 55} y={-h + 24 + row * 70} width={30} height={38} rx={4} fill="#d6ecff" stroke={C.ink} strokeWidth={3} />
+        )),
+      )}
+    </g>
+  );
+};
+
+/** Big emphasised number/label inside a circle badge. */
+export const Badge: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const R = num(spec.r, 110);
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 400)}) scale(${appearK(spec, t)}) rotate(${num(spec.rot, 10)})`}>
+      <circle r={R} fill={str(spec.color, C.yellow)} stroke={C.ink} strokeWidth={9} />
+      <text y={R * 0.12} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={R * 0.62} fill={C.ink}>{str(spec.text, '?!')}</text>
+      {spec.sub !== undefined && <text y={R * 0.5} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={R * 0.22} fill={C.ink}>{str(spec.sub, '')}</text>}
+    </g>
+  );
+};
+
+export const PROPS2: Record<string, React.FC<PP>> = {
+  pal: Pal, crowd: Crowd, bars: Bars, clock: Clock, calendar: Calendar, gauge: Gauge, board: Board, timeline: Timeline, seismo: Seismo,
+  phone: Phone, wifi: Wifi, server: Server, cable: Cable, satellite: Satellite, moon: Moon, sun: Sun, orbit: Orbit, tide: Tide,
+  hurricane: Hurricane, brain: Brain, item: Item, burst: Burst, icon: Icon, vehicle: Vehicle, confetti: Confetti, crack: Crack,
+  building: Building, badge: Badge,
+};
+
+// keep the smooth import used (tree-shaking friendly re-export for tests)
+export const _smooth = smooth;

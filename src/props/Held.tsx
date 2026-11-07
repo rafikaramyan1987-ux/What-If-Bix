@@ -39,6 +39,35 @@ export const Clipboard: React.FC = () => (
   </g>
 );
 
+export const Pillow: React.FC = () => (
+  <g transform="translate(0 -24)">
+    <path d="M -44 -22 Q 0 -34 44 -22 Q 52 0 44 22 Q 0 34 -44 22 Q -52 0 -44 -22 Z" fill="#ffffff" stroke={C.ink} strokeWidth={4.5} />
+    <path d="M -30 -6 q 30 10 60 0" stroke="#d9deec" strokeWidth={4} fill="none" />
+  </g>
+);
+
+export const Laptop: React.FC = () => (
+  <g transform="translate(0 -24)">
+    <rect x={-36} y={-34} width={72} height={46} rx={5} fill={C.ink} />
+    <rect x={-30} y={-29} width={60} height={36} rx={3} fill="#7fd3ff" />
+    <path d="M -46 12 L 46 12 L 40 22 L -40 22 Z" fill={C.grey} stroke={C.ink} strokeWidth={4} strokeLinejoin="round" />
+  </g>
+);
+
+export const Book: React.FC = () => (
+  <g transform="translate(0 -26) rotate(-8)">
+    <rect x={-30} y={-36} width={60} height={72} rx={5} fill={C.purple} stroke={C.ink} strokeWidth={4.5} />
+    <rect x={-22} y={-24} width={44} height={14} rx={3} fill="#fff" />
+  </g>
+);
+
+export const Coin: React.FC = () => (
+  <g transform="translate(0 -22)">
+    <circle r={24} fill={C.yellow} stroke={C.ink} strokeWidth={4.5} />
+    <circle r={15} fill="none" stroke={C.orange} strokeWidth={4} />
+  </g>
+);
+
 export const Held: React.FC<{ kind: string }> = ({ kind }) => {
   switch (kind) {
     case 'sandwich':
@@ -49,6 +78,14 @@ export const Held: React.FC<{ kind: string }> = ({ kind }) => {
       return <Phone />;
     case 'clipboard':
       return <Clipboard />;
+    case 'pillow':
+      return <Pillow />;
+    case 'laptop':
+      return <Laptop />;
+    case 'book':
+      return <Book />;
+    case 'coin':
+      return <Coin />;
     default:
       return null;
   }
