@@ -52,7 +52,7 @@ export const checkEpisode = (file) => {
     const words = parseNarration(s.narration).map((u, i) => ({ key: normWord(u.display), start: i, end: i + 0.5 }));
     const ctx = { id: s.id, start: 0, end: 999, words };
     try {
-      resolveDeep({ p: s.props ?? [], b: s.bix ?? [], t: s.texts ?? [], c: s.chips ?? [], f: s.sfx ?? [], cam: s.camera ?? {} }, ctx);
+      resolveDeep({ bg: s.background ?? {}, p: s.props ?? [], b: s.bix ?? [], t: s.texts ?? [], c: s.chips ?? [], f: s.sfx ?? [], cam: s.camera ?? {} }, ctx);
     } catch (e) {
       errors.push(e.message);
     }

@@ -31,6 +31,14 @@ describe('timeline', () => {
     expect(resolveTime(2, ctx)).toBe(12);
     expect(() => resolveTime('@nope', ctx)).toThrow(/no word/);
   });
+  it('converts every *At time field, including in the background', async () => {
+    const { resolveDeep } = await import('../pipeline/lib/timeline.mjs');
+    const out = resolveDeep({ bg: { lightsOffAt: 1 }, p: [{ failAt: 2, cutAt: '@brakes', x: 5 }] }, ctx);
+    expect(out.bg.lightsOffAt).toBe(11);
+    expect(out.p[0].failAt).toBe(12);
+    expect(out.p[0].cutAt).toBe(12);
+    expect(out.p[0].x).toBe(5);
+  });
   it('builds caption pages that never cross sentences', () => {
     const w = (text, s, segEnd = false) => ({ text, start: s, end: s + 0.2, segEnd });
     const pages = buildCaptionPages([w('One', 0), w('two.', 0.3, true), w('Three', 1), w('four', 1.3), w('five', 1.6), w('six', 1.9), w('seven', 2.2), w('eight', 2.5)]);

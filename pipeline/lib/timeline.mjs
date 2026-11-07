@@ -2,7 +2,10 @@
 import { normWord, parseNarration, segmentUnits } from './script.mjs';
 
 // Keys whose numeric values are scene-relative times (converted to absolute).
-const TIME_KEYS = new Set(['at', 'until', 'stopAt', 'windAt', 'roofAt', 'hoverUntil', 'shake']);
+export const TIME_KEYS = new Set([
+  'at', 'until', 'stopAt', 'windAt', 'roofAt', 'hoverUntil', 'shake', 'switchAt', 'crossAt', 'failAt', 'cutAt',
+  'jumpAt', 'cheerAt', 'panicAt', 'spikeAt', 'shakeAt', 'moveAt', 'stateAt', 'lightsOffAt',
+]);
 
 export const INTRO_SECONDS = 2;
 export const ENDSCREEN_SECONDS = 20;
@@ -191,7 +194,7 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
       id: s.id,
       start,
       end,
-      background: s.background,
+      background: resolveDeep(s.background, ctx),
       props: r(s.props),
       bix: r(s.bix).map((c) => ({ ...c })),
       bixDefaults: { pos: s.bixStart ?? [960, 820], scale: s.bixScale ?? 1, facing: s.bixFacing ?? 1 },
