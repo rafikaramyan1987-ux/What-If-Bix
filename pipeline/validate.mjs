@@ -11,7 +11,7 @@ import { resolveDeep } from './lib/timeline.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 // Calibrated on rendered episodes (Piper LibriTTS speaker 92, lengthScale 0.92).
-export const WORDS_PER_SEC = 3.6;
+export const WORDS_PER_SEC = 3.8;
 export const SCENE_OVERHEAD = 0.7; // lead + tail per scene
 export const INTRO_SEC = 2;
 export const ENDSCREEN_SEC = 20;
@@ -20,7 +20,8 @@ export const estimateScene = (s) => {
   const units = parseNarration(s.narration);
   const segs = segmentUnits(units);
   const pauses = segs.slice(0, -1).reduce((n, g) => n + g.pause, 0);
-  return units.length / WORDS_PER_SEC + pauses + SCENE_OVERHEAD + (s.hold ?? 0);
+  const spoken = units.reduce((n, u) => n + Math.max(1, u.spoken.split(/\s+/).filter(Boolean).length), 0);
+  return spoken / WORDS_PER_SEC + pauses + SCENE_OVERHEAD + (s.hold ?? 0);
 };
 
 const trigrams = (text) => {

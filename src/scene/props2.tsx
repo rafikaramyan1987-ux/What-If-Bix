@@ -95,6 +95,7 @@ export const Bars: React.FC<PP> = ({ spec, t }) => {
   const max = num(spec.max, Math.max(...values));
   const bw = (w / values.length) * 0.62;
   const unit = str(spec.unit, '');
+  const display = arr<string>(spec.display, []); // optional text per bar, e.g. "6 trillion trillion kg"
   return (
     <g transform={`translate(${x - w / 2} ${y})`}>
       <line x1={-20} y1={0} x2={w + 20} y2={0} stroke={C.ink} strokeWidth={7} strokeLinecap="round" />
@@ -107,7 +108,7 @@ export const Bars: React.FC<PP> = ({ spec, t }) => {
             <rect x={cx - bw / 2} y={-bh} width={bw} height={bh} rx={10} fill={colors[i % colors.length]} stroke={C.ink} strokeWidth={6} />
             {k > 0.2 && (
               <text x={cx} y={-bh - 18} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={42} fill={C.white} stroke={C.ink} strokeWidth={8}
-                paintOrder="stroke">{formatNumber(v * k, num(spec.decimals, 0))}{unit}</text>
+                paintOrder="stroke">{display[i] !== undefined && k > 0.95 ? display[i] : `${formatNumber(v * k, num(spec.decimals, 0))}${unit}`}</text>
             )}
             {labels[i] && (
               <text x={cx} y={56} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={36} fill={C.white} stroke={C.ink} strokeWidth={7}

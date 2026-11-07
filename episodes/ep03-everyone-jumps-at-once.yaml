@@ -1,0 +1,381 @@
+id: ep03-everyone-jumps-at-once
+number: 3
+title: "What if everyone on Earth jumped at the same time?"
+description: |
+  Bix runs a three-part experiment: eight billion people jump where they stand, then all together on one giant salt flat, then over and over in rhythm.
+  We weigh humanity, put it on a bar chart next to Earth, and do the real momentum math (spoiler: atoms are involved, and they are not impressed).
+  Plus the real football crowd that showed up on a seismometer, and the London bridge that crowds really did shake.
+tags: [science, what if, physics, momentum, earth, earthquake, seismology, beast quake, millennium bridge, newton, animation, education]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 0.92 }
+music: { style: curious, gain: 0.2, duck: 0.55, seed: 33 }
+introAfter: cold-open
+outro:
+  narration: "Want more experiments with huge setups and tiny results? Watch another What If Bix episode, or tap subscribe. It takes less effort than a jump, and it moves the planet by exactly the same amount."
+  background: { type: lab, board: false }
+
+scenes:
+  # ------------------------------------------------------------------ SETUP
+  - id: cold-open
+    chapter: "The experiment"
+    background: { type: lab, board: false }
+    bixStart: [600, 820]
+    props:
+      - { type: crowd, x: 1240, y: 820, w: 760, count: 18, rows: 2, s: 0.4, seed: 4, jumpAt: "@jumped", sync: true }
+      - { type: item, item: clipboard, x: 840, y: 520, s: 1.0, float: true, at: "@coats" }
+    bix:
+      - { at: 0, action: idle, hold: clipboard }
+      - { at: "@jumped", action: jump }
+      - { at: "@budge", action: think }
+      - { at: "@coats", action: present }
+    texts:
+      - { at: "@What", text: "WHAT IF EVERYONE\nJUMPED AT ONCE?", style: title, x: 960, y: 150 }
+      - { at: "@Delivery", text: "ETA: NEVER", style: label, x: 640, y: 380, color: "#ff5a5f", rotate: 4 }
+    camera: { zoom: [1.0, 1.07], focus: [900, 560] }
+    narration: "What if everyone on Earth jumped... at the exact same moment? Would the planet budge? Bix has booked a lab and ordered eight billion lab coats. Delivery estimate: never."
+
+  - id: hypothesis
+    background: { type: lab, board: false }
+    bixStart: [420, 820]
+    props:
+      - { type: pal, x: 1560, y: 820, s: 0.95, facing: -1, color: "#2bb5a0", hold: clipboard, actions: [{ at: "@no", action: facepalm }] }
+      - { type: board, title: "HYPOTHESES", x: 960, y: 330, w: 760, size: 44, at: "@hypothesis", step: 1.4, color: "#fffdf2",
+          lines: ["Bix: big jump, big wobble", "Partner: Bix, no."] }
+    bix:
+      - { at: 0, action: walk, from: [200, 820], to: [480, 820] }
+      - { at: "@hypothesis", action: present }
+      - { at: "@wobble", action: cheer }
+      - { at: "@no", action: shrug }
+      - { at: "@three", action: point }
+    narration: "Every good experiment starts with a hypothesis. Bix's hypothesis: big jump, big wobble. His lab partner's hypothesis: Bix, *no*. We'll test three setups, and the numbers get the final word."
+
+  # ------------------------------------------------------------------ STEP 1
+  - id: weigh-humanity
+    chapter: "Step 1: weigh humanity"
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [520, 820]
+    props:
+      - { type: crowd, x: 1180, y: 820, w: 800, count: 24, rows: 3, s: 0.36, seed: 9, at: "@billion" }
+      - { type: badge, x: 1640, y: 540, r: 100, text: "62 kg", sub: "AVG ADULT", color: "#ffd447", at: "@62", rot: 8 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@billion", action: point }
+      - { at: "@Kids", action: shrug }
+      - { at: "@Total", action: present }
+    texts:
+      - { at: "@8.2", text: "8.2 BILLION", style: big, x: 960, y: 270, count: { from: 0, to: 8.2, dur: 1.2, decimals: 1, suffix: " BILLION" } }
+      - { at: "@Total", text: "≈ 500,000,000,000 kg", style: label, x: 960, y: 470, color: "#7a5cff" }
+    narration: "First, we weigh the contestants. There are about {8.2|eight point two} billion of us. A study of global body mass put the average adult at about {62|sixty-two} kilograms. Kids weigh less, but let's be generous and give everyone the adult number. Total: roughly five hundred billion kilograms of human."
+
+  - id: vs-earth
+    transition: iris
+    background: { type: space, tint: blue }
+    bixStart: [420, 800]
+    props:
+      - { type: earth, x: 1680, y: 250, r: 130, spin: 0.05 }
+      - { type: bars, x: 1000, y: 760, w: 760, h: 420, values: [500, 5970000000000000], display: ["~0.5 trillion kg", "6 trillion trillion kg"], labels: ["All humans", "Earth"],
+          colors: ["#ff8a3d", "#2bb5a0"], at: "@NASA" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@opponent", action: point }
+      - { at: "@twelve", action: shock }
+      - { at: "@theoretical", action: laugh }
+    texts:
+      - { at: "@NASA", text: "billions of kg", style: note, x: 1000, y: 870 }
+      - { at: "@twelve", text: "1 : 12,000,000,000,000", style: label, x: 1000, y: 160, color: "#ff5a5f" }
+      - { at: "@theoretical", text: "← us", style: note, x: 640, y: 720 }
+    narration: "Sounds heavy, until you meet the opponent. NASA puts Earth's mass at about {5.97×10²⁴|six trillion trillion} kilograms. Earth outweighs all of humanity roughly twelve trillion to one. Picture a mosquito head-butting a large warship, and you're in the right ballpark. On this bar chart, our bar isn't short. It's *theoretical*."
+
+  - id: momentum-rule
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [480, 820]
+    props:
+      - { type: board, title: "THE RULE", x: 1130, y: 330, w: 1000, size: 38, at: "@rule", step: 1.2,
+          lines: ["you push Earth down = Earth pushes you up", "your momentum = Earth's momentum", "30 cm hop → 2.4 m/s takeoff"] }
+      - { type: arrow, from: [480, 420], to: [480, 250], at: "@up", color: "#2bb5a0", width: 14 }
+      - { type: arrow, from: [640, 700], to: [640, 800], at: "@down", color: "#ff5a5f", width: 14, label: "Earth", labelX: 720, labelY: 700 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@up", action: jump }
+      - { at: "@hop", action: jump }
+      - { at: "@accountant", action: present }
+    narration: "Now the rule. When you jump, you push Earth down, and Earth pushes you up. Your momentum and Earth's momentum are equal and opposite. A modest {30|thirty} centimeter hop means leaving the ground at about {2.4|two point four} meters per second. Physics is a strict accountant, and it's about to audit everybody."
+
+  # ------------------------------------------------------------------ SCENARIO A
+  - id: scenario-a
+    chapter: "Scenario A: jump where you stand"
+    transition: iris
+    background: { type: space }
+    bixStart: [480, 840]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 1140, y: 470, r: 250, spin: 0.04 }
+      - { type: arrow, from: [1140, 220], to: [1140, 90], at: "@Tokyo", color: "#ffd447", width: 12, label: "Tokyo", labelY: 70 }
+      - { type: arrow, from: [1140, 720], to: [1140, 850], at: "@Buenos", color: "#ffd447", width: 12, label: "Buenos Aires", labelY: 890 }
+      - { type: arrow, from: [1390, 470], to: [1530, 470], at: "@sphere", color: "#ffd447", width: 12 }
+      - { type: arrow, from: [890, 470], to: [750, 470], at: "@sphere+0.15", color: "#ffd447", width: 12 }
+      - { type: arrow, from: [1317, 293], to: [1416, 194], at: "@sphere+0.3", color: "#ffd447", width: 12 }
+      - { type: arrow, from: [963, 647], to: [864, 746], at: "@sphere+0.45", color: "#ffd447", width: 12 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@twist", action: think }
+      - { at: "@Tokyo", action: point }
+      - { at: "@cancel", action: shrug }
+    narration: "Scenario A: everyone jumps right where they're standing. Here's the twist: up is not the same direction everywhere. Someone in Tokyo pushes Earth one way. Someone in Buenos Aires, almost on the opposite side, pushes it nearly the other way. Spread around a sphere, the pushes mostly cancel out."
+
+  - id: scenario-a-leftover
+    transition: whip
+    background: { type: space, tint: purple }
+    bixStart: [560, 820]
+    props:
+      - { type: earth, x: 1200, y: 470, r: 230, spin: 0.04, band: 0.3 }
+      - { type: arrow, from: [1200, 700], to: [1200, 780], at: "@leftover", color: "#ff5a5f", width: 10, label: "tiny net push", labelY: 830 }
+      - { type: badge, x: 1580, y: 240, r: 110, text: "≈ 9/10", sub: "LIVE NORTH", color: "#5bc8ff", at: "@Northern", rot: -8 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@Northern", action: point }
+      - { at: "@atom", action: laugh }
+      - { at: "@inconclusive", action: shrug }
+    texts:
+      - { at: "@inconclusive", text: "RESULT: INCONCLUSIVE", style: label, x: 960, y: 150, color: "#7a5cff" }
+    narration: "Not perfectly, though. Almost nine in ten people live in the Northern Hemisphere, so a small leftover push survives. Result? Earth gets nudged by an amount that wouldn't trouble a single atom. Experiment A: inconclusive. Mostly because nothing happened."
+
+  # ------------------------------------------------------------------ SCENARIO B
+  - id: scenario-b-venue
+    chapter: "Scenario B: everyone in one place"
+    transition: iris
+    background: { type: land, mood: day }
+    bixStart: [560, 820]
+    props:
+      - { type: board, title: "VENUE", x: 1150, y: 330, w: 760, size: 44, at: "@Salar", step: 1.0, color: "#fffdf2",
+          lines: ["Salar de Uyuni, Bolivia", "~10,000 km² of salt", "flat enough for satellites"] }
+      - { type: satellite, x: 1620, y: 150, s: 0.7, kind: satellite, spin: 0.1, at: "@satellites" }
+    bix:
+      - { at: 0, action: walk, from: [260, 820], to: [560, 820] }
+      - { at: "@Salar", action: present }
+      - { at: "@satellites", action: point }
+      - { at: "@bumps", action: laugh }
+    narration: "Scenario B: we line everyone up so every push points the same way. We need somewhere big and flat, so we pick the Salar de Uyuni in Bolivia, the world's largest salt flat. It covers about {10,000|ten thousand} square kilometers and is so flat that satellites use it to check their measurements. We're about to add eight billion bumps."
+
+  - id: scenario-b-mats
+    background: { type: land, mood: day }
+    bixStart: [600, 820]
+    props:
+      - { type: crowd, x: 1150, y: 820, w: 900, count: 36, rows: 4, s: 0.34, seed: 12, at: "@Everyone" }
+      - { type: item, item: book, x: 840, y: 560, s: 1.2, rot: 90, at: "@yoga" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@yoga", action: present }
+      - { at: "@thin", action: sleepy }
+      - { at: "@breathing", action: facepalm }
+    texts:
+      - { at: "@1.3", text: "≈ 1.3 m² EACH", style: label, x: 1100, y: 260, color: "#2bb5a0" }
+      - { at: "@3,650", text: "3,650 m UP", style: note, x: 1100, y: 380 }
+    narration: "Everyone gets about {1.3|one point three} square meters, a little more than a yoga mat each. The salt flat also sits about {3,650|three thousand six hundred fifty} meters above sea level, where the air is thin. So the warm-up is just breathing."
+
+  - id: scenario-b-jump
+    transition: pop
+    background: { type: land, mood: day }
+    bixStart: [600, 820]
+    props:
+      - { type: crowd, x: 1150, y: 820, w: 900, count: 36, rows: 4, s: 0.34, seed: 12, jumpAt: "@jump", sync: true }
+      - { type: arrow, from: [1150, 470], to: [1150, 330], at: "@launching", color: "#2bb5a0", width: 14, label: "humans", labelY: 300 }
+      - { type: arrow, from: [1500, 860], to: [1500, 890], at: "@recoils", color: "#ff5a5f", width: 8, label: "Earth", labelX: 1600, labelY: 880 }
+      - { type: puff, at: "@jump+0.9", x: 1150, y: 820 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@three", action: point }
+      - { at: "@jump", action: jump }
+      - { at: "@recoils", action: think }
+    texts:
+      - { at: "@three", until: "@jump", text: "3... 2... 1...", style: label, x: 1100, y: 230, color: "#ff8a3d" }
+      - { at: "@jump", until: "@jump+1.2", text: "JUMP!", style: shout, x: 1100, y: 250, rotate: -6 }
+    camera: { shake: ["@jump+0.95"], shakeAmp: 10 }
+    narration: "Now all eight billion of us jump straight up, together. Ready? Three, two, one... *jump*! Each person shoves the ground down while launching up, so the whole planet recoils the other way with exactly the same momentum. For one split second, all of humanity is airborne, and the planet is very slightly falling away beneath us."
+
+  - id: scenario-b-math
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [440, 820]
+    props:
+      - { type: board, title: "HOW FAR DOES EARTH MOVE?", x: 960, y: 330, w: 820, size: 40, at: "@math", step: 1.1,
+          lines: ["0.3 m × (5×10¹¹ kg ÷ 6×10²⁴ kg)", "≈ 2.5×10⁻¹⁴ m", "≈ a couple of atomic nuclei"] }
+      - { type: icon, icon: check, x: 1520, y: 620, s: 1.1, at: "@zero" }
+    bix:
+      - { at: 0, action: idle, hold: clipboard }
+      - { at: "@math", action: present, hold: clipboard }
+      - { at: "@nuclei", action: shock }
+      - { at: "@zero", action: shrug }
+    texts:
+      - { at: "@zero", text: "NET: 0", style: big, x: 1240, y: 680 }
+    narration: "So how far does Earth actually move? Do the math, and the planet drops about {2.5×10⁻¹⁴|two and a half times ten to the minus fourteen} meters. That's roughly the width of a couple of atomic nuclei, thousands of times smaller than one atom. For scale: blow one atom up to the size of a football stadium, and Earth's move would be about a golf ball. Then everyone lands, and Earth gets pushed straight back. Net movement: zero."
+
+  - id: scenario-b-quake
+    transition: iris
+    background: { type: land, mood: sunset }
+    bixStart: [520, 820]
+    props:
+      - { type: seismo, x: 1150, y: 300, w: 760, h: 220, spikeAt: "@landing", amp: 1 }
+      - { type: crack, x: 1150, y: 830, w: 360, at: "@landing" }
+      - { type: icon, icon: bulb, x: 1580, y: 600, s: 1.0, at: "@power" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@landing", action: tumble }
+      - { at: "@power", action: point }
+      - { at: "@knees", action: laugh }
+    camera: { shake: ["@landing"], shakeAmp: 12 }
+    texts:
+      - { at: "@bowling", text: "≈ 180 J EACH", style: label, x: 1150, y: 520, color: "#ff8a3d" }
+      - { at: "@power", text: "1 GW × 25 min", style: note, x: 1150, y: 600 }
+    narration: "But could eight billion people landing at once cause an earthquake? Each landing hits like a bowling ball dropped from about {2.5|two and a half} meters up. Add them all up, and that's about the energy a big power plant makes in {25|twenty-five} minutes. Even if all of it became seismic waves, you'd get roughly a magnitude five. Realistically, most of it turns into heat, noise and eight billion annoyed knees, so think three-ish."
+
+  - id: beast-quake
+    chapter: "Reality check: crowds on the seismometer"
+    transition: whip
+    background: { type: city, mood: night }
+    bixStart: [560, 820]
+    props:
+      - { type: crowd, x: 1180, y: 820, w: 860, count: 30, rows: 3, s: 0.36, seed: 21, cheerAt: "@touchdown" }
+      - { type: seismo, x: 1180, y: 300, w: 700, h: 200, spikeAt: "@seismometer", amp: 0.7 }
+      - { type: confetti, at: "@touchdown", dur: 2.5, count: 60 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@touchdown", action: cheer }
+      - { at: "@Beast", action: point }
+      - { at: "@Swift", action: laugh }
+    texts:
+      - { at: "@Beast", text: "BEAST QUAKE ≈ M2", style: label, x: 1180, y: 480, color: "#2bb5a0" }
+      - { at: "@twice", text: "×2 SHAKING", style: label, x: 1180, y: 560, color: "#ff5a5f", rotate: 3 }
+    narration: "We actually have real data on crowds. In January {2011|twenty eleven}, Seattle Seahawks fans celebrated a wild touchdown run by Marshawn Lynch so hard that a seismometer near the stadium picked it up. Seismologists nicknamed it the Beast Quake, around magnitude two. In {2023|twenty twenty-three}, Taylor Swift fans in the same stadium shook the ground about twice as hard. Science now has a leaderboard."
+
+  - id: crowd-scale
+    background: { type: city, mood: night }
+    bixStart: [700, 820]
+    props:
+      - { type: bars, x: 1240, y: 760, w: 640, h: 380, values: [66, 8200000], display: ["66,000", "8.2 billion"], labels: ["stadium", "everyone"], unit: "k",
+          colors: ["#2bb5a0", "#ff8a3d"], at: "@times" }
+      - { type: building, x: 330, y: 820, w: 220, h: 420, color: "#5b6b9a", shakeAt: "@windows" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@times", action: point }
+      - { at: "@windows", action: shock }
+      - { at: "@planet", action: shrug }
+    narration: "Our salt flat crowd is about {120,000|a hundred twenty thousand} times bigger than that stadium. That's enough to rattle windows nearby and light up seismometers worldwide. But to the planet itself? It's a tap on the shoulder."
+
+  # ------------------------------------------------------------------ SCENARIO C
+  - id: scenario-c
+    chapter: "Scenario C: keep the beat"
+    transition: iris
+    background: { type: night-city }
+    bixStart: [620, 820]
+    props:
+      - { type: crowd, x: 1200, y: 820, w: 800, count: 24, rows: 3, s: 0.36, seed: 30, jumpAt: "@over", sync: true }
+      - { type: clock, x: 1560, y: 260, r: 100, time: "00:00", speed: 3, at: "@year" }
+      - { type: arrow, from: [620, 380], to: [620, 230], at: "@escape", color: "#ffd447", width: 12, label: "11.2 km/s", labelY: 200 }
+    bix:
+      - { at: 0, action: jump }
+      - { at: "@over", action: jump }
+      - { at: "@zero", action: shrug }
+      - { at: "@escape", action: point }
+      - { at: "@best", action: facepalm }
+    texts:
+      - { at: "@best", text: "YOU: 2.4 m/s", style: label, x: 1080, y: 200, color: "#ff5a5f" }
+    narration: "Scenario C, Bix's own idea: what if everyone jumps over and over, in rhythm, for a whole year? Surely it adds up? Not for Earth. Every landing hands back exactly the momentum the jump borrowed, so a billion bounces still total zero. To truly push a planet, you'd have to throw stuff off it forever, faster than the escape speed of about {11.2|eleven point two} kilometers per second. Your best jump: about {2.4|two point four} meters per second."
+
+  - id: bridge
+    transition: whip
+    background: { type: city, mood: day }
+    bixStart: [560, 820]
+    props:
+      - { type: cable, points: [[700, 620], [1000, 650], [1300, 620], [1600, 650]], at: "@Millennium", grow: 1.0, color: "#9aa0b5" }
+      - { type: crowd, x: 1150, y: 600, w: 760, count: 16, rows: 1, s: 0.3, seed: 3, at: "@Millennium", panicAt: "@wobble" }
+      - { type: wind, at: "@wobble", until: "@days", count: 8, band: 300 }
+      - { type: badge, x: 1500, y: 260, r: 110, text: "2 days", sub: "THEN CLOSED", color: "#ff5a5f", at: "@days", rot: 8 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Millennium", action: point }
+      - { at: "@wobble", action: tumble }
+      - { at: "@dampers", action: present }
+    camera: { shake: ["@wobble", "@more"], shakeAmp: 8 }
+    texts:
+      - { at: "@dampers", text: "+ DOZENS OF DAMPERS", style: label, x: 1150, y: 400, color: "#2bb5a0" }
+    narration: "But rhythm matters a lot for things smaller than planets. In June {2000|two thousand}, London's new Millennium Bridge opened, and crowds walking across it started to sway in step with its wobble, which made it wobble *more*. It closed after two days and reopened in {2002|two thousand two}, with dozens of dampers added. That's why engineers design bridges and stadium stands for crowds that move together."
+
+  # ------------------------------------------------------------------ RESULTS
+  - id: results
+    chapter: "Results"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [440, 820]
+    props:
+      - { type: board, title: "LAB REPORT", x: 1080, y: 360, w: 880, size: 42, at: "@Scenario", step: 2.2,
+          lines: ["A: pushes cancel. Earth: unbothered", "B: < 1 atom, then back. Windows: rattled", "C: bridges care. Planets don't"] }
+      - { type: icon, icon: cross, x: 1580, y: 680, s: 1.0, at: "@wrong" }
+    bix:
+      - { at: 0, action: present, hold: clipboard }
+      - { at: "@wrong", action: facepalm }
+      - { at: "@tired", action: sleepy }
+    narration: "Results. Scenario A: the pushes cancel, and Earth is unbothered. Scenario B: Earth moves less than an atom, then right back, while nearby windows rattle. Scenario C: bridges should worry, planets shouldn't. Bix's hypothesis was wrong, and his lab partner would like that in writing. His legs, however, are very tired."
+
+  - id: punchline
+    transition: pop
+    background: { type: land, mood: sunset }
+    bixStart: [760, 820]
+    props:
+      - { type: crowd, x: 1250, y: 820, w: 700, count: 20, rows: 2, s: 0.36, seed: 41, cheerAt: "@agree" }
+      - { type: confetti, at: "@second", dur: 3, count: 80 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@agree", action: cheer }
+      - { at: "@unrealistic", action: laugh }
+    texts:
+      - { at: "@unrealistic", text: "MOST UNREALISTIC PART", style: title, x: 960, y: 170 }
+    hold: 0.6
+    narration: "But we did prove one thing: eight billion people can agree to do the same thing, at the same time, for one whole second. Honestly, that's the most unrealistic part of this entire video."
+
+shorts:
+  - id: short-atom
+    title: "Everyone jumps at once. Earth moves less than an atom #Shorts"
+    from: scenario-b-jump
+    to: scenario-b-math
+    hook: "8 BILLION JUMP AT ONCE"
+    description: "The momentum math of a synchronized human jump, and why Earth barely notices."
+  - id: short-quake
+    title: "Could 8 billion people jumping cause an earthquake? #Shorts"
+    from: scenario-b-quake
+    to: beast-quake
+    hook: "CAN JUMPING MAKE A QUAKE?"
+    description: "Landing energy, magnitude math, and the real football crowd that showed up on a seismometer."
+  - id: short-bridge
+    title: "Jumping forever won't move Earth, but it can shake a bridge #Shorts"
+    from: scenario-c
+    to: bridge
+    hook: "THE BRIDGE THAT DANCED"
+    description: "Why repeated jumping nets zero for planets, and how a London bridge started swaying with its crowd."
+
+thumbnail:
+  title: ["EVERYONE", "JUMPS"]
+  accent: 1
+  subtitle: "at the same time"
+  background: { type: land, mood: day }
+  props:
+    - { type: crowd, x: 960, y: 820, w: 1100, count: 30, rows: 3, s: 0.5, seed: 12, jumpAt: 0, sync: true }
+    - { type: burst, x: 1150, y: 460, text: "?!", r: 120, color: "#ffd447" }
+  bix: { action: shock, x: 1600, y: 1210, scale: 2.45, facing: -1, t: 0.45 }
+
+sources:
+  - "United Nations, World Population Prospects 2024 — world population about 8.2 billion (2024): https://population.un.org/wpp/"
+  - "Walpole et al. (2012), 'The weight of nations: an estimation of adult human biomass', BMC Public Health 12:439 — average adult body mass ~62 kg; adult biomass ~287 million tonnes (2005): https://doi.org/10.1186/1471-2458-12-439"
+  - "NASA Earth Fact Sheet — Earth's mass 5.972×10²⁴ kg; escape velocity 11.19 km/s: https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html"
+  - "Back-of-envelope (our calculation): humans ≈ 8.2×10⁹ × 62 kg ≈ 5×10¹¹ kg; Earth/humans ≈ 1.2×10¹³; 30 cm hop → v = √(2gh) ≈ 2.4 m/s; Earth shift = 0.3 m × 5×10¹¹ / 5.97×10²⁴ ≈ 2.5×10⁻¹⁴ m; landing energy ≈ 62 kg × 9.8 m/s² × 0.3 m ≈ 180 J each (≈ a 7.3 kg bowling ball falling 2.5 m), ≈ 1.5×10¹² J total; magnitude via log₁₀E = 1.5M + 4.8 (≈ M4.9 if 100% became seismic waves, ≈ M3.6 at 1%). Gutenberg–Richter energy relation: https://www.usgs.gov/programs/earthquake-hazards/earthquake-magnitude-energy-release-and-shaking-intensity"
+  - "Encyclopaedia Britannica — Atom (atoms ~10⁻¹⁰ m across; nuclei ~10⁻¹⁴ m; scaling an atom to a ~200 m stadium scales 2.5×10⁻¹⁴ m to ~5 cm): https://www.britannica.com/science/atom"
+  - "U.S. Department of Energy — How much power is 1 gigawatt? (1 GW × 25 min ≈ 1.5×10¹² J): https://www.energy.gov/eere/articles/how-much-power-1-gigawatt"
+  - "Wikipedia — Northern Hemisphere (roughly 87–90% of the world's population lives there): https://en.wikipedia.org/wiki/Northern_Hemisphere"
+  - "Encyclopaedia Britannica — Uyuni Salt Flat (about 10,582 km², elevation about 3,656 m): https://www.britannica.com/place/Uyuni-Salt-Flat"
+  - "NASA Technical Reports — Salar de Uyuni as a calibration target for satellite altimetry: https://ntrs.nasa.gov/citations/20050071074"
+  - "University of Washington News (2014), 'Scientists to observe seismic energy from Seahawks 12th Man quakes' — the 8 Jan 2011 'Beast Quake' recorded near the stadium (Pacific Northwest Seismic Network): https://www.washington.edu/news/2014/01/09/scientists-to-observe-seismic-energy-from-seahawks-12th-man-quakes/"
+  - "KUOW / PNSN — Beast Quake registered as roughly a magnitude 1–2 event: https://www.kuow.org/stories/raise-roof-seahawks-fans-shake-ground-trigger-small-earthquake"
+  - "CBS News (2023) — Taylor Swift 'Swift Quake' in Seattle about twice the peak shaking of the Beast Quake (seismologist Jackie Caplan-Auerbach): https://www.cbsnews.com/news/beast-quake-taylor-swift-seattle-concerts-seismic-activity-lumen-field/"
+  - "Beast Quake game attendance ~66,000 (8.2 billion ÷ 66,000 ≈ 124,000): https://en.wikipedia.org/wiki/Beast_Quake"
+  - "Millennium Bridge, London — opened 10 June 2000, closed 12 June after synchronous lateral excitation; 37 viscous and 52 tuned mass dampers; reopened February 2002: https://en.wikipedia.org/wiki/Millennium_Bridge,_London"

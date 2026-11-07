@@ -20,7 +20,7 @@ chapters, sources and estimated lengths without rendering.
   `{465 m/s|four hundred sixty-five meters per second}`) and `*word*` (emphasis colour in captions).
   Write numbers the voice must say in words with this markup.
 - Each sentence (`.`, `?`, `!`, `...`) becomes one TTS segment. Short punchy sentences = better timing.
-- Pace: about **3.6 spoken words per second** (voice 92), plus pauses. A long video is 4–6 min
+- Pace: about **3.8 spoken words per second** (voice 92, counting the words actually spoken), plus pauses. A long video is 4–6 min
   including the 2 s intro and the 20 s end screen (≈ 800–1,050 narration words; aim for ~900).
   A Short is 30–55 s (≈ 100–170 words).
 
@@ -131,7 +131,7 @@ Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop boo
 | `item` | **`item`** `x y s rot float: true at` |
 | `pal` | generic extra person (not Bix): `x y s facing action actions: [{at, action}] color hair seed hold panic from to moveAt dur emote: false` |
 | `crowd` | `x y w count rows s seed jumpAt cheerAt panicAt sync: true` |
-| `bars` | **`values`** `labels colors x y w h max unit decimals at` (bar chart grows) |
+| `bars` | **`values`** `labels display colors x y w h max unit decimals at` (bar chart grows; `display` = text per bar for huge numbers) |
 | `clock` | `x y r time: "hh:mm" speed` (hours per second) `at` |
 | `calendar` | `x y s from to at dur label color rot` (page counter) |
 | `gauge` | `x y r from to max at dur label` |

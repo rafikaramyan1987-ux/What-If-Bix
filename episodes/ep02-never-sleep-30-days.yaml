@@ -1,0 +1,426 @@
+id: ep02-never-sleep-30-days
+number: 2
+title: "What if you never slept for 30 days?"
+description: |
+  Bix tries to stay awake for thirty days straight and keeps a diary of every stage: the 3 a.m. wall, microsleeps, mood swings, hallucinations and a very unhappy immune system.
+  Along the way: Randy Gardner's famous 11-day record, the rat experiments that showed total sleep loss can kill, and the night-time "rinse cycle" scientists found in sleeping brains.
+  A thought experiment, not a challenge. Please do not try this at home (or anywhere).
+tags: [science, what if, sleep, sleep deprivation, brain, neuroscience, randy gardner, microsleep, glymphatic system, health, animation, education]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 0.92 }
+music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 21 }
+introAfter: cold-open
+outro:
+  narration: "Still awake? Then make it count. Pick another What If Bix episode, or subscribe, so the well-rested version of you can find it tomorrow. Doctor's orders, sort of: one more video, then lights out."
+  background: { type: bedroom, mood: night, clock: "1:00" }
+
+scenes:
+  # ------------------------------------------------------------------ DAY 0
+  - id: cold-open
+    chapter: "Day 0: the bet"
+    background: { type: bedroom, mood: night, clock: "23:00", clockSpeed: 0.2 }
+    bixStart: [640, 820]
+    bixScale: 0.95
+    props:
+      - { type: calendar, x: 380, y: 330, s: 0.8, from: 0, to: 0, at: "@Bix", label: "DAY" }
+      - { type: item, item: mug, x: 820, y: 560, s: 1.1, float: true, at: "@Not" }
+    bix:
+      - { at: 0, action: idle, hold: mug }
+      - { at: "@never", action: shock, hold: mug }
+      - { at: "@Bix", action: cheer }
+      - { at: "@asked", action: shrug }
+    texts:
+      - { at: "@What", until: "@Not-0.2", text: "WHAT IF YOU NEVER SLEPT\nFOR 30 DAYS?", style: title, x: 960, y: 150 }
+      - { at: "@volunteered", text: "VOLUNTEER", style: label, x: 640, y: 380, color: "#2bb5a0", rotate: -4 }
+    camera: { zoom: [1.0, 1.08], focus: [700, 560] }
+    narration: "What if you never slept... for *thirty days*? Not one nap. Not one blink that lasts a little too long. Bix has volunteered. Nobody asked Bix."
+
+  - id: ground-rules
+    background: { type: bedroom, mood: night, clock: "23:30", clockSpeed: 0.2 }
+    bixStart: [560, 820]
+    props:
+      - { type: board, title: "STAY-AWAKE DIARY", x: 1050, y: 380, w: 760, size: 46, at: "@rules", step: 0.9,
+          lines: ["Rule 1: no sleep", "Rule 2: see rule 1", "Rule 3: do NOT try this"] }
+    bix:
+      - { at: 0, action: walk, from: [300, 820], to: [560, 820] }
+      - { at: "@rules", action: present, hold: clipboard }
+      - { at: "@Nobody", action: point }
+      - { at: "@diary", action: present, hold: book }
+    narration: "Quick ground rules. This is a thought experiment, not a challenge. Nobody should actually try it, and by the end you'll know exactly why. Let's open the diary."
+
+  # ------------------------------------------------------------------ DAY 1
+  - id: day1-wall
+    chapter: "Day 1: the 3 a.m. wall"
+    transition: fade
+    background: { type: bedroom, mood: night, clock: "1:00", clockSpeed: 0.45 }
+    bixStart: [700, 820]
+    props:
+      - { type: clock, x: 1040, y: 330, r: 120, time: "02:00", speed: 0.4, at: "@small" }
+      - { type: brain, x: 720, y: 290, s: 0.7, state: ok, stateAt: "@sleepiest", state2: tired, at: "@body" }
+    bix:
+      - { at: 0, action: idle, hold: mug }
+      - { at: "@sleepiest", action: sleepy }
+      - { at: "@wind", action: jump }
+      - { at: "@victory", action: cheer }
+      - { at: "@polite", action: shrug }
+    chips:
+      - { at: 0.2, label: "Day 1", icon: calendar }
+    texts:
+      - { at: "@wind", until: "@victory", text: "SECOND WIND!", style: label, x: 700, y: 360, color: "#ff8a3d" }
+    narration: "Day one. The first evening is easy. Then come the small hours, when your body clock hits its sleepiest point, whether you approve or not. Around sunrise, a strange second wind arrives. That's not victory. That's your circadian rhythm being polite."
+
+  - id: day1-tipsy
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [760, 820]
+    props:
+      - { type: gauge, x: 1230, y: 420, r: 190, from: 0, to: 0.1, max: 0.12, at: "@CDC", dur: 2.2, label: "0.10% BAC" }
+      - { type: icon, icon: warning, x: 1500, y: 230, s: 1, at: "@legal" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@hour", action: tumble }
+      - { at: "@CDC", action: point }
+      - { at: "@legal", action: facepalm }
+    texts:
+      - { at: "@hour", until: "@CDC", text: "24 HOURS AWAKE", style: big, x: 960, y: 290 }
+    camera: { zoom: [1.0, 1.05], focus: [960, 520] }
+    narration: "By hour twenty-four, Bix's reaction times look like someone who's had a few drinks. The CDC says being awake for {24|twenty-four} hours impairs you about as much as a blood alcohol level of {0.10|zero point one zero} percent. That's above the legal driving limit everywhere in the United States."
+
+  # ------------------------------------------------------------------ DAY 2
+  - id: day2-microsleep
+    chapter: "Day 2: the missing seconds"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [820, 820]
+    props:
+      - { type: item, item: laptop, x: 1120, y: 700, s: 1.2, at: 0 }
+      - { type: clock, x: 1300, y: 320, r: 110, time: "15:00", speed: 0.02, at: 0 }
+      - { type: burst, x: 820, y: 330, text: "?!", r: 110, at: "@reading#2", until: "@reading#2+1.2", color: "#ffd447" }
+    bix:
+      - { at: 0, action: sit, hold: book }
+      - { at: "@clocks", action: sleepy }
+      - { at: "@notice", action: sleepy }
+      - { at: "@reading#2", action: shock, hold: book }
+    chips:
+      - { at: 0.2, label: "Day 2", icon: calendar }
+    texts:
+      - { at: "@microsleeps", text: "MICROSLEEP", style: title, x: 960, y: 170 }
+      - { at: "@clocks", until: "@notice", text: "zzz...", style: note, x: 900, y: 380 }
+    narration: "Day two, and the microsleeps begin. A microsleep is a brief blackout where your brain simply clocks out for a few seconds, without asking. Your eyes can even stay open. Often, you don't even notice. Bix was reading this sentence. Bix is now reading it again."
+
+  - id: drowsy-driving
+    transition: whip
+    background: { type: night-city }
+    bixStart: [520, 820]
+    props:
+      - { type: vehicle, kind: car, from: [-300, 800], to: [2300, 800], at: "@wheel", dur: 3.2, s: 1.1, color: "#5b8cff" }
+      - { type: arrow, from: [700, 640], to: [1450, 640], at: "@highway+0.6", color: "#ffd447", label: "≈ 110 m", labelY: 590 }
+      - { type: item, item: coin, x: 1500, y: 300, s: 1.0, at: "@freezer" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@wheel", action: shock }
+      - { at: "@hundred", action: point }
+      - { at: "@freezer", action: present }
+    texts:
+      - { at: "@highway", until: "@hundred+1.6", text: "4 s × 100 km/h", style: label, x: 1080, y: 250, color: "#ff5a5f" }
+      - { at: "@freezer", text: "KEYS: CONFISCATED", style: shout, x: 1080, y: 230, rotate: -5 }
+    narration: "That's why the scariest place for a microsleep is behind a wheel. A four-second microsleep at highway speed means rolling more than a hundred meters with nobody in charge. Police reports link hundreds of U.S. deaths a year to drowsy driving, and researchers think the true number is far higher. Bix's car keys now live in the freezer."
+
+  # ------------------------------------------------------------------ DAY 3
+  - id: day3-mood
+    chapter: "Day 3: emotional weather"
+    transition: pop
+    background: { type: bedroom, mood: day, clock: "10:00", bed: false }
+    bixStart: [760, 820]
+    props:
+      - { type: phone, x: 1060, y: 560, s: 0.9, screen: video, switchAt: "@phone", screen2: nosignal, at: "@commercial" }
+      - { type: brain, x: 1400, y: 440, s: 0.85, state: tired, at: "@amygdala" }
+      - { type: ring, x: 1400, y: 440, r: 70, color: "#ff5a5f", at: "@alarm" }
+    bix:
+      - { at: 0, action: laugh }
+      - { at: "@cried", action: facepalm }
+      - { at: "@amygdala", action: point }
+      - { at: "@phone", action: shrug }
+    chips:
+      - { at: 0.2, label: "Day 3", icon: calendar }
+    texts:
+      - { at: "@60", text: "+60%", style: big, x: 1400, y: 760, count: { from: 0, to: 60, dur: 1.2, prefix: "+", suffix: "%" } }
+    narration: "Day three. Bix laughed at a toaster this morning, then cried at a toaster commercial. In one brain-scan study, after a night without sleep, the amygdala, your brain's alarm system, reacted about {60|sixty} percent more strongly to upsetting pictures. And the calm front part of the brain that normally keeps it in check? Not answering its phone."
+
+  # ------------------------------------------------------------------ DAY 4
+  - id: day4-visions
+    chapter: "Day 4: uninvited guests"
+    transition: fade
+    background: { type: bedroom, mood: night, clock: "3:00", clockSpeed: 0.1 }
+    bixStart: [600, 820]
+    props:
+      - { type: board, title: "21 STUDIES SAY", x: 1340, y: 300, w: 640, size: 40, at: "@review", step: 1.0,
+          lines: ["Day 1–2: distortions", "Day 3: hallucinations", "Later: psychosis-like"] }
+      - { type: pal, x: 880, y: 820, s: 0.8, facing: -1, color: "#9b7bff", at: "@waves", actions: [{ at: "@waves", action: wave }] }
+      - { type: burst, x: 880, y: 430, text: "HI!", r: 80, at: "@waves", until: "@back", color: "#ffd447" }
+    bix:
+      - { at: 0, action: sleepy }
+      - { at: "@weird", action: shock }
+      - { at: "@back", action: wave }
+      - { at: "@own", action: shock }
+    chips:
+      - { at: 0.2, label: "Day 4", icon: calendar }
+    texts:
+      - { at: "@own", text: "...WAIT.", style: shout, x: 700, y: 330, rotate: -6 }
+    narration: "Day four. Things get weird. A review of {21|twenty-one} sleep-loss studies found that small distortions show up within a day or two, and full hallucinations by about day three. A coat rack waves at Bix. Bix waves back. Bix does not own a coat rack."
+
+  # ------------------------------------------------------------------ DAY 5
+  - id: day5-snacks
+    chapter: "Day 5: the 4 a.m. fridge"
+    transition: pop
+    background: { type: night-city, lightsOffAt: 2 }
+    bixStart: [700, 820]
+    props:
+      - { type: flyer, item: sandwich, at: "@hunger", from: [1500, 300], to: [780, 700], dur: 0.8, spin: 360, s: 1.0, persist: true }
+      - { type: bars, x: 1300, y: 760, w: 640, h: 300, values: [28, 24], unit: "%", labels: ["ghrelin", "hunger"], colors: ["#ff8a3d", "#ffd447"], at: "@ghrelin" }
+      - { type: arrow, from: [1660, 460], to: [1660, 700], at: "@leptin", color: "#5b8cff", width: 14, label: "leptin −18%", labelX: 1660, labelY: 420 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@hunger", action: cheer, hold: sandwich }
+      - { at: "@ghrelin", action: point, hold: sandwich }
+      - { at: "@cheese", action: laugh, hold: sandwich }
+    chips:
+      - { at: 0.2, label: "Day 5", icon: calendar }
+    texts:
+      - { at: "@cheese", text: "4 A.M. CHEESE PLAN", style: label, x: 760, y: 330, color: "#ff8a3d", rotate: -4 }
+    narration: "Day five. Bix is hungry in a way that feels personal. In a classic experiment, just two short nights of sleep raised ghrelin, the hormone that says eat, by about {28|twenty-eight} percent, and cut leptin, the one that says stop, by about {18|eighteen} percent. Hunger rose by about a quarter. Bix now has a plan, and the plan is cheese."
+
+  - id: day6-memory
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [520, 820]
+    props:
+      - { type: board, title: "NEW MEMORIES", x: 1060, y: 330, w: 720, size: 44, at: "@Learning", step: 0.8,
+          lines: ["rested: ✓ ✓ ✓ ✓ ✓", "no sleep: ✓ ✓ ✓ ✗ ✗"] }
+      - { type: icon, icon: bulb, x: 1520, y: 620, s: 1.1, at: "@hippocampus" }
+    bix:
+      - { at: 0, action: think, hold: book }
+      - { at: "@40", action: shock, hold: book }
+      - { at: "@name", action: facepalm }
+    chips:
+      - { at: 0.2, label: "Day 6", icon: calendar }
+    texts:
+      - { at: "@40", text: "≈ −40%", style: big, x: 1060, y: 640 }
+    narration: "Day six. Learning goes next. In one study, people who skipped a single night were about {40|forty} percent worse at forming new memories, because the hippocampus, the brain's inbox for new facts, stops filing properly. Bix has now read the same page eleven times and still can't remember the main character's name. Bix wrote the book."
+
+  # ------------------------------------------------------------------ DAY 7
+  - id: day7-immune
+    chapter: "Day 7: the immune complaint"
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [520, 820]
+    props:
+      - { type: bars, x: 1220, y: 760, w: 760, h: 380, values: [1, 4.2], decimals: 1, unit: "×", labels: ["7+ hours", "under 6"],
+          colors: ["#2bb5a0", "#ff5a5f"], at: "@four" }
+      - { type: item, item: clipboard, x: 760, y: 420, s: 1.0, float: true, at: "@Behind" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@dripped", action: shock }
+      - { at: "@four", action: point }
+      - { at: "@zero", action: facepalm }
+    chips:
+      - { at: 0.2, label: "Day 7", icon: calendar }
+    texts:
+      - { at: "@dripped", until: "@four", text: "COLD VIRUS: NOSE DROPS", style: label, x: 1200, y: 230, color: "#5b8cff" }
+      - { at: "@zero", text: "BIX: 0 HOURS", style: label, x: 560, y: 300, color: "#ff5a5f", rotate: 4 }
+    narration: "Day seven. Behind the scenes, Bix's immune system is filing complaints. In one study, scientists dripped cold virus into volunteers' noses. People who usually slept under six hours a night were about four times more likely to get sick than those sleeping seven or more. And that was just from sleeping short. Bix is sleeping zero."
+
+  # ------------------------------------------------------------------ DAY 11
+  - id: gardner
+    chapter: "Day 11: the record"
+    transition: iris
+    background: { type: city, mood: day }
+    bixStart: [520, 820]
+    props:
+      - { type: calendar, x: 1000, y: 330, s: 0.9, from: 1, to: 11, at: "@eleven", dur: 2.0, label: "DAY" }
+      - { type: pal, x: 1420, y: 820, s: 0.95, facing: -1, color: "#ff8a3d", at: "@Randy", actions: [{ at: "@Randy", action: wave }, { at: "@football", action: cheer }] }
+      - { type: pal, x: 1700, y: 820, s: 0.9, facing: -1, color: "#5b8cff", hold: clipboard, at: "@Dement" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@Randy", action: point }
+      - { at: "@football", action: laugh }
+    texts:
+      - { at: "@264", text: "264 HOURS", style: label, x: 1000, y: 560, color: "#ff5a5f", count: { from: 0, to: 264, dur: 1.5, suffix: " HOURS" } }
+      - { at: "@football", text: "\"I'M A FOOTBALL STAR\"", style: label, x: 1420, y: 400, color: "#ff8a3d", rotate: 3 }
+    camera: { zoom: [1.0, 1.05], focus: [1000, 520] }
+    focus: [1000]
+    narration: "Day eleven, the edge of the map. Over the winter of {1963|nineteen sixty-three} into {1964|sixty-four}, a seventeen-year-old San Diego student named Randy Gardner stayed awake for about {264|two hundred sixty-four} hours, roughly eleven days, for a science fair project. Stanford sleep researcher William Dement joined in to keep watch. Randy got moody and forgetful, and at one point was convinced he was a famous football player."
+
+  - id: record-retired
+    transition: whip
+    background: { type: city, mood: sunset }
+    bixStart: [700, 820]
+    props:
+      - { type: badge, x: 1150, y: 360, r: 150, text: "264 h", sub: "RECORD RETIRED", color: "#ffd447", at: "@Guinness", rot: -8 }
+      - { type: crack, x: 1150, y: 360, w: 260, at: "@stopped" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Guinness", action: point }
+      - { at: "@insomnia", action: think }
+      - { at: "@trophy", action: shrug }
+    narration: "He recovered after some long sleeps. But Guinness World Records later stopped accepting sleeplessness records altogether, because of the health risks. And Gardner himself said that, decades later, he struggled with insomnia. Not exactly a trophy you want on the shelf."
+
+  # ------------------------------------------------------------------ BEYOND
+  - id: beyond
+    chapter: "Day 12+: off the map"
+    transition: fade
+    background: { type: lab, board: false }
+    bixStart: [600, 820]
+    props:
+      - { type: calendar, x: 1060, y: 330, s: 0.8, from: 12, to: 30, at: "@after", dur: 1.6, label: "DAY", color: "#7a5cff" }
+      - { type: icon, icon: question, x: 1060, y: 650, s: 1.4, at: "@Nobody" }
+      - { type: icon, icon: cross, x: 1400, y: 380, s: 1.1, at: "@ethics" }
+    bix:
+      - { at: 0, action: walk, from: [300, 820], to: [600, 820] }
+      - { at: "@Honestly", action: think }
+      - { at: "@ethics", action: shrug }
+    texts:
+      - { at: "@ethics", text: "ETHICS BOARD: NO.", style: label, x: 1400, y: 220, color: "#ff5a5f" }
+    narration: "So what happens after day eleven? Honestly? Nobody knows for certain, because no human has ever been studied that long, and no ethics board on Earth would allow it."
+
+  - id: rat-studies
+    background: { type: lab, board: false }
+    bixStart: [460, 820]
+    props:
+      - { type: board, title: "RATS, NO SLEEP", x: 960, y: 335, w: 760, size: 44, at: "@ate", step: 1.0,
+          lines: ["ate more, lost weight", "couldn't stay warm", "died in ~2–3 weeks"] }
+      - { type: brain, x: 1520, y: 380, s: 0.9, state: tired, stateAt: "@weeks", state2: fried, at: "@animal" }
+    bix:
+      - { at: 0, action: idle, hold: clipboard }
+      - { at: "@Rechtschaffen", action: present, hold: clipboard }
+      - { at: "@weeks", action: shock }
+      - { at: "@alive", action: think }
+    narration: "What we do have are animal studies. In the {1980s|nineteen eighties}, researcher Allan Rechtschaffen kept rats continuously awake. They ate more but lost weight, struggled to stay warm, and within about two to three weeks, they died. Sleep, it turns out, is not optional. It's part of how a body stays alive."
+
+  - id: fatal-insomnia
+    transition: fade
+    background: { type: plain, color: "#2c2a4a" }
+    bixStart: [560, 820]
+    props:
+      - { type: brain, x: 1150, y: 400, s: 1.2, state: ok, at: "@thalamus-0.6" }
+      - { type: ring, x: 1150, y: 410, r: 60, color: "#ffd447", at: "@thalamus" }
+      - { type: icon, icon: heart, x: 1500, y: 260, s: 1.0, at: "@researchers" }
+    bix:
+      - { at: 0, action: sit }
+      - { at: "@thalamus", action: point }
+      - { at: "@researchers", action: idle }
+    texts:
+      - { at: "@thalamus", text: "THALAMUS", style: label, x: 1150, y: 620, color: "#7a5cff" }
+    narration: "There is also a very rare human disease called fatal familial insomnia. It's an inherited prion disease that damages the thalamus, a relay station deep in the brain that helps run sleep. Over months, real sleep becomes impossible, and sadly, the illness is fatal. It affects only a small number of families worldwide, and researchers are working hard on ways to delay or prevent it."
+
+  # ------------------------------------------------------------------ WHY
+  - id: rinse-cycle
+    chapter: "Why we sleep: the night shift"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [480, 820]
+    props:
+      - { type: brain, x: 960, y: 330, s: 1.1, state: ok, at: "@mice" }
+      - { type: arrow, from: [760, 470], to: [1160, 470], at: "@fluid", bend: 60, color: "#5bc8ff", width: 14 }
+      - { type: arrow, from: [1160, 200], to: [760, 200], at: "@fluid+0.3", bend: 60, color: "#5bc8ff", width: 14 }
+      - { type: item, item: mug, x: 1500, y: 640, s: 1.0, at: "@dishes" }
+      - { type: item, item: mug, x: 1540, y: 560, s: 1.0, rot: 12, at: "@stack" }
+      - { type: item, item: mug, x: 1490, y: 480, s: 1.0, rot: -10, at: "@stack+0.2" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@widen", action: point }
+      - { at: "@dishwasher", action: laugh }
+      - { at: "@stack", action: facepalm }
+    texts:
+      - { at: "@sixty", text: "+60% SPACE", style: label, x: 960, y: 610, color: "#2bb5a0" }
+      - { at: "@Alzheimer's", text: "β-amyloid OUT", style: note, x: 1400, y: 300 }
+    camera: { zoom: [1.0, 1.06], focus: [960, 450] }
+    narration: "So why is sleep so non-negotiable? One big clue came in {2013|twenty thirteen}. Scientists watching the brains of sleeping mice saw the spaces between brain cells widen by about sixty percent, letting fluid rinse through and carry away waste, including beta-amyloid, a protein linked to Alzheimer's. Your brain runs the dishwasher at night. Skip sleep, and the dishes stack up."
+
+  # ------------------------------------------------------------------ DAY 30
+  - id: day30
+    chapter: "Day 30: reality check"
+    transition: whip
+    background: { type: bedroom, mood: day, clock: "8:00" }
+    bixStart: [640, 820]
+    props:
+      - { type: calendar, x: 330, y: 330, s: 0.8, from: 29, to: 30, at: "@thirty", dur: 0.8, label: "DAY" }
+      - { type: board, title: "AFTER ONE NIGHT", x: 1180, y: 330, w: 640, size: 42, at: "@know", step: 0.7,
+          lines: ["slower", "grumpier", "sicker", "worse driver"] }
+    bix:
+      - { at: 0, action: sleepy }
+      - { at: "@cereal", action: tumble }
+      - { at: "@know", action: present }
+    chips:
+      - { at: 0.2, label: "Day 30?", icon: calendar }
+    texts:
+      - { at: "@cereal", until: "@know", text: "*SPLASH*", style: shout, x: 640, y: 420, rotate: 8 }
+    narration: "So, day thirty? The honest answer: a person almost certainly couldn't stay truly awake that long. Microsleeps would sneak in, and the experiment would end with the volunteer face-down in a bowl of cereal. What we do know: after even one lost night, you're slower, grumpier, more likely to get sick, and worse at driving."
+
+  - id: lights-out
+    transition: fade
+    background: { type: bedroom, mood: night, clock: "2:00" }
+    bixStart: [600, 820]
+    props:
+      - { type: item, item: pillow, x: 1050, y: 640, s: 1.2, at: "@seven" }
+      - { type: badge, x: 1500, y: 300, r: 120, text: "7+ h", sub: "PER NIGHT", color: "#2bb5a0", at: "@seven", rot: 8 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@seven", action: point }
+      - { at: "@tab", action: walk, from: [600, 820], to: [1000, 820] }
+      - { at: "@Go", action: sleepy }
+    texts:
+      - { at: "@entry", until: "@Final", text: "\"This will be easy.\"", style: label, x: 760, y: 300, color: "#7a5cff" }
+      - { at: "@Final", until: "@a.m.", text: "\"zzzzz\"", style: label, x: 760, y: 300, color: "#7a5cff", rotate: 3 }
+      - { at: "@Go", text: "GO TO SLEEP.", style: title, x: 960, y: 170 }
+    camera: { zoom: [1.0, 1.1], focus: [900, 600] }
+    hold: 0.6
+    narration: "Most adults need at least seven hours a night. So here is the diary, in full. Day one entry: this will be easy. Final entry: zzzz. And if you're watching this at two a.m., the bravest experiment left is closing this tab. Go to sleep. Bix will still be here tomorrow."
+
+shorts:
+  - id: short-microsleep
+    title: "Your brain can switch off for seconds without telling you #Shorts"
+    from: day2-microsleep
+    to: drowsy-driving
+    hook: "YOUR BRAIN SKIPS SECONDS"
+    description: "Microsleeps: brief blackouts you often don't notice, and why they're terrifying behind the wheel."
+  - id: short-gardner
+    title: "The teen who stayed awake for 11 days #Shorts"
+    from: gardner
+    to: record-retired
+    hook: "AWAKE FOR 11 DAYS"
+    description: "Randy Gardner's 264-hour record from 1963–64, and why record books stopped accepting attempts."
+  - id: short-dishwasher
+    title: "Your brain runs a dishwasher while you sleep #Shorts"
+    from: rinse-cycle
+    to: day30
+    hook: "YOUR BRAIN'S NIGHT SHIFT"
+    description: "What sleeping mouse brains revealed about the brain's night-time cleaning, and what one lost night does to you."
+
+thumbnail:
+  title: ["30 DAYS", "NO SLEEP"]
+  accent: 0
+  subtitle: "Bix tries it"
+  background: { type: bedroom, mood: night, clock: "3:00" }
+  props:
+    - { type: calendar, x: 1150, y: 520, s: 1.5, from: 30, to: 30, label: "DAY", rot: -6 }
+    - { type: brain, x: 1480, y: 330, s: 1.1, state: fried }
+  bix: { action: shock, x: 1600, y: 1210, scale: 2.45, facing: -1, t: 0.45 }
+
+sources:
+  - "NPR (2024), 'Lessons from sleeplessness: the 60th anniversary of Randy Gardner's world record' — ~264 hours (11 days) awake, Dec 1963–Jan 1964, age 17, observed by William Dement; later insomnia: https://www.npr.org/2024/01/28/1227217274/sleep-deprivation-record"
+  - "Guinness World Records stopped monitoring sleep-deprivation attempts on health grounds (summary with citations): https://en.wikipedia.org/wiki/Randy_Gardner_(record_holder)"
+  - "CDC / NIOSH — 24 hours awake impairs about like a 0.10% blood alcohol concentration; U.S. legal limit 0.08%: https://archive.cdc.gov/www_cdc_gov/niosh/emres/longhourstraining/impaired.html"
+  - "NHLBI (NIH) — Sleep deprivation and deficiency, including microsleep: https://www.nhlbi.nih.gov/health/sleep-deprivation"
+  - "NHTSA — Drowsy driving (police-reported deaths in the hundreds per year; widely considered an undercount). Distance: 100 km/h = 27.8 m/s, × 4 s ≈ 111 m: https://www.nhtsa.gov/risky-driving/drowsy-driving"
+  - "Yoo, Gujar, Hu, Jolesz & Walker (2007), 'The human emotional brain without sleep — a prefrontal amygdala disconnect', Current Biology 17(20) — ~60% greater amygdala reactivity: https://doi.org/10.1016/j.cub.2007.08.007"
+  - "Waters, Chiu, Atkinson & Blom (2018), 'Severe sleep deprivation causes hallucinations and a gradual progression toward psychosis with increasing time awake', Frontiers in Psychiatry — review of 21 studies: https://doi.org/10.3389/fpsyt.2018.00303"
+  - "Prather, Janicki-Deverts, Hall & Cohen (2015), 'Behaviorally assessed sleep and susceptibility to the common cold', SLEEP 38(9) — <6 h sleepers ~4.2× more likely to develop a cold vs >7 h: https://doi.org/10.5665/sleep.4968"
+  - "Rechtschaffen & Bergmann (2002), 'Sleep deprivation in the rat: an update of the 1989 paper', SLEEP 25(1):18–24 — totally sleep-deprived rats died within ~2–3 weeks, with increased food intake, weight loss and falling body temperature: https://doi.org/10.1093/sleep/25.1.18"
+  - "University of Chicago News — Allan Rechtschaffen, sleep research pioneer (1927–2021): https://news.uchicago.edu/story/allan-rechtschaffen-sleep-research-pioneer-1927-2021"
+  - "NIH GARD — Fatal familial insomnia (inherited prion disease affecting the thalamus): https://rarediseases.info.nih.gov/diseases/6429/fatal-familial-insomnia"
+  - "Xie et al. (2013), 'Sleep drives metabolite clearance from the adult brain', Science 342:373–377 — ~60% larger interstitial space in sleep, faster β-amyloid clearance: https://doi.org/10.1126/science.1241224"
+  - "NIH News (2013), 'Brain may flush out toxins during sleep': https://www.nih.gov/news-events/news-releases/brain-may-flush-out-toxins-during-sleep"
+  - "NIGMS (NIH) — Circadian rhythms fact sheet: https://nigms.nih.gov/education/fact-sheets/Pages/circadian-rhythms.aspx"
+  - "CDC — About sleep: adults need 7 or more hours per night: https://www.cdc.gov/sleep/about/index.html"
+  - "Spiegel, Tasali, Penev & Van Cauter (2004), 'Brief communication: sleep curtailment in healthy young men is associated with decreased leptin levels, elevated ghrelin levels, and increased hunger and appetite', Annals of Internal Medicine 141(11) — after 2 nights of 4 h: leptin −18%, ghrelin +28%, hunger +24%: https://doi.org/10.7326/0003-4819-141-11-200412070-00008"
+  - "Yoo, Hu, Gujar, Jolesz & Walker (2007), 'A deficit in the ability to form new human memories without sleep', Nature Neuroscience 10:385–392 — ~40% deficit in hippocampal encoding after one night of deprivation: https://doi.org/10.1038/nn1851"
