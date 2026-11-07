@@ -1,0 +1,137 @@
+# STEP 1 style test: the first ~30 seconds of episode 1.
+# Times: plain numbers are seconds from the scene start; "@word" means
+# "when the narrator says <word>" (use "@word#2" for the 2nd occurrence and
+# "@word+0.3" / "@word.end" for offsets). Inline narration markup:
+#   {shown text|spoken text}  -> captions show the first part, TTS speaks the second
+#   *word*                    -> emphasised word in captions
+id: ep01-style-test
+title: "What if Earth stopped spinning for 1 second?"
+targetDuration: 30
+voice:
+  provider: piper
+  model: en-us-libritts-high
+  speaker: 437
+  lengthScale: 0.92
+music:
+  style: curious
+  gain: 0.22
+  duck: 0.55
+  seed: 7
+
+scenes:
+  - id: cold-open
+    background: { type: space }
+    bixStart: [960, 604]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 960, y: 1500, r: 900, spin: 0.03, tilt: 0, caps: false, band: -0.62 }
+    bix:
+      - { at: 0, action: walk }
+      - { at: "@one", action: think }
+    texts:
+      - { at: "@What", text: "WHAT IF EARTH STOPPED SPINNING?", style: title, y: 165 }
+    camera: { zoom: [1.0, 1.07], focus: [960, 560] }
+    narration: "What if Earth stopped spinning... for just *one second*?"
+
+  - id: harmless
+    background: { type: space }
+    bixStart: [960, 604]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 960, y: 1500, r: 900, spin: 0.03, tilt: 0, caps: false, band: -0.62 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Sounds", action: jump }
+      - { at: "@one", action: laugh }
+    camera: { zoom: [1.07, 1.12], focus: [960, 560] }
+    sfx:
+      - { name: boing, at: "@Sounds+0.15", gain: 0.5 }
+    narration: "Sounds harmless, right? It's *one* second!"
+
+  - id: the-catch
+    transition: whip
+    background: { type: space, tint: blue }
+    bixStart: [380, 930]
+    props:
+      - { type: earth, x: 1200, y: 610, r: 330, spin: 0.12, tilt: 0, equator: true }
+      - { type: arrow, at: "@equator", from: [930, 700], to: [1450, 700], bend: -70, color: "#ffd447" }
+    bix:
+      - { at: 0, action: walk, from: [140, 930], to: [380, 930] }
+      - { at: "@equator", action: point }
+    texts:
+      - { at: "@1,670", text: "1,670 km/h", style: big, x: 1200, y: 200, count: { from: 0, to: 1670, dur: 1.3, suffix: " km/h" } }
+      - { at: "@kilometers", text: "(about 1,040 mph)", style: note, x: 1200, y: 262 }
+    camera: { zoom: [1.0, 1.04] }
+    narration: "But here's the catch. At the equator, the ground beneath you is moving at about {1,670|sixteen hundred and seventy} kilometers per hour."
+
+  - id: brakes
+    transition: iris
+    background: { type: land, seaEnd: 520, speed: 15 }
+    bixStart: [820, 800]
+    bixScale: 0.9
+    props:
+      - { type: house, x: 1260, y: 800, s: 0.95, roofAt: "@air+0.25" }
+      - { type: tree, x: 1640, y: 800, s: 1.0, windAt: "@air" }
+      - { type: wind, at: "@air", count: 14, band: 650 }
+      - { type: puff, at: "@don't", x: 820, y: 800 }
+      - { type: wave, at: "@oceans", h: 340, dur: 2.6, layer: front }
+      - { type: flyer, item: sandwich, at: "@don't", hoverUntil: "@sandwich", from: [846, 707], to: [2300, 470], dur: 0.9, spin: 720, s: 0.77, layer: front }
+    bix:
+      - { at: 0, action: idle, hold: sandwich }
+      - { at: "@brakes", action: shock, hold: sandwich }
+      - { at: "@don't", action: fly, from: [820, 800], to: [2600, 420], dur: 0.55, params: { panic: 1 } }
+    texts:
+      - { at: "@brakes", until: "@brakes+1.1", text: "SCREEEECH!", style: shout, y: 230, rotate: -6 }
+      - { at: "@don't+0.1", until: "@don't+1.2", text: "WHOOSH", style: title, x: 1500, y: 360, rotate: -10 }
+    camera: { shake: ["@brakes", "@don't"], shakeAmp: 20 }
+    sfx:
+      - { name: screech, at: "@brakes", gain: 0.55 }
+      - { name: whoosh, at: "@don't", gain: 0.8 }
+    narration: "If the planet suddenly hits the brakes... you *don't*. Neither does the air. Or the oceans. Or that sandwich you were holding."
+
+  - id: one-second-later
+    transition: whip
+    background: { type: sky, speed: 2600, sun: false, clouds: 7 }
+    bixStart: [880, 600]
+    props:
+      - { type: speedlines, count: 20, y: 540, spread: 900 }
+      - { type: flyer, item: sandwich, at: 0, from: [330, 660], to: [470, 610], dur: 4, spin: 200, s: 1.1, wobble: 14, persist: true }
+      - { type: boom, at: "@sound", x: 860, y: 520 }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0.7 } }
+    chips:
+      - { at: 0.15, label: "1 second later" }
+    texts:
+      - { at: "@faster", text: "≈ MACH 1.4", style: label, x: 1490, y: 300 }
+    camera: { shake: ["@sound"], shakeAmp: 14 }
+    narration: "One second later, you're hurtling east... faster than the speed of sound."
+
+  - id: tease
+    transition: iris
+    background: { type: space }
+    bixStart: [960, 760]
+    bixScale: 1.1
+    props:
+      - { type: earth, x: 1560, y: 330, r: 150, spin: 0, face: shock }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@how", action: think }
+      - { at: "@very", action: shock }
+    texts:
+      - { at: "@very", text: "VERY.", style: shout, x: 960, y: 230, rotate: -5 }
+    hold: 0.75
+    narration: "So... how bad does it get? Spoiler: *very*."
+
+sources:
+  - "NASA Earth Fact Sheet — equatorial radius 6,378 km, sidereal rotation 23.934 h (→ ~465 m/s ≈ 1,674 km/h at the equator): https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html"
+  - "U.S. Standard Atmosphere — speed of sound at sea level ≈ 340 m/s (465 / 340 ≈ Mach 1.4)."
+
+thumbnail:
+  title: ["EARTH", "STOPS"]
+  accent: 1
+  subtitle: "for 1 second"
+  background: { type: space, tint: blue }
+  props:
+    - { type: skid, x: 1120, y: 640, r: 300 }
+    - { type: earth, x: 1120, y: 640, r: 300, spin: 0, face: shock }
+  bix: { action: shock, x: 1600, y: 1210, scale: 2.45, facing: -1, t: 0.45 }
