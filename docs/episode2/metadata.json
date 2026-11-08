@@ -1,0 +1,117 @@
+{
+  "id": "ep02-you-could-fly",
+  "title": "What if you could fly? (what would REALLY happen to your body)",
+  "description": "What if YOU could fly? No wings, no jetpack, you just think \"up\". Sounds like the best superpower ever... until your body starts filing complaints.\nBix finds out what speed, sharp turns, freezing wind and thin air would really do to a human flier, and builds the checklist you'd need to survive.\n\nChapters:\n0:00 The superpower\n0:19 Liftoff\n0:36 How fast can you go?\n1:14 Don't take corners fast\n1:31 It gets cold. Fast.\n1:50 Your ears\n2:12 Thin air\n2:28 Plane height\n3:02 Sun and storms\n3:19 How to fly without dying\n3:36 Real humans who flew\n3:54 Back in the lab\n\nSources:\n• FAA, Small Unmanned Aircraft (Part 107) — maximum altitude 400 ft (≈120 m) above ground: https://www.faa.gov/uas/commercial_operators\n• EASA, Open category drones — maximum height 120 m: https://www.easa.europa.eu/en/domains/civil-drones/drones-regulatory-framework-background/open-category-civil-drones\n• NASA Glenn Research Center, Terminal velocity — a skydiver falls at roughly 200 km/h (≈120 mph) belly-down: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/termvel/\n• Audubon / Cornell Lab of Ornithology, Peregrine falcon — dives faster than 300 km/h (200+ mph): https://www.allaboutbirds.org/guide/Peregrine_Falcon/overview\n• Calculation: centripetal acceleration a = v²/r; 300 km/h = 83.3 m/s; r = 100 m → a ≈ 69 m/s² ≈ 7 g (we say 'a curve a hundred meters across' meaning radius 100 m).\n• FAA Aerospace Medicine, G-induced loss of consciousness — relaxed, unprotected people typically lose vision/consciousness around +4 to +6 g: https://www.faa.gov/pilots/safety/pilotsafetybrochures\n• International Standard Atmosphere (ICAO/NOAA) — temperature lapse rate 6.5 °C per km; ≈ −50 °C at 10 km; pressure ≈ 70% at 3 km, ≈ 31% at 8,849 m, ≈ 26% at 10 km: https://www.engineeringtoolbox.com/standard-atmosphere-d_604.html\n• U.S. National Weather Service, Wind chill chart and formula — −20 °C with 100 km/h wind ≈ −40 °C wind chill (calculated); frostbite in about 10 minutes at that level: https://www.weather.gov/safety/cold-wind-chill-chart\n• FAA Pilot Safety Brochure, Hypoxia — effects on judgment begin above about 10,000 ft (≈3,000 m): https://www.faa.gov/pilots/safety/pilotsafetybrochures/media/hypoxia.pdf\n• Mount Everest height 8,849 m (2020 China–Nepal survey): https://www.britannica.com/place/Mount-Everest\n• U.S. 14 CFR §25.841 — airliner cabin pressure altitude no higher than 8,000 ft (≈2,400 m) in normal operation: https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-25/subpart-D/subject-group-ECFR3e2c3c9e7c0e5d1/section-25.841\n• FAA Advisory Circular AC 61-107B — time of useful consciousness at 35,000 ft ≈ 30–60 seconds: https://www.faa.gov/documentLibrary/media/Advisory_Circular/AC_61-107B.pdf\n• Laybourne, R. C. (1974), 'Collision between a vulture and an aircraft at an altitude of 37,000 feet', Wilson Bulletin 86(4): 461–462 (Rüppell's vulture, Abidjan, 1973; ≈11,300 m): https://sora.unm.edu/node/129397\n• World Health Organization, Global Solar UV Index — UV levels increase about 10% with every 1,000 m of altitude: https://www.who.int/publications/i/item/9241590076\n• NOAA National Severe Storms Laboratory, Thunderstorm basics — updrafts in strong storms can exceed 100 mph (≈160 km/h): https://www.nssl.noaa.gov/education/svrwx101/thunderstorms/\n• Skydiving speeds — belly-to-earth ≈ 190–200 km/h, head-down ('freefly') typically ≈ 240–290 km/h, varying by person and suit: https://www.uspa.org/discover/faqs\n• Mayo Clinic, Airplane ear (ear barotrauma) — pressure difference across the eardrum during altitude changes; swallowing/yawning helps: https://www.mayoclinic.org/diseases-conditions/airplane-ear/symptoms-causes/syc-20351701\n• NOAA SciJinks / NASA, What are clouds made of? — tiny water droplets or ice crystals; supercooled droplets freeze on contact (aircraft icing): https://scijinks.gov/clouds/\n• CDC Yellow Book, High-altitude travel and altitude illness — acclimatization takes days to weeks: https://www.cdc.gov/yellow-book/hcp/environmental-hazards-risks/high-elevation-travel-and-altitude-illness.html\n• Calculation: 115 km ÷ 42.195 km (marathon) ≈ 2.7 marathons.\n• NASA, Daedalus 88 human-powered aircraft — Kanellos Kanellopoulos flew 115 km (71.5 mi) from Crete to Santorini on 23 April 1988 in 3 h 54 min: https://www.nasa.gov/centers-and-facilities/armstrong/daedalus-project/\n\nAnimation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).\nNarration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)\n\n#science #whatif #animation",
+  "tags": [
+    "what if you could fly",
+    "could humans fly",
+    "superpowers science",
+    "human body",
+    "g-force",
+    "hypoxia",
+    "altitude",
+    "wind chill",
+    "flying",
+    "physics",
+    "biology",
+    "science explained",
+    "what if bix",
+    "what if",
+    "science",
+    "animation"
+  ],
+  "chapters": [
+    {
+      "time": "0:00",
+      "seconds": 0,
+      "title": "The superpower"
+    },
+    {
+      "time": "0:19",
+      "seconds": 20,
+      "title": "Liftoff"
+    },
+    {
+      "time": "0:36",
+      "seconds": 36,
+      "title": "How fast can you go?"
+    },
+    {
+      "time": "1:14",
+      "seconds": 74,
+      "title": "Don't take corners fast"
+    },
+    {
+      "time": "1:31",
+      "seconds": 92,
+      "title": "It gets cold. Fast."
+    },
+    {
+      "time": "1:50",
+      "seconds": 110,
+      "title": "Your ears"
+    },
+    {
+      "time": "2:12",
+      "seconds": 133,
+      "title": "Thin air"
+    },
+    {
+      "time": "2:28",
+      "seconds": 148,
+      "title": "Plane height"
+    },
+    {
+      "time": "3:02",
+      "seconds": 182,
+      "title": "Sun and storms"
+    },
+    {
+      "time": "3:19",
+      "seconds": 200,
+      "title": "How to fly without dying"
+    },
+    {
+      "time": "3:36",
+      "seconds": 216,
+      "title": "Real humans who flew"
+    },
+    {
+      "time": "3:54",
+      "seconds": 235,
+      "title": "Back in the lab"
+    }
+  ],
+  "duration": 269.6333333333333,
+  "categoryId": 27,
+  "madeForKids": false,
+  "defaultLanguage": "en",
+  "files": {
+    "video": "ep02-you-could-fly.mp4",
+    "thumbnail": "thumbnail.png",
+    "captions": "ep02-you-could-fly.en.srt"
+  },
+  "shorts": [
+    {
+      "id": "short-speed",
+      "file": "shorts/short-speed.mp4",
+      "title": "What flying at 200 km/h would do to your body #Shorts",
+      "description": "If you could fly, speed and sharp turns would hit your body hard. Here's what really happens.\n\nFull episode: \"What if you could fly? (what would REALLY happen to your body)\" on the channel.\n\nAnimation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).\nNarration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)\n\n#Shorts #science #whatif",
+      "duration": 49.4
+    },
+    {
+      "id": "short-plane-height",
+      "file": "shorts/short-plane-height.mp4",
+      "title": "Fly to plane height and you'd have 30 seconds #Shorts",
+      "description": "If you could fly up to where airliners cruise, thin air and cold would beat you fast.\n\nFull episode: \"What if you could fly? (what would REALLY happen to your body)\" on the channel.\n\nAnimation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).\nNarration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)\n\n#Shorts #science #whatif",
+      "duration": 38.266666666666666
+    },
+    {
+      "id": "short-cold",
+      "file": "shorts/short-cold.mp4",
+      "title": "Flying would be FREEZING (the real numbers) #Shorts",
+      "description": "If you could fly, cold and wind would be your first enemies.\n\nFull episode: \"What if you could fly? (what would REALLY happen to your body)\" on the channel.\n\nAnimation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).\nNarration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)\n\n#Shorts #science #whatif",
+      "duration": 43.9
+    }
+  ]
+}
