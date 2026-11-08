@@ -1,0 +1,385 @@
+# What If Bix — Episode 3 (Bix 2.0) — animal-facts season
+# Structure: (1) the surprising animal fact + WHY it happens (real biology),
+# (2) "what if YOU had it" with real science, (3) funny lab ending + teaser.
+# Every claim maps to a numbered entry in `sources`; debated points are worded as such.
+id: ep03-sleep-like-a-dolphin
+number: 3
+title: "What if you slept like a dolphin? (half your brain stays awake)"
+character: bix2
+description: |
+  Dolphins can sleep with half their brain while the other half stays awake, often with one eye open. Why do they do it, and what would happen if YOU could?
+  Bix dives into unihemispheric sleep, a 15-day dolphin experiment, birds that nap mid-flight, and the tiny version your own brain already does.
+tags: [what if you slept like a dolphin, dolphin sleep, unihemispheric sleep, sleep with one eye open, animal facts, dolphins, brain, sleep science, first night effect, frigatebird, biology, what if bix]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 33 }
+introAfter: why-care
+outro:
+  narration: "Thanks for watching with both halves of your brain. Or at least one of them. Watch another what if right here, and subscribe before you fall asleep."
+  background: { type: space, tint: blue }
+
+scenes:
+  # ============================================================ (1) THE FACT + WHY
+  - id: cold-open
+    chapter: "Half asleep"
+    background: { type: ocean, horizon: 480, beach: true }
+    bixStart: [330, 1000]
+    bixScale: 0.8
+    props:
+      - { type: dolphin, x: 1150, y: 720, s: 1.3, eye: open, from: [1500, 760], to: [1050, 700], dur: 5 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@half", action: shock }
+      - { at: "@Dolphins", action: point }
+    texts:
+      - { at: "@What", text: "WHAT IF YOU SLEPT LIKE A DOLPHIN?", style: title, y: 160 }
+    narration: "What if you could sleep with *half* your brain, while the other half stays awake? Dolphins do it every single day."
+
+  - id: why-care
+    background: { type: ocean, horizon: 480, beach: true }
+    bixStart: [330, 1000]
+    bixScale: 0.8
+    props:
+      - { type: dolphin, x: 1050, y: 700, s: 1.3, eye: open }
+      - { type: halfbrain, at: "@Half", x: 1550, y: 330, s: 0.55, asleep: left, labels: false }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@survive", action: point }
+      - { at: "@too", action: cheer }
+    narration: "One eye open. Half the brain snoozing. It's not a party trick, it's how they survive. Let's find out why, and what would happen if you could do it too."
+
+  - id: two-halves
+    chapter: "One brain, two shifts"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [330, 820]
+    bixScale: 0.95
+    props:
+      - { type: halfbrain, at: 0, until: "@together", x: 1150, y: 420, s: 1.0, asleep: none }
+      - { type: halfbrain, at: "@together", until: "@dolphin's", x: 1150, y: 420, s: 1.0, asleep: both }
+      - { type: halfbrain, at: "@dolphin's", x: 1150, y: 420, s: 1.0, asleep: left, swapAt: "@swap" }
+      - { type: cactus, x: 1780, y: 818, s: 0.8, mood: sleepy }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@together", action: sleepy }
+      - { at: "@dolphin's", action: point }
+      - { at: "@swap", action: shock }
+    texts:
+      - { at: "@Scientists", text: "UNIHEMISPHERIC SLOW-WAVE SLEEP", style: label, x: 1150, y: 130, color: "#8a5cff" }
+    narration: "Your brain has two halves, called hemispheres. When you fall asleep, both halves slow down together. But a dolphin's brain can split the shift: one half drops into deep, slow-wave sleep, while the other half stays awake. Later, they swap. Scientists call it unihemispheric slow-wave sleep."
+
+  - id: one-eye
+    chapter: "One eye open"
+    transition: whip
+    background: { type: ocean, horizon: 300 }
+    bixStart: [300, 960]
+    bixScale: 0.75
+    props:
+      - { type: dolphin, x: 1000, y: 560, s: 1.6, facing: -1, eye: open, label: "left eye open" }
+      - { type: halfbrain, at: "@crosses", x: 1600, y: 300, s: 0.55, asleep: left, labels: true }
+      - { type: arrow, at: "@crosses", from: [880, 520], to: [1450, 330], bend: 80, color: "#ffd447" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@clever", action: cheer }
+      - { at: "@left", action: think }
+    narration: "Here's the clever part. In dolphins, nearly all the wiring from each eye crosses over to the opposite half of the brain. So when the left half is asleep, it's often the *left* eye that stays open, because it's wired to the half that's still awake."
+
+  - id: why-breathe
+    chapter: "Why bother?"
+    transition: fade
+    background: { type: ocean, horizon: 360 }
+    bixStart: [320, 960]
+    bixScale: 0.75
+    props:
+      - { type: dolphin, x: 1100, y: 640, s: 1.4, eye: open, from: [1100, 760], to: [1100, 420], moveAt: "@surface", dur: 1.6, blowAt: "@breath" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@automatically", action: sleepy }
+      - { at: "@voluntary", action: point }
+    texts:
+      - { at: "@voluntary", text: "every breath = a decision", style: label, x: 1100, y: 160, color: "#22d3c5" }
+    narration: "So why sleep in halves? The leading idea is breathing. You breathe automatically, even in deep sleep. Dolphins are voluntary breathers: each breath is something they actively do, at the surface, through the blowhole. Keeping half the brain awake lets them keep coming up for that next breath."
+
+  - id: other-reasons
+    background: { type: ocean, horizon: 360 }
+    bixStart: [320, 960]
+    bixScale: 0.75
+    props:
+      - { type: dolphin, x: 900, y: 600, s: 1.0, eye: open }
+      - { type: dolphin, x: 1300, y: 680, s: 0.9, eye: closed }
+      - { type: dolphin, x: 1650, y: 560, s: 0.8, eye: open }
+      - { type: icon, icon: question, at: "@debate", x: 1650, y: 230, s: 0.8 }
+      - { type: dolphin, at: "@calves", x: 1500, y: 860, s: 0.45, eye: open }
+    texts:
+      - { at: "@dispute", text: "debated", style: label, x: 1450, y: 420, color: "#8b93ad" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@predators", action: scared }
+      - { at: "@debate", action: shrug }
+      - { at: "@calves", action: shock }
+    narration: "Half-awake may also help them watch for predators, stay with their group, and keep moving to stay warm. Researchers still debate how much each reason matters. Some even reported that newborn dolphin calves and their mothers barely rest at all for weeks after birth, though other scientists dispute that."
+
+  - id: sea-cousins
+    transition: whip
+    background: { type: ocean, horizon: 300 }
+    bixStart: [300, 960]
+    bixScale: 0.75
+    props:
+      - { type: board, at: "@seals", x: 1150, y: 450, w: 900, size: 44, step: 2.2, title: "Other half-sleepers",
+          lines: ["Fur seals: both halves on land,", "   mostly one half in the water", "Sperm whales: short upright naps,", "   about 7% of the time"] }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@water", action: think }
+      - { at: "@logs", action: laugh }
+    narration: "Their ocean neighbors have tricks too. Fur seals sleep with both halves at once on land, but in the water they mostly sleep one half at a time. And sperm whales take short naps hanging upright near the surface, like giant floating logs, for about seven percent of their time."
+
+  - id: vigilance
+    chapter: "The 15-day test"
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [330, 820]
+    bixScale: 0.95
+    props:
+      - { type: calendar, at: "@straight", x: 1200, y: 360, from: 1, to: 15, dur: 2.5, label: "DAY", s: 1.1 }
+      - { type: dolphin, x: 1550, y: 740, s: 0.7, eye: open, at: "@dolphins" }
+      - { type: cactus, x: 1800, y: 818, s: 0.8, mood: shock, at: "@meeting" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@straight", action: shock }
+      - { at: "@meeting", action: sleepy }
+    texts:
+      - { at: "@meeting", text: "BIX: 15 MINUTES", style: shout, x: 760, y: 230, rotate: -5 }
+    narration: "How good is this trick? In one study, two Navy dolphins were trained to keep finding targets with echolocation, their natural sonar. One of them kept it up for {15 days|fifteen days} straight, without slipping. Bix lasts about fifteen minutes in a meeting."
+
+  - id: birds-too
+    chapter: "Not just dolphins"
+    transition: iris
+    background: { type: sky, speed: 80, mood: day }
+    bixStart: [300, 900]
+    bixScale: 0.8
+    props:
+      - { type: bird, kind: duck, at: 0, from: [700, 760], to: [701, 760], dur: 1, s: 0.8, sleepy: true }
+      - { type: bird, kind: duck, at: 0, from: [880, 760], to: [881, 760], dur: 1, s: 0.8, sleepy: true }
+      - { type: bird, kind: duck, at: 0, from: [1060, 760], to: [1061, 760], dur: 1, s: 0.8 }
+      - { type: bird, kind: frigate, at: "@frigatebirds", from: [-200, 260], to: [2200, 220], dur: 6, s: 1.1 }
+      - { type: bars, at: "@40", x: 1450, y: 760, w: 520, h: 300, values: [0.7, 12], labels: ["in flight", "on land"], unit: " h", decimals: 1,
+          display: ["~40 min", "12+ h"], colors: ["#22d3c5", "#8a5cff"] }
+    bix:
+      - { at: 0, action: point }
+      - { at: "@danger", action: scared }
+      - { at: "@land", action: laugh }
+    texts:
+      - { at: "@outward", text: "edge duck: one eye on danger", style: label, x: 880, y: 560, color: "#2f9e5a" }
+    narration: "Dolphins aren't the only ones. Ducks sleeping at the edge of a group keep more of their brain awake, with the open eye pointed outward, toward danger. And great frigatebirds can sleep while flying over the ocean for days. In one study, they slept only about {40|forty} minutes a day in the air, compared with over {12|twelve} hours a day on land."
+
+  # ============================================================ (2) WHAT IF YOU
+  - id: you-already
+    chapter: "You already do it (a little)"
+    transition: whip
+    background: { type: bedroom, mood: night, clock: "2:10" }
+    bixStart: [620, 820]
+    bixScale: 0.95
+    props:
+      - { type: halfbrain, at: "@left", x: 1500, y: 470, s: 0.65, asleep: right, labels: true }
+      - { type: burst, at: "@sounds", until: "@sounds+1.2", x: 300, y: 300, text: "CREAK?", r: 110 }
+    bix:
+      - { at: 0, action: sleepy }
+      - { at: "@sounds", action: shock }
+      - { at: "@worst", action: facepalm }
+    texts:
+      - { at: "@effect", text: "THE FIRST-NIGHT EFFECT", style: label, x: 1000, y: 130, color: "#8a5cff" }
+    narration: "Now, what about you? Surprise: you already do a tiny version. The first night you sleep somewhere new, like a hotel, part of your left hemisphere stays more alert during deep sleep, and reacts faster to strange sounds. Scientists call it the first-night effect, a kind of built-in night watch for unfamiliar places. It's one reason your first night away from home is often your worst."
+
+  - id: full-upgrade
+    chapter: "The full dolphin upgrade"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [400, 820]
+    bixScale: 0.95
+    props:
+      - { type: halfbrain, at: 0, x: 1250, y: 420, s: 0.9, asleep: left, swaps: ["@switch", "@switch+2"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@perfect", action: cheer }
+      - { at: "@catch", action: shock }
+    narration: "But what if you had the full upgrade? One half sleeps, the other half handles your day, then they switch. No more yawning through first period. Sounds perfect. There's just one catch. Actually, three."
+
+  - id: catch-language
+    chapter: "The catch"
+    transition: whip
+    background: { type: city, mood: day }
+    bixStart: [600, 820]
+    bixScale: 0.95
+    props:
+      - { type: halfbrain, at: "@left", x: 1400, y: 380, s: 0.6, asleep: left, labels: true }
+      - { type: burst, at: "@talk", until: "@talk+1.5", x: 900, y: 300, text: "...?", r: 110 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@talk", action: shrug }
+      - { at: "@homework", action: facepalm }
+    narration: "Catch one: your two halves don't do the same jobs. In most right-handed people, language lives mainly in the left hemisphere. So with your left half asleep, you'd be awake, but you might struggle to talk. Or to read your homework."
+
+  - id: catch-body
+    background: { type: city, mood: day }
+    bixStart: [600, 820]
+    bixScale: 0.95
+    props:
+      - { type: flyer, item: mug, at: "@clumsy", from: [690, 690], to: [760, 830], dur: 0.6, spin: 300, s: 1.3, arc: -40 }
+      - { type: burst, at: "@clumsy+0.6", until: "@clumsy+1.6", x: 800, y: 760, text: "CLANK", r: 90, color: "#ff7a1a" }
+    bix:
+      - { at: 0, action: idle, hold: mug }
+      - { at: "@clumsy", action: shock }
+      - { at: "@most", action: facepalm }
+    texts:
+      - { at: "@most", text: "~9 in 10 people are right-handed", style: label, x: 1300, y: 300, color: "#ff4d5e" }
+    narration: "Catch two: each half of your brain controls the *opposite* side of your body. Left half asleep? Your right hand gets clumsy. Hope you're not right-handed. Oh wait, most people are."
+
+  - id: catch-eyes
+    background: { type: city, mood: day }
+    bixStart: [600, 820]
+    bixScale: 0.95
+    props:
+      - { type: arrow, at: "@half", from: [1250, 520], to: [1600, 380], color: "#ffd447", label: "half crosses" }
+      - { type: arrow, at: "@half", from: [1250, 520], to: [1600, 660], color: "#22d3c5", label: "half stays" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@both", action: shock }
+      - { at: "@switch", action: shrug }
+    narration: "Catch three: your eyes are wired differently from a dolphin's. About half the nerve fibers from each of your eyes cross to the other side, so each eye talks to *both* halves of your brain. One sleepy half couldn't just switch off one eye."
+
+  - id: no-free-hours
+    chapter: "No free hours"
+    transition: fade
+    background: { type: bedroom, mood: night, clock: "10:30" }
+    bixStart: [620, 820]
+    bixScale: 0.95
+    props:
+      - { type: clock, at: "@seven", x: 1500, y: 470, r: 120, time: "10:30", speed: 1.2 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@still", action: point }
+      - { at: "@seven", action: sleepy }
+    texts:
+      - { at: "@seven", text: "ADULTS: 7+ HOURS", style: label, x: 1000, y: 160, color: "#22d3c5" }
+    narration: "And the biggest catch: it wouldn't give you free time. Dolphins still sleep. Each half still gets its rest, just in shifts. Your brain would still need its hours too. For adults, that's at least {seven|seven} hours a night."
+
+  # ============================================================ (3) LAB ENDING + TEASER
+  - id: lab-ending
+    chapter: "Back in the lab"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [760, 820]
+    bixScale: 1.0
+    props:
+      - { type: halfbrain, at: 0, until: "@seconds", x: 1200, y: 300, s: 0.45, asleep: left, labels: false }
+      - { type: halfbrain, at: "@seconds", x: 1200, y: 300, s: 0.45, asleep: both, labels: false }
+      - { type: cactus, x: 1600, y: 818, s: 1.1, mood: happy, until: "@watch" }
+      - { type: cactus, x: 1600, y: 818, s: 1.1, mood: wink, at: "@watch" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@tried", action: present }
+      - { at: "@seconds", action: sleepy }
+    texts:
+      - { at: "@seconds", text: "HALF-AWAKE: FAILED", style: shout, x: 760, y: 200, rotate: -5 }
+    narration: "So Bix tried it. One eye open, half the brain on duty... and both halves fell asleep in about four seconds. Newton kept watch."
+    hold: 0.6
+
+  - id: teaser
+    transition: whip
+    background: { type: sky, mood: night, speed: 20 }
+    bixStart: [420, 900]
+    bixScale: 0.85
+    props:
+      - { type: badge, at: "@egg", x: 1350, y: 560, r: 150, text: "🥚", color: "#ffffff" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@winter", action: scared }
+    chips:
+      - { at: 0.1, label: "Next time", icon: bolt }
+    texts:
+      - { at: "@dads", text: "WHAT IF DADS HAD TO SIT ON THE EGG?", style: title, y: 230 }
+    narration: "Next time on What If Bix: what if dads had to sit on the egg, all winter long?"
+
+shorts:
+  - id: short-one-eye
+    title: "Dolphins sleep with ONE eye open (here's why)"
+    from: one-eye
+    to: why-breathe
+    hook: "DOLPHINS SLEEP WITH 1 EYE OPEN"
+    description: "Dolphins can sleep with half their brain at a time, often with one eye open. The likely reason: breathing."
+    scenes:
+      one-eye:
+        narration: "Dolphins sleep with one eye open. Literally. Half their brain sleeps while the other half stays awake. And nearly all the wiring from each eye crosses to the opposite half of the brain. So when the left half is asleep, it's often the *left* eye that stays open, wired to the half that's still awake."
+        props:
+          - { type: dolphin, x: 1000, y: 560, s: 1.6, facing: -1, eye: open, label: "left eye open" }
+          - { type: halfbrain, at: "@Half", x: 1600, y: 300, s: 0.55, asleep: left, labels: true }
+          - { type: arrow, at: "@crosses", from: [880, 520], to: [1450, 330], bend: 80, color: "#ffd447" }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@Literally", action: point }
+          - { at: "@left", action: think }
+        texts:
+          - { at: "@Literally", until: "@Literally+1.4", text: "WAIT, WHAT?!", style: shout, x: 900, y: 230, rotate: -5 }
+  - id: short-15-days
+    title: "This dolphin stayed alert for 15 days straight"
+    from: vigilance
+    to: birds-too
+    hook: "15 DAYS WITHOUT A BREAK"
+    description: "Dolphins and some birds can rest half their brain at a time. One dolphin stayed on task for 15 days."
+    scenes:
+      vigilance:
+        narration: "This dolphin stayed alert for {15 days|fifteen days} straight. In one study, two Navy dolphins were trained to keep finding targets with echolocation, their natural sonar. One of them kept it up for over two weeks, without slipping. Bix lasts about fifteen minutes in a meeting."
+        props:
+          - { type: calendar, at: 0, x: 1200, y: 360, from: 1, to: 15, dur: 2.2, label: "DAY", s: 1.1 }
+          - { type: dolphin, x: 1550, y: 740, s: 0.7, eye: open, at: 0 }
+          - { type: cactus, x: 1800, y: 818, s: 0.8, mood: shock, at: "@meeting" }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@trained", action: present }
+          - { at: "@meeting", action: sleepy }
+        texts:
+          - { at: "@straight", until: "@straight+1.4", text: "NO SLEEP?!", style: shout, x: 760, y: 230, rotate: -5 }
+          - { at: "@meeting", text: "BIX: 15 MINUTES", style: shout, x: 760, y: 230, rotate: -5 }
+  - id: short-half-brain-catch
+    title: "Sleeping with half your brain has 3 big problems"
+    from: catch-language
+    to: catch-eyes
+    hook: "HALF-BRAIN SLEEP? 3 PROBLEMS"
+    description: "What if you slept like a dolphin, one half of the brain at a time? Your brain's wiring would make it messy."
+    scenes:
+      catch-language:
+        narration: "Sleeping with half your brain sounds great, until you try to talk. Your two halves don't do the same jobs. In most right-handed people, language lives mainly in the left hemisphere. So with your left half asleep, you'd be awake, but you might struggle to talk. Or to read your homework."
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@talk", action: shrug }
+          - { at: "@homework", action: facepalm }
+        props:
+          - { type: halfbrain, at: 0, x: 1400, y: 380, s: 0.6, asleep: left, labels: true }
+          - { type: burst, at: "@talk", until: "@talk+1.5", x: 900, y: 300, text: "...?", r: 110 }
+
+thumbnail:
+  title: ["HALF", "ASLEEP?!"]
+  accent: 1
+  background: { type: ocean, horizon: 420 }
+  props:
+    - { type: dolphin, x: 1000, y: 720, s: 1.9, facing: -1, eye: open }
+    - { type: halfbrain, at: 0, x: 1650, y: 300, s: 0.55, asleep: left, labels: false }
+  bix: { action: shock, x: 1600, y: 1180, scale: 2.0, facing: -1, t: 0.45 }
+
+sources:
+  - "Mukhametov, L. M., Supin, A. Y. & Polyakova, I. G. (1977). Interhemispheric asymmetry of the electroencephalographic sleep patterns in dolphins. Brain Research 134(3): 581–584 — first EEG evidence that one hemisphere sleeps while the other is awake: https://doi.org/10.1016/0006-8993(77)90835-6"
+  - "Lyamin, O. I., Manger, P. R., Ridgway, S. H., Mukhametov, L. M. & Siegel, J. M. (2008). Cetacean sleep: an unusual form of mammalian sleep. Neuroscience & Biobehavioral Reviews 32(8): 1451–1484 — unihemispheric slow-wave sleep, hemispheres alternate, one eye open, proposed functions (breathing, vigilance, thermoregulation): https://doi.org/10.1016/j.neubiorev.2008.05.023"
+  - "Rattenborg, N. C., Amlaner, C. J. & Lima, S. L. (2000). Behavioral, neurophysiological and evolutionary perspectives on unihemispheric sleep. Neuroscience & Biobehavioral Reviews 24(8): 817–842 — the open eye is usually the one contralateral to the awake hemisphere; near-complete crossing of optic fibers in cetaceans and birds: https://doi.org/10.1016/S0149-7634(00)00039-7"
+  - "NOAA Fisheries, Common Bottlenose Dolphin — dolphins breathe air at the surface through a blowhole: https://www.fisheries.noaa.gov/species/common-bottlenose-dolphin"
+  - "Branstetter, B. K., Finneran, J. J., Fletcher, E. A., Weisman, B. C. & Ridgway, S. H. (2012). Dolphins can maintain vigilant behavior through echolocation for 15 days without interruption or cognitive impairment. PLoS ONE 7(10): e47478 (U.S. Navy Marine Mammal Program dolphins): https://doi.org/10.1371/journal.pone.0047478"
+  - "Rattenborg, N. C., Lima, S. L. & Amlaner, C. J. (1999). Half-awake to the risk of predation. Nature 397: 397–398 — mallards at the edge of a row used more unihemispheric sleep and kept the open eye directed away from the group: https://doi.org/10.1038/17037"
+  - "Rattenborg, N. C. et al. (2016). Evidence that birds sleep in mid-flight. Nature Communications 7: 12468 — great frigatebirds on flights of up to ~10 days slept ~0.7 h (≈42 min) per day in flight vs >12 h per day on land: https://doi.org/10.1038/ncomms12468"
+  - "Tamaki, M., Bang, J. W., Watanabe, T. & Sasaki, Y. (2016). Night watch in one brain hemisphere during sleep associated with the first-night effect in humans. Current Biology 26(9): 1190–1194 — left hemisphere more vigilant during deep sleep on the first night, faster responses to deviant sounds: https://doi.org/10.1016/j.cub.2016.02.063"
+  - "Knecht, S. et al. (2000). Handedness and hemispheric language dominance in healthy humans. Brain 123(12): 2512–2518 — left-hemisphere language dominance in the large majority of right-handers: https://doi.org/10.1093/brain/123.12.2512"
+  - "NINDS (NIH), Brain Basics: Know Your Brain — each hemisphere controls the opposite side of the body: https://www.ninds.nih.gov/health-information/public-education/brain-basics/brain-basics-know-your-brain"
+  - "Papadatou-Pastou, M. et al. (2020). Human handedness: a meta-analysis. Psychological Bulletin 146(6): 481–524 — about 10.6% of people are left-handed (≈9 in 10 right-handed): https://doi.org/10.1037/bul0000229"
+  - "NCBI StatPearls, Neuroanatomy, Optic Chiasm — nasal retinal fibers (about half) of each eye cross at the optic chiasm, so each eye projects to both hemispheres: https://www.ncbi.nlm.nih.gov/books/NBK542287/"
+  - "Lyamin, O. I. et al. (2005). Continuous activity in cetaceans after birth. Nature 435: 1177 — reported little or no typical rest in newborn dolphin/killer whale calves and mothers for weeks (DEBATED: see next source): https://doi.org/10.1038/4351177a"
+  - "Gnone, G., Moriconi, T. & Gambini, G. (2006). Sleep behaviour: activity and sleep in dolphins. Nature 441: E10–E11 — reports rest/sleep behaviour in dolphin mothers and calves, disputing the 2005 claim: https://doi.org/10.1038/nature04898"
+  - "Lyamin, O. I. et al. (2018). Fur seals suppress REM sleep for very long periods without subsequent rebound. Current Biology 28(12): 2000–2005 — northern fur seals sleep bilaterally on land and mostly unihemispherically in seawater: https://doi.org/10.1016/j.cub.2018.05.022"
+  - "Miller, P. J. O., Aoki, K., Rendell, L. E. & Amano, M. (2008). Stereotypical resting behavior of the sperm whale. Current Biology 18(1): R21–R23 — upright drift-dive naps near the surface, about 7% of recorded time: https://doi.org/10.1016/j.cub.2007.11.003"
+  - "CDC, About Sleep — adults need 7 or more hours of sleep per night: https://www.cdc.gov/sleep/about/index.html"

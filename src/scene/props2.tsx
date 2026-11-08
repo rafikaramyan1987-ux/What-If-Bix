@@ -785,7 +785,7 @@ export const Bird: React.FC<PP> = ({ spec, t }) => {
   const dirX = x2 >= x1 ? 1 : -1;
   const kind = str(spec.kind, 'falcon');
   const flap = Math.sin(t * (kind === 'vulture' ? 5 : 14));
-  const body = kind === 'vulture' ? '#6b4a2b' : kind === 'pigeon' ? '#8b93ad' : '#5b6178';
+  const body = kind === 'vulture' ? '#6b4a2b' : kind === 'pigeon' ? '#8b93ad' : kind === 'duck' ? '#a0784a' : kind === 'frigate' ? '#2b2f45' : '#5b6178';
   return (
     <g transform={`translate(${x} ${y}) scale(${num(spec.s, 1) * dirX} ${num(spec.s, 1)})`}>
       <path d={`M -20 0 Q -60 ${-50 * flap} -110 ${-20 - 40 * flap} Q -60 ${10 - 10 * flap} -10 12 Z`} fill={body} stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
@@ -795,6 +795,10 @@ export const Bird: React.FC<PP> = ({ spec, t }) => {
       <path d="M 54 -8 L 72 0 L 54 4 Z" fill={C.yellow} stroke={C.ink} strokeWidth={4} strokeLinejoin="round" />
       <circle cx={45} cy={-10} r={4} fill={C.ink} />
       {kind === 'falcon' && <path d="M 36 -18 q 6 10 -2 18" stroke={C.ink} strokeWidth={4} fill="none" />}
+      {kind === 'duck' && <circle cx={40} cy={-6} r={17} fill="#2f9e5a" stroke={C.ink} strokeWidth={5} />}
+      {kind === 'duck' && <circle cx={45} cy={-10} r={4} fill={C.ink} />}
+      {kind === 'frigate' && <ellipse cx={34} cy={14} rx={14} ry={11} fill={C.red} stroke={C.ink} strokeWidth={4} />}
+      {spec.sleepy === true && <path d="M 40 -10 l 9 0" stroke="#ffffff" strokeWidth={4} strokeLinecap="round" />}
       <path d={`M 10 0 Q 40 ${-60 * flap} 90 ${-30 - 40 * flap} Q 50 ${0 - 10 * flap} 20 10 Z`} fill={body} stroke={C.ink} strokeWidth={5} strokeLinejoin="round" opacity={0.95} />
     </g>
   );
@@ -825,7 +829,113 @@ export const Frost: React.FC<PP> = ({ spec, t }) => {
   );
 };
 
+/**
+ * Side-view dolphin. eye: open | closed (the visible eye); from/to/dur to swim; blowAt = spout at the surface;
+ * label: optional text under it (e.g. "left brain asleep").
+ */
+export const Dolphin: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  let [x, y] = [num(spec.x, 960), num(spec.y, 600)];
+  if (spec.to) {
+    const [x1, y1] = vec(spec.from, [x, y]);
+    const [x2, y2] = vec(spec.to, [x, y]);
+    const k = easeInOut((t - num(spec.moveAt, num(spec.at, 0))) / num(spec.dur, 3));
+    x = x1 + (x2 - x1) * k;
+    y = y1 + (y2 - y1) * k;
+  }
+  let eye = str(spec.eye, 'open');
+  if (typeof spec.eyeAt === 'number' && t >= spec.eyeAt) eye = str(spec.eye2, eye === 'open' ? 'closed' : 'open');
+  const bob = 8 * Math.sin(t * 1.6 + x * 0.01);
+  const tail = 10 * Math.sin(t * 3);
+  const f = num(spec.facing, 1);
+  const blow = typeof spec.blowAt === 'number' ? clamp((t - spec.blowAt) / 1.2) : 0;
+  return (
+    <g transform={`translate(${x} ${y + bob}) scale(${num(spec.s, 1) * f * appearK(spec, t)} ${num(spec.s, 1) * appearK(spec, t)})`}>
+      {blow > 0 && blow < 1 && (
+        <g opacity={1 - blow}>
+          {[-14, 0, 14].map((dx, i) => <circle key={i} cx={92 + dx * (1 + blow)} cy={-90 - 120 * blow + Math.abs(dx)} r={12 + 10 * blow} fill="#dff6ff" stroke={C.ink} strokeWidth={3} />)}
+        </g>
+      )}
+      <g transform={`rotate(${tail * 0.3})`}>
+        <path d={`M -150 ${-6 + tail} L -200 ${-40 + tail} Q -185 ${-8 + tail} -205 ${24 + tail} Z`} fill="#6f8fb3" stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+      </g>
+      {/* body: rounded melon (forehead) + short beak, so it reads as a dolphin, not a shark */}
+      <path d="M -152 0 Q -100 -50 0 -54 Q 70 -57 104 -42 Q 140 -66 168 -32 Q 176 -20 202 -13 Q 210 -5 202 2 Q 172 8 150 12 Q 100 40 0 38 Q -100 32 -152 0 Z"
+        fill="#8fb1d4" stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+      <path d="M -118 8 Q -20 40 128 16 Q 70 38 0 37 Q -80 33 -118 8 Z" fill="#e6f0fa" />
+      {/* curved (falcate) dorsal fin sweeping back */}
+      <path d="M 26 -54 Q 18 -98 -28 -114 Q -6 -88 -16 -52 Z" fill="#7a9cc2" stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+      <path d="M 30 20 Q 22 58 -12 66 Q -2 42 4 22 Z" fill="#7a9cc2" stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+      <ellipse cx={92} cy={-49} rx={7} ry={4} fill="#4d6f94" />
+      {eye === 'open' ? (
+        <>
+          <circle cx={134} cy={-24} r={10} fill="#fff" stroke={C.ink} strokeWidth={4} />
+          <circle cx={137} cy={-24} r={5} fill={C.ink} />
+        </>
+      ) : (
+        <path d="M 124 -22 q 10 6 20 0" stroke={C.ink} strokeWidth={5} fill="none" strokeLinecap="round" />
+      )}
+      <path d="M 152 6 Q 176 8 198 -1" stroke={C.ink} strokeWidth={4} fill="none" strokeLinecap="round" />
+      {spec.label !== undefined && (
+        <text y={92} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={34} fill="#fff" stroke={C.ink} strokeWidth={7} paintOrder="stroke"
+          transform={`scale(${f} 1)`}>{str(spec.label, '')}</text>
+      )}
+    </g>
+  );
+};
+
+/**
+ * Brain seen from above, split into two halves: one asleep (dark, "Zzz"), one awake (pink, sparkles).
+ * asleep: left | right | both | none; swapAt flips which half sleeps; labels: true shows LEFT/RIGHT.
+ */
+export const HalfBrain: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  let asleep = str(spec.asleep, 'left');
+  const swaps = arr<number>(Array.isArray(spec.swaps) ? spec.swaps : typeof spec.swapAt === 'number' ? [spec.swapAt] : [], []);
+  for (const sw of swaps) if (t >= sw) asleep = asleep === 'left' ? 'right' : asleep === 'right' ? 'left' : asleep;
+  if (typeof spec.bothAt === 'number' && t >= spec.bothAt) asleep = 'both';
+  const half = (side: -1 | 1) => {
+    const sleeping = asleep === 'both' || (asleep === 'left' && side === -1) || (asleep === 'right' && side === 1);
+    const d = side === -1
+      ? 'M -6 -150 Q -120 -160 -150 -60 Q -175 40 -110 120 Q -60 160 -6 140 Z'
+      : 'M 6 -150 Q 120 -160 150 -60 Q 175 40 110 120 Q 60 160 6 140 Z';
+    const k = (t * 0.7) % 1;
+    return (
+      <g key={side}>
+        <path d={d} fill={sleeping ? '#3b3f7a' : '#ffb3c7'} stroke={C.ink} strokeWidth={8} strokeLinejoin="round" />
+        <path d={side === -1 ? 'M -40 -100 q -40 30 -20 70 M -100 -60 q 30 20 10 60 M -60 40 q -30 30 0 70' : 'M 40 -100 q 40 30 20 70 M 100 -60 q -30 20 -10 60 M 60 40 q 30 30 0 70'}
+          fill="none" stroke={sleeping ? '#5a5fa3' : '#e88aa3'} strokeWidth={7} strokeLinecap="round" />
+        {sleeping ? (
+          <text x={side * 80 + 20 * k} y={-40 - 60 * k} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={56 + 20 * k} fill="#ffffff" opacity={1 - k}>Z</text>
+        ) : (
+          [0, 1, 2].map((i) => (
+            <path key={i} d="M 0 -16 L 4 -4 L 16 0 L 4 4 L 0 16 L -4 4 L -16 0 L -4 -4 Z" fill={C.yellow}
+              transform={`translate(${side * (60 + i * 30)} ${-60 + i * 50}) scale(${0.6 + 0.4 * Math.abs(Math.sin(t * 4 + i))})`} />
+          ))
+        )}
+        {spec.labels !== false && (
+          <g>
+            <text x={side * 100} y={198} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={34} fill="#fff" stroke={C.ink} strokeWidth={7} paintOrder="stroke">
+              {side === -1 ? 'LEFT' : 'RIGHT'}
+            </text>
+            <text x={side * 100} y={240} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={34} fill={sleeping ? '#9fb6ff' : C.yellow} stroke={C.ink} strokeWidth={7} paintOrder="stroke">
+              {sleeping ? 'ASLEEP' : 'AWAKE'}
+            </text>
+          </g>
+        )}
+      </g>
+    );
+  };
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 450)}) scale(${num(spec.s, 1) * appearK(spec, t)})`}>
+      {half(-1)}
+      {half(1)}
+    </g>
+  );
+};
+
 export const PROPS2: Record<string, React.FC<PP>> = {
+  dolphin: Dolphin, halfbrain: HalfBrain,
   cactus: Cactus, bird: Bird, frost: Frost,
   pal: Pal, crowd: Crowd, bars: Bars, clock: Clock, calendar: Calendar, gauge: Gauge, board: Board, timeline: Timeline, seismo: Seismo,
   phone: Phone, wifi: Wifi, server: Server, cable: Cable, satellite: Satellite, moon: Moon, sun: Sun, orbit: Orbit, tide: Tide,

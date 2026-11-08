@@ -154,7 +154,9 @@ Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop boo
 | `vehicle` | `kind: car\|bus\|plane from to at dur s color` |
 | `confetti` | `at dur count` |
 | `cactus` | **Newton**, Bix's lab cactus (recurring): `x y s mood: happy\|shock\|sleepy\|wink float: true floatAt label: false at` |
-| `bird` | `kind: falcon\|vulture\|pigeon from to at dur s` |
+| `bird` | `kind: falcon\|vulture\|pigeon\|duck\|frigate from to at dur s sleepy: true` |
+| `dolphin` | `x y s facing eye: open\|closed eyeAt eye2 from to moveAt dur blowAt label at` |
+| `halfbrain` | brain halves, one asleep: `x y s asleep: left\|right\|both\|none swapAt swaps: [..] bothAt labels: false at` |
 | `frost` | `x y r count at seed` (ice crystals) |
 | `crack` | `x y w at` |
 

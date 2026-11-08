@@ -165,11 +165,10 @@ YouTube demonetizes "mass-produced or repetitive" content. Every episode uses it
 | # | Episode | Structure |
 |---|---|---|
 | 1 | Earth stops spinning for 1 second (Bix 1) | cause-and-effect chain + "the restart is worse" twist |
-| 2 | What if you could fly? (Bix 2.0) | a climb: each stage is one complaint from your body; lab open/close with Newton the cactus, teaser |
-| 3 | Everyone on Earth jumps at once | three-scenario experiment |
-| 4 | The Internet disappears worldwide | escalating timeline (minute → month) |
-| 5 | The Moon is twice as close | "Ask Bix" Q&A on location |
-| 6 | Never sleep for 30 days | diary / day counter |
+| 2 | What if you could fly? (Bix 2.0) | a climb: each stage is one complaint from your body |
+| 3+ | Animal-facts season: dolphin sleep, penguin dads, octopus hearts, giraffe sleep | fact + why → what if YOU → lab ending + teaser |
+
+The full plan and backlog are in [docs/EPISODE_PLAN.md](docs/EPISODE_PLAN.md). Older scripts are kept in `episodes/archive/`.
 
 Each episode also has its own scenes, jokes, music seed and outro. `validate.mjs --all` fails if two episodes share
 more than 8% of their narration, the same background sequence, or the same outro.
