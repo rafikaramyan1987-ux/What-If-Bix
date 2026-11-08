@@ -4,7 +4,7 @@ import { normWord, parseNarration, segmentUnits } from './script.mjs';
 // Keys whose numeric values are scene-relative times (converted to absolute).
 export const TIME_KEYS = new Set([
   'at', 'until', 'stopAt', 'windAt', 'roofAt', 'hoverUntil', 'shake', 'switchAt', 'crossAt', 'failAt', 'cutAt',
-  'jumpAt', 'cheerAt', 'panicAt', 'spikeAt', 'shakeAt', 'moveAt', 'stateAt', 'lightsOffAt', 'eyeAt', 'blowAt', 'swapAt', 'swaps', 'bothAt', 'floatAt',
+  'jumpAt', 'cheerAt', 'panicAt', 'spikeAt', 'shakeAt', 'moveAt', 'stateAt', 'lightsOffAt', 'eyeAt', 'blowAt', 'swapAt', 'swaps', 'bothAt', 'floatAt', 'heatAt',
 ]);
 
 export const INTRO_SECONDS = 2;

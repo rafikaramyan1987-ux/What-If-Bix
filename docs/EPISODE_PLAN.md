@@ -21,9 +21,9 @@ The production rules are the same as episode 2:
 | # | Episode | Status |
 |---|---|---|
 | 1 | What if Earth stopped spinning for 1 second? | published (Bix 1) |
-| 2 | What if you could fly? | rendered (PR #2) |
-| 3 | What if you slept like a dolphin? (unihemispheric sleep, one eye open) | **script written, awaiting fact review** |
-| 4 | What if dads had to sit on the egg? (emperor penguin males incubate on their feet through the Antarctic winter while fasting) | planned |
+| 2 | What if you could fly? | rendered (PR #2); teaser now points to the dolphin episode |
+| 3 | What if you slept like a dolphin? (unihemispheric sleep, one eye open) | facts approved, rendered (PR #2) |
+| 4 | What if dads had to sit on the egg? (emperor penguin males incubate on their feet through the Antarctic winter while fasting) | **script written, awaiting fact review** (`docs/episode4/FACTS.md`) |
 | 5 | What if you had 3 hearts and blue blood like an octopus? | planned |
 | 6 | What if you slept only 30 minutes a day like a giraffe? | planned (check sources carefully: wild-giraffe sleep figures vary between studies) |
 

@@ -340,19 +340,20 @@ scenes:
 
   - id: teaser
     transition: whip
-    background: { type: night-city }
-    bixStart: [380, 900]
+    background: { type: ocean, horizon: 420, mood: night }
+    bixStart: [380, 960]
     bixScale: 0.85
     props:
-      - { type: crowd, x: 1150, y: 900, w: 1300, count: 26, jumpAt: "@jumped", sync: true }
+      - { type: dolphin, x: 1150, y: 700, s: 1.3, eye: open, from: [1500, 740], to: [1100, 690], dur: 4 }
+      - { type: halfbrain, at: "@half", x: 1600, y: 300, s: 0.5, asleep: left, labels: false }
     bix:
       - { at: 0, action: think }
-      - { at: "@jumped", action: jump }
+      - { at: "@dolphin", action: shock }
     chips:
       - { at: 0.1, label: "Next time", icon: bolt }
     texts:
-      - { at: "@everyone", text: "WHAT IF EVERYONE JUMPED AT ONCE?", style: title, y: 230 }
-    narration: "Next time on What If Bix: what if everyone on Earth jumped at the exact same moment?"
+      - { at: "@what#2", text: "WHAT IF YOU SLEPT LIKE A DOLPHIN?", style: title, y: 160 }
+    narration: "Next time on What If Bix: what if you slept like a dolphin, with half your brain awake?"
 
 shorts:
   - id: short-speed

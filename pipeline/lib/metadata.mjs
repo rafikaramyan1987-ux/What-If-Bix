@@ -37,6 +37,26 @@ export const buildSrt = (pages, offset = 0) =>
     .map((p, i) => `${i + 1}\n${srtTime(p.start - offset)} --> ${srtTime(p.end - offset)}\n${p.words.map((w) => w.text).join(' ')}\n`)
     .join('\n');
 
+/**
+ * Compact one-line source for the YouTube description: "Author et al. 2012: https://doi.org/…".
+ * The full citation stays in sources.txt.
+ */
+export const shortSource = (raw) => {
+  const s = String(raw);
+  const url = (s.match(/https?:\/\/\S+/g) ?? []).pop();
+  const paper = s.match(/^([A-Z][A-Za-zÀ-ž'’-]+),[^()]*?\((\d{4})\)/);
+  let label;
+  if (paper) {
+    const authors = s.slice(0, s.indexOf(`(${paper[2]})`));
+    const many = /&|et al\./.test(authors) || (authors.match(/,/g) ?? []).length > 2;
+    label = `${paper[1]}${many ? ' et al.' : ''} ${paper[2]}`;
+  } else {
+    label = s.split(' — ')[0].replace(/:\s*https?:\/\/\S+$/, '').trim();
+    if (label.length > 70) label = `${label.slice(0, 67).trimEnd()}…`;
+  }
+  return url ? `${label}: ${url}` : label;
+};
+
 export const CREDIT_LINES = [
   'Animation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).',
   'Narration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)',
@@ -44,7 +64,7 @@ export const CREDIT_LINES = [
 
 export const buildMetadata = (ep, manifest, shorts = []) => {
   const chapters = buildChapters(manifest);
-  const sources = (ep.sources ?? []).map((s) => `• ${s}`);
+  const sources = (ep.sources ?? []).map((s) => `• ${shortSource(s)}`);
   const tags = [...new Set([...(ep.tags ?? []), 'what if', 'what if bix', 'science', 'animation'])];
   let tagChars = 0;
   const tagsFit = tags.filter((t) => (tagChars += t.length + 1) <= 480); // YouTube limit is 500

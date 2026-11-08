@@ -88,7 +88,7 @@ Cue fields: `at`, `action`, `from: [x,y]`, `to: [x,y]`, `dur` (travel seconds), 
 upward arc while travelling), `facing`, `scale`, `hold` (item in hand), `params: { panic: 0..1 }`
 (fly), `hidden: true`. Walk/run become idle when they arrive. Jump lasts 0.95 s.
 
-Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop book coin`.
+Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop book coin egg`.
 
 ### On-screen text styles
 
@@ -109,6 +109,7 @@ Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop boo
 | `ocean` | horizon at `horizon` (default 560), `beach: true` |
 | `moon` | lunar surface + black sky (add an `earth` prop to show Earth) |
 | `plain` | `color` |
+| `ice` | Antarctic sea ice: `mood: night\|day aurora: false blizzard` (snow speed, px/s) |
 
 ### Props (all fields optional unless noted; `at` = appear time with a pop)
 
@@ -156,6 +157,8 @@ Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop boo
 | `cactus` | **Newton**, Bix's lab cactus (recurring): `x y s mood: happy\|shock\|sleepy\|wink float: true floatAt label: false at` |
 | `bird` | `kind: falcon\|vulture\|pigeon\|duck\|frigate from to at dur s sleepy: true` |
 | `dolphin` | `x y s facing eye: open\|closed eyeAt eye2 from to moveAt dur blowAt label at` |
+| `penguin` | emperor penguin: `x y s facing egg: true chick: true mood: calm\|sleepy from to moveAt dur at` |
+| `huddle` | penguin huddle: `x y w h count seed wave` (shuffle speed) `heat: true heatAt at` |
 | `halfbrain` | brain halves, one asleep: `x y s asleep: left\|right\|both\|none swapAt swaps: [..] bothAt labels: false at` |
 | `frost` | `x y r count at seed` (ice crystals) |
 | `crack` | `x y w at` |

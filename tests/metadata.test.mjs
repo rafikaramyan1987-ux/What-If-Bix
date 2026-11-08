@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import path from 'node:path';
-import { buildChapters, buildMetadata, buildSrt, fmtTime } from '../pipeline/lib/metadata.mjs';
+import { buildChapters, buildMetadata, buildSrt, fmtTime, shortSource } from '../pipeline/lib/metadata.mjs';
 import { DEFAULT_CTA, shortEpisode, toShortManifest } from '../pipeline/lib/shorts.mjs';
 import { loadEpisode } from '../pipeline/lib/script.mjs';
 import { buildTimeline, expandScenes, planNarration } from '../pipeline/lib/timeline.mjs';
@@ -95,6 +95,15 @@ describe('character', () => {
     const p2 = planNarration(sep);
     expect(buildTimeline(sep, p2, fakeTts(p2)).manifest.character).toBe('bix2');
     expect(buildMetadata(ep2, manifest, []).description).toContain('CC BY 4.0: https://creativecommons.org/licenses/by/4.0/');
+  });
+});
+
+describe('short sources', () => {
+  it('compacts paper citations to "Author et al. Year: DOI"', () => {
+    expect(shortSource('Branstetter, B. K., Finneran, J. J. & Ridgway, S. H. (2012). Dolphins can... PLoS ONE 7: e47478: https://doi.org/10.1371/journal.pone.0047478'))
+      .toBe('Branstetter et al. 2012: https://doi.org/10.1371/journal.pone.0047478');
+    expect(shortSource('CDC, About Sleep — adults need 7 or more hours: https://www.cdc.gov/sleep/about/index.html'))
+      .toBe('CDC, About Sleep: https://www.cdc.gov/sleep/about/index.html');
   });
 });
 

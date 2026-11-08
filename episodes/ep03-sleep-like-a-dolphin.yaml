@@ -65,7 +65,7 @@ scenes:
       - { at: "@swap", action: shock }
     texts:
       - { at: "@Scientists", text: "UNIHEMISPHERIC SLOW-WAVE SLEEP", style: label, x: 1150, y: 130, color: "#8a5cff" }
-    narration: "Your brain has two halves, called hemispheres. When you fall asleep, both halves slow down together. But a dolphin's brain can split the shift: one half drops into deep, slow-wave sleep, while the other half stays awake. Later, they swap. Scientists call it unihemispheric slow-wave sleep."
+    narration: "Your brain has two halves, called hemispheres. When you fall asleep, both halves slow down together. But a dolphin's brain can split the shift: one half drops into deep, slow-wave sleep, while the other half stays awake. Later, they swap. Scientists call it unihemispheric slow-wave sleep. It was first measured in the 1970s, by recording the brain waves of sleeping dolphins."
 
   - id: one-eye
     chapter: "One eye open"
@@ -97,7 +97,7 @@ scenes:
       - { at: "@voluntary", action: point }
     texts:
       - { at: "@voluntary", text: "every breath = a decision", style: label, x: 1100, y: 160, color: "#22d3c5" }
-    narration: "So why sleep in halves? The leading idea is breathing. You breathe automatically, even in deep sleep. Dolphins are voluntary breathers: each breath is something they actively do, at the surface, through the blowhole. Keeping half the brain awake lets them keep coming up for that next breath."
+    narration: "So why sleep in halves? The leading idea is breathing. You breathe automatically, even in deep sleep. Dolphins are voluntary breathers: each breath is something they actively do, at the surface, through the blowhole on top of their head. Keeping half the brain awake lets them keep coming up for that next breath."
 
   - id: other-reasons
     background: { type: ocean, horizon: 360 }
@@ -169,7 +169,7 @@ scenes:
       - { at: "@land", action: laugh }
     texts:
       - { at: "@outward", text: "edge duck: one eye on danger", style: label, x: 880, y: 560, color: "#2f9e5a" }
-    narration: "Dolphins aren't the only ones. Ducks sleeping at the edge of a group keep more of their brain awake, with the open eye pointed outward, toward danger. And great frigatebirds can sleep while flying over the ocean for days. In one study, they slept only about {40|forty} minutes a day in the air, compared with over {12|twelve} hours a day on land."
+    narration: "Dolphins aren't the only ones. Ducks sleeping at the edge of a group keep more of their brain awake, with the open eye pointed outward, toward danger. And great frigatebirds can sleep while flying over the ocean, on trips lasting up to ten days. In one study, they slept only about {40|forty} minutes a day in the air, compared with over {12|twelve} hours a day on land."
 
   # ============================================================ (2) WHAT IF YOU
   - id: you-already
@@ -260,7 +260,7 @@ scenes:
       - { at: "@seven", action: sleepy }
     texts:
       - { at: "@seven", text: "ADULTS: 7+ HOURS", style: label, x: 1000, y: 160, color: "#22d3c5" }
-    narration: "And the biggest catch: it wouldn't give you free time. Dolphins still sleep. Each half still gets its rest, just in shifts. Your brain would still need its hours too. For adults, that's at least {seven|seven} hours a night."
+    narration: "And the biggest catch: it wouldn't give you free time. Dolphins still sleep. Each half still gets its rest, just in shifts. Your brain would still need its hours too. For adults, that's at least {seven|seven} hours a night. For teens, it's eight to ten."
 
   # ============================================================ (3) LAB ENDING + TEASER
   - id: lab-ending
@@ -289,7 +289,7 @@ scenes:
     bixStart: [420, 900]
     bixScale: 0.85
     props:
-      - { type: badge, at: "@egg", x: 1350, y: 560, r: 150, text: "🥚", color: "#ffffff" }
+      - { type: item, item: egg, at: "@egg", x: 1350, y: 700, s: 4, float: true }
     bix:
       - { at: 0, action: think }
       - { at: "@winter", action: scared }
@@ -308,7 +308,7 @@ shorts:
     description: "Dolphins can sleep with half their brain at a time, often with one eye open. The likely reason: breathing."
     scenes:
       one-eye:
-        narration: "Dolphins sleep with one eye open. Literally. Half their brain sleeps while the other half stays awake. And nearly all the wiring from each eye crosses to the opposite half of the brain. So when the left half is asleep, it's often the *left* eye that stays open, wired to the half that's still awake."
+        narration: "Dolphins sleep with one eye open. Literally. Half their brain sleeps while the other half stays awake. Scientists call it unihemispheric sleep. And nearly all the wiring from each eye crosses to the opposite half of the brain. So when the left half is asleep, it's often the *left* eye that stays open, wired to the half that's still awake."
         props:
           - { type: dolphin, x: 1000, y: 560, s: 1.6, facing: -1, eye: open, label: "left eye open" }
           - { type: halfbrain, at: "@Half", x: 1600, y: 300, s: 0.55, asleep: left, labels: true }
@@ -327,7 +327,7 @@ shorts:
     description: "Dolphins and some birds can rest half their brain at a time. One dolphin stayed on task for 15 days."
     scenes:
       vigilance:
-        narration: "This dolphin stayed alert for {15 days|fifteen days} straight. In one study, two Navy dolphins were trained to keep finding targets with echolocation, their natural sonar. One of them kept it up for over two weeks, without slipping. Bix lasts about fifteen minutes in a meeting."
+        narration: "This dolphin stayed alert for {15 days|fifteen days} straight. In one study, two Navy dolphins were trained to keep finding targets with echolocation, their natural sonar. One of them kept it up for over two weeks, and its accuracy didn't drop. Bix lasts about fifteen minutes in a meeting."
         props:
           - { type: calendar, at: 0, x: 1200, y: 360, from: 1, to: 15, dur: 2.2, label: "DAY", s: 1.1 }
           - { type: dolphin, x: 1550, y: 740, s: 0.7, eye: open, at: 0 }
@@ -359,11 +359,11 @@ shorts:
 thumbnail:
   title: ["HALF", "ASLEEP?!"]
   accent: 1
-  background: { type: ocean, horizon: 420 }
+  background: { type: ocean, horizon: 420, sun: false }
   props:
-    - { type: dolphin, x: 1000, y: 720, s: 1.9, facing: -1, eye: open }
-    - { type: halfbrain, at: 0, x: 1650, y: 300, s: 0.55, asleep: left, labels: false }
-  bix: { action: shock, x: 1600, y: 1180, scale: 2.0, facing: -1, t: 0.45 }
+    - { type: dolphin, x: 1080, y: 880, s: 1.75, facing: -1, eye: open }
+    - { type: halfbrain, at: 0, x: 1250, y: 250, s: 0.5, asleep: left, labels: false }
+  bix: { action: shock, x: 1640, y: 1190, scale: 1.95, facing: -1, t: 0.45 }
 
 sources:
   - "Mukhametov, L. M., Supin, A. Y. & Polyakova, I. G. (1977). Interhemispheric asymmetry of the electroencephalographic sleep patterns in dolphins. Brain Research 134(3): 581–584 — first EEG evidence that one hemisphere sleeps while the other is awake: https://doi.org/10.1016/0006-8993(77)90835-6"
@@ -382,4 +382,4 @@ sources:
   - "Gnone, G., Moriconi, T. & Gambini, G. (2006). Sleep behaviour: activity and sleep in dolphins. Nature 441: E10–E11 — reports rest/sleep behaviour in dolphin mothers and calves, disputing the 2005 claim: https://doi.org/10.1038/nature04898"
   - "Lyamin, O. I. et al. (2018). Fur seals suppress REM sleep for very long periods without subsequent rebound. Current Biology 28(12): 2000–2005 — northern fur seals sleep bilaterally on land and mostly unihemispherically in seawater: https://doi.org/10.1016/j.cub.2018.05.022"
   - "Miller, P. J. O., Aoki, K., Rendell, L. E. & Amano, M. (2008). Stereotypical resting behavior of the sperm whale. Current Biology 18(1): R21–R23 — upright drift-dive naps near the surface, about 7% of recorded time: https://doi.org/10.1016/j.cub.2007.11.003"
-  - "CDC, About Sleep — adults need 7 or more hours of sleep per night: https://www.cdc.gov/sleep/about/index.html"
+  - "CDC, About Sleep — adults need 7 or more hours of sleep per night; teens (13–18) need 8–10 hours: https://www.cdc.gov/sleep/about/index.html"

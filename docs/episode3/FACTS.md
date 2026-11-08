@@ -18,7 +18,7 @@ Legend: ✅ well established · ⚠️ debated or simplified (worded carefully i
 | 8 | Sperm whales take short upright naps near the surface, about 7% of their time. | Miller et al. 2008 (*Current Biology*) | ✅ About 7% of recorded time, in tagged whales. |
 | 9 | Two US Navy dolphins were trained to keep detecting targets with echolocation; one kept it up for 15 days straight without slipping. | Branstetter et al. 2012 (*PLoS ONE*) | ✅ The title of the paper states "15 days without interruption or cognitive impairment". |
 | 10 | Ducks at the edge of a sleeping group keep more of their brain awake, with the open eye facing outward toward danger. | Rattenborg et al. 1999 (*Nature*, mallards) | ✅ |
-| 11 | Great frigatebirds can sleep in flight over the ocean for days, about 40 minutes a day in the air, compared with over 12 hours a day on land. | Rattenborg et al. 2016 (*Nature Communications*) | ✅ About 0.7 h/day in flight (≈42 min); flights lasted up to about 10 days. |
+| 11 | Great frigatebirds can sleep in flight over the ocean for days, about 40 minutes a day in the air, compared with over 12 hours a day on land. | Rattenborg et al. 2016 (*Nature Communications*) | ✅ About 0.7 h/day in flight (≈42 min); flights lasted up to about 10 days (narrated as "trips lasting up to ten days"). |
 
 ## Part 2 — What if YOU had it
 
@@ -31,7 +31,9 @@ Legend: ✅ well established · ⚠️ debated or simplified (worded carefully i
 | 16 | About 9 in 10 people are right-handed. | Papadatou-Pastou et al. 2020 (*Psychological Bulletin*): ~10.6% left-handed | ✅ |
 | 17 | About half the nerve fibers from each human eye cross at the optic chiasm, so each eye talks to both halves. | NCBI StatPearls, *Optic Chiasm* | ✅ |
 | 18 | Dolphins still sleep; each half still gets its rest, just in shifts. | Lyamin et al. 2008 | ✅ |
-| 19 | Adults need at least 7 hours of sleep a night. | CDC, *About Sleep* | ✅ |
+| 19 | Adults need at least 7 hours of sleep a night; teens need 8–10. | CDC, *About Sleep* | ✅ |
+| 20 | Unihemispheric sleep was first measured in the 1970s from the brain waves (EEG) of sleeping dolphins. | Mukhametov et al. 1977 | ✅ |
+| 21 | The blowhole sits on top of the head. | NOAA Fisheries | ✅ |
 
 ## Part 3 — Lab ending and teaser
 

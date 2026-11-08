@@ -329,7 +329,45 @@ export const MoonBg: React.FC<BgProps> = ({ spec, t }) => {
   );
 };
 
+/** Antarctic sea ice: polar-night sky (mood: night|day), optional aurora, blizzard (snow speed px/s). */
+export const IceBg: React.FC<BgProps> = ({ spec, t }) => {
+  const night = str(spec.mood, 'night') === 'night';
+  const blizzard = num(spec.blizzard, 0);
+  const r = rng(num(spec.seed, 12));
+  const flakes = Array.from({ length: blizzard ? 120 : 40 }, () => ({ x: r() * W, y: r() * H, s: 2 + r() * 4, v: 0.6 + r() * 0.8 }));
+  return (
+    <g>
+      <defs>
+        <linearGradient id="iceSky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor={night ? '#0a1236' : '#7cc4ff'} />
+          <stop offset="1" stopColor={night ? '#2b3a7a' : '#d8f0ff'} />
+        </linearGradient>
+      </defs>
+      <rect width={W} height={H} fill="url(#iceSky)" />
+      {night && <Stars t={t} seed={5} count={90} drift={0} />}
+      {night && spec.aurora !== false && [0, 1, 2].map((i) => (
+        <path key={i} d={`M -100 ${220 + i * 50} Q 400 ${120 + i * 40 + 30 * Math.sin(t * 0.6 + i)} 960 ${230 + i * 30} T 2100 ${200 + i * 45}`}
+          fill="none" stroke={i === 1 ? '#7dffb0' : '#44e0c8'} strokeWidth={40 - i * 10} strokeLinecap="round" opacity={0.25 + 0.1 * Math.sin(t + i)} />
+      ))}
+      <path d={`M 0 ${GROUND_Y - 30} Q 300 ${GROUND_Y - 120} 620 ${GROUND_Y - 50} L 820 ${GROUND_Y - 160} L 980 ${GROUND_Y - 60} Q 1400 ${GROUND_Y - 110} 1920 ${GROUND_Y - 40} L 1920 ${H} L 0 ${H} Z`}
+        fill={night ? '#9fb3d9' : '#e6f4ff'} stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+      <rect x={0} y={GROUND_Y} width={W} height={H - GROUND_Y} fill={night ? '#c9d8f2' : '#f4fbff'} />
+      <line x1={0} y1={GROUND_Y} x2={W} y2={GROUND_Y} stroke={C.ink} strokeWidth={5} />
+      {[220, 700, 1300, 1700].map((x, i) => (
+        <path key={i} d={`M ${x - 90} ${GROUND_Y + 60 + i * 18} q 90 -30 180 0`} fill="none" stroke="#9fb3d9" strokeWidth={6} strokeLinecap="round" />
+      ))}
+      {flakes.map((f, i) => {
+        const x = ((((f.x + (blizzard || 30) * f.v * t) % (W + 100)) + W + 100) % (W + 100)) - 50;
+        const y = (f.y + 60 * f.v * t) % H;
+        return blizzard ? <line key={i} x1={x} y1={y} x2={x - 6 - blizzard / 60} y2={y - 2} stroke="#ffffff" strokeWidth={f.s} strokeLinecap="round" opacity={0.8} />
+          : <circle key={i} cx={x} cy={y} r={f.s} fill="#ffffff" opacity={0.8} />;
+      })}
+    </g>
+  );
+};
+
 export const BACKGROUNDS: Record<string, React.FC<BgProps>> = {
+  ice: IceBg,
   space: Space,
   sky: Sky,
   land: Land,

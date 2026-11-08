@@ -68,6 +68,15 @@ export const Coin: React.FC = () => (
   </g>
 );
 
+export const Egg: React.FC = () => (
+  <g transform="translate(0 -30)">
+    <ellipse rx={24} ry={31} fill="#fffaf0" stroke={C.ink} strokeWidth={4.5} />
+    <circle cx={-8} cy={-10} r={3} fill="#e8dcc0" />
+    <circle cx={7} cy={4} r={2.5} fill="#e8dcc0" />
+    <path d="M -12 -18 q 6 -8 14 -9" stroke="#ffffff" strokeWidth={4} fill="none" strokeLinecap="round" />
+  </g>
+);
+
 export const Held: React.FC<{ kind: string }> = ({ kind }) => {
   switch (kind) {
     case 'sandwich':
@@ -86,6 +95,8 @@ export const Held: React.FC<{ kind: string }> = ({ kind }) => {
       return <Book />;
     case 'coin':
       return <Coin />;
+    case 'egg':
+      return <Egg />;
     default:
       return null;
   }

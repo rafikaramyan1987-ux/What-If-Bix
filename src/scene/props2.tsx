@@ -934,7 +934,110 @@ export const HalfBrain: React.FC<PP> = ({ spec, t }) => {
   );
 };
 
+/**
+ * Emperor penguin (front 3/4 view). egg: true = egg on its feet under the brood pouch;
+ * chick: true = chick on its feet; from/to/moveAt/dur = waddle; mood: calm|sleepy|proud.
+ */
+export const Penguin: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  let [x, y] = [num(spec.x, 960), num(spec.y, GROUND_Y)];
+  let walking = false;
+  if (spec.to) {
+    const [x1, y1] = vec(spec.from, [x, y]);
+    const [x2, y2] = vec(spec.to, [x, y]);
+    const k = clamp((t - num(spec.moveAt, num(spec.at, 0))) / num(spec.dur, 3));
+    walking = k > 0 && k < 1;
+    x = x1 + (x2 - x1) * k;
+    y = y1 + (y2 - y1) * k;
+  }
+  const f = num(spec.facing, 1);
+  const waddle = walking ? 6 * Math.sin(t * 9) : 1.5 * Math.sin(t * 1.5 + x);
+  const mood = str(spec.mood, 'calm');
+  const egg = spec.egg === true;
+  const chick = spec.chick === true;
+  return (
+    <g transform={`translate(${x} ${y}) scale(${num(spec.s, 1) * f * appearK(spec, t)} ${num(spec.s, 1) * appearK(spec, t)}) rotate(${waddle})`}>
+      <ellipse cx={0} cy={4} rx={70} ry={12} fill="#000" opacity={0.15} />
+      {/* body */}
+      <path d="M 0 -300 Q 70 -300 82 -200 Q 100 -90 70 -20 Q 40 6 0 6 Q -40 6 -70 -20 Q -100 -90 -82 -200 Q -70 -300 0 -300 Z" fill="#1d2233" stroke={C.ink} strokeWidth={6} />
+      <path d="M 10 -230 Q 62 -200 66 -110 Q 64 -30 30 -8 Q 0 2 -26 -8 Q -58 -40 -52 -120 Q -48 -200 10 -230 Z" fill="#fbfcff" />
+      <path d="M 10 -230 Q 50 -214 58 -170 Q 30 -190 -40 -170 Q -30 -214 10 -230 Z" fill="#ffe08a" opacity={0.9} />
+      {/* head */}
+      <circle cx={8} cy={-268} r={44} fill="#1d2233" stroke={C.ink} strokeWidth={6} />
+      <path d="M 34 -262 Q 54 -244 40 -222 Q 26 -234 26 -252 Z" fill={C.yellow} stroke={C.ink} strokeWidth={4} />
+      <path d="M 40 -276 Q 96 -268 104 -256 Q 80 -252 44 -258 Z" fill="#2b2b2b" stroke={C.ink} strokeWidth={4} strokeLinejoin="round" />
+      <path d="M 52 -262 Q 80 -258 96 -257" stroke={C.orange} strokeWidth={5} strokeLinecap="round" />
+      {mood === 'sleepy' ? <path d="M 16 -280 q 9 5 18 0" stroke="#fff" strokeWidth={4} fill="none" strokeLinecap="round" />
+        : <><circle cx={26} cy={-280} r={7} fill="#fff" /><circle cx={28} cy={-280} r={3.5} fill={C.ink} /></>}
+      {/* flippers */}
+      <path d="M 70 -200 Q 110 -140 96 -80 Q 80 -120 64 -150 Z" fill="#1d2233" stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+      <path d="M -72 -200 Q -112 -140 -98 -80 Q -82 -120 -66 -150 Z" fill="#141826" stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+      {/* feet */}
+      <path d="M -40 2 q 20 -14 40 0 q -20 8 -40 0 Z M 6 2 q 20 -14 40 0 q -20 8 -40 0 Z" fill="#2b2b2b" stroke={C.ink} strokeWidth={4} />
+      {egg && (
+        <g>
+          <ellipse cx={6} cy={-24} rx={27} ry={32} fill="#fffaf0" stroke={C.ink} strokeWidth={5} />
+          <path d="M -6 -44 q 8 -8 16 -8" stroke="#ffffff" strokeWidth={4} fill="none" strokeLinecap="round" />
+          <path d="M -44 -48 Q 6 -74 56 -48 Q 40 -40 6 -40 Q -28 -40 -44 -48 Z" fill="#e9edf8" stroke={C.ink} strokeWidth={4} />
+        </g>
+      )}
+      {chick && (
+        <g transform="translate(8 -10)">
+          <ellipse cx={0} cy={-34} rx={34} ry={36} fill="#b8bec9" stroke={C.ink} strokeWidth={4.5} />
+          <circle cx={0} cy={-84} r={24} fill="#1d2233" stroke={C.ink} strokeWidth={4} />
+          <ellipse cx={4} cy={-82} rx={16} ry={13} fill="#ffffff" />
+          <circle cx={9} cy={-84} r={3} fill={C.ink} />
+        </g>
+      )}
+    </g>
+  );
+};
+
+/** A tight emperor-penguin huddle; heat: true shows the warm core; wave: shuffle ripple speed. */
+export const Huddle: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const n = num(spec.count, 40);
+  const w = num(spec.w, 900);
+  const h = num(spec.h, 220);
+  const r = rng(num(spec.seed, 8));
+  const pts = Array.from({ length: n }, () => {
+    const a = r() * Math.PI * 2;
+    const d = Math.sqrt(r());
+    return { x: Math.cos(a) * d * w / 2, y: Math.sin(a) * d * h / 2, ph: r() * 6 };
+  }).sort((a, b) => a.y - b.y);
+  const wave = num(spec.wave, 0);
+  const heat = spec.heat === true ? clamp((t - num(spec.heatAt, num(spec.at, 0))) / 1) : 0;
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, GROUND_Y)}) scale(${appearK(spec, t)})`}>
+      {heat > 0 && (
+        <g opacity={heat}>
+          <defs>
+            <radialGradient id="huddleHeat">
+              <stop offset="0" stopColor="#ff7a1a" stopOpacity={0.75} />
+              <stop offset="1" stopColor="#ff7a1a" stopOpacity={0} />
+            </radialGradient>
+          </defs>
+          <ellipse cx={0} cy={-120} rx={w * 0.55} ry={h + 120} fill="url(#huddleHeat)" />
+        </g>
+      )}
+      {pts.map((p, i) => {
+        const shuffle = wave ? 6 * Math.sin(t * wave - p.x * 0.02) : 0;
+        const sc = 0.32 + 0.12 * ((p.y + h / 2) / h);
+        return (
+          <g key={i} transform={`translate(${p.x + shuffle} ${p.y}) scale(${sc})`}>
+            <path d="M 0 -300 Q 70 -300 82 -200 Q 100 -90 70 -20 Q 40 6 0 6 Q -40 6 -70 -20 Q -100 -90 -82 -200 Q -70 -300 0 -300 Z" fill="#1d2233" stroke={C.ink} strokeWidth={10} />
+            <circle cx={8} cy={-268} r={44} fill="#1d2233" stroke={C.ink} strokeWidth={10} />
+            <path d="M 34 -262 Q 54 -244 40 -222 Q 26 -234 26 -252 Z" fill={C.yellow} />
+            <path d="M 10 -230 Q 62 -200 66 -110 Q 64 -30 30 -8 Q 0 2 -26 -8 Q -58 -40 -52 -120 Q -48 -200 10 -230 Z" fill="#fbfcff" opacity={0.9} />
+          </g>
+        );
+      })}
+    </g>
+  );
+};
+
 export const PROPS2: Record<string, React.FC<PP>> = {
+  penguin: Penguin, huddle: Huddle,
   dolphin: Dolphin, halfbrain: HalfBrain,
   cactus: Cactus, bird: Bird, frost: Frost,
   pal: Pal, crowd: Crowd, bars: Bars, clock: Clock, calendar: Calendar, gauge: Gauge, board: Board, timeline: Timeline, seismo: Seismo,
