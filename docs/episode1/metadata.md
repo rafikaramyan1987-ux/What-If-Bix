@@ -1,6 +1,6 @@
 # What if Earth stopped spinning for 1 second?
 
-**Duration:** 4:18 · **Category:** Education · **Made for kids:** No · **Language:** English
+**Duration:** 4:54 · **Category:** Education · **Made for kids:** No · **Language:** English
 
 ## Title
 
@@ -16,16 +16,16 @@ Bix finds out what happens to you, the air, the oceans and one very unlucky sand
 
 Chapters:
 0:00 The one-second question
-0:11 How fast are you moving right now?
-0:54 You already know this feeling
-1:06 The stop
-1:58 A planet-sized windstorm
-2:11 The oceans
-2:22 Who's totally fine?
-2:42 The restart twist
-2:58 Where does the energy go?
-3:09 What if it never restarted?
-3:23 This really happens (a tiny bit)
+0:13 How fast are you moving right now?
+1:03 You already know this feeling
+1:16 The stop
+2:16 A planet-sized windstorm
+2:30 The oceans
+2:44 Who's totally fine?
+3:06 The restart twist
+3:25 Where does the energy go?
+3:39 What if it never restarted?
+3:53 This really happens (a tiny bit)
 
 Sources:
 • NASA Earth Fact Sheet: equatorial radius 6,378 km, sidereal rotation period 23.9345 h (equatorial speed ≈ 465 m/s ≈ 1,674 km/h; speed at latitude φ = 1,674 × cos φ): https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
@@ -59,7 +59,7 @@ what if earth stopped spinning, earth stops spinning, earth rotation, physics, s
 
 ## Shorts
 
-### shorts/short-supersonic.mp4 (34.4 s)
+### shorts/short-supersonic.mp4 (40.0 s)
 
 ```
 Earth stops for ONE second and you go supersonic #Shorts
@@ -76,7 +76,7 @@ Narration voice: Piper TTS, LibriTTS voice (CC BY 4.0).
 #Shorts #science #whatif
 ```
 
-### shorts/short-speed.mp4 (42.8 s)
+### shorts/short-speed.mp4 (50.7 s)
 
 ```
 You are moving at 1,670 km/h right now #Shorts
@@ -93,7 +93,7 @@ Narration voice: Piper TTS, LibriTTS voice (CC BY 4.0).
 #Shorts #science #whatif
 ```
 
-### shorts/short-restart.mp4 (41.2 s)
+### shorts/short-restart.mp4 (48.0 s)
 
 ```
 The restart would be WORSE than the stop #Shorts
