@@ -13,7 +13,17 @@ describe('narration parsing', () => {
   it('splits sentences and ellipses into segments', () => {
     const segs = segmentUnits(parseNarration('What if... it stopped? Yes. No'));
     expect(segs.map((s) => s.units.length)).toEqual([2, 2, 1, 1]);
-    expect(segs[0].pause).toBeGreaterThan(segs[2].pause);
+    expect(segs[0].pause).toBeGreaterThan(0.4); // ellipsis
+  });
+  it('adds beats after numbers, punchlines and [beat] markers', () => {
+    const segs = segmentUnits(parseNarration('The ground moves at about {1,670|sixteen hundred and seventy} kilometers per hour. Sideways. This sentence is long and has no joke in it at all. Wait [beat 0.6] for it.'));
+    expect(segs).toHaveLength(5);
+    expect(segs[0].extra).toBeCloseTo(0.35); // number
+    expect(segs[1].extra).toBeCloseTo(0.35); // punchline
+    expect(segs[2].extra).toBe(0);
+    expect(segs[3].units.map((u) => u.display)).toEqual(['Wait']);
+    expect(segs[3].pause).toBeLessThanOrEqual(0.9);
+    expect(parseNarration('a [beat] b').map((u) => u.display)).toEqual(['a', 'b']);
   });
   it('normalises words for @refs', () => {
     expect(normWord('*Don’t*.')).toBe("don't");
@@ -43,7 +53,8 @@ describe('timeline', () => {
     const w = (text, s, segEnd = false) => ({ text, start: s, end: s + 0.2, segEnd });
     const pages = buildCaptionPages([w('One', 0), w('two.', 0.3, true), w('Three', 1), w('four', 1.3), w('five', 1.6), w('six', 1.9), w('seven', 2.2), w('eight', 2.5)]);
     expect(pages[0].words.map((x) => x.text)).toEqual(['One', 'two.']);
-    expect(pages.every((p) => p.words.length <= 5)).toBe(true);
+    expect(pages.every((p) => p.words.length <= 6)).toBe(true); // 5 + a merged orphan
+    expect(pages.every((p) => p.words.length > 1 || /[.!?]$/.test(p.words[0].text))).toBe(true);
   });
   it('lays out the sample episode with fake TTS', () => {
     const ep = loadEpisode(path.join(__dirname, '..', 'episodes', 'samples', 'ep01-style-test.yaml'));

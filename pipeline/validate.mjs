@@ -10,16 +10,16 @@ import { loadEpisode, normWord, parseNarration, segmentUnits } from './lib/scrip
 import { resolveDeep } from './lib/timeline.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-// Calibrated on rendered episodes (Piper LibriTTS speaker 92, lengthScale 0.92).
-export const WORDS_PER_SEC = 3.8;
-export const SCENE_OVERHEAD = 0.7; // lead + tail per scene
+// Calibrated on the episode 1 render (Piper LibriTTS speaker 92, lengthScale 1.05, pause model in script.mjs).
+export const WORDS_PER_SEC = 3.5;
+export const SCENE_OVERHEAD = 1.0; // scene lead + tail (SCENE_LEAD + SCENE_TAIL in timeline.mjs)
 export const INTRO_SEC = 2;
 export const ENDSCREEN_SEC = 20;
 
 export const estimateScene = (s) => {
   const units = parseNarration(s.narration);
   const segs = segmentUnits(units);
-  const pauses = segs.slice(0, -1).reduce((n, g) => n + g.pause, 0);
+  const pauses = segs.slice(0, -1).reduce((n, g) => n + g.pause, 0) + (segs.length ? segs[segs.length - 1].extra : 0);
   const spoken = units.reduce((n, u) => n + Math.max(1, u.spoken.split(/\s+/).filter(Boolean).length), 0);
   return spoken / WORDS_PER_SEC + pauses + SCENE_OVERHEAD + (s.hold ?? 0);
 };

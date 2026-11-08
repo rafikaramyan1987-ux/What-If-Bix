@@ -7,7 +7,7 @@ description: |
   Halve the distance to the Moon and what happens? Bix takes your questions on location: would it look huge, how wild would the tides get, could it crash into us, and what happens to eclipses?
   The physics is real (one cube law does most of the damage), and the answers are stranger, and a lot prettier, than you might expect.
 tags: [science, what if, moon, tides, astronomy, roche limit, solar eclipse, physics, space, explained, animation, what if bix]
-voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 0.92 }
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
 music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 55 }
 introAfter: cold-open
 outro:

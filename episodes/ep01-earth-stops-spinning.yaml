@@ -9,11 +9,11 @@ description: |
   Earth stops spinning for ONE second. That sounds harmless... until you learn how fast you're moving right now.
   Bix finds out what happens to you, the air, the oceans and one very unlucky sandwich, and why the restart might be even worse than the stop.
 tags: [what if earth stopped spinning, earth stops spinning, earth rotation, physics, science explained, inertia, leap second, space, educational animation, what if bix]
-voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 0.92 }
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
 music: { style: curious, gain: 0.2, duck: 0.55, seed: 7 }
 introAfter: harmless
 outro:
-  narration: "That's one second you'll never get back. Spend the next five minutes on another what-if, right here. And if you want Bix to break more planets, subscribe. Responsibly."
+  narration: "That's one second you'll never get back. Spend the next five minutes on another what-if, right here. And if you want Bix to break more planets, subscribe. [beat 0.3] Responsibly."
   background: { type: space, tint: blue }
 
 scenes:
@@ -49,7 +49,7 @@ scenes:
     sfx:
       - { name: boing, at: "@Sounds+0.15", gain: 0.5 }
       - { name: pop, at: "@snack", gain: 0.5 }
-    narration: "Sounds harmless, right? It's *one* second! Well... grab a snack. This is going to get weird."
+    narration: "Sounds harmless, right? It's *one* second! [beat 0.3] Well... grab a snack. This is going to get weird."
 
   # ------------------------------------------------------------- how fast
   - id: how-fast
@@ -269,7 +269,7 @@ scenes:
     texts:
       - { at: "@western", text: "→ west coasts of continents", style: label, x: 1150, y: 200 }
     camera: { shake: ["@piles"], shakeAmp: 12 }
-    narration: "The oceans keep going too. Water sloshes east and piles up against the western coasts of every continent, in walls of tsunami-sized waves. Somewhere, a surfer is having the best and worst day of their life."
+    narration: "The oceans keep going too. Water sloshes east and piles up against the western coasts of every continent, in walls of tsunami-sized waves. Somewhere, a surfer is having the best and worst day of their life. [beat]"
 
   # ------------------------------------------------------------- survivors
   - id: survivors
@@ -290,7 +290,7 @@ scenes:
       - { at: "@nothing", action: cheer }
     texts:
       - { at: "@International", text: "ISS · 400 km up", style: label, x: 820, y: 120, color: "#8a5cff" }
-    narration: "So who gets through this just fine? Astronauts on the International Space Station. They orbit Earth instead of riding on it, so for them, it's just a very strange view. People at the poles barely move at all. Penguins are mostly fine too, though they don't actually live at the South Pole. And pilots? Their planes already fly with the air around them. For one second, nothing changes up there."
+    narration: "So who gets through this just fine? Astronauts on the International Space Station. They orbit Earth instead of riding on it, so for them, it's just a very strange view. People at the poles barely move at all. Penguins are mostly fine too, though they don't actually live at the South Pole. [beat] And pilots? Their planes already fly with the air around them. For one second, nothing changes up there."
 
   # ------------------------------------------------------------- restart
   - id: restart
@@ -381,7 +381,7 @@ scenes:
       - { at: "@computers", action: facepalm }
     texts:
       - { at: "@milliseconds", text: "± milliseconds", style: note, x: 760, y: 560 }
-    narration: "Here's the wild part: Earth's spin really does change, just a tiny bit. Tides, earthquakes and melting ice nudge the length of a day by milliseconds. In 2020, Earth even clocked some of its shortest days ever measured. To keep clocks honest, scientists have added 27 leap seconds since 1972. And they plan to stop by 2035, partly because leap seconds keep confusing computers."
+    narration: "Here's the wild part: Earth's spin really does change, just a tiny bit. Tides, earthquakes and melting ice nudge the length of a day by milliseconds. In 2020, Earth even clocked some of its shortest days ever measured. To keep clocks honest, scientists have added 27 leap seconds since 1972. And they plan to stop by 2035, partly because leap seconds keep confusing computers. [beat]"
 
   - id: wrap-up
     transition: iris
@@ -398,7 +398,7 @@ scenes:
     texts:
       - { at: "@sandwich", text: "HOLD ON TO YOUR SANDWICH", style: title, y: 165 }
     camera: { zoom: [1.12, 1.0], focus: [960, 560] }
-    narration: "So, could Earth stop spinning for one second? No. Nothing we know of could brake a planet that fast. But if it did, the stop would be bad, and the restart would be worse. On the bright side, you'd have the best excuse ever for being late. Hold on to your sandwich."
+    narration: "So, could Earth stop spinning for one second? No. Nothing we know of could brake a planet that fast. But if it did, the stop would be bad, and the restart would be worse. On the bright side, you'd have the best excuse ever for being late. [beat] Hold on to your sandwich."
 
 shorts:
   - id: short-supersonic

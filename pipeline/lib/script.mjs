@@ -8,47 +8,76 @@ export { BACKGROUNDS, BIX_ACTIONS, PROPS, SFX };
 
 const SENTENCE_END = /([.!?]["'”’)\]]*|\.\.\.|…)$/;
 
+// Pause model (seconds). Base pauses follow punctuation; extra "beats" give jokes,
+// key numbers and explicit [beat] markers room to land.
+export const PAUSE = {
+  ellipsis: 0.42, question: 0.3, period: 0.24, other: 0.15,
+  number: 0.35, // after a sentence that states a number
+  punch: 0.35, // after a short punchy sentence (≤ 4 words) — usually a joke
+  exclaim: 0.15, // extra after "!"
+  beat: 0.4, // default for an explicit [beat]
+  max: 0.9,
+};
+
 /**
  * Split narration text into caption/TTS units.
- * Markup: {shown|spoken} replaces spoken text; *word* marks emphasis.
+ * Markup: {shown|spoken} replaces spoken text; *word* marks emphasis;
+ * [beat] or [beat 0.5] inserts a pause after the previous word.
  * @param {string} text
- * @returns {{display: string, spoken: string, emphasis: boolean}[]}
+ * @returns {{display: string, spoken: string, emphasis: boolean, beat?: number}[]}
  */
 export const parseNarration = (text) => {
   const subs = [];
-  const marked = text.replace(/\{([^{}|]*)\|([^{}]*)\}/g, (_, d, s) => {
-    subs.push([d, s]);
-    return `\u0001${subs.length - 1}\u0002`;
-  });
-  return marked
-    .split(/\s+/)
-    .filter(Boolean)
-    .map((chunk) => {
-      let emphasis = false;
-      let c = chunk;
-      if (/\*/.test(c)) {
-        emphasis = true;
-        c = c.replace(/\*/g, '');
-      }
-      const restore = (which) => c.replace(/\u0001(\d+)\u0002/g, (_, i) => subs[Number(i)][which]);
-      const display = restore(0);
-      const spoken = restore(1);
-      return { display, spoken, emphasis };
-    })
-    .filter((u) => u.display.length || u.spoken.length);
+  const marked = text
+    .replace(/\[beat(?:\s+(\d*\.?\d+))?\]/gi, (_, secs) => ` \u0003${secs ?? PAUSE.beat}\u0004 `)
+    .replace(/\{([^{}|]*)\|([^{}]*)\}/g, (_, d, s) => {
+      subs.push([d, s]);
+      return `\u0001${subs.length - 1}\u0002`;
+    });
+  const out = [];
+  for (const chunk of marked.split(/\s+/).filter(Boolean)) {
+    const beat = chunk.match(/^\u0003([\d.]+)\u0004$/);
+    if (beat) {
+      if (out.length) out[out.length - 1].beat = (out[out.length - 1].beat ?? 0) + parseFloat(beat[1]);
+      continue;
+    }
+    let emphasis = false;
+    let c = chunk;
+    if (/\*/.test(c)) {
+      emphasis = true;
+      c = c.replace(/\*/g, '');
+    }
+    const restore = (which) => c.replace(/\u0001(\d+)\u0002/g, (_, i) => subs[Number(i)][which]);
+    const display = restore(0);
+    const spoken = restore(1);
+    if (display.length || spoken.length) out.push({ display, spoken, emphasis });
+  }
+  return out;
 };
 
-/** Pause (seconds) to leave after a unit that ends a segment. */
+/** Base pause (seconds) after a unit that ends a segment, from its punctuation. */
 export const pauseAfter = (display) => {
-  if (/(\.\.\.|…)["'”’)]*$/.test(display)) return 0.42;
-  if (/[?!]["'”’)]*$/.test(display)) return 0.3;
-  if (/\.["'”’)]*$/.test(display)) return 0.24;
-  return 0.15;
+  if (/(\.\.\.|…)["'”’)]*$/.test(display)) return PAUSE.ellipsis;
+  if (/[?!]["'”’)]*$/.test(display)) return PAUSE.question;
+  if (/\.["'”’)]*$/.test(display)) return PAUSE.period;
+  return PAUSE.other;
+};
+
+/** Extra beat after a segment: key numbers, short punchlines, "!", explicit [beat]. */
+export const beatAfter = (units) => {
+  const last = units[units.length - 1];
+  let extra = 0;
+  if (units.some((u) => /\d/.test(u.display))) extra += PAUSE.number;
+  if (units.length <= 4 && /[.!]["'”’)]*$/.test(last.display) && !/(\.\.\.|…)$/.test(last.display)) extra += PAUSE.punch;
+  if (/!["'”’)]*$/.test(last.display)) extra += PAUSE.exclaim;
+  if (last.beat) extra += last.beat;
+  return extra;
 };
 
 /**
- * Group units into TTS segments (sentences or ellipsis-separated phrases).
- * @returns {{units: ReturnType<typeof parseNarration>, pause: number}[]}
+ * Group units into TTS segments (sentences, ellipsis-separated phrases, or up to a [beat]).
+ * `pause` = base + extra beat (capped); `extra` is the beat part, also added to a scene's tail.
+ * @returns {{units: ReturnType<typeof parseNarration>, pause: number, extra: number}[]}
  */
 export const segmentUnits = (units) => {
   const out = [];
@@ -56,8 +85,10 @@ export const segmentUnits = (units) => {
   units.forEach((u, i) => {
     cur.push(u);
     const last = i === units.length - 1;
-    if (SENTENCE_END.test(u.display) || last) {
-      out.push({ units: cur, pause: pauseAfter(u.display) });
+    if (SENTENCE_END.test(u.display) || u.beat || last) {
+      const base = pauseAfter(u.display);
+      const extra = beatAfter(cur);
+      out.push({ units: cur, pause: Math.min(PAUSE.max, base + extra), extra: Math.min(PAUSE.max - base, extra) });
       cur = [];
     }
   });

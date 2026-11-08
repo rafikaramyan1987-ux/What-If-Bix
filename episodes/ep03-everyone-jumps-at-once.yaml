@@ -6,7 +6,7 @@ description: |
   We weigh humanity, put it on a bar chart next to Earth, and do the real momentum math (spoiler: atoms are involved, and they are not impressed).
   Plus the real football crowd that showed up on a seismometer, and the London bridge that crowds really did shake.
 tags: [science, what if, physics, momentum, earth, earthquake, seismology, beast quake, millennium bridge, newton, animation, education]
-voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 0.92 }
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
 music: { style: curious, gain: 0.2, duck: 0.55, seed: 33 }
 introAfter: cold-open
 outro:

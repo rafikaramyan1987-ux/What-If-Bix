@@ -8,6 +8,8 @@ export const TIME_KEYS = new Set([
 ]);
 
 export const INTRO_SECONDS = 2;
+export const SCENE_LEAD = 0.5;
+export const SCENE_TAIL = 0.5;
 export const ENDSCREEN_SECONDS = 20;
 
 /**
@@ -106,10 +108,33 @@ export const buildCaptionPages = (words, { maxWords = 5, maxChars = 30 } = {}) =
     if (strongBreak || softBreak || cur.length >= maxWords || nextChars > maxChars) flush();
   });
   flush();
+  // fold a lone trailing word ("east.") into the page before it when they belong together
+  for (let i = pages.length - 1; i > 0; i--) {
+    const p = pages[i];
+    const prev = pages[i - 1];
+    const sameSentence = !/[.!?…]["'”’)]*$/.test(prev.words[prev.words.length - 1].text);
+    if (p.words.length === 1 && sameSentence && p.start - prev.end < 0.2 && prev.words.length <= maxWords) {
+      prev.words.push(...p.words);
+      prev.end = p.end;
+      pages.splice(i, 1);
+    }
+  }
+  // merge very short comma fragments ("the air,") with the next page of the same sentence
+  for (let i = 0; i < pages.length - 1; i++) {
+    const p = pages[i];
+    const next = pages[i + 1];
+    const endsSentence = /[.!?…]["'”’)]*$/.test(p.words[p.words.length - 1].text);
+    if (!endsSentence && p.end - p.start < 0.45 && next.start - p.end < 0.2 && p.words.length + next.words.length <= maxWords + 1) {
+      p.words.push(...next.words);
+      p.end = next.end;
+      pages.splice(i + 1, 1);
+      i--;
+    }
+  }
   // keep a page on screen until the next one starts (no flicker in short gaps)
   for (let i = 0; i < pages.length - 1; i++) {
     const gap = pages[i + 1].start - pages[i].end;
-    if (gap > 0 && gap < 0.6) pages[i].end = pages[i + 1].start - 0.02;
+    if (gap > 0 && gap < 1.0) pages[i].end = pages[i + 1].start - 0.02;
   }
   return pages;
 };
@@ -146,8 +171,8 @@ const AUTO_SFX = (scene) => {
 export const buildTimeline = (ep, plan, tts, opts = {}) => {
   const fps = opts.fps ?? 30;
   const leadFirst = opts.leadFirst ?? 0.45;
-  const lead = opts.lead ?? 0.3;
-  const tailDefault = opts.tail ?? 0.4;
+  const lead = opts.lead ?? SCENE_LEAD; // breathing room after a scene change
+  const tailDefault = opts.tail ?? SCENE_TAIL;
   const scenes = [];
   const words = [];
   const narration = [];
@@ -172,7 +197,9 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
       t += r.duration + (gi === plan[si].segments.length - 1 ? 0 : seg.pause);
     });
     const narrEnd = t;
-    let end = narrEnd + (s.tail ?? tailDefault) + (s.hold ?? 0);
+    const segs = plan[si].segments;
+    const lastBeat = segs.length ? segs[segs.length - 1].extra ?? 0 : 0; // let a final joke/number land
+    let end = narrEnd + (s.tail ?? tailDefault) + lastBeat + (s.hold ?? 0);
     if (s.minDuration) end = Math.max(end, start + s.minDuration);
     if (s.kind === 'intro') end = start + INTRO_SECONDS;
     cursor = end;

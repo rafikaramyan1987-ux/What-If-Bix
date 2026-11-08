@@ -3,7 +3,7 @@ id: ci-mini
 title: "What if CI rendered a tiny episode?"
 description: "Pipeline smoke test."
 tags: [test, ci, bix, render, smoke]
-voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 0.92 }
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
 music: { style: curious, seed: 3 }
 outro:
   narration: "Thanks for testing."

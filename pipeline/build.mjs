@@ -62,7 +62,8 @@ const main = async () => {
 
   // 1. narration
   const plan = planNarration(ep);
-  const voice = { provider: 'piper', ...(ep.voice ?? {}) };
+  // Defaults: Piper LibriTTS speaker 92 at lengthScale 1.05 (approved channel voice and pace).
+  const voice = { provider: 'piper', model: 'en-us-libritts-high', speaker: 92, lengthScale: 1.05, ...(ep.voice ?? {}) };
   // BIX_TTS_PROVIDER=elevenlabs|openai switches to a paid voice (API key from the environment).
   if (process.env.BIX_TTS_PROVIDER) voice.provider = process.env.BIX_TTS_PROVIDER;
   if (voice.provider === 'piper') voice.model = resolveVoiceModel(voice);

@@ -22,7 +22,13 @@ def test_align_units_snaps_punctuation_to_gap():
 
 def test_align_units_without_gaps_is_proportional():
     times = tts.align_units([1, 3], breaks=[], duration=4.0, gaps=[])
-    assert abs(times[0][1] - 1.0) < 1e-9
+    e = tts.WORD_EDGE
+    assert abs(times[0][1] - 4.0 * (1 + e) / (4 + 2 * e)) < 1e-9
+
+
+def test_short_words_get_a_minimum_share():
+    times = tts.align_units([1, 12, 1], breaks=[], duration=2.0, gaps=[])
+    assert times[0][1] - times[0][0] > 0.15
 
 
 def test_find_gaps_detects_silence():

@@ -9,7 +9,7 @@ description: |
   One second you're scrolling. The next, the entire internet is gone, everywhere, all at once. Bix follows the fallout minute by minute, hour by hour, all the way to month one: what breaks first, what quietly keeps working, and why your grandparents' radio suddenly becomes the most important gadget in the house.
   Plus the honest answer to the real question: could the whole internet actually vanish?
 tags: [science, what if, internet, technology, undersea cables, ARPANET, CrowdStrike, Facebook outage, GPS, explained, animation, what if bix]
-voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 0.92 }
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
 music: { style: tense, gain: 0.2, duck: 0.55, seed: 44 }
 introAfter: cold-open
 outro:

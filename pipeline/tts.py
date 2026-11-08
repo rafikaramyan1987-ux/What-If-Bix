@@ -3,7 +3,7 @@
 
 Reads a JSON job (written by pipeline/build.mjs):
   {
-    "voice": {"provider": "piper", "model": "...onnx", "speaker": 437, "lengthScale": 0.9},
+    "voice": {"provider": "piper", "model": "...onnx", "speaker": 92, "lengthScale": 1.05},
     "outDir": "build/ep/tts",
     "segments": [{"id": "s0", "units": [{"display": "What", "spoken": "What"}, ...]}, ...]
   }
@@ -36,6 +36,7 @@ import numpy as np
 from scipy.signal import resample_poly
 
 OUT_SR = 48000
+WORD_EDGE = 1.5  # phoneme-equivalents added to every word's weight
 PUNCT_BREAK = re.compile(r"[,;:—–)\]]$|\.\.\.$|…$")
 
 
@@ -90,7 +91,9 @@ def align_units(weights, breaks, duration, gaps, max_snap=0.6):
     n = len(weights)
     if n == 0:
         return []
-    w = np.maximum(np.asarray(weights, dtype=float), 1.0)
+    # +WORD_EDGE per word: every word gets a minimum share (onsets, transitions), so short
+    # words like "a" or "of" don't flash by in a few milliseconds.
+    w = np.maximum(np.asarray(weights, dtype=float), 1.0) + WORD_EDGE
     cum = np.concatenate([[0.0], np.cumsum(w)])
     est = cum / cum[-1] * duration  # estimated boundary after unit i at est[i+1]
     anchors = [(0, 0.0, 0.0)]  # (unit index boundary, end time of previous, start of next)
@@ -128,7 +131,7 @@ class PiperProvider:
         self.voice = PiperVoice.load(cfg["model"])
         self.syn = SynthesisConfig(
             speaker_id=cfg.get("speaker"),
-            length_scale=cfg.get("lengthScale"),
+            length_scale=cfg.get("lengthScale", 1.05),
             noise_scale=cfg.get("noiseScale"),
             noise_w_scale=cfg.get("noiseW"),
         )
@@ -246,47 +249,61 @@ def write_wav(path, audio, sr):
         w.writeframes(pcm.tobytes())
 
 
+def read_wav(path):
+    with wave.open(path, "rb") as w:
+        data = np.frombuffer(w.readframes(w.getnframes()), dtype="<i2").astype(np.float64) / 32768
+    return data
+
+
 def run(job):
     os.makedirs(job["outDir"], exist_ok=True)
     prov = None
     results = []
     vkey = json.dumps(job["voice"], sort_keys=True)
+
+    def provider():
+        nonlocal prov
+        if prov is None:
+            prov = PROVIDERS[job["voice"].get("provider", "piper")](job["voice"])
+        return prov
+
     for seg in job["segments"]:
         units = seg["units"]
         text = " ".join(u["spoken"] for u in units)
-        # Cache by content: same text + voice -> same audio and timings (reproducible rebuilds).
-        h = hashlib.sha1((vkey + "|" + json.dumps(units, sort_keys=True)).encode()).hexdigest()[:16]
+        # Audio is cached by spoken text + voice (reproducible rebuilds, no re-synthesis).
+        # Word alignment is recomputed every run so alignment improvements apply to cached audio.
+        h = hashlib.sha1((vkey + "|" + json.dumps([u["spoken"] for u in units])).encode()).hexdigest()[:16]
         path = os.path.join(job["outDir"], f"{seg['id']}-{h}.wav")
         meta = path + ".json"
+        exact = None
         if os.path.exists(path) and os.path.exists(meta):
-            cached = json.load(open(meta))
-            results.append({"id": seg["id"], "file": path, **cached})
-            continue
-        if prov is None:
-            prov = PROVIDERS[job["voice"].get("provider", "piper")](job["voice"])
-        audio, sr, chars = prov.synth(text)
-        audio = audio.astype(np.float64)
-        trimmed, offset = trim(audio, sr)
-        if sr != OUT_SR:
-            g = np.gcd(sr, OUT_SR)
-            trimmed = resample_poly(trimmed, OUT_SR // g, sr // g)
+            trimmed = read_wav(path)
+            exact = json.load(open(meta)).get("exact")
+        else:
+            audio, sr, chars = provider().synth(text)
+            audio = audio.astype(np.float64)
+            trimmed, offset = trim(audio, sr)
+            if sr != OUT_SR:
+                g = np.gcd(sr, OUT_SR)
+                trimmed = resample_poly(trimmed, OUT_SR // g, sr // g)
+            if chars:
+                exact = char_alignment_to_units(units, chars, offset)
+                if any(t is None for t in exact):
+                    exact = None
+            peak = np.max(np.abs(trimmed)) or 1.0
+            trimmed = trimmed / peak * 0.89
+            write_wav(path, trimmed, OUT_SR)
+            json.dump({"exact": exact}, open(meta, "w"))
+            print(f"tts {seg['id']}: {len(trimmed) / OUT_SR:.2f}s  {text[:60]}", file=sys.stderr)
         dur = len(trimmed) / OUT_SR
-        times = None
-        if chars:
-            times = char_alignment_to_units(units, chars, offset)
-            if any(t is None for t in times):
-                times = None
-        if times is None:
-            weights = [prov.weight(u["spoken"]) for u in units]
+        if exact:
+            times = exact
+        else:
+            weights = [provider().weight(u["spoken"]) for u in units]
             breaks = [i for i, u in enumerate(units) if PUNCT_BREAK.search(u["display"].strip())]
-            gaps = find_gaps(trimmed, OUT_SR)
-            times = align_units(weights, breaks, dur, gaps)
-        peak = np.max(np.abs(trimmed)) or 1.0
-        write_wav(path, trimmed / peak * 0.89, OUT_SR)
-        info = {"duration": dur, "units": [{"start": round(s, 3), "end": round(e, 3)} for s, e in times]}
-        json.dump(info, open(meta, "w"))
-        results.append({"id": seg["id"], "file": path, **info})
-        print(f"tts {seg['id']}: {dur:.2f}s  {text[:60]}", file=sys.stderr)
+            times = align_units(weights, breaks, dur, find_gaps(trimmed, OUT_SR))
+        results.append({"id": seg["id"], "file": path, "duration": dur,
+                        "units": [{"start": round(s, 3), "end": round(e, 3)} for s, e in times]})
     return {"segments": results}
 
 

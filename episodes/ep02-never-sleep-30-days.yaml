@@ -6,7 +6,7 @@ description: |
   Along the way: Randy Gardner's famous 11-day record, the rat experiments that showed total sleep loss can kill, and the night-time "rinse cycle" scientists found in sleeping brains.
   A thought experiment, not a challenge. Please do not try this at home (or anywhere).
 tags: [science, what if, sleep, sleep deprivation, brain, neuroscience, randy gardner, microsleep, glymphatic system, health, animation, education]
-voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 0.92 }
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
 music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 21 }
 introAfter: cold-open
 outro:

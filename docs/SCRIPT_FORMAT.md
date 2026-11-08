@@ -16,13 +16,17 @@ chapters, sources and estimated lengths without rendering.
   says *word* in this scene's narration. Variants: `"@word#2"` (2nd occurrence), `"@word.end"`,
   `"@word+0.4"`, `"@word-0.2"`, `"@start"`, `"@end"`. Matching ignores case and surrounding
   punctuation (`"@don't"` matches `*don't*.`). Numbers match as written (`"@1,670"`).
+- Pauses: sentences get a pause from their punctuation, plus an automatic **beat** (~0.35 s) after a
+  sentence with a number, after short punchy sentences (≤ 4 words, usually the joke), and after `!`.
+  Scenes start with a 0.5 s breath. Add `[beat]` (0.4 s) or `[beat 0.6]` after any word to hold for a
+  laugh; it also splits the sentence there.
 - Narration markup: `{shown|spoken}` (captions show *shown*, the voice says *spoken*, e.g.
   `{465 m/s|four hundred sixty-five meters per second}`) and `*word*` (emphasis colour in captions).
   Write numbers the voice must say in words with this markup.
 - Each sentence (`.`, `?`, `!`, `...`) becomes one TTS segment. Short punchy sentences = better timing.
-- Pace: about **3.8 spoken words per second** (voice 92, counting the words actually spoken), plus pauses. A long video is 4–6 min
-  including the 2 s intro and the 20 s end screen (≈ 800–1,050 narration words; aim for ~900).
-  A Short is 30–55 s (≈ 100–170 words).
+- Pace: about **3.5 spoken words per second** while talking (voice 92, lengthScale 1.05), ≈ 2.7
+  words/s overall once pauses are included. A long video is 4–6 min including the 2 s intro and the
+  20 s end screen (≈ 650–950 narration words; aim for ~800). A Short is 30–55 s (≈ 80–140 words).
 
 ## Top level
 
@@ -33,7 +37,7 @@ title: "What if you never slept for 30 days?"   # YouTube title, ≤ 100 chars
 description: |                     # first lines of the YouTube description (chapters/sources/credits are appended)
   ...
 tags: [science, what if, ...]      # ≥ 5
-voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 0.92 }
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
 music: { style: curious, gain: 0.2, duck: 0.55, seed: 7 }   # styles: curious | tense | dreamy; change seed per episode
 introAfter: cold-open              # scene id after which the 2 s intro sting plays (default: first scene)
 outro:                             # spoken over the 20 s end screen; must be unique per episode
