@@ -401,24 +401,78 @@ scenes:
     narration: "So, could Earth stop spinning for one second? No. Nothing we know of could brake a planet that fast. But if it did, the stop would be bad, and the restart would be worse. On the bright side, you'd have the best excuse ever for being late. [beat] Hold on to your sandwich."
 
 shorts:
+  # Each Short is a standalone mini-episode: the first scene is overridden so it opens on a
+  # hook line that needs no context, with motion on frame 0 and a payoff inside 3 s.
+  # A SUBSCRIBE call-to-action ("Subscribe for more what ifs!") is appended automatically.
   - id: short-supersonic
     title: "Earth stops for ONE second and you go supersonic"
     from: brakes
     to: landing
     hook: "EARTH STOPS FOR 1 SECOND"
     description: "If Earth's spin stopped for a single second, you'd keep moving east at about 1,670 km/h."
+    scenes:
+      brakes:
+        narration: "Earth stops for *one* second. You *don't*. Neither does the air. Or the oceans. Or that sandwich you were holding."
+        props:
+          - { type: earth, x: 1050, y: 330, r: 95, spin: 0.6, stopAt: "@stops" }
+          - { type: skid, x: 1050, y: 330, r: 95, at: "@stops+0.1" }
+          - { type: house, x: 1260, y: 800, s: 0.95, roofAt: "@air+0.25" }
+          - { type: tree, x: 1640, y: 800, s: 1.0, windAt: "@air" }
+          - { type: wind, at: "@air", count: 14, band: 650 }
+          - { type: puff, at: "@don't", x: 820, y: 800 }
+          - { type: wave, at: "@oceans", h: 340, dur: 2.6, layer: front }
+          - { type: flyer, item: sandwich, at: "@don't", hoverUntil: "@sandwich", from: [846, 707], to: [2300, 470], dur: 0.9, spin: 720, s: 0.77, layer: front }
+        bix:
+          - { at: 0, action: shock, hold: sandwich }
+          - { at: "@don't", action: fly, from: [820, 800], to: [2600, 420], dur: 0.55, params: { panic: 1 } }
+        texts:
+          - { at: "@stops", until: "@stops+1.1", text: "SCREEEECH!", style: shout, y: 230, rotate: -6 }
+          - { at: "@don't+0.1", until: "@don't+1.2", text: "WHOOSH", style: title, x: 1500, y: 360, rotate: -10 }
+        camera: { shake: ["@stops", "@don't"], shakeAmp: 20 }
+        sfx:
+          - { name: screech, at: "@stops", gain: 0.55 }
+          - { name: whoosh, at: "@don't", gain: 0.8 }
   - id: short-speed
     title: "You are moving at 1,670 km/h right now"
     from: how-fast
     to: why-dont-feel
     hook: "YOU'RE MOVING 1,670 KM/H"
     description: "Earth's rotation carries you at up to 1,670 km/h. So why don't you feel a thing?"
+    scenes:
+      how-fast:
+        narration: "Right now, you're *moving* at {1,670|sixteen hundred and seventy} kilometers per hour. That's how fast the ground travels at the equator, as Earth spins once a day."
+        bix:
+          - { at: 0, action: run, from: [120, 930], to: [380, 930], dur: 0.7 }
+          - { at: "@moving", action: shock }
+          - { at: "@equator", action: point }
   - id: short-restart
     title: "The restart would be WORSE than the stop"
     from: restart
     to: forever
     hook: "THE RESTART IS WORSE"
     description: "If Earth stopped spinning for one second and then restarted, everything would get hit twice."
+    scenes:
+      restart:
+        narration: "Stopping Earth is bad. Restarting it is *worse*. Say Earth stops for one second, then starts spinning again, instantly. Anything still flying east is suddenly back in sync with the ground. Lucky. But everything that crashed and stopped during that second? The ground races back under it at full speed. So the whole disaster happens again... in the *other* direction."
+        props:
+          - { type: earth, x: 1680, y: 200, r: 120, spin: 0.5, stopAt: "@Stopping+0.2", until: "@spinning" }
+          - { type: earth, x: 1680, y: 200, r: 120, spin: 0.5, at: "@spinning" }
+          - { type: burst, at: "@worse", until: "@worse+1.4", x: 1150, y: 330, text: "WORSE?!", r: 150, color: "#ff4d5e" }
+          - { type: crack, x: 1000, y: 850, w: 700, at: "@crashed" }
+          - { type: puff, at: "@other", x: 1500, y: 800 }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@worse", action: facepalm }
+          - { at: "@Lucky", action: shrug }
+          - { at: "@crashed", action: shock }
+          - { at: "@other", action: tumble, from: [1500, 800], to: [-500, 640], dur: 1.1 }
+        chips: []
+        camera: { shake: ["@Stopping", "@worse", "@other"], shakeAmp: 18 }
+        sfx:
+          - { name: screech, at: "@Stopping+0.2", gain: 0.45 }
+          - { name: boom, at: "@worse", gain: 0.5 }
+          - { name: rumble, at: "@spinning", gain: 0.5 }
+          - { name: whoosh, at: "@other", gain: 0.8 }
 
 thumbnail:
   title: ["EARTH", "STOPS"]

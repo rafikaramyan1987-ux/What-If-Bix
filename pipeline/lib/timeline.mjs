@@ -158,6 +158,12 @@ const AUTO_SFX = (scene) => {
     if (b.action === 'jump') fx.push({ name: 'swish', at: b.at + 0.15, gain: 0.3 });
     if (b.action === 'shock') fx.push({ name: 'pop', at: b.at, gain: 0.3 });
   }
+  if (scene.kind === 'cta') {
+    // button pops in, bell rings, button gets pressed (matches the CTA animation timing)
+    const d = scene.end - scene.start;
+    fx.push({ name: 'pop', at: scene.start + 0.02, gain: 0.6 }, { name: 'ding', at: scene.start + 0.35, gain: 0.55 },
+      { name: 'pop', at: scene.start + d * 0.55, gain: 0.5 }, { name: 'sparkle', at: scene.start + d * 0.58, gain: 0.4 });
+  }
   if (scene.transition === 'whip') fx.push({ name: 'whoosh', at: scene.start - 0.08, gain: 0.45 });
   if (scene.transition === 'iris') fx.push({ name: 'swish', at: scene.start, gain: 0.35 });
   return fx;
@@ -181,7 +187,7 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
   const all = expandScenes(ep);
   all.forEach((s, si) => {
     const start = cursor;
-    let t = start + (si === 0 ? leadFirst : s.lead ?? lead);
+    let t = start + (s.lead ?? (si === 0 ? leadFirst : lead));
     const sceneWords = [];
     plan[si].segments.forEach((seg, gi) => {
       const r = tts[seg.id];

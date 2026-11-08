@@ -36,6 +36,7 @@ export const SceneView: React.FC<{ scene: Scene; t: number; index: number }> = (
     [scene],
   );
   if (scene.kind === 'intro') return <IntroArt t={t - scene.start} />;
+  if (scene.kind === 'cta') return <Background spec={scene.background} t={t} />;
   if (scene.kind === 'endscreen') return <EndScreenArt t={t - scene.start} background={scene.background} dur={scene.end - scene.start} />;
   const st = bixStateAt(resolved, t, index);
   const back = scene.props.filter((p) => p.layer !== 'front');

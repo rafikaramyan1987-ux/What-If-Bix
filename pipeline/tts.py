@@ -23,6 +23,8 @@ optional and read ELEVENLABS_API_KEY / OPENAI_API_KEY from the environment.
 from __future__ import annotations
 
 import base64
+import glob
+import shutil
 import hashlib
 import json
 import os
@@ -273,7 +275,14 @@ def run(job):
         # Audio is cached by spoken text + voice (reproducible rebuilds, no re-synthesis).
         # Word alignment is recomputed every run so alignment improvements apply to cached audio.
         h = hashlib.sha1((vkey + "|" + json.dumps([u["spoken"] for u in units])).encode()).hexdigest()[:16]
-        path = os.path.join(job["outDir"], f"{seg['id']}-{h}.wav")
+        # File name = content hash only, so a Short reuses the exact audio of the same
+        # sentence in the long episode (older caches were named "<segment>-<hash>.wav").
+        path = os.path.join(job["outDir"], f"{h}.wav")
+        if not os.path.exists(path):
+            legacy = glob.glob(os.path.join(job["outDir"], f"*-{h}.wav"))
+            if legacy and os.path.exists(legacy[0] + ".json"):
+                shutil.copyfile(legacy[0], path)
+                shutil.copyfile(legacy[0] + ".json", path + ".json")
         meta = path + ".json"
         exact = None
         if os.path.exists(path) and os.path.exists(meta):

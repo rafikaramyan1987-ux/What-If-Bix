@@ -117,10 +117,14 @@ def run(job):
     mj = job.get("music")
     if mj:
         m = read_wav(mj["file"])
+        off = int(mj.get("offset", 0) * SR)  # start partway into the track (Shorts)
+        if 0 < off < len(m):
+            m = m[off:]
         reps = int(np.ceil(n / len(m)))
         m = np.tile(m, (reps, 1))[:n]
-        fo = int(SR * 1.5)
-        m[-fo:] *= np.linspace(1, 0, fo)[:, None]
+        fo = int(SR * mj.get("fadeOut", 1.5))
+        if fo > 0:
+            m[-fo:] *= np.linspace(1, 0, fo)[:, None]
         music = m * mj.get("gain", 0.25) * duck_envelope(voice, mj.get("duck", 0.6))
 
     mix = voice + sfx + music

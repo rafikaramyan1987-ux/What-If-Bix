@@ -13,7 +13,8 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { loadEpisode } from './lib/script.mjs';
 import { buildTimeline, planNarration } from './lib/timeline.mjs';
-import { buildMetadata, buildShortManifests, buildSrt, metadataMarkdown } from './lib/metadata.mjs';
+import { buildMetadata, buildSrt, metadataMarkdown } from './lib/metadata.mjs';
+import { shortEpisode, SHORT_MAX, SHORT_MIN, toShortManifest } from './lib/shorts.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PY = process.env.PYTHON ?? 'python3';
@@ -60,50 +61,70 @@ const main = async () => {
   fs.mkdirSync(out, { recursive: true });
   log(`episode ${ep.id}: ${ep.title}`);
 
-  // 1. narration
-  const plan = planNarration(ep);
   // Defaults: Piper LibriTTS speaker 92 at lengthScale 1.05 (approved channel voice and pace).
   const voice = { provider: 'piper', model: 'en-us-libritts-high', speaker: 92, lengthScale: 1.05, ...(ep.voice ?? {}) };
   // BIX_TTS_PROVIDER=elevenlabs|openai switches to a paid voice (API key from the environment).
   if (process.env.BIX_TTS_PROVIDER) voice.provider = process.env.BIX_TTS_PROVIDER;
   if (voice.provider === 'piper') voice.model = resolveVoiceModel(voice);
   if (process.env.BIX_VOICE_ID) voice.voiceId = process.env.BIX_VOICE_ID;
-  const job = {
-    voice,
-    outDir: path.join(build, 'tts'),
-    segments: plan.flatMap((p) => p.segments.map((s) => ({ id: s.id, units: s.units }))),
-  };
-  const jobFile = path.join(build, 'tts-job.json');
-  fs.writeFileSync(jobFile, JSON.stringify(job, null, 1));
-  log(`tts: ${job.segments.length} segments (${voice.provider})`);
-  const ttsOut = JSON.parse(run(PY, [path.join(ROOT, 'pipeline', 'tts.py'), jobFile], { capture: true }));
-  const tts = Object.fromEntries(ttsOut.segments.map((s) => [s.id, s]));
-
-  // 2. timeline
-  const { manifest, audio } = buildTimeline(ep, plan, tts);
-  fs.writeFileSync(path.join(build, 'manifest.json'), JSON.stringify(manifest, null, 1));
-  log(`timeline: ${manifest.scenes.length} scenes, ${manifest.duration.toFixed(2)} s`);
-
-  // 3. music + sfx (synthesized, deterministic)
   const sfxDir = path.join(ROOT, 'build', '_sfx');
   if (!fs.existsSync(path.join(sfxDir, 'sting.wav'))) run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'sfx', sfxDir]);
-  const music = ep.music ?? { style: 'curious' };
-  const musicFile = path.join(build, `music-${music.style}.wav`);
-  run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'music', music.style, String(manifest.duration + 1), musicFile, '--seed', String(music.seed ?? 7)]);
 
-  // 4. mix
-  const mixFile = path.join(build, 'mix.wav');
-  const mixJob = {
-    duration: manifest.duration,
-    out: mixFile,
-    workDir: path.join(build, 'mix'),
-    narration: audio.narration,
-    sfx: audio.sfx.map((f) => ({ ...f, file: path.join(sfxDir, `${f.name}.wav`) })),
-    music: { file: musicFile, gain: music.gain ?? 0.22, duck: music.duck ?? 0.55 },
+  /** TTS for every sentence (cached by content in build/<id>/tts) + timeline. */
+  const narrateAndTime = (epLike, name) => {
+    const plan = planNarration(epLike);
+    const job = {
+      voice,
+      outDir: path.join(build, 'tts'),
+      segments: plan.flatMap((p) => p.segments.map((s) => ({ id: s.id, units: s.units }))),
+    };
+    const jobFile = path.join(build, `tts-job-${name}.json`);
+    fs.writeFileSync(jobFile, JSON.stringify(job, null, 1));
+    const ttsOut = JSON.parse(run(PY, [path.join(ROOT, 'pipeline', 'tts.py'), jobFile], { capture: true }));
+    const tts = Object.fromEntries(ttsOut.segments.map((s) => [s.id, s]));
+    return buildTimeline(epLike, plan, tts);
   };
-  fs.writeFileSync(path.join(build, 'mix-job.json'), JSON.stringify(mixJob, null, 1));
-  run(PY, [path.join(ROOT, 'pipeline', 'mix.py'), path.join(build, 'mix-job.json')], { capture: true });
-  log('audio mixed');
+
+  /** Music (synthesized, deterministic) + narration + SFX -> loudness-normalised mix. */
+  const mixAudio = (manifestX, audioX, musicCfg, name) => {
+    const offset = musicCfg.offset ?? 0;
+    const musicFile = path.join(build, `music-${musicCfg.style}-${name}.wav`);
+    run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'music', musicCfg.style, String(manifestX.duration + offset + 1), musicFile,
+      '--seed', String(musicCfg.seed ?? 7)]);
+    const mixFile = path.join(build, `mix-${name}.wav`);
+    const mixJob = {
+      duration: manifestX.duration,
+      out: mixFile,
+      workDir: path.join(build, `mix-${name}`),
+      narration: audioX.narration,
+      sfx: audioX.sfx.map((f) => ({ ...f, file: path.join(sfxDir, `${f.name}.wav`) })),
+      music: { file: musicFile, gain: musicCfg.gain ?? 0.22, duck: musicCfg.duck ?? 0.55, offset, fadeOut: musicCfg.fadeOut ?? 1.5 },
+    };
+    fs.writeFileSync(path.join(build, `mix-job-${name}.json`), JSON.stringify(mixJob, null, 1));
+    run(PY, [path.join(ROOT, 'pipeline', 'mix.py'), path.join(build, `mix-job-${name}.json`)], { capture: true });
+    return mixFile;
+  };
+
+  // 1-2. narration + timeline (long episode)
+  const { manifest, audio } = narrateAndTime(ep, 'long');
+  fs.writeFileSync(path.join(build, 'manifest.json'), JSON.stringify(manifest, null, 1));
+  log(`timeline: ${manifest.scenes.length} scenes, ${manifest.duration.toFixed(2)} s (${voice.provider})`);
+
+  // Shorts: standalone mini-episodes (hook line, context-free cuts, CTA); unchanged
+  // sentences reuse the long episode's cached audio, only new lines are voiced.
+  const shorts = (ep.shorts ?? []).map((sh) => {
+    const sep = shortEpisode(ep, sh);
+    const t = narrateAndTime(sep, sh.id);
+    return { short: sh, epLike: sep, manifest: toShortManifest(t.manifest, sh, ep), audio: t.audio };
+  });
+  for (const s of shorts) {
+    const d = s.manifest.duration;
+    log(`short ${s.short.id}: ${d.toFixed(1)} s${d < SHORT_MIN || d > SHORT_MAX ? ` — WARNING outside ${SHORT_MIN}–${SHORT_MAX} s` : ''}`);
+  }
+
+  // 3-4. music + mix
+  const mixFile = only.has('long') ? mixAudio(manifest, audio, ep.music ?? { style: 'curious' }, 'long') : null;
+  if (mixFile) log('audio mixed');
 
   // 5. render
   const { bundle } = await import('@remotion/bundler');
@@ -131,25 +152,21 @@ const main = async () => {
     log(`video -> ${path.relative(ROOT, final)}`);
   }
 
-  const shorts = buildShortManifests(ep, manifest);
   if (only.has('shorts') && shorts.length) {
     fs.mkdirSync(path.join(out, 'shorts'), { recursive: true });
     for (const s of shorts) {
       const d = s.manifest.duration;
-      if (d < 30 || d > 60) log(`WARNING short ${s.short.id} is ${d.toFixed(1)} s (YouTube Shorts: ≤ 60 s, aim 30–55 s)`);
+      const shortMix = mixAudio(s.manifest, s.audio, { ...s.epLike.music, fadeOut: 0 }, s.short.id);
       const comp = await selectComposition({ serveUrl, id: 'Episode', inputProps: s.manifest, browserExecutable });
       const silent = path.join(build, `short-${s.short.id}-silent.mp4`);
       await renderMedia({
         composition: comp, serveUrl, codec: 'h264', outputLocation: silent, inputProps: s.manifest,
         browserExecutable, concurrency, crf: 18, muted: true, pixelFormat: 'yuv420p',
       });
-      const audio = path.join(build, `short-${s.short.id}.wav`);
-      run('ffmpeg', ['-y', '-v', 'error', '-ss', s.start.toFixed(3), '-t', d.toFixed(3), '-i', mixFile,
-        '-af', `afade=t=in:d=0.12,afade=t=out:st=${Math.max(0, d - 0.6).toFixed(3)}:d=0.6`, audio]);
       const final = path.join(out, 'shorts', `${s.short.id}.mp4`);
-      run('ffmpeg', ['-y', '-v', 'error', '-i', silent, '-i', audio, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
+      run('ffmpeg', ['-y', '-v', 'error', '-i', silent, '-i', shortMix, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
         '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', final]);
-      fs.writeFileSync(path.join(out, 'shorts', `${s.short.id}.en.srt`), buildSrt(s.manifest.captions, s.start));
+      fs.writeFileSync(path.join(out, 'shorts', `${s.short.id}.en.srt`), buildSrt(s.manifest.captions));
       log(`short ${s.short.id} (${d.toFixed(1)} s) -> ${path.relative(ROOT, final)}`);
     }
   }

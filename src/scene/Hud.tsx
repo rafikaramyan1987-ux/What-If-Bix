@@ -109,7 +109,8 @@ export const Chip: React.FC<{ spec: ChipSpec; t: number; x?: number; y?: number;
 export type CaptionLayout = { y: number; size: number; maxWidth: number; centerX: number };
 
 export const LONG_CAPTIONS: CaptionLayout = { y: 985, size: 62, maxWidth: 1500, centerX: 960 };
-export const SHORT_CAPTIONS: CaptionLayout = { y: 1640, size: 88, maxWidth: 960, centerX: 540 };
+// Shorts: inside the safe zone (clear of the right-hand buttons and bottom UI of TikTok / Shorts)
+export const SHORT_CAPTIONS: CaptionLayout = { y: 1405, size: 80, maxWidth: 800, centerX: 480 };
 
 /** Word-by-word captions: the current page is shown, the spoken word pops in yellow. */
 export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: CaptionLayout }> = ({ pages, t, layout }) => {

@@ -37,37 +37,6 @@ export const buildSrt = (pages, offset = 0) =>
     .map((p, i) => `${i + 1}\n${srtTime(p.start - offset)} --> ${srtTime(p.end - offset)}\n${p.words.map((w) => w.text).join(' ')}\n`)
     .join('\n');
 
-/** Manifests for each Short: a vertical slice of the long timeline. */
-export const buildShortManifests = (ep, manifest) =>
-  (ep.shorts ?? []).map((sh) => {
-    const a = manifest.scenes.find((s) => s.id === sh.from);
-    const b = manifest.scenes.find((s) => s.id === sh.to);
-    if (!a || !b) throw new Error(`short ${sh.id}: unknown scene`);
-    const start = a.start;
-    const end = b.end + 0.4;
-    const scenes = manifest.scenes
-      .filter((s) => s.end > start && s.start < end)
-      .map((s) => (s.id === sh.from ? { ...s, transition: 'cut' } : s));
-    return {
-      short: sh,
-      start,
-      end,
-      manifest: {
-        ...manifest,
-        id: `${manifest.id}-${sh.id}`,
-        title: sh.title,
-        format: 'short',
-        width: 1080,
-        height: 1920,
-        timeOffset: start,
-        duration: Math.round((end - start) * manifest.fps) / manifest.fps,
-        hook: sh.hook ?? ep.title.toUpperCase(),
-        scenes,
-        captions: manifest.captions.filter((p) => p.end > start && p.start < end),
-      },
-    };
-  });
-
 export const CREDIT_LINES = [
   'Animation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).',
   'Narration voice: Piper TTS, LibriTTS voice (CC BY 4.0).',

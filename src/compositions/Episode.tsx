@@ -2,6 +2,7 @@ import React from 'react';
 import { AbsoluteFill, CalculateMetadataFunction, useCurrentFrame, useVideoConfig } from 'remotion';
 import { Captions, Chip, LONG_CAPTIONS, OnScreenText, SHORT_CAPTIONS } from '../scene/Hud';
 import { SceneView, shortFraming } from '../scene/SceneView';
+import { CtaArt, HookBanner, SAFE } from './ShortsUI';
 import { C, FONT, TITLE_FONT } from '../theme';
 import { Manifest, Scene } from '../types';
 import { clamp, easeInOut, lerp } from '../util';
@@ -65,38 +66,17 @@ const Stage: React.FC<{ m: Manifest; t: number }> = ({ m, t }) => {
   );
 };
 
-const HookBanner: React.FC<{ text: string; t: number }> = ({ text, t }) => {
-  const k = easeInOut(t / 0.35);
-  const size = Math.min(76, 1700 / Math.max(10, text.length));
-  return (
-    <g transform={`translate(540 ${-140 + 260 * k}) rotate(-2)`}>
-      <rect x={-500} y={-70} width={1000} height={140} rx={34} fill={C.yellow} stroke={C.ink} strokeWidth={8} />
-      <text y={size * 0.36} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={size} fill={C.ink}>{text}</text>
-    </g>
-  );
-};
-
-const EndCard: React.FC<{ t: number }> = ({ t }) => {
-  const k = easeInOut(t / 0.4);
-  return (
-    <g transform={`translate(540 ${2000 - 170 * k})`}>
-      <rect x={-470} y={-70} width={940} height={140} rx={70} fill={C.purple} stroke={C.ink} strokeWidth={8} />
-      <text y={20} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={54} fill="#fff">Full episode on the channel ▶</text>
-    </g>
-  );
-};
-
 const Hud: React.FC<{ m: Manifest; t: number; vertical: boolean }> = ({ m, t, vertical }) => (
   <g>
     {m.scenes.flatMap((s, si) =>
       s.texts
         .filter((tx) => t >= tx.at - 0.01 && t <= (tx.until ?? s.end) + 0.3)
         .map((tx, j) => (
-          <OnScreenText key={`${si}-${j}`} spec={{ ...tx, until: tx.until ?? s.end, ...(vertical ? { x: 540, y: 470 + (tx.y ?? 260) * 0.42 } : {}) }} t={t}
+          <OnScreenText key={`${si}-${j}`} spec={{ ...tx, until: tx.until ?? s.end, ...(vertical ? { x: SAFE.centerX, y: 520 + (tx.y ?? 260) * 0.42 } : {}) }} t={t}
             stageW={vertical ? 1080 : 1920} />
         )),
     )}
-    {m.scenes.flatMap((s, si) => s.chips.map((c, j) => <Chip key={`${si}-${j}`} spec={c} t={t} x={vertical ? 60 : 70} y={vertical ? 300 : 70} scale={vertical ? 1.1 : 1} />))}
+    {m.scenes.flatMap((s, si) => s.chips.map((c, j) => <Chip key={`${si}-${j}`} spec={c} t={t} x={vertical ? SAFE.left : 70} y={vertical ? 430 : 70} scale={vertical ? 1.1 : 1} />))}
   </g>
 );
 
@@ -146,7 +126,18 @@ export const Episode: React.FC<Manifest> = (m) => {
   const rf = reframeAt(m, t);
   const s = rf.scale;
   const cy = s >= 1.77 ? 960 : 900; // full-bleed crops are centred; zoomed-out cards sit a bit higher
-  const end = m.duration + (m.timeOffset ?? 0);
+  const active = m.scenes[activeSceneIndex(m.scenes, t)];
+  if (active.kind === 'cta') {
+    return (
+      <AbsoluteFill style={{ background: C.night }}>
+        <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+          <Band t={t} />
+          <CtaArt t={t - active.start} dur={active.end - active.start} />
+          <Captions pages={m.captions} t={t} layout={SHORT_CAPTIONS} />
+        </svg>
+      </AbsoluteFill>
+    );
+  }
   return (
     <AbsoluteFill style={{ background: C.night }}>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
@@ -158,7 +149,6 @@ export const Episode: React.FC<Manifest> = (m) => {
         <Hud m={m} t={t} vertical />
         <Captions pages={m.captions} t={t} layout={SHORT_CAPTIONS} />
         {m.hook && <HookBanner text={m.hook} t={t - (m.timeOffset ?? 0)} />}
-        {end - t < 2.4 && <EndCard t={2.4 - (end - t)} />}
       </svg>
     </AbsoluteFill>
   );

@@ -8,6 +8,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEpisode, normWord, parseNarration, segmentUnits } from './lib/script.mjs';
 import { resolveDeep } from './lib/timeline.mjs';
+import { shortEpisode, SHORT_MAX, SHORT_MIN } from './lib/shorts.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 // Calibrated on the episode 1 render (Piper LibriTTS speaker 92, lengthScale 1.05, pause model in script.mjs).
@@ -38,6 +39,18 @@ export const similarity = (a, b) => {
   return inter / Math.max(1, Math.min(A.size, B.size));
 };
 
+const checkRefs = (scenes, errors, prefix = '') => {
+  for (const s of scenes) {
+    const words = parseNarration(s.narration).map((u, i) => ({ key: normWord(u.display), start: i, end: i + 0.5 }));
+    const ctx = { id: s.id, start: 0, end: 999, words };
+    try {
+      resolveDeep({ bg: s.background ?? {}, p: s.props ?? [], b: s.bix ?? [], t: s.texts ?? [], c: s.chips ?? [], f: s.sfx ?? [], cam: s.camera ?? {} }, ctx);
+    } catch (e) {
+      errors.push(prefix + e.message);
+    }
+  }
+};
+
 export const checkEpisode = (file) => {
   const errors = [];
   const warnings = [];
@@ -49,15 +62,7 @@ export const checkEpisode = (file) => {
   }
   const isSample = file.includes(`${path.sep}samples${path.sep}`) || file.includes('/samples/');
   // references
-  for (const s of ep.scenes) {
-    const words = parseNarration(s.narration).map((u, i) => ({ key: normWord(u.display), start: i, end: i + 0.5 }));
-    const ctx = { id: s.id, start: 0, end: 999, words };
-    try {
-      resolveDeep({ bg: s.background ?? {}, p: s.props ?? [], b: s.bix ?? [], t: s.texts ?? [], c: s.chips ?? [], f: s.sfx ?? [], cam: s.camera ?? {} }, ctx);
-    } catch (e) {
-      errors.push(e.message);
-    }
-  }
+  checkRefs(ep.scenes, errors);
   const sceneSec = ep.scenes.map(estimateScene);
   const total = sceneSec.reduce((a, b) => a + b, 0);
   let videoSec = total;
@@ -71,12 +76,22 @@ export const checkEpisode = (file) => {
     const shorts = ep.shorts ?? [];
     if (shorts.length < 2 || shorts.length > 3) errors.push('2–3 shorts are required');
     for (const sh of shorts) {
-      const a = ep.scenes.findIndex((s) => s.id === sh.from);
-      const b = ep.scenes.findIndex((s) => s.id === sh.to);
-      if (a < 0 || b < 0) continue;
-      const d = sceneSec.slice(a, b + 1).reduce((x, y) => x + y, 0);
-      if (d < 30 || d > 55) errors.push(`short ${sh.id}: estimated ${d.toFixed(1)} s is outside 30–55 s`);
+      let sep;
+      try {
+        sep = shortEpisode(ep, sh);
+      } catch (e) {
+        errors.push(e.message);
+        continue;
+      }
+      checkRefs(sep.scenes, errors, `short ${sh.id}: `);
+      // first scene's lead + every scene + the CTA
+      const d = sep.scenes.reduce((x, sc, i) => x + estimateScene(sc) - (i === 0 ? SCENE_OVERHEAD / 2 - (sc.lead ?? 0) : 0), 0);
+      if (d < SHORT_MIN || d > SHORT_MAX) errors.push(`short ${sh.id}: estimated ${d.toFixed(1)} s is outside ${SHORT_MIN}–${SHORT_MAX} s`);
+      const firstSeg = segmentUnits(parseNarration(sep.scenes[0].narration))[0];
+      const words = firstSeg.units.reduce((n, u) => n + Math.max(1, u.spoken.split(/\s+/).filter(Boolean).length), 0);
+      if (words / WORDS_PER_SEC > 3.5) warnings.push(`short ${sh.id}: hook line "${firstSeg.units.map((u) => u.display).join(' ')}" takes ~${(words / WORDS_PER_SEC).toFixed(1)} s to say; open with a short standalone hook`);
       if (sh.title.length > 100) errors.push(`short ${sh.id}: title longer than 100 characters`);
+      if (!sh.hook) warnings.push(`short ${sh.id}: no hook banner text`);
     }
     if (!ep.thumbnail) errors.push('thumbnail block is required');
     if (!ep.description) errors.push('description is required');

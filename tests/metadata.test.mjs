@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import path from 'node:path';
-import { buildChapters, buildMetadata, buildShortManifests, buildSrt, fmtTime } from '../pipeline/lib/metadata.mjs';
+import { buildChapters, buildMetadata, buildSrt, fmtTime } from '../pipeline/lib/metadata.mjs';
+import { DEFAULT_CTA, shortEpisode, toShortManifest } from '../pipeline/lib/shorts.mjs';
 import { loadEpisode } from '../pipeline/lib/script.mjs';
 import { buildTimeline, expandScenes, planNarration } from '../pipeline/lib/timeline.mjs';
 import { checkEpisode, similarity } from '../pipeline/validate.mjs';
@@ -33,18 +34,39 @@ describe('full episode timeline', () => {
     expect(ch.length).toBeGreaterThanOrEqual(3);
     for (let i = 1; i < ch.length; i++) expect(ch[i].time - ch[i - 1].time).toBeGreaterThanOrEqual(10);
   });
-  it('slices shorts out of the long timeline', () => {
-    const shorts = buildShortManifests(ep1, manifest);
-    expect(shorts).toHaveLength(ep1.shorts.length);
-    for (const s of shorts) {
-      expect(s.manifest.width).toBe(1080);
-      expect(s.manifest.height).toBe(1920);
-      expect(s.manifest.scenes[0].transition).toBe('cut');
-      expect(s.manifest.captions.every((p) => p.end > s.start && p.start < s.end)).toBe(true);
+  const buildShorts = () =>
+    ep1.shorts.map((sh) => {
+      const sep = shortEpisode(ep1, sh);
+      const p = planNarration(sep);
+      const t = buildTimeline(sep, p, fakeTts(p));
+      return { short: sh, sep, manifest: toShortManifest(t.manifest, sh, ep1), audio: t.audio };
+    });
+  it('builds each Short as a standalone mini-episode with a hook and a CTA', () => {
+    for (const s of buildShorts()) {
+      const m = s.manifest;
+      expect(m.width).toBe(1080);
+      expect(m.height).toBe(1920);
+      expect(m.timeOffset).toBe(0);
+      expect(m.hook).toBeTruthy();
+      expect(m.scenes[0].transition).toBe('cut');
+      expect(m.captions[0].start).toBeLessThan(0.3); // hook line starts immediately
+      const last = m.scenes[m.scenes.length - 1];
+      expect(last.kind).toBe('cta');
+      expect(last.end - last.start).toBeGreaterThan(1.2);
+      expect(last.end - last.start).toBeLessThan(3);
+      expect(m.captions.flatMap((p) => p.words.map((w) => w.text)).join(' ')).toContain(DEFAULT_CTA);
+      expect(s.audio.sfx.filter((f) => f.at >= last.start).map((f) => f.name)).toEqual(expect.arrayContaining(['pop', 'ding']));
+      expect(s.sep.scenes.some((sc) => sc.chapter)).toBe(false);
     }
   });
+  it('cuts context-dependent openers from the Shorts', () => {
+    const sup = buildShorts().find((s) => s.short.id === 'short-supersonic');
+    const text = sup.manifest.captions.flatMap((p) => p.words.map((w) => w.text)).join(' ');
+    expect(text.startsWith('Earth stops for one second.')).toBe(true);
+    expect(text).not.toContain('Now, the experiment.');
+  });
   it('writes metadata with chapters, sources and credits', () => {
-    const meta = buildMetadata(ep1, manifest, buildShortManifests(ep1, manifest));
+    const meta = buildMetadata(ep1, manifest, buildShorts());
     expect(meta.description).toContain('0:00 ');
     expect(meta.description).toContain('Sources:');
     expect(meta.description).toContain('CC BY 4.0');

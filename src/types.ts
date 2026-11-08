@@ -42,7 +42,7 @@ export type Scene = {
   camera?: CameraSpec;
   transition?: Transition;
   /** Special generated scenes: the channel intro sting and the end screen. */
-  kind?: 'intro' | 'endscreen';
+  kind?: 'intro' | 'endscreen' | 'cta';
   /** Shorts: fixed horizontal crop centre for this scene (default: follow Bix). */
   focus?: number;
 };
