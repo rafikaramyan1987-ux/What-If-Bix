@@ -1,6 +1,6 @@
 import React from 'react';
 import { C } from '../theme';
-import { Head } from './Bix';
+import { EmoteFx, Head } from './Bix';
 import { Emote, Face, Pose, isBlinking } from './poses';
 import { Held } from '../props/Held';
 
@@ -204,10 +204,19 @@ export const Bix2: React.FC<Bix2Props> = ({ variant, x, y, scale = 1, facing = 1
           <circle cx={r.near.hand[0]} cy={r.near.hand[1]} r={13} fill={s.hand} stroke={C.ink} strokeWidth={5} />
         </g>
       </g>
-      {emote === 'sweat' && (
-        <path d={`M ${x - facing * 95 * scale} ${y - (bix2Height(variant) - 70) * scale} q ${-12 * scale} ${20 * scale} 0 ${28 * scale} q ${12 * scale} ${-8 * scale} 0 ${-28 * scale} Z`}
-          fill="#7fd3ff" stroke={C.ink} strokeWidth={4} />
-      )}
+      {emote !== 'none' && (() => {
+        // head position after the whole-body rotation (flying, tumbling)
+        const a = rad(pose.rot);
+        const dx = r.head[0] - r.hip[0];
+        const dy = r.head[1] - r.hip[1];
+        const hx = r.hip[0] + dx * Math.cos(a) - dy * Math.sin(a);
+        const hy = r.hip[1] + dx * Math.sin(a) + dy * Math.cos(a);
+        return (
+        <g transform={`translate(${x + facing * scale * hx} ${y + scale * hy}) scale(${scale * s.head * 0.85})`}>
+          <EmoteFx kind={emote} t={t} />
+        </g>
+        );
+      })()}
     </g>
   );
 };

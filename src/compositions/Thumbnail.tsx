@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
-import { Bix } from '../bix/Bix';
+import { Character, CharacterContext, CharacterId } from '../bix/Character';
 import { actionPose, BixAction } from '../bix/poses';
 import { Background } from '../scene/backgrounds';
 import { Prop } from '../scene/props';
@@ -16,6 +16,7 @@ export const Thumbnail: React.FC<ThumbnailProps> = (p) => {
   const lineH = size * 0.98;
   const top = 540 - ((p.title.length - 1) * lineH) / 2 + size * 0.3 - (p.subtitle ? 60 : 0);
   return (
+    <CharacterContext.Provider value={(p.character ?? 'bix2') as CharacterId}>
     <AbsoluteFill style={{ background: C.night }}>
       <svg width="100%" height="100%" viewBox="0 0 1920 1080">
         <Background spec={p.background} t={2} />
@@ -44,7 +45,7 @@ export const Thumbnail: React.FC<ThumbnailProps> = (p) => {
             </g>
           )}
         </g>
-        <Bix x={p.bix.x ?? 1500} y={p.bix.y ?? 1000} scale={p.bix.scale ?? 2.1} facing={p.bix.facing ?? -1} pose={o.pose} face={o.face}
+        <Character x={p.bix.x ?? 1500} y={p.bix.y ?? 1000} scale={p.bix.scale ?? 2.1} facing={p.bix.facing ?? -1} pose={o.pose} face={o.face}
           emote={o.emote} t={t} hold={p.bix.hold} shadow={false} />
         {p.badge && (
           <g transform="translate(1790 120) rotate(12)">
@@ -54,5 +55,6 @@ export const Thumbnail: React.FC<ThumbnailProps> = (p) => {
         )}
       </svg>
     </AbsoluteFill>
+    </CharacterContext.Provider>
   );
 };

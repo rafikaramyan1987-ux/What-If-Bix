@@ -731,7 +731,102 @@ export const Badge: React.FC<PP> = ({ spec, t }) => {
   );
 };
 
+/** Newton, Bix's lab cactus (recurring character). mood: happy | shock | sleepy | wink; float: true bobs in the air. */
+export const Cactus: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const mood = str(spec.mood, 'happy');
+  const floatK = typeof spec.floatAt === 'number' ? smooth((t - spec.floatAt) / 1.2) : spec.float === true ? 1 : 0;
+  const lift = floatK * (90 + 12 * Math.sin(t * 2.4));
+  const wob = floatK * 6 * Math.sin(t * 1.7);
+  return (
+    <g transform={`translate(${num(spec.x, 300)} ${num(spec.y, 360) - lift}) scale(${num(spec.s, 1) * appearK(spec, t)}) rotate(${wob})`}>
+      <path d="M -44 0 L 44 0 L 36 62 L -36 62 Z" fill="#d9774a" stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+      <rect x={-50} y={-10} width={100} height={20} rx={6} fill="#c4643a" stroke={C.ink} strokeWidth={6} />
+      <path d="M -26 -10 L -26 -96 Q -26 -124 0 -124 Q 26 -124 26 -96 L 26 -10 Z" fill="#4cc25c" stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+      <path d="M -26 -54 L -46 -54 Q -58 -54 -58 -68 L -58 -88 Q -58 -98 -48 -98 Q -38 -98 -38 -88 L -38 -72 L -26 -72" fill="#4cc25c" stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+      <path d="M 26 -40 L 46 -40 Q 56 -40 56 -52 L 56 -70 Q 56 -80 46 -80 Q 36 -80 36 -70 L 36 -58 L 26 -58" fill="#4cc25c" stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+      {[[-12, -110], [10, -100], [-14, -40], [14, -30], [0, -70]].map(([x, y], i) => (
+        <line key={i} x1={x} y1={y} x2={x + (i % 2 ? 6 : -6)} y2={y - 6} stroke="#2a7a37" strokeWidth={3} strokeLinecap="round" />
+      ))}
+      <circle cx={6} cy={-130} r={9} fill={C.pink} stroke={C.ink} strokeWidth={4} />
+      {mood === 'shock' ? (
+        <>
+          <circle cx={-9} cy={-90} r={6} fill="#fff" stroke={C.ink} strokeWidth={3} />
+          <circle cx={9} cy={-90} r={6} fill="#fff" stroke={C.ink} strokeWidth={3} />
+          <ellipse cx={0} cy={-74} rx={5} ry={7} fill={C.mouth} />
+        </>
+      ) : mood === 'sleepy' ? (
+        <>
+          <path d="M -14 -90 l 9 0 M 5 -90 l 9 0" stroke={C.ink} strokeWidth={4} strokeLinecap="round" />
+          <path d="M -6 -76 q 6 4 12 0" stroke={C.ink} strokeWidth={4} fill="none" strokeLinecap="round" />
+        </>
+      ) : (
+        <>
+          <circle cx={-9} cy={-90} r={4.5} fill={C.ink} />
+          {mood === 'wink' ? <path d="M 5 -90 l 9 0" stroke={C.ink} strokeWidth={4} strokeLinecap="round" /> : <circle cx={9} cy={-90} r={4.5} fill={C.ink} />}
+          <path d="M -8 -78 q 8 8 16 0" stroke={C.ink} strokeWidth={4} fill="none" strokeLinecap="round" />
+        </>
+      )}
+      {spec.label !== false && floatK === 0 && (
+        <text y={44} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={20} fill="#fff">NEWTON</text>
+      )}
+    </g>
+  );
+};
+
+/** A flapping bird (falcon, vulture or pigeon) flying from -> to. */
+export const Bird: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const [x1, y1] = vec(spec.from, [-200, 300]);
+  const [x2, y2] = vec(spec.to, [2200, 300]);
+  const k = clamp((t - num(spec.at, 0)) / num(spec.dur, 3));
+  const x = x1 + (x2 - x1) * k;
+  const y = y1 + (y2 - y1) * k + 8 * Math.sin(t * 6);
+  const dirX = x2 >= x1 ? 1 : -1;
+  const kind = str(spec.kind, 'falcon');
+  const flap = Math.sin(t * (kind === 'vulture' ? 5 : 14));
+  const body = kind === 'vulture' ? '#6b4a2b' : kind === 'pigeon' ? '#8b93ad' : '#5b6178';
+  return (
+    <g transform={`translate(${x} ${y}) scale(${num(spec.s, 1) * dirX} ${num(spec.s, 1)})`}>
+      <path d={`M -20 0 Q -60 ${-50 * flap} -110 ${-20 - 40 * flap} Q -60 ${10 - 10 * flap} -10 12 Z`} fill={body} stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+      <ellipse cx={0} cy={6} rx={46} ry={20} fill={body} stroke={C.ink} strokeWidth={5} />
+      <path d={`M -40 6 L -72 -6 L -70 22 Z`} fill={body} stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+      <circle cx={40} cy={-6} r={17} fill={kind === 'vulture' ? '#e8b4a0' : body} stroke={C.ink} strokeWidth={5} />
+      <path d="M 54 -8 L 72 0 L 54 4 Z" fill={C.yellow} stroke={C.ink} strokeWidth={4} strokeLinejoin="round" />
+      <circle cx={45} cy={-10} r={4} fill={C.ink} />
+      {kind === 'falcon' && <path d="M 36 -18 q 6 10 -2 18" stroke={C.ink} strokeWidth={4} fill="none" />}
+      <path d={`M 10 0 Q 40 ${-60 * flap} 90 ${-30 - 40 * flap} Q 50 ${0 - 10 * flap} 20 10 Z`} fill={body} stroke={C.ink} strokeWidth={5} strokeLinejoin="round" opacity={0.95} />
+    </g>
+  );
+};
+
+/** Frost: ice crystals drifting around a point (cold scenes). */
+export const Frost: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const r = rng(num(spec.seed, 17));
+  const x0 = num(spec.x, 960);
+  const y0 = num(spec.y, 400);
+  const k = clamp((t - num(spec.at, 0)) / 0.6);
+  return (
+    <g opacity={k}>
+      {Array.from({ length: num(spec.count, 14) }, (_, i) => {
+        const a = r() * Math.PI * 2;
+        const d = 80 + r() * num(spec.r, 260);
+        const x = x0 + Math.cos(a + t * 0.3) * d;
+        const y = y0 + Math.sin(a + t * 0.3) * d * 0.7;
+        const sz = 10 + r() * 14;
+        return (
+          <g key={i} transform={`translate(${x} ${y}) rotate(${t * 40 + i * 20})`}>
+            {[0, 60, 120].map((ang) => <line key={ang} x1={-sz} y1={0} x2={sz} y2={0} stroke="#dff6ff" strokeWidth={4} strokeLinecap="round" transform={`rotate(${ang})`} />)}
+          </g>
+        );
+      })}
+    </g>
+  );
+};
+
 export const PROPS2: Record<string, React.FC<PP>> = {
+  cactus: Cactus, bird: Bird, frost: Frost,
   pal: Pal, crowd: Crowd, bars: Bars, clock: Clock, calendar: Calendar, gauge: Gauge, board: Board, timeline: Timeline, seismo: Seismo,
   phone: Phone, wifi: Wifi, server: Server, cable: Cable, satellite: Satellite, moon: Moon, sun: Sun, orbit: Orbit, tide: Tide,
   hurricane: Hurricane, brain: Brain, item: Item, burst: Burst, icon: Icon, vehicle: Vehicle, confetti: Confetti, crack: Crack,

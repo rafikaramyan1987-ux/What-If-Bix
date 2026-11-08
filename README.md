@@ -21,7 +21,9 @@ You write one YAML script per episode. The factory turns it into:
 Episode 1 renders are attached to the pull request in [`docs/episode1/`](docs/episode1). Channel assets are in
 [`docs/channel/`](docs/channel). Step-1 style test: [`docs/step1/`](docs/step1).
 
-![Bix character sheet](docs/step1/bix-character-sheet.png)
+![Bix 2.0](docs/bix2/bix2-C-emotions.png)
+
+Since episode 2 the channel uses **Bix 2.0 (variant C, "Chibi")**: big head, orange beanie, round glasses, purple "?" sweater. Set `character: bix1` in a script to use the original thin Bix. His lab sidekick is **Newton the cactus** (`cactus` prop).
 
 ---
 
@@ -162,11 +164,12 @@ YouTube demonetizes "mass-produced or repetitive" content. Every episode uses it
 
 | # | Episode | Structure |
 |---|---|---|
-| 1 | Earth stops spinning for 1 second | cause-and-effect chain + "the restart is worse" twist |
-| 2 | Never sleep for 30 days | diary / day counter |
+| 1 | Earth stops spinning for 1 second (Bix 1) | cause-and-effect chain + "the restart is worse" twist |
+| 2 | What if you could fly? (Bix 2.0) | a climb: each stage is one complaint from your body; lab open/close with Newton the cactus, teaser |
 | 3 | Everyone on Earth jumps at once | three-scenario experiment |
 | 4 | The Internet disappears worldwide | escalating timeline (minute → month) |
 | 5 | The Moon is twice as close | "Ask Bix" Q&A on location |
+| 6 | Never sleep for 30 days | diary / day counter |
 
 Each episode also has its own scenes, jokes, music seed and outro. `validate.mjs --all` fails if two episodes share
 more than 8% of their narration, the same background sequence, or the same outro.

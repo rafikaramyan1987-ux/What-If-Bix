@@ -172,7 +172,7 @@ const main = async () => {
   }
 
   if (only.has('thumb') && ep.thumbnail) {
-    const props = { background: { type: 'space' }, props: [], ...ep.thumbnail };
+    const props = { background: { type: 'space' }, props: [], character: ep.character ?? 'bix2', ...ep.thumbnail };
     const comp = await selectComposition({ serveUrl, id: 'Thumbnail', inputProps: props, browserExecutable });
     const thumb = path.join(out, 'thumbnail.png');
     await renderStill({ composition: comp, serveUrl, output: thumb, inputProps: props, browserExecutable });

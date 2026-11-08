@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Bix } from '../bix/Bix';
+import { Character } from '../bix/Character';
 import { bixStateAt, resolveCues } from '../bix/motion';
 import { Scene } from '../types';
 import { clamp, easeInOut, lerp } from '../util';
@@ -51,7 +51,7 @@ export const SceneView: React.FC<{ scene: Scene; t: number; index: number }> = (
           <Prop key={i} spec={p} t={t} />
         ))}
         {st && !st.hidden && (
-          <Bix x={st.x} y={st.y} scale={st.scale} facing={st.facing} pose={st.pose} face={st.face} emote={st.emote} t={t}
+          <Character x={st.x} y={st.y} scale={st.scale} facing={st.facing} pose={st.pose} face={st.face} emote={st.emote} t={t}
             hold={st.hold} airborne={st.airborne} shadow={st.action !== 'fly' && st.action !== 'float' && st.action !== 'tumble'} seed={index} />
         )}
         {front.map((p, i) => (

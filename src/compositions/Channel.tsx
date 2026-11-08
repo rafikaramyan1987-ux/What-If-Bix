@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
-import { Bix, Head } from '../bix/Bix';
+import { Character, CharacterHead } from '../bix/Character';
 import { actionPose, BixAction, Face } from '../bix/poses';
 import { Background } from '../scene/backgrounds';
 import { C, FONT, TITLE_FONT } from '../theme';
@@ -47,7 +47,7 @@ export const IntroArt: React.FC<{ t: number }> = ({ t }) => {
             transform={`translate(560 540) rotate(${i * 22.5})`} opacity={1 - burst} />
         ))}
         <g transform={`translate(560 ${560 - (1 - beanieDrop) * 500}) scale(${3.4 * headIn}) rotate(${-8 + 8 * headIn})`}>
-          <Head face={t > 0.9 && t < 1.1 ? { ...happy, eyes: 'closed' } : t > 0.5 ? happy : grin} beanie={Math.sin(t * 20) * 6 * (1 - clamp(t / 0.8))} blink={false} />
+          <CharacterHead face={t > 0.9 && t < 1.1 ? { ...happy, eyes: 'closed' } : t > 0.5 ? happy : grin} beanie={Math.sin(t * 20) * 6 * (1 - clamp(t / 0.8))} blink={false} />
         </g>
         <text x={1310} y={470} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={210 * w1} fill={C.yellow} stroke={C.ink} strokeWidth={22}
           paintOrder="stroke" transform="rotate(-5 1310 470)">WHAT IF</text>
@@ -92,7 +92,7 @@ export const EndScreenArt: React.FC<{ t: number; background?: Spec; dur?: number
         <circle r={100} fill="#00000033" stroke="#ffffff" strokeWidth={8} strokeDasharray="22 14" />
         <text y={14} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={34} fill="#fff">SUBSCRIBE</text>
       </g>
-      <Bix x={960} y={690} scale={0.6} facing={cur.facing} pose={o.pose} face={o.face} emote="none" t={t} airborne={o.pose.bob} />
+      <Character x={960} y={690} scale={0.6} facing={cur.facing} pose={o.pose} face={o.face} emote="none" t={t} airborne={o.pose.bob} />
       {t > dur - 0.6 && <rect width={1920} height={1080} fill="#000" opacity={clamp((t - (dur - 0.6)) / 0.6)} />}
     </g>
   );
@@ -135,7 +135,7 @@ export const Avatar: React.FC = () => (
       <rect width={800} height={800} fill="url(#avbg)" />
       <circle cx={400} cy={400} r={330} fill={C.yellow} stroke={C.ink} strokeWidth={16} />
       <g transform="translate(400 455) scale(4.6) rotate(-6)">
-        <Head face={grin} beanie={0} blink={false} />
+        <CharacterHead face={grin} beanie={0} blink={false} />
       </g>
     </svg>
   </AbsoluteFill>
@@ -169,7 +169,7 @@ export const Banner: React.FC = () => {
           transform="rotate(-3 1350 700)">WHAT IF BIX</text>
         <text x={1350} y={810} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={64} fill={C.white} stroke={C.ink} strokeWidth={10}
           paintOrder="stroke">Absurd questions. Real science.</text>
-        <Bix x={560} y={900} scale={1.15} facing={1} pose={o.pose} face={o.face} t={1} shadow={false} />
+        <Character x={560} y={900} scale={1.0} facing={1} pose={o.pose} face={o.face} t={1} shadow={false} />
       </svg>
     </AbsoluteFill>
   );

@@ -1,0 +1,450 @@
+# What If Bix — Episode 2 (Bix 2.0)
+# "What if YOU…" premise: you can fly with no wings or plane. Structure: a climb —
+# every stage of the flight (speed, turning, cold, thin air, plane height, sun/storms)
+# is one complaint from your body; then a safety checklist, a real-world record,
+# and back to Bix's lab, where Newton the cactus (recurring) gets ideas. Teaser at the end.
+id: ep02-you-could-fly
+number: 2
+title: "What if you could fly? (what would REALLY happen to your body)"
+character: bix2
+description: |
+  What if YOU could fly? No wings, no jetpack, you just think "up". Sounds like the best superpower ever... until your body starts filing complaints.
+  Bix finds out what speed, sharp turns, freezing wind and thin air would really do to a human flier, and builds the checklist you'd need to survive.
+tags: [what if you could fly, could humans fly, superpowers science, human body, g-force, hypoxia, altitude, wind chill, flying, physics, biology, science explained, what if bix]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: curious, gain: 0.2, duck: 0.55, seed: 22 }
+introAfter: body-notes
+outro:
+  narration: "Thanks for flying with Bix. Please keep your seatbelt fastened until the video comes to a complete stop. Watch another what if right here, and subscribe, so Newton has company."
+  background: { type: space, tint: purple }
+
+scenes:
+  # ------------------------------------------------------------- cold open (Bix's lab)
+  - id: lab-open
+    chapter: "The superpower"
+    background: { type: lab, board: false }
+    bixStart: [760, 820]
+    bixScale: 1.0
+    props:
+      - { type: cactus, x: 1640, y: 818, s: 1.1, mood: happy, until: "@go" }
+      - { type: cactus, x: 1640, y: 818, s: 1.1, mood: shock, at: "@go" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@up", action: cheer }
+      - { at: "@go", action: float, from: [760, 820], to: [760, 600], dur: 1.2 }
+    texts:
+      - { at: "@What", text: "WHAT IF YOU COULD FLY?", style: title, y: 160 }
+    sfx:
+      - { name: sparkle, at: "@go", gain: 0.6 }
+    narration: "What if *you* could fly? No wings. No jetpack. You just think: up. And up you go."
+
+  - id: body-notes
+    background: { type: lab, board: false }
+    bixStart: [760, 600]
+    bixScale: 1.0
+    props:
+      - { type: cactus, x: 1640, y: 818, s: 1.1, mood: wink }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@best", action: laugh }
+      - { at: "@complaints", action: shrug }
+    texts:
+      - { at: "@complaints", text: "BODY: 0 · SUPERPOWER: 1", style: label, x: 1150, y: 330, color: "#ff4d5e" }
+    narration: "Best superpower ever, right? No traffic, no tickets, no airport security. Well, your body has a few complaints. Let's go up there and hear them, one by one."
+
+  # ------------------------------------------------------------- liftoff
+  - id: liftoff
+    chapter: "Liftoff"
+    transition: iris
+    background: { type: land, mood: day }
+    bixStart: [760, 780]
+    bixScale: 0.9
+    props:
+      - { type: house, x: 1260, y: 800, s: 0.9 }
+      - { type: tree, x: 1640, y: 800, s: 1.0 }
+      - { type: pal, x: 1480, y: 820, s: 0.65, facing: -1, seed: 3, actions: [{ at: 0, action: idle }, { at: "@neighbor", action: shock }] }
+    bix:
+      - { at: 0, action: float, from: [760, 780], to: [860, 420], dur: 4 }
+      - { at: "@glorious", action: cheer, from: [860, 520], to: [860, 420], dur: 2 }
+      - { at: "@rule", action: point }
+    narration: "The first few meters are glorious. Rooftops, treetops, one very confused neighbor. Then you hit your first rule."
+
+  - id: drones
+    transition: whip
+    background: { type: sky, speed: 40 }
+    bixStart: [700, 640]
+    bixScale: 0.95
+    props:
+      - { type: icon, icon: warning, at: "@drones", x: 1350, y: 520, s: 1.1 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@drone.end", action: shrug }
+      - { at: "@confusing", action: facepalm }
+    texts:
+      - { at: "@120 meters", text: "Drones: max ~120 m (400 ft)", style: label, x: 1300, y: 260, color: "#8a5cff" }
+    narration: "In the US and Europe, small drones generally have to stay below about {120 meters|one hundred twenty meters}. You are not a drone. Legally, you're a very confusing case."
+
+  # ------------------------------------------------------------- speed
+  - id: speed
+    chapter: "How fast can you go?"
+    transition: whip
+    background: { type: sky, speed: 1400, sun: false }
+    bixStart: [760, 560]
+    props:
+      - { type: speedlines, count: 18, y: 540, spread: 820 }
+      - { type: gauge, at: "@100 km/h", x: 1480, y: 470, r: 170, from: 0, to: 100, max: 220, dur: 1.0, label: "km/h" }
+      - { type: gauge, at: "@200 km/h", x: 1480, y: 470, r: 170, from: 100, to: 200, max: 220, dur: 1.0, label: "km/h" }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0 } }
+      - { at: "@200 km/h", action: fly, params: { panic: 0.8 } }
+      - { at: "@goggles", action: fly, params: { panic: 0 } }
+    texts:
+      - { at: "@goggles", text: "GET GOGGLES", style: shout, x: 900, y: 230, rotate: -5 }
+    sfx:
+      - { name: wind, at: "@200 km/h", gain: 0.6 }
+    narration: "Let's speed up. At {100 km/h|one hundred kilometers per hour}, it's like sticking your head out of a car on the highway. At {200 km/h|two hundred}, skydiver speed, the wind hits so hard your eyes won't stop watering. Fliers, get goggles."
+
+  - id: falcon
+    background: { type: sky, speed: 1400, sun: false }
+    bixStart: [760, 560]
+    props:
+      - { type: speedlines, count: 18, y: 540, spread: 820 }
+      - { type: bird, kind: falcon, at: "@peregrine", from: [-250, 360], to: [2300, 300], dur: 1.4, s: 1.3 }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0 } }
+      - { at: "@overtakes", action: shock }
+      - { at: "@Rude", action: facepalm }
+    texts:
+      - { at: "@300 km/h", text: "300+ km/h", style: big, x: 1250, y: 260 }
+    sfx:
+      - { name: whoosh, at: "@peregrine+0.3", gain: 0.7 }
+    narration: "Then a peregrine falcon overtakes you. In a dive, falcons can top {300 km/h|three hundred kilometers per hour}. Rude."
+
+  - id: superhero-pose
+    transition: cut
+    background: { type: sky, speed: 1800, sun: false }
+    bixStart: [760, 560]
+    props:
+      - { type: speedlines, count: 22, y: 540, spread: 820 }
+      - { type: arrow, at: "@drag", from: [1500, 560], to: [1100, 560], color: "#ff4d5e", label: "drag", labelY: 500 }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0 } }
+      - { at: "@belly-first", action: float }
+      - { at: "@head-first", action: fly, params: { panic: 0 } }
+    texts:
+      - { at: "@head-first", text: "SUPERHERO POSE = LESS DRAG", style: label, x: 1150, y: 260, color: "#22d3c5" }
+    narration: "Want to go faster? Strike the superhero pose. Skydivers who fall belly-first hit about two hundred, but head-first, with less air in the way, many reach around {250 km/h|two hundred fifty} or more. Less drag, more speed. The cape is optional."
+
+  # ------------------------------------------------------------- turning
+  - id: turning
+    chapter: "Don't take corners fast"
+    transition: iris
+    background: { type: sky, speed: 300, mood: sunset }
+    bixStart: [760, 640]
+    props:
+      - { type: orbit, x: 960, y: 520, rx: 520, ry: 210, body: dot, r: 16, period: 2.5, at: "@turn" }
+      - { type: gauge, at: "@seven", x: 1480, y: 300, r: 150, from: 1, to: 7, max: 8, dur: 1.0, label: "g" }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0 } }
+      - { at: "@squeezes", action: tumble, from: [760, 640], to: [820, 620], dur: 2.5 }
+      - { at: "@gray", action: sleepy }
+    texts:
+      - { at: "@gray", until: "@black", text: "GRAY…", style: shout, x: 760, y: 250, color: "#8b93ad" }
+      - { at: "@black", text: "BLACK.", style: shout, x: 760, y: 250, color: "#1b1e33" }
+    narration: "Now take a tight turn at {300 km/h|three hundred kilometers per hour}, on a curve a hundred meters across. That squeezes you with around *seven* g, seven times your body weight. Without training or a g-suit, many people black out somewhere between four and six g. First your vision goes gray. Then black."
+
+  # ------------------------------------------------------------- cold
+  - id: cold
+    chapter: "It gets cold. Fast."
+    transition: whip
+    background: { type: sky, speed: 120, mood: day, clouds: 10 }
+    bixStart: [720, 700]
+    bixScale: 1.0
+    props:
+      - { type: board, at: "@kilometer", x: 1330, y: 360, w: 640, size: 42, step: 0.8, title: "Air temperature",
+          lines: ["Ground: 20 °C", "1 km up: about 13 °C", "3 km up: about 0 °C"] }
+      - { type: frost, at: "@freezing", x: 720, y: 520, r: 220 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@freezing", action: scared }
+      - { at: "@frostbite", action: shock }
+    texts:
+      - { at: "@forty", text: "FEELS LIKE −40 °C", style: shout, x: 760, y: 220, rotate: -4 }
+    sfx:
+      - { name: wind, at: "@wind", gain: 0.5 }
+    narration: "Air cools by about {6.5 degrees|six and a half degrees} Celsius for every kilometer you climb. So on a warm day, three kilometers up it's already around freezing. Add the wind: at minus twenty, flying at {100 km/h|one hundred kilometers per hour}, it feels like minus *forty*. Exposed skin can get frostbite in around ten minutes."
+
+  - id: ears
+    chapter: "Your ears"
+    transition: fade
+    background: { type: sky, speed: 100, mood: day, clouds: 6 }
+    bixStart: [760, 700]
+    bixScale: 1.0
+    props:
+      - { type: burst, at: "@pop", until: "@pop+1.2", x: 1250, y: 330, text: "POP!", r: 120 }
+      - { type: arrow, at: "@eardrums", from: [1500, 520], to: [1000, 470], color: "#ffd447", label: "pressure", labelY: 440 }
+    bix:
+      - { at: 0, action: float, from: [760, 760], to: [760, 600], dur: 3 }
+      - { at: "@hurt", action: facepalm }
+      - { at: "@Swallow", action: think }
+    narration: "Climb fast and your ears start to hurt. Air trapped behind your eardrums can't keep up with the pressure change, just like on a plane, only faster. Swallow, yawn, and wait for that satisfying *pop*."
+
+  - id: clouds
+    transition: whip
+    background: { type: sky, speed: 900, mood: day, clouds: 14, sun: false }
+    bixStart: [760, 600]
+    bixScale: 1.0
+    props:
+      - { type: frost, at: "@ice", x: 760, y: 450, r: 220 }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0 } }
+      - { at: "@droplets", action: shock }
+      - { at: "@soaked", action: scared }
+    texts:
+      - { at: "@soaked", text: "SOAKED", style: shout, x: 900, y: 240, color: "#2f8cff", rotate: -5 }
+    narration: "And clouds? They look like cotton candy, but they're made of billions of tiny water droplets. Fly through one and you come out soaked. In the cold, those droplets can freeze onto you as ice."
+
+  # ------------------------------------------------------------- thin air
+  - id: thin-air
+    chapter: "Thin air"
+    transition: fade
+    background: { type: sky, speed: 60, mood: sunset, clouds: 4 }
+    bixStart: [520, 720]
+    bixScale: 0.95
+    props:
+      - { type: bars, at: "@thin", x: 1260, y: 780, w: 860, h: 400, values: [100, 70, 31, 26], unit: "%", labels: ["Sea level", "3 km", "Everest", "10 km"],
+          colors: ["#22d3c5", "#ffd447", "#ff7a1a", "#ff4d5e"] }
+    bix:
+      - { at: 0, action: float, from: [520, 720], to: [520, 560], dur: 3 }
+      - { at: "@judgment", action: think }
+      - { at: "@third", action: scared }
+    texts:
+      - { at: "@thin", text: "air pressure", style: note, x: 1260, y: 330 }
+    narration: "Keep climbing and the air gets thin. Above about three kilometers, low oxygen starts messing with your judgment. At the top of Mount Everest, there's only about a *third* of the air pressure you'd have at sea level. Climbers spend weeks letting their bodies adapt to that. You'd get there in minutes."
+
+  - id: plane-height
+    chapter: "Plane height"
+    transition: whip
+    background: { type: sky, speed: 80, mood: night }
+    bixStart: [760, 600]
+    props:
+      - { type: vehicle, kind: plane, at: "@Airliners", from: [2300, 330], to: [-500, 280], dur: 6, s: 1.1, color: "#ff4d5e" }
+      - { type: frost, at: 0, x: 760, y: 450, r: 240 }
+      - { type: clock, at: "@seconds", x: 1500, y: 640, r: 110, time: "12:00", speed: 0.4 }
+    bix:
+      - { at: 0, action: scared }
+      - { at: "@seconds", action: shock }
+      - { at: "@falling", action: tumble, from: [760, 600], to: [800, 1300], dur: 1.2 }
+    texts:
+      - { at: "@minus", text: "≈ −50 °C", style: big, x: 1300, y: 230 }
+      - { at: "@seconds", text: "30–60 SECONDS", style: shout, x: 900, y: 230, rotate: -4 }
+    narration: "Now try plane height, about {10 kilometers|ten kilometers} up. It's around minus fifty outside. Airliners keep their cabins at the pressure of about {2,400 meters|two thousand four hundred meters}, but you don't have a cabin. At that height, people who lose cabin pressure have roughly 30 to 60 seconds of useful consciousness. After that, you're not flying. You're *falling*."
+
+  - id: vulture
+    transition: cut
+    background: { type: sky, speed: 60, mood: day }
+    bixStart: [520, 640]
+    bixScale: 0.9
+    props:
+      - { type: bird, kind: vulture, at: 0, from: [1900, 320], to: [1150, 360], dur: 3, s: 1.2 }
+      - { type: vehicle, kind: plane, at: "@hit", from: [2400, 300], to: [-500, 340], dur: 2.5, s: 1.0, color: "#22d3c5" }
+      - { type: burst, at: "@hit+0.9", until: "@hit+2.2", x: 1150, y: 300, text: "BONK", r: 120 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@hit", action: shock }
+      - { at: "@vulture#2", action: facepalm }
+    texts:
+      - { at: "@11,300 meters", text: "11,300 m — highest bird ever recorded", style: label, x: 1150, y: 560, color: "#6b4a2b" }
+    sfx:
+      - { name: thud, at: "@hit+0.9", gain: 0.6 }
+    narration: "Fun fact: the highest-flying bird ever recorded, a Rüppell's vulture, hit an airliner at about {11,300 meters|eleven thousand three hundred meters} over West Africa in 1973. It did not end well for the vulture."
+
+  # ------------------------------------------------------------- sun and storms
+  - id: sun-storms
+    chapter: "Sun and storms"
+    transition: iris
+    background: { type: sky, speed: 100, mood: day, sun: false }
+    bixStart: [640, 700]
+    bixScale: 0.95
+    props:
+      - { type: sun, at: "@UV", x: 1500, y: 260, r: 150 }
+      - { type: hurricane, at: "@thunderstorm", x: 1350, y: 520, r: 220, speed: 200 }
+      - { type: burst, at: "@lightning", until: "@lightning+1.4", x: 1500, y: 300, text: "ZAP!", r: 130, color: "#ffd447" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@sunscreen", action: point }
+      - { at: "@updrafts", action: tumble, from: [640, 700], to: [900, 420], dur: 1.8 }
+    texts:
+      - { at: "@ten", text: "UV +10% per 1,000 m", style: label, x: 700, y: 260, color: "#ff7a1a" }
+    sfx:
+      - { name: rumble, at: "@thunderstorm", gain: 0.6 }
+      - { name: boom, at: "@lightning", gain: 0.5 }
+    narration: "Bonus problems. UV radiation gets about ten percent stronger for every thousand meters you climb, so sunscreen is mandatory. And never fly into a thunderstorm. Updrafts inside big storms can top {150 km/h|one hundred fifty kilometers per hour}, with hail and lightning on the side."
+
+  # ------------------------------------------------------------- checklist
+  - id: checklist
+    chapter: "How to fly without dying"
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [380, 820]
+    bixScale: 1.0
+    props:
+      - { type: board, at: "@checklist", x: 1120, y: 400, w: 820, size: 44, step: 1.15, title: "Flight checklist",
+          lines: ["1. Goggles", "2. Ski jacket + gloves", "3. Stay below 3 km", "4. Wide, gentle turns", "5. Sunscreen", "6. No storms, no airports"] }
+      - { type: cactus, x: 1720, y: 818, s: 0.9, mood: happy }
+      - { type: bird, kind: pigeon, at: "@pigeon", from: [-200, 220], to: [2200, 200], dur: 2.5, s: 0.8 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@Goggles", action: point }
+      - { at: "@Basically", action: laugh }
+    narration: "So here's your flight checklist. Goggles. A ski jacket and gloves. Stay below three kilometers. Make wide, gentle turns. Wear sunscreen. And stay far away from storms and airports. Basically: dress like a skier, and fly like a nervous pigeon."
+
+  # ------------------------------------------------------------- real world
+  - id: daedalus
+    chapter: "Real humans who flew"
+    transition: iris
+    background: { type: ocean, horizon: 600 }
+    bixStart: [380, 860]
+    bixScale: 0.85
+    props:
+      - { type: vehicle, kind: plane, at: "@1988", from: [-400, 420], to: [2300, 380], dur: 9, s: 0.9, color: "#22d3c5" }
+      - { type: badge, at: "@115 kilometers", x: 1500, y: 250, r: 120, text: "115 km", sub: "pedal power" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@pedaled", action: point }
+      - { at: "@legs", action: cheer }
+      - { at: "@marathons", action: shock }
+    texts:
+      - { at: "@1988", text: "Daedalus 88 · 1988", style: label, x: 900, y: 250, color: "#22d3c5" }
+    narration: "Real humans have tried, the hard way. In 1988, Greek cyclist Kanellos Kanellopoulos pedaled a feather-light aircraft called Daedalus {115 kilometers|one hundred fifteen kilometers} across the Aegean Sea, in just under four hours. That's almost three marathons, in the air, powered only by his legs."
+
+  # ------------------------------------------------------------- back to the lab
+  - id: lab-close
+    chapter: "Back in the lab"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [760, 560]
+    bixScale: 1.0
+    props:
+      - { type: cactus, x: 1600, y: 818, s: 1.1, mood: wink, floatAt: "@Newton" }
+    bix:
+      - { at: 0, action: float, from: [760, 560], to: [760, 820], dur: 1.6 }
+      - { at: "@gear", action: present }
+      - { at: "@Newton", action: shock }
+    texts:
+      - { at: "@Newton", text: "NEWTON?!", style: shout, x: 1250, y: 260, rotate: -6 }
+    sfx:
+      - { name: sparkle, at: "@Newton", gain: 0.6 }
+    narration: "So, could you handle flying? With the right gear, a little. Without it, your body would quit long before your superpower does. Wait... Newton?"
+
+  - id: teaser
+    transition: whip
+    background: { type: night-city }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: crowd, x: 1150, y: 900, w: 1300, count: 26, jumpAt: "@jumped", sync: true }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@jumped", action: jump }
+    chips:
+      - { at: 0.1, label: "Next time", icon: bolt }
+    texts:
+      - { at: "@everyone", text: "WHAT IF EVERYONE JUMPED AT ONCE?", style: title, y: 230 }
+    narration: "Next time on What If Bix: what if everyone on Earth jumped at the exact same moment?"
+
+shorts:
+  - id: short-speed
+    title: "What flying at 200 km/h would do to your body"
+    from: speed
+    to: turning
+    hook: "FLY FAST = BAD IDEA"
+    description: "If you could fly, speed and sharp turns would hit your body hard. Here's what really happens."
+    scenes:
+      speed:
+        narration: "If you could fly, going fast would *hurt*. At {100 km/h|one hundred kilometers per hour}, it's like sticking your head out of a car on the highway. At {200 km/h|two hundred}, skydiver speed, the wind hits so hard your eyes won't stop watering. Fliers, get goggles."
+        texts:
+          - { at: "@hurt", until: "@hurt+1.3", text: "WHOOSH!", style: shout, x: 900, y: 240, rotate: -6 }
+          - { at: "@goggles", text: "GET GOGGLES", style: shout, x: 900, y: 230, rotate: -5 }
+        props:
+          - { type: speedlines, count: 18, y: 540, spread: 820 }
+          - { type: gauge, at: 0, x: 1180, y: 330, r: 150, from: 0, to: 100, max: 220, dur: 2.0, label: "km/h" }
+          - { type: gauge, at: "@200 km/h", x: 1180, y: 330, r: 150, from: 100, to: 200, max: 220, dur: 1.0, label: "km/h" }
+        bix:
+          - { at: 0, action: fly, params: { panic: 0.8 } }
+          - { at: "@goggles", action: fly, params: { panic: 0 } }
+      superhero-pose:
+        narration: "Want more speed? Strike the superhero pose. Less drag, more speed. The cape is optional."
+        texts:
+          - { at: "@pose", text: "SUPERHERO POSE = LESS DRAG", style: label, x: 1150, y: 260, color: "#22d3c5" }
+        bix:
+          - { at: 0, action: float }
+          - { at: "@pose", action: fly, params: { panic: 0 } }
+  - id: short-plane-height
+    title: "Fly to plane height and you'd have 30 seconds"
+    from: plane-height
+    to: vulture
+    hook: "PLANE HEIGHT = 30 SECONDS"
+    description: "If you could fly up to where airliners cruise, thin air and cold would beat you fast."
+    scenes:
+      plane-height:
+        narration: "Fly to plane height? You'd have 30 seconds. Planes cruise about {10 kilometers|ten kilometers} up. It's around minus fifty outside. Airliners keep their cabins at the pressure of about {2,400 meters|two thousand four hundred meters}, but you don't have a cabin. At that height, people who lose cabin pressure have roughly 30 to 60 seconds of useful consciousness. After that, you're not flying. You're *falling*."
+        texts:
+          - { at: "@seconds", until: "@seconds+1.6", text: "30 SECONDS?!", style: shout, x: 900, y: 230, rotate: -4 }
+          - { at: "@minus", text: "≈ −50 °C", style: big, x: 1300, y: 230 }
+        props:
+          - { type: vehicle, kind: plane, at: 0, from: [2100, 330], to: [-500, 280], dur: 7, s: 1.1, color: "#ff4d5e" }
+          - { type: frost, at: 0, x: 760, y: 450, r: 240 }
+          - { type: clock, at: "@seconds", x: 1500, y: 640, r: 110, time: "12:00", speed: 0.4 }
+  - id: short-cold
+    title: "Flying would be FREEZING (the real numbers)"
+    from: cold
+    to: clouds
+    hook: "FLYING IS FREEZING"
+    description: "If you could fly, cold and wind would be your first enemies."
+    scenes:
+      cold:
+        narration: "Flying would be *freezing*. Air cools by about {6.5 degrees|six and a half degrees} Celsius for every kilometer you climb. So on a warm day, three kilometers up it's already around freezing. Add the wind: at minus twenty, flying at {100 km/h|one hundred kilometers per hour}, it feels like minus *forty*. Exposed skin can get frostbite in around ten minutes."
+        props:
+          - { type: frost, at: 0, x: 720, y: 520, r: 220 }
+          - { type: board, at: "@kilometer", x: 1330, y: 360, w: 640, size: 42, step: 0.8, title: "Air temperature",
+              lines: ["Ground: 20 °C", "1 km up: about 13 °C", "3 km up: about 0 °C"] }
+        bix:
+          - { at: 0, action: scared }
+          - { at: "@frostbite", action: shock }
+        texts:
+          - { at: "@freezing", until: "@freezing+1.4", text: "BRRRR!", style: shout, x: 760, y: 230, rotate: -6 }
+          - { at: "@forty", text: "FEELS LIKE −40 °C", style: shout, x: 760, y: 220, rotate: -4 }
+
+thumbnail:
+  title: ["YOU", "FLY?!"]
+  accent: 1
+  background: { type: sky, speed: 1500, sun: false, clouds: 8 }
+  props:
+    - { type: speedlines, count: 14, y: 560, spread: 700 }
+    - { type: vehicle, kind: plane, at: 0, from: [1480, 210], to: [1481, 210], dur: 1, s: 1.1, color: "#ff4d5e" }
+    - { type: frost, at: 0, x: 1350, y: 640, r: 260 }
+  bix: { action: fly, x: 1110, y: 900, scale: 1.85, facing: 1, t: 0.4 }
+
+sources:
+  - "FAA, Small Unmanned Aircraft (Part 107) — maximum altitude 400 ft (≈120 m) above ground: https://www.faa.gov/uas/commercial_operators"
+  - "EASA, Open category drones — maximum height 120 m: https://www.easa.europa.eu/en/domains/civil-drones/drones-regulatory-framework-background/open-category-civil-drones"
+  - "NASA Glenn Research Center, Terminal velocity — a skydiver falls at roughly 200 km/h (≈120 mph) belly-down: https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/termvel/"
+  - "Audubon / Cornell Lab of Ornithology, Peregrine falcon — dives faster than 300 km/h (200+ mph): https://www.allaboutbirds.org/guide/Peregrine_Falcon/overview"
+  - "Calculation: centripetal acceleration a = v²/r; 300 km/h = 83.3 m/s; r = 100 m → a ≈ 69 m/s² ≈ 7 g (we say 'a curve a hundred meters across' meaning radius 100 m)."
+  - "FAA Aerospace Medicine, G-induced loss of consciousness — relaxed, unprotected people typically lose vision/consciousness around +4 to +6 g: https://www.faa.gov/pilots/safety/pilotsafetybrochures"
+  - "International Standard Atmosphere (ICAO/NOAA) — temperature lapse rate 6.5 °C per km; ≈ −50 °C at 10 km; pressure ≈ 70% at 3 km, ≈ 31% at 8,849 m, ≈ 26% at 10 km: https://www.engineeringtoolbox.com/standard-atmosphere-d_604.html"
+  - "U.S. National Weather Service, Wind chill chart and formula — −20 °C with 100 km/h wind ≈ −40 °C wind chill (calculated); frostbite in about 10 minutes at that level: https://www.weather.gov/safety/cold-wind-chill-chart"
+  - "FAA Pilot Safety Brochure, Hypoxia — effects on judgment begin above about 10,000 ft (≈3,000 m): https://www.faa.gov/pilots/safety/pilotsafetybrochures/media/hypoxia.pdf"
+  - "Mount Everest height 8,849 m (2020 China–Nepal survey): https://www.britannica.com/place/Mount-Everest"
+  - "U.S. 14 CFR §25.841 — airliner cabin pressure altitude no higher than 8,000 ft (≈2,400 m) in normal operation: https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-25/subpart-D/subject-group-ECFR3e2c3c9e7c0e5d1/section-25.841"
+  - "FAA Advisory Circular AC 61-107B — time of useful consciousness at 35,000 ft ≈ 30–60 seconds: https://www.faa.gov/documentLibrary/media/Advisory_Circular/AC_61-107B.pdf"
+  - "Laybourne, R. C. (1974), 'Collision between a vulture and an aircraft at an altitude of 37,000 feet', Wilson Bulletin 86(4): 461–462 (Rüppell's vulture, Abidjan, 1973; ≈11,300 m): https://sora.unm.edu/node/129397"
+  - "World Health Organization, Global Solar UV Index — UV levels increase about 10% with every 1,000 m of altitude: https://www.who.int/publications/i/item/9241590076"
+  - "NOAA National Severe Storms Laboratory, Thunderstorm basics — updrafts in strong storms can exceed 100 mph (≈160 km/h): https://www.nssl.noaa.gov/education/svrwx101/thunderstorms/"
+  - "Skydiving speeds — belly-to-earth ≈ 190–200 km/h, head-down ('freefly') commonly ≈ 240–290 km/h (FLAGGED: varies by person/suit; we say 'around 250 or more'): https://www.uspa.org/discover/faqs"
+  - "Mayo Clinic, Airplane ear (ear barotrauma) — pressure difference across the eardrum during altitude changes; swallowing/yawning helps: https://www.mayoclinic.org/diseases-conditions/airplane-ear/symptoms-causes/syc-20351701"
+  - "NOAA SciJinks / NASA, What are clouds made of? — tiny water droplets or ice crystals; supercooled droplets freeze on contact (aircraft icing): https://scijinks.gov/clouds/"
+  - "CDC Yellow Book, High-altitude travel and altitude illness — acclimatization takes days to weeks: https://www.cdc.gov/yellow-book/hcp/environmental-hazards-risks/high-elevation-travel-and-altitude-illness.html"
+  - "Calculation: 115 km ÷ 42.195 km (marathon) ≈ 2.7 marathons."
+  - "NASA, Daedalus 88 human-powered aircraft — Kanellos Kanellopoulos flew 115 km (71.5 mi) from Crete to Santorini on 23 April 1988 in 3 h 54 min: https://www.nasa.gov/centers-and-facilities/armstrong/daedalus-project/"

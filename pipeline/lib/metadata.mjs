@@ -39,7 +39,7 @@ export const buildSrt = (pages, offset = 0) =>
 
 export const CREDIT_LINES = [
   'Animation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).',
-  'Narration voice: Piper TTS, LibriTTS voice (CC BY 4.0).',
+  'Narration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)',
 ];
 
 export const buildMetadata = (ep, manifest, shorts = []) => {

@@ -256,6 +256,7 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
       height: 1080,
       duration,
       format: 'long',
+      character: ep.character ?? 'bix2',
       scenes: outScenes,
       captions,
     },

@@ -163,6 +163,7 @@ export const validateEpisode = (ep, file = 'episode') => {
       if (!SFX.includes(fx.name)) fail(file, `${where}: unknown sfx "${fx.name}"`);
     }
   });
+  if (ep.character && !['bix1', 'bix2'].includes(ep.character)) fail(file, `character must be bix1 or bix2`);
   if (ep.music?.style && !MUSIC_STYLES.includes(ep.music.style)) fail(file, `unknown music style "${ep.music.style}"`);
   for (const sh of ep.shorts ?? []) {
     if (!sh.id || !sh.title || !sh.from || !sh.to) fail(file, 'shorts need id, title, from, to');

@@ -6,6 +6,7 @@ chapters, sources and estimated lengths without rendering.
 
 ## Stage and timing basics
 
+- Bix 2.0 stands about 378 px tall at scale 1 (big head ≈ 55% of that); use `bixScale` 0.85–1.0 for most scenes.
 - The stage is **1920 × 1080**. `x` grows to the right, `y` grows **down**. The ground line in
   `land`, `lab`, `city`, `night-city` and `bedroom` is at **y = 820**. Bix's position is the point
   between his feet. At scale 1 he is about 330 px tall.
@@ -37,6 +38,7 @@ title: "What if you never slept for 30 days?"   # YouTube title, ≤ 100 chars
 description: |                     # first lines of the YouTube description (chapters/sources/credits are appended)
   ...
 tags: [science, what if, ...]      # ≥ 5
+character: bix2                    # bix2 = Bix 2.0 "Chibi" (default since episode 2); bix1 = original thin Bix
 voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
 music: { style: curious, gain: 0.2, duck: 0.55, seed: 7 }   # styles: curious | tense | dreamy; change seed per episode
 introAfter: cold-open              # scene id after which the 2 s intro sting plays (default: first scene)
@@ -151,6 +153,9 @@ Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop boo
 | `badge` | `x y r text sub color rot at` |
 | `vehicle` | `kind: car\|bus\|plane from to at dur s color` |
 | `confetti` | `at dur count` |
+| `cactus` | **Newton**, Bix's lab cactus (recurring): `x y s mood: happy\|shock\|sleepy\|wink float: true floatAt label: false at` |
+| `bird` | `kind: falcon\|vulture\|pigeon from to at dur s` |
+| `frost` | `x y r count at seed` (ice crystals) |
 | `crack` | `x y w at` |
 
 ### SFX names

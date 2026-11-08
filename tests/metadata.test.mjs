@@ -85,6 +85,19 @@ describe('full episode timeline', () => {
   });
 });
 
+describe('character', () => {
+  it('episode 2 uses Bix 2.0 and passes it to the long video and Shorts', () => {
+    const ep2 = loadEpisode(path.join(__dirname, '..', 'episodes', 'ep02-you-could-fly.yaml'));
+    const plan = planNarration(ep2);
+    const { manifest } = buildTimeline(ep2, plan, fakeTts(plan));
+    expect(manifest.character).toBe('bix2');
+    const sep = shortEpisode(ep2, ep2.shorts[0]);
+    const p2 = planNarration(sep);
+    expect(buildTimeline(sep, p2, fakeTts(p2)).manifest.character).toBe('bix2');
+    expect(buildMetadata(ep2, manifest, []).description).toContain('CC BY 4.0: https://creativecommons.org/licenses/by/4.0/');
+  });
+});
+
 describe('helpers', () => {
   it('formats times', () => {
     expect(fmtTime(0)).toBe('0:00');

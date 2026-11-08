@@ -3,6 +3,7 @@ import { AbsoluteFill, CalculateMetadataFunction, useCurrentFrame, useVideoConfi
 import { Captions, Chip, LONG_CAPTIONS, OnScreenText, SHORT_CAPTIONS } from '../scene/Hud';
 import { SceneView, shortFraming } from '../scene/SceneView';
 import { CtaArt, HookBanner, SAFE } from './ShortsUI';
+import { CharacterContext } from '../bix/Character';
 import { C, FONT, TITLE_FONT } from '../theme';
 import { Manifest, Scene } from '../types';
 import { clamp, easeInOut, lerp } from '../util';
@@ -107,7 +108,13 @@ const Band: React.FC<{ t: number }> = ({ t }) => (
   </g>
 );
 
-export const Episode: React.FC<Manifest> = (m) => {
+export const Episode: React.FC<Manifest> = (m) => (
+  <CharacterContext.Provider value={m.character ?? 'bix2'}>
+    <EpisodeInner {...m} />
+  </CharacterContext.Provider>
+);
+
+const EpisodeInner: React.FC<Manifest> = (m) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps + (m.timeOffset ?? 0);

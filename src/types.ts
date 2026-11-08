@@ -66,9 +66,12 @@ export type Manifest = {
   timeOffset?: number;
   /** Shorts: banner text at the top. */
   hook?: string;
+  /** Which Bix to draw (default: Bix 2.0). */
+  character?: 'bix1' | 'bix2';
 };
 
 export type ThumbnailProps = {
+  character?: 'bix1' | 'bix2';
   title: string[];
   accent?: number; // index of the title line drawn in the accent color
   subtitle?: string;

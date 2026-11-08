@@ -234,7 +234,7 @@ export const Head: React.FC<{ face: Face; beanie: number; blink: boolean; eyeSca
   );
 };
 
-const EmoteFx: React.FC<{ kind: Emote; t: number }> = ({ kind, t }) => {
+export const EmoteFx: React.FC<{ kind: Emote; t: number }> = ({ kind, t }) => {
   const txt = (s: string, x: number, y: number, size: number, fill: string, rot = 0, op = 1) => (
     <text x={x} y={y} fontFamily={FONT} fontWeight={700} fontSize={size} fill={fill} stroke={C.ink} strokeWidth={6}
       paintOrder="stroke" textAnchor="middle" transform={`rotate(${rot} ${x} ${y})`} opacity={op}>{s}</text>

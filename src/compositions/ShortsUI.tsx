@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bix } from '../bix/Bix';
+import { Character } from '../bix/Character';
 import { actionPose } from '../bix/poses';
 import { C, TITLE_FONT } from '../theme';
 import { clamp, popIn } from '../util';
@@ -87,7 +87,7 @@ export const CtaArt: React.FC<{ t: number; dur: number }> = ({ t, dur }) => {
             fill={[C.yellow, C.teal, C.pink][i % 3]} opacity={1 - clamp((t - press) / 0.7)}>★</text>
         );
       })}
-      <Bix x={300} y={1265} scale={1.15} facing={1} pose={pose} face={pressed ? o.face : { ...o.face, look: [0.6, -1] }} emote="none" t={t} airborne={pose.bob} />
+      <Character x={300} y={1265} scale={1.15} facing={1} pose={pose} face={pressed ? o.face : { ...o.face, look: [0.6, -1] }} emote="none" t={t} airborne={pose.bob} />
     </g>
   );
 };
