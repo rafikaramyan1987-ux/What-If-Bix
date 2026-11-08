@@ -1,0 +1,45 @@
+# Tiny episode used by CI to smoke-test the full pipeline end to end.
+id: ci-mini
+title: "What if CI rendered a tiny episode?"
+description: "Pipeline smoke test."
+tags: [test, ci, bix, render, smoke]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: curious, seed: 3 }
+outro:
+  narration: "Thanks for testing."
+scenes:
+  - id: hello
+    chapter: "Hello"
+    background: { type: space }
+    bixStart: [960, 820]
+    props:
+      - { type: earth, x: 1500, y: 300, r: 140, spin: 0.2 }
+    bix:
+      - { at: 0, action: wave }
+      - { at: "@works", action: cheer }
+    texts:
+      - { at: "@Hello", text: "CI CHECK", style: title }
+    narration: "Hello from the build robot. If you can hear this, the pipeline works."
+  - id: bye
+    chapter: "Bye"
+    transition: whip
+    background: { type: lab }
+    bixStart: [700, 820]
+    bix:
+      - { at: 0, action: point }
+    chips:
+      - { at: 0.2, label: "1 second later" }
+    narration: "That is all. Back to work."
+shorts:
+  - id: short-test
+    title: "CI short"
+    from: hello
+    to: bye
+    hook: "CI SHORT"
+thumbnail:
+  title: ["CI", "OK"]
+  bix: { action: cheer }
+  background: { type: space }
+  props: []
+sources:
+  - "https://example.org"

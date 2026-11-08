@@ -1,0 +1,424 @@
+# Episode 5: "ASK BIX" Q&A format. Every chapter opens on a question card (board prop, "ASK BIX"),
+# then Bix investigates on location. Not-to-scale diagrams are labelled as such.
+id: ep05-moon-twice-as-close
+number: 5
+title: "What if the Moon were twice as close?"
+description: |
+  Halve the distance to the Moon and what happens? Bix takes your questions on location: would it look huge, how wild would the tides get, could it crash into us, and what happens to eclipses?
+  The physics is real (one cube law does most of the damage), and the answers are stranger, and a lot prettier, than you might expect.
+tags: [science, what if, moon, tides, astronomy, roche limit, solar eclipse, physics, space, explained, animation, what if bix]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 55 }
+introAfter: cold-open
+outro:
+  narration: "Pick another episode to watch next, and subscribe before the Moon drifts another three point eight centimeters away. That gives you about a year. No pressure."
+  background: { type: sky, mood: night }
+
+scenes:
+  # ------------------------------------------------------------------ COLD OPEN
+  - id: cold-open
+    chapter: "Ask Bix: the closer Moon"
+    background: { type: sky, mood: night, sun: false, clouds: 2 }
+    bixStart: [760, 820]
+    props:
+      - { type: tree, x: 300, y: 820, s: 0.9 }
+      - { type: moon, x: 1350, y: 480, at: "@twice", dur: 1.6, grow: [90, 190] }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@twice", action: shock }
+      - { at: "@questions", action: wave }
+      - { at: "@go", action: run, from: [760, 820], to: [1100, 820], dur: 1.0 }
+    texts:
+      - { at: "@What", text: "WHAT IF THE MOON WERE\nTWICE AS CLOSE?", style: title, y: 140 }
+    camera: { zoom: [1.0, 1.06], focus: [1000, 520] }
+    narration: "What if the Moon were *twice* as close? Today, Bix takes your questions... on location. Let's go."
+
+  - id: the-distance
+    transition: iris
+    background: { type: space, tint: blue }
+    bixStart: [1300, 900]
+    bixScale: 0.7
+    props:
+      - { type: earth, x: 330, y: 520, r: 150, spin: 0.05 }
+      - { type: moon, x: 1640, y: 520, r: 70 }
+      - { type: arrow, at: "@average", from: [500, 420], to: [1560, 420], color: "#ffd447", label: "384,400 km", labelY: 380 }
+      - { type: ring, at: "@half", x: 1640, y: 520, r: 100, color: "#ff8fb1" }
+      - { type: moon, x: 1000, y: 520, r: 70, face: smile, at: "@half" }
+      - { type: arrow, at: "@192,000", from: [500, 640], to: [920, 640], color: "#5ad1c4", label: "192,000 km", labelY: 700 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@average", action: point, facing: 1 }
+      - { at: "@half", action: think }
+      - { at: "@personal", action: laugh }
+    texts:
+      - { at: "@personal", text: "TOO CLOSE, BUDDY", style: label, x: 1000, y: 280, color: "#ff8fb1", rotate: -4 }
+    narration: "Here's the starting point. On average, the Moon is about {384,400|three hundred eighty-four thousand} kilometers away. Cut that in half, and it orbits roughly {192,000|one hundred ninety-two thousand} kilometers from us. Same Moon, same size. It just stands a lot closer, like someone who never learned about *personal* space."
+
+  # ------------------------------------------------------------------ Q1 SIZE
+  - id: q-huge
+    chapter: "Q: Would it look huge?"
+    transition: pop
+    background: { type: plain, color: "#5b3fa0" }
+    bixStart: [720, 820]
+    focus: [960]
+    props:
+      - { type: board, x: 1180, y: 430, w: 640, size: 60, title: "ASK BIX", at: 0.2, step: 0.5, lines: ["Q: Would it", "look huge?"], rot: 2 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@huge", action: jump }
+    narration: "First question, from the back row. Would it look *huge*?"
+
+  - id: huge-sky
+    transition: whip
+    background: { type: land, mood: night }
+    bixStart: [760, 820]
+    props:
+      - { type: moon, x: 1380, y: 330, at: "@twice", dur: 1.4, grow: [110, 220] }
+      - { type: house, x: 1700, y: 820, s: 0.8 }
+    bix:
+      - { at: 0, action: point, facing: 1 }
+      - { at: "@square", action: present, facing: 1 }
+      - { at: "@walks", action: walk, from: [760, 820], to: [880, 820], dur: 1.2 }
+      - { at: "@sleep", action: sleepy, hold: pillow }
+    texts:
+      - { at: "@wide", until: "@four", text: "2× WIDER", style: label, x: 560, y: 260, color: "#5ad1c4" }
+      - { at: "@four", text: "4× AREA", style: big, x: 560, y: 380 }
+      - { at: "@sunlight", text: "≈ 4× brighter full Moon", style: note, x: 560, y: 470 }
+    narration: "Yes. Twice as close means twice as *wide*. But the area you see grows with the square, so the Moon would cover four times as much sky, and bounce about four times as much sunlight our way. Full Moon nights would be far brighter. Great for night walks. Bad news for anyone who needs total darkness to sleep."
+
+  - id: earth-view
+    transition: whip
+    background: { type: moon }
+    bixStart: [700, 800]
+    bixScale: 0.9
+    props:
+      - { type: earth, x: 1300, y: 330, r: 90, spin: 0.04 }
+      - { type: earth, x: 1300, y: 330, r: 180, spin: 0.04, at: "@twice", face: smile }
+      - { type: ring, at: "@spot", x: 1300, y: 330, r: 220, color: "#ffd447" }
+    bix:
+      - { at: 0, action: walk, from: [420, 800], to: [700, 800], dur: 1.2 }
+      - { at: "@twice", action: point, facing: 1 }
+      - { at: "@spot", action: present, facing: 1 }
+      - { at: "@face", action: wave }
+    texts:
+      - { at: "@spot", text: "parked in the same spot", style: label, x: 1300, y: 600, color: "#5ad1c4" }
+    narration: "Quick bonus for future Moon tourists. From the lunar surface, Earth would look *twice* as wide too. And it would hang in the same spot in the sky, all the time, because the Moon always keeps the same *face* toward us."
+
+  - id: night-life
+    transition: fade
+    background: { type: ocean, mood: night, horizon: 420 }
+    bixStart: [620, 700]
+    bixScale: 0.8
+    props:
+      - { type: moon, x: 1450, y: 210, r: 150 }
+      - { type: icon, icon: heart, x: 1100, y: 640, s: 0.45, at: "@corals" }
+      - { type: icon, icon: question, x: 1300, y: 560, s: 0.5, at: "@scramble" }
+      - { type: calendar, x: 1500, y: 620, s: 0.7, from: 1, to: 31, at: "@scramble", dur: 1.6, label: "SPAWN?", color: "#ff8fb1" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@corals", action: point, facing: 1 }
+      - { at: "@scramble", action: shrug }
+    texts:
+      - { at: "@corals", text: "corals: \"see you after the full Moon\"", style: note, x: 1150, y: 390 }
+    narration: "Nature would notice too. Many reef *corals* time their mass spawning to the nights just after a full Moon. A brighter Moon on a ten-day cycle would scramble a lot of carefully kept calendars."
+
+  # ------------------------------------------------------------------ Q2 TIDES
+  - id: q-tides
+    chapter: "Q: What about the tides?"
+    transition: pop
+    background: { type: plain, color: "#1f6f8b" }
+    bixStart: [720, 820]
+    focus: [960]
+    props:
+      - { type: board, x: 1180, y: 430, w: 640, size: 60, title: "ASK BIX", at: 0.2, step: 0.5, lines: ["Q: What about", "the tides?"], rot: -2 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@tides", action: point, facing: 1 }
+    narration: "Next question. What about the *tides*? This is where things get wild."
+
+  - id: tide-math
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [520, 820]
+    props:
+      - { type: board, x: 1180, y: 400, w: 820, size: 54, title: "TIDAL FORCE", at: "@difference", step: 1.4, lines: ["∝ 1 / distance³", "½ distance → 2 × 2 × 2", "= 8× stronger"] }
+      - { type: burst, x: 600, y: 300, r: 120, text: "8×", at: "@eight", color: "#ffd447" }
+    bix:
+      - { at: 0, action: present, facing: 1 }
+      - { at: "@cube", action: point, facing: 1 }
+      - { at: "@two", action: think }
+      - { at: "@eight", action: shock }
+      - { at: "@sidekick", action: laugh }
+    camera: { zoom: [1.0, 1.05], focus: [960, 470] }
+    narration: "Tides happen because the Moon pulls harder on Earth's near side than on its far side. That *difference* in pull fades with the cube of the distance. So halve the distance, and you get two, times two, times two... *eight* times the tidal force. For comparison, the Sun's tidal pull today is a bit less than half the Moon's. Multiply the Moon's by eight, and the Sun becomes a minor sidekick."
+
+  - id: beach
+    transition: iris
+    background: { type: ocean, beach: true, horizon: 520 }
+    bixStart: [760, 900]
+    props:
+      - { type: house, x: 1280, y: 890, s: 0.6 }
+      - { type: tide, x0: 900, x1: 1920, from: 900, to: 640, at: "@bigger", dur: 3, marker: true }
+      - { type: moon, x: 1500, y: 200, r: 110, face: shock }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Not", action: shrug }
+      - { at: "@bigger", action: shock }
+      - { at: "@several", action: run, from: [760, 900], to: [380, 900], dur: 1.6, facing: -1 }
+    texts:
+      - { at: "@coastlines", text: "coastline + sea floor + resonance", style: note, x: 760, y: 420 }
+      - { at: "@café", text: "OPEN BETWEEN TIDES ONLY", style: label, x: 1280, y: 560, color: "#ff8fb1", rotate: 3 }
+    narration: "Does that mean waves eight times taller? Not exactly. Real tide heights depend on coastlines, the shape of the sea floor, and resonance, so they vary a lot from place to place. But overall, expect tides that are much *bigger*, often several times today's. Harbors would need much taller walls, and towns would move a little farther inland. That cute beachfront café? It now has strict opening hours."
+
+  - id: rock-tides
+    transition: pop
+    background: { type: land, mood: sunset }
+    bixStart: [760, 820]
+    props:
+      - { type: arrow, at: "@rises", from: [1250, 760], to: [1250, 520], color: "#ffd447", width: 10, label: "tens of cm" }
+      - { type: arrow, at: "@farther", from: [1500, 800], to: [1500, 360], color: "#ff5a6b", width: 12, label: "several × more" }
+      - { type: satellite, x: 1650, y: 150, s: 0.5, at: "@scientists" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@ground", action: jump }
+      - { at: "@elevator", action: present, facing: 1 }
+      - { at: "@feel", action: shrug }
+      - { at: "@scientists", action: point, facing: 1 }
+    narration: "Even the *ground* has tides. Solid rock under your feet rises and falls by tens of centimeters every day, and nobody notices. With a closer Moon, that invisible elevator would travel several times farther. You still wouldn't feel it. Scientists with precise GPS stations absolutely would."
+
+  - id: quakes
+    transition: cut
+    background: { type: land, mood: day }
+    bixStart: [600, 820]
+    props:
+      - { type: seismo, x: 1250, y: 400, w: 700, h: 220, spikeAt: "@nudge", amp: 0.7 }
+      - { type: icon, icon: question, x: 1250, y: 640, s: 0.55, at: "@nonstop" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Careful", action: think }
+      - { at: "@squeeze", action: present, facing: 1 }
+      - { at: "@nonstop", action: shrug }
+    texts:
+      - { at: "@slightly", text: "small effect, still studied", style: label, x: 1250, y: 220, color: "#ffd447" }
+    narration: "And earthquakes? Careful here. Tides really do squeeze Earth's crust a little, and some studies find large quakes are *slightly* more likely when tidal stress is high. Stronger tides might nudge faults more often. But a planet of nonstop earthquakes? There's no good evidence for that."
+
+  # ------------------------------------------------------------------ Q3 CRASH
+  - id: q-crash
+    chapter: "Q: Is it going to crash into us?"
+    transition: pop
+    background: { type: plain, color: "#8b2f4a" }
+    bixStart: [720, 820]
+    focus: [960]
+    props:
+      - { type: board, x: 1180, y: 430, w: 660, size: 58, title: "ASK BIX", at: 0.2, step: 0.5, lines: ["Q: Will it crash", "into us?"], rot: 1.5 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@crash", action: shock }
+      - { at: "@nervous", action: tumble }
+    camera: { shake: ["@crash"], shakeAmp: 10 }
+    narration: "Okay. The big one. Is it going to *crash* into us? Bix has been nervous about this one all episode."
+
+  - id: roche
+    transition: whip
+    background: { type: space, tint: purple }
+    bixStart: [640, 900]
+    bixScale: 0.7
+    focus: [900]
+    props:
+      - { type: orbit, x: 1060, y: 520, rx: 640, ry: 260, period: 12, phase: 0.6, body: moon, r: 55 }
+      - { type: ring, at: "@Roche", x: 1060, y: 520, r: 170, color: "#ff5a6b" }
+      - { type: earth, x: 1060, y: 520, r: 80, spin: 0.08 }
+      - { type: badge, x: 1060, y: 230, r: 80, text: "×10+", sub: "safe margin", color: "#5ad1c4", at: "@ten" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@Roche", action: point, facing: 1 }
+      - { at: "@ten", action: cheer }
+      - { at: "@Saturn", action: shrug }
+    texts:
+      - { at: "@18,000", text: "Roche limit ≈ 18,000 km", style: label, x: 1180, y: 840, color: "#ff5a6b" }
+      - { at: "@Relax", text: "not to scale", style: note, x: 1700, y: 160 }
+    narration: "Relax. A moon gets into real trouble inside something called the *Roche* limit, where Earth's tides would stretch it apart into rings. For a moon like ours, that's roughly {18,000|eighteen thousand} kilometers from Earth's center. Our closer Moon would still orbit more than *ten* times farther out than that. So, no rings for us. Sorry, Saturn fans."
+
+  - id: faster-month
+    transition: pop
+    background: { type: space, tint: blue, planet: true }
+    bixStart: [600, 860]
+    bixScale: 0.85
+    props:
+      - { type: calendar, x: 1250, y: 450, s: 1.1, from: 27, to: 10, at: "@Kepler's", dur: 2.2, label: "MONTH", color: "#7a5cff" }
+      - { type: orbit, x: 1250, y: 450, rx: 330, ry: 150, period: 2.4, body: moon, r: 30, at: "@faster" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@Kepler's", action: present, facing: 1 }
+      - { at: "@Werewolves", action: laugh }
+    texts:
+      - { at: "@ten", text: "≈ 10 days per orbit", style: label, x: 1250, y: 720, color: "#ffd447" }
+    narration: "Bonus side effect: a closer orbit is a *faster* one. Thanks to Kepler's laws, the Moon would circle Earth in about ten days instead of twenty-seven. More full Moons, more often. Werewolves would need a far more flexible work schedule."
+
+  # ------------------------------------------------------------------ Q4 ECLIPSES
+  - id: q-eclipse
+    chapter: "Q: What happens to eclipses?"
+    transition: pop
+    background: { type: plain, color: "#2b2f6b" }
+    bixStart: [720, 820]
+    focus: [960]
+    props:
+      - { type: board, x: 1180, y: 430, w: 640, size: 60, title: "ASK BIX", at: 0.2, step: 0.5, lines: ["Q: What about", "eclipses?"], rot: -1.5 }
+    bix:
+      - { at: 0, action: sit }
+      - { at: "@eclipses", action: jump }
+    narration: "Next up, a sky-watcher's question. What happens to *eclipses*?"
+
+  - id: eclipse
+    transition: iris
+    background: { type: sky, mood: day, sun: false, clouds: 3 }
+    bixStart: [620, 820]
+    props:
+      - { type: sun, x: 1250, y: 380, r: 110, face: false }
+      - { type: moon, x: 1250, y: 380, r: 102, at: "@farther" }
+      - { type: ring, at: "@ring", x: 1250, y: 380, r: 150, color: "#ffd447" }
+      - { type: moon, x: 1250, y: 380, r: 215, at: "@half", face: smile }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@coincidence", action: point, facing: 1 }
+      - { at: "@half", action: shock }
+      - { at: "@cancelled", action: laugh }
+      - { at: "@Total", action: cheer }
+      - { at: "@corona", action: think }
+    texts:
+      - { at: "@annular", until: "@half", text: "ANNULAR = RING OF FIRE", style: label, x: 620, y: 300, color: "#ffb347" }
+      - { at: "@cancelled", text: "CANCELLED!", style: shout, x: 620, y: 300, rotate: -6 }
+      - { at: "@Total", text: "more total eclipses, longer totality", style: note, x: 1250, y: 680 }
+    narration: "Today, the Moon and the Sun look almost exactly the same size in our sky. It's a lucky *coincidence*. When the Moon is a bit farther away, it can't quite cover the Sun, and we get a ring of fire: an annular eclipse. At half the distance, the Moon would look about twice as wide as the Sun. Ring-of-fire eclipses? *Cancelled*. Total eclipses would come more often, and last much longer. One catch: a Moon that big would also hide part of the Sun's glowing outer atmosphere, the *corona*. So the view would be longer... but a little different."
+
+  # ------------------------------------------------------------------ Q5 HISTORY
+  - id: q-history
+    chapter: "Q: Was it ever this close?"
+    transition: pop
+    background: { type: plain, color: "#3b6b3f" }
+    bixStart: [720, 820]
+    focus: [960]
+    props:
+      - { type: board, x: 1180, y: 430, w: 640, size: 60, title: "ASK BIX", at: 0.2, step: 0.5, lines: ["Q: Was it ever", "this close?"], rot: 2 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@sort", action: shrug }
+    narration: "Last question. Has the Moon ever *been* this close? Well... sort of."
+
+  - id: mirrors
+    transition: whip
+    background: { type: moon }
+    bixStart: [780, 800]
+    bixScale: 0.9
+    props:
+      - { type: earth, x: 1520, y: 250, r: 130, spin: 0.04 }
+      - { type: arrow, at: "@lasers", from: [1420, 330], to: [960, 760], color: "#ff5a6b", width: 8 }
+      - { type: arrow, at: "@echo", from: [1000, 720], to: [1450, 340], color: "#ffd447", width: 6, bend: 30 }
+      - { type: badge, x: 960, y: 770, r: 45, text: "◇", color: "#d6ecff", at: "@mirrors" }
+    bix:
+      - { at: 0, action: walk, from: [500, 800], to: [780, 800], dur: 1.4 }
+      - { at: "@lasers", action: point, facing: 1 }
+      - { at: "@3.8", action: present, facing: 1 }
+      - { at: "@fingernails", action: laugh }
+    texts:
+      - { at: "@3.8", text: "≈ 3.8 cm per year", style: big, x: 700, y: 260 }
+      - { at: "@Apollo", text: "Apollo 11, 1969", style: note, x: 700, y: 340 }
+    narration: "Astronauts left mirrors on the Moon, starting with Apollo 11, and they still work more than fifty years later. Scientists still fire lasers at them and time the echo. The result: the Moon drifts away about {3.8|three point eight} centimeters every year. That's roughly the speed your *fingernails* grow."
+
+  - id: deep-time
+    transition: fade
+    background: { type: space, drift: 4 }
+    bixStart: [600, 860]
+    bixScale: 0.85
+    props:
+      - { type: clock, x: 1250, y: 420, r: 150, time: "6:00", speed: 3, at: "@day" }
+      - { type: badge, x: 1500, y: 640, r: 90, text: "18 h", sub: "per day", color: "#ffd447", at: "@eighteen" }
+      - { type: moon, x: 1650, y: 230, at: "@formed", dur: 1.4, grow: [60, 130] }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@backwards", action: tumble }
+      - { at: "@day", action: point, facing: 1 }
+      - { at: "@eighteen", action: sleepy }
+      - { at: "@squeezes", action: shock }
+    texts:
+      - { at: "@341,000", text: "1.4 billion years ago: ≈ 341,000 km", style: label, x: 1100, y: 160, color: "#5ad1c4" }
+    narration: "Run that backwards, and the Moon used to be closer. About {1.4 billion|one point four billion} years ago, it was roughly {341,000|three hundred forty-one thousand} kilometers away, and a *day* lasted only about eighteen hours. That squeezes roughly four hundred seventy days into a single year. Right after it formed, it was much closer still."
+
+  - id: the-brake
+    transition: cut
+    background: { type: space, tint: purple, seed: 9 }
+    bixStart: [560, 880]
+    bixScale: 0.8
+    props:
+      - { type: skid, x: 1150, y: 500, r: 230, at: "@brake" }
+      - { type: earth, x: 1150, y: 500, r: 230, spin: 0.1, face: shock }
+      - { type: moon, x: 1600, y: 250, r: 80, at: "@twice" }
+      - { type: arrow, at: "@stretch", from: [800, 220], to: [1450, 220], color: "#ffd447", label: "longer days", labelY: 180 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@brake", action: point, facing: 1 }
+      - { at: "@harder", action: facepalm }
+      - { at: "@stretch", action: present, facing: 1 }
+    narration: "All that tidal friction works like a *brake* on Earth's spin, slowly making our days longer. Put the Moon twice as close today, and that brake bites much harder. Our days would stretch out faster."
+
+  # ------------------------------------------------------------------ VERDICT
+  - id: verdict
+    chapter: "The verdict"
+    transition: iris
+    background: { type: ocean, beach: true, mood: night, horizon: 540 }
+    bixStart: [760, 900]
+    props:
+      - { type: moon, x: 1300, y: 300, r: 200, face: smile, at: "@Brighter" }
+      - { type: confetti, at: "@glow-up", dur: 3, count: 70 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@No", action: wave }
+      - { at: "@Brighter", action: present, facing: 1 }
+      - { at: "@glow-up", action: cheer }
+    texts:
+      - { at: "@Brighter", text: "brighter nights · bigger tides\n10-day months · epic eclipses", style: label, x: 760, y: 220, color: "#5b3fa0" }
+    narration: "So, would a Moon twice as close be the end of the world? No. Brighter nights, wilder tides, ten-day months, and the best eclipses in the solar system. Honestly? It sounds less like a disaster... and more like a *glow-up*."
+    hold: 0.6
+
+shorts:
+  - id: short-eight-times-tides
+    title: "Moon twice as close = tides 8× stronger?! #Shorts"
+    from: q-tides
+    to: beach
+    hook: "MOON 2× CLOSER: TIDES?"
+    description: "One cube law, eight times the tidal force, and a very nervous beach café."
+  - id: short-moon-crash
+    title: "Would a closer Moon crash into Earth? #Shorts"
+    from: q-crash
+    to: faster-month
+    hook: "WILL THE MOON HIT US?"
+    description: "The Roche limit, a safety margin of more than ten, and werewolves with scheduling problems."
+  - id: short-eclipses
+    title: "A closer Moon would cancel ring-of-fire eclipses #Shorts"
+    from: q-eclipse
+    to: eclipse
+    hook: "MOON 2× CLOSER: ECLIPSES?"
+
+thumbnail:
+  title: ["MOON", "2× CLOSER"]
+  accent: 1
+  subtitle: "what would happen?"
+  background: { type: sky, mood: night, sun: false }
+  props:
+    - { type: moon, x: 1050, y: 520, r: 380, face: shock }
+  bix: { action: shock, x: 1620, y: 1210, scale: 2.45, facing: -1, t: 0.45 }
+
+sources:
+  - "NASA NSSDC, Moon Fact Sheet (mean Earth-Moon distance about 384,400 km; sidereal orbit period 27.3 days): https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html"
+  - "NOAA Ocean Service, Tides and Water Levels: What causes tides? (tide-generating force varies with the inverse cube of distance): https://oceanservice.noaa.gov/education/tutorial_tides/tides02_cause.html"
+  - "NOAA Ocean Service, Tides and Water Levels: Variations in tides (local tide heights depend on coastline, bathymetry and resonance): https://oceanservice.noaa.gov/education/tutorial_tides/tides07_cycles.html"
+  - "Ide, Yabe & Tanaka (2016), Earthquake potential revealed by tidal influence on earthquake size-frequency statistics, Nature Geoscience 9: https://www.nature.com/articles/ngeo2796"
+  - "USGS FAQ, Can the position of the Moon or the planets affect seismicity?: https://www.usgs.gov/faqs/can-position-moon-or-planets-affect-seismicity-are-there-more-earthquakes-morning-evening-or"
+  - "Wikipedia, Roche limit (Earth-Moon fluid Roche limit about 18,400 km): https://en.wikipedia.org/wiki/Roche_limit"
+  - "NASA Science, Orbits and Kepler's Laws (period grows as distance^1.5, so half the distance gives about 27.3 / 2.83 ≈ 9.7 days): https://science.nasa.gov/resource/orbits-and-keplers-laws/"
+  - "NASA Science, Types of solar eclipses (annular eclipses happen when the Moon is near its farthest point and looks smaller than the Sun): https://science.nasa.gov/eclipses/types/"
+  - "NASA GSFC, Measuring the Moon's Distance (Apollo retroreflectors; Moon recedes about 3.8 cm per year): https://eclipse.gsfc.nasa.gov/help/ApolloLaser.html"
+  - "Meyers & Malinverno (2018), Proterozoic Milankovitch cycles and the history of the solar system, PNAS (1.4 billion years ago: Earth-Moon distance about 341,000 km, day about 18.7 hours, so about 365.25 x 24 / 18.7 ≈ 470 days per year): https://www.pnas.org/doi/10.1073/pnas.1717689115"
+  - "Wikipedia, Earth tide (solid Earth rises and falls by tens of centimeters): https://en.wikipedia.org/wiki/Earth_tide"
+  - "Lin et al. (2021), Moonrise timing is key for synchronized spawning in coral Dipsastraea speciosa, PNAS: https://pmc.ncbi.nlm.nih.gov/articles/PMC8403928"
+  - "Wikipedia, Tidal acceleration (tidal friction slows Earth's rotation and pushes the Moon outward): https://en.wikipedia.org/wiki/Tidal_acceleration"

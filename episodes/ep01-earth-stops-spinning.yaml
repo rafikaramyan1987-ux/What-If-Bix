@@ -1,0 +1,511 @@
+# What If Bix — Episode 1
+# Structure: a cause-and-effect chain (stop -> you -> air -> oceans -> survivors),
+# then a twist (the RESTART is a second disaster), a physics reality check and a
+# real-world connection (leap seconds).
+id: ep01-earth-stops-spinning
+number: 1
+title: "What if Earth stopped spinning for 1 second?"
+description: |
+  Earth stops spinning for ONE second. That sounds harmless... until you learn how fast you're moving right now.
+  Bix finds out what happens to you, the air, the oceans and one very unlucky sandwich, and why the restart might be even worse than the stop.
+tags: [what if earth stopped spinning, earth stops spinning, earth rotation, physics, science explained, inertia, leap second, space, educational animation, what if bix]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: curious, gain: 0.2, duck: 0.55, seed: 7 }
+introAfter: harmless
+outro:
+  narration: "That's one second you'll never get back. Spend the next five minutes on another what-if, right here. And if you want Bix to break more planets, subscribe. [beat 0.3] Responsibly."
+  background: { type: space, tint: blue }
+
+scenes:
+  # ------------------------------------------------------------- cold open
+  - id: cold-open
+    chapter: "The one-second question"
+    background: { type: space }
+    bixStart: [960, 604]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 960, y: 1500, r: 900, spin: 0.03, tilt: 0, caps: false, band: -0.62 }
+    bix:
+      - { at: 0, action: walk }
+      - { at: "@one", action: think }
+    texts:
+      - { at: "@What", text: "WHAT IF EARTH STOPPED SPINNING?", style: title, y: 165 }
+    camera: { zoom: [1.0, 1.07], focus: [960, 560] }
+    narration: "What if Earth stopped spinning... for just *one second*?"
+
+  - id: harmless
+    background: { type: space }
+    bixStart: [960, 604]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 960, y: 1500, r: 900, spin: 0.03, tilt: 0, caps: false, band: -0.62 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Sounds", action: jump }
+      - { at: "@one", action: laugh }
+      - { at: "@snack", action: idle, hold: sandwich }
+      - { at: "@weird", action: shrug, hold: sandwich }
+    camera: { zoom: [1.07, 1.14], focus: [960, 560] }
+    sfx:
+      - { name: boing, at: "@Sounds+0.15", gain: 0.5 }
+      - { name: pop, at: "@snack", gain: 0.5 }
+    narration: "Sounds harmless, right? It's *one* second! [beat 0.3] Well... grab a snack. This is going to get weird."
+
+  # ------------------------------------------------------------- how fast
+  - id: how-fast
+    chapter: "How fast are you moving right now?"
+    background: { type: space, tint: blue }
+    bixStart: [380, 930]
+    props:
+      - { type: earth, x: 1200, y: 610, r: 330, spin: 0.12, tilt: 0, equator: true }
+      - { type: arrow, at: "@equator", from: [930, 700], to: [1450, 700], bend: -70 }
+    bix:
+      - { at: 0, action: walk, from: [140, 930], to: [380, 930] }
+      - { at: "@moving", action: shock }
+      - { at: "@equator", action: point }
+    texts:
+      - { at: "@1,670", text: "1,670 km/h", style: big, x: 1200, y: 200, count: { from: 0, to: 1670, dur: 1.3, suffix: " km/h" } }
+      - { at: "@kilometers", text: "(about 1,040 mph)", style: note, x: 1200, y: 262 }
+    camera: { zoom: [1.0, 1.04] }
+    narration: "First, a confession. Right now, you are *moving*. Fast. Earth spins once a day, and at the equator, the ground beneath you travels about {1,670|sixteen hundred and seventy} kilometers per hour."
+
+  - id: your-city
+    transition: whip
+    background: { type: lab }
+    bixStart: [300, 820]
+    props:
+      - { type: board, x: 960, y: 335, w: 780, h: 400, title: "Your speed right now", size: 46, step: 0.9, at: "@farther",
+          lines: ["Equator ............ 1,670 km/h", "New York .......... 1,270 km/h", "London .............. 1,040 km/h", "North Pole ............... 0 km/h"] }
+      - { type: earth, x: 1640, y: 640, r: 150, spin: 0.15, tilt: -23 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@York", action: point }
+      - { at: "@Pole", action: float, from: [300, 820], to: [300, 760], dur: 0.8 }
+    texts:
+      - { at: "@circle", text: "wheee", style: note, x: 300, y: 380, rotate: -8 }
+    narration: "The farther you are from the equator, the slower you go. New York cruises at about {1,270|twelve hundred and seventy}. London, about {1,040|one thousand and forty}. At the North Pole, you're just turning in a very slow circle."
+
+  - id: cosmic-speeds
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [330, 880]
+    props:
+      - { type: sun, x: 960, y: 470, r: 120 }
+      - { type: orbit, x: 960, y: 470, rx: 560, ry: 200, body: dot, r: 22, period: 6, at: "@races" }
+      - { type: arrow, at: "@galaxy", from: [1400, 880], to: [1850, 760], bend: 40, color: "#ff6fb5", label: "~800,000 km/h", labelX: 1600, labelY: 700 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@races", action: point }
+      - { at: "@galaxy", action: shock }
+      - { at: "@stopping", action: shrug }
+    texts:
+      - { at: "@races", text: "107,000 km/h", style: label, x: 960, y: 170, color: "#ffd447" }
+    narration: "And that's just the spin. Earth also races around the Sun at about {107,000|one hundred and seven thousand} kilometers per hour, while the Sun drags us around the galaxy even faster. Relax: nobody is stopping those. Today."
+
+  - id: why-dont-feel
+    transition: iris
+    background: { type: sky, speed: 60 }
+    bixStart: [760, 640]
+    props:
+      - { type: vehicle, kind: plane, from: [2300, 330], to: [-400, 300], at: "@flight", dur: 5, s: 1.1, color: "#8a5cff" }
+    bix:
+      - { at: 0, action: float, hold: mug }
+      - { at: "@everything", action: present, hold: mug }
+      - { at: "@spilling", action: laugh, hold: mug }
+    texts:
+      - { at: "@everything", text: "Everything moves together", style: label, x: 1250, y: 560, color: "#22d3c5" }
+    narration: "So why don't you feel it? Because *everything* moves with you: the ground, the air, the oceans. It's like a smooth flight. You can sip coffee at {900 km/h|nine hundred kilometers per hour} without spilling a drop."
+
+  - id: inertia
+    chapter: "You already know this feeling"
+    transition: whip
+    background: { type: city }
+    bixStart: [700, 820]
+    props:
+      - { type: vehicle, kind: bus, from: [-500, 822], to: [1100, 822], at: 0, dur: 2.2, color: "#ffd447" }
+      - { type: pal, x: 1350, y: 820, s: 0.75, facing: -1, seed: 2, actions: [{ at: 0, action: idle }, { at: "@lurch", action: shock }] }
+      - { type: pal, x: 1520, y: 820, s: 0.7, facing: -1, seed: 5, actions: [{ at: 0, action: idle }, { at: "@lurch+0.1", action: tumble }] }
+      - { type: board, at: "@inertia", x: 1150, y: 330, w: 760, size: 46, title: "Inertia", lines: ["Moving things keep moving", "until something stops them."] }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@lurch", action: shock }
+      - { at: "@inertia", action: present }
+      - { at: "@planet", action: think }
+    camera: { shake: ["@brakes"], shakeAmp: 10 }
+    sfx:
+      - { name: screech, at: "@brakes", gain: 0.35 }
+    narration: "You already know this feeling. When a bus brakes hard, you lurch forward. That's *inertia*: moving things keep moving until something stops them. Now imagine the bus is the entire planet. And it's doing {1,670|sixteen hundred and seventy}."
+
+  # ------------------------------------------------------------- the stop
+  - id: brakes
+    chapter: "The stop"
+    transition: whip
+    background: { type: land, seaEnd: 520, speed: 15 }
+    bixStart: [820, 800]
+    bixScale: 0.9
+    props:
+      - { type: house, x: 1260, y: 800, s: 0.95, roofAt: "@air+0.25" }
+      - { type: tree, x: 1640, y: 800, s: 1.0, windAt: "@air" }
+      - { type: wind, at: "@air", count: 14, band: 650 }
+      - { type: puff, at: "@don't", x: 820, y: 800 }
+      - { type: wave, at: "@oceans", h: 340, dur: 2.6, layer: front }
+      - { type: flyer, item: sandwich, at: "@don't", hoverUntil: "@sandwich", from: [846, 707], to: [2300, 470], dur: 0.9, spin: 720, s: 0.77, layer: front }
+    bix:
+      - { at: 0, action: idle, hold: sandwich }
+      - { at: "@brakes", action: shock, hold: sandwich }
+      - { at: "@don't", action: fly, from: [820, 800], to: [2600, 420], dur: 0.55, params: { panic: 1 } }
+    texts:
+      - { at: "@brakes", until: "@brakes+1.1", text: "SCREEEECH!", style: shout, y: 230, rotate: -6 }
+      - { at: "@don't+0.1", until: "@don't+1.2", text: "WHOOSH", style: title, x: 1500, y: 360, rotate: -10 }
+    camera: { shake: ["@brakes", "@don't"], shakeAmp: 20 }
+    sfx:
+      - { name: screech, at: "@brakes", gain: 0.55 }
+      - { name: whoosh, at: "@don't", gain: 0.8 }
+    narration: "Now, the experiment. Without warning, the planet slams on the brakes. Earth stops. You *don't*. Neither does the air. Or the oceans. Or that sandwich you were holding."
+
+  - id: one-second-later
+    transition: whip
+    background: { type: sky, speed: 2600, sun: false, clouds: 7 }
+    bixStart: [880, 600]
+    props:
+      - { type: speedlines, count: 20, y: 540, spread: 900 }
+      - { type: flyer, item: sandwich, at: 0, from: [330, 660], to: [470, 610], dur: 4, spin: 200, s: 1.1, wobble: 14, persist: true }
+      - { type: boom, at: "@sound", x: 860, y: 520 }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0.7 } }
+    chips:
+      - { at: 0.15, label: "1 second later" }
+    texts:
+      - { at: "@about", until: "@cover", text: "≈ 465 m/s", style: label, x: 1490, y: 300 }
+      - { at: "@cover", text: "4.5 football pitches", style: label, x: 1490, y: 300, color: "#3fcf6e" }
+    camera: { shake: ["@sound"], shakeAmp: 14 }
+    narration: "Half a heartbeat later, you're hurtling east at about {Mach 1.4|Mach one point four}. That's faster than the speed of sound. In that one second, you'd cover {465 meters|four hundred sixty-five meters}: about four and a half football pitches."
+
+  - id: landing
+    transition: cut
+    background: { type: city }
+    bixStart: [250, 560]
+    props:
+      - { type: vehicle, kind: car, from: [100, 822], to: [2400, 822], at: "@Gravity", dur: 1.4, color: "#ff4d5e" }
+      - { type: puff, at: "@Sideways", x: 980, y: 810 }
+      - { type: burst, at: "@Sideways", until: "@Sideways+1.4", x: 1180, y: 420, text: "OOF!", r: 150 }
+      - { type: bars, at: "@jet", x: 1460, y: 330, w: 520, h: 200, values: [900, 1670], labels: ["Jet", "You"], unit: "", colors: ["#22d3c5", "#ff4d5e"] }
+    bix:
+      - { at: 0, action: fly, from: [250, 560], to: [560, 600], dur: 1.6, params: { panic: 1 } }
+      - { at: "@ground", action: tumble, from: [560, 640], to: [980, 790], dur: 0.9 }
+      - { at: "@Sideways", action: tumble, from: [980, 790], to: [1100, 800], dur: 0.6 }
+      - { at: "@everything", action: facepalm }
+    camera: { shake: ["@Sideways"], shakeAmp: 18 }
+    sfx:
+      - { name: thud, at: "@Sideways", gain: 0.8 }
+    narration: "The good news: you won't fly for long. Gravity pulls you to the ground in about half a second. The bad news: you land moving almost twice as fast as a cruising jet. Sideways. Into everything that just stopped. Which is... everything."
+
+  - id: space-myth
+    transition: fade
+    background: { type: sky, speed: 120, mood: day }
+    bixStart: [520, 900]
+    props:
+      - { type: gauge, at: "@Nope", x: 1320, y: 470, r: 210, from: 0, to: 1670, max: 40000, dur: 1.4, label: "YOU vs ESCAPE SPEED" }
+    bix:
+      - { at: 0, action: float, from: [520, 900], to: [520, 520], dur: 2.2 }
+      - { at: "@Nope", action: shock }
+      - { at: "@Unfortunately", action: tumble, from: [520, 520], to: [560, 900], dur: 0.7 }
+    texts:
+      - { at: "@escape", text: "Escape speed ≈ 40,000 km/h", style: label, x: 1320, y: 150, color: "#ff4d5e" }
+    sfx:
+      - { name: thud, at: "@Unfortunately+0.6", gain: 0.6 }
+    narration: "Wait, would you fly off into space? Nope. To escape Earth's gravity you'd need about {40,000|forty thousand} kilometers per hour. You're doing barely four percent of that. So you stay on Earth. Unfortunately."
+
+  - id: not-bolted
+    transition: pop
+    background: { type: land, seaEnd: 0, mood: sunset }
+    bixStart: [300, 800]
+    props:
+      - { type: vehicle, kind: car, from: [-300, 822], to: [2400, 700], at: "@Cars", dur: 1.6, color: "#22d3c5" }
+      - { type: vehicle, kind: bus, from: [-400, 822], to: [2500, 640], at: "@trains", dur: 1.8, color: "#ff7a1a" }
+      - { type: flyer, item: book, at: "@rocks", from: [-100, 600], to: [2200, 420], dur: 1.4, spin: 540, s: 1.6 }
+      - { type: flyer, item: coin, at: "@cows", from: [-100, 500], to: [2200, 300], dur: 1.2, spin: 900, s: 1.8 }
+      - { type: burst, at: "@cows", until: "@cows+1.6", x: 1450, y: 300, text: "MOO?!", r: 140, color: "#ff6fb5" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Cars", action: shock }
+      - { at: "@bolted", action: point }
+    narration: "And it's not just you. Cars, trains, rocks, cows. Everything that isn't bolted down takes the same trip east."
+
+  # ------------------------------------------------------------- the wind
+  - id: wind
+    chapter: "A planet-sized windstorm"
+    transition: whip
+    background: { type: sky, speed: 900, mood: sunset }
+    bixStart: [260, 900]
+    props:
+      - { type: wind, at: 0, count: 18, band: 900, speed: 3200 }
+      - { type: hurricane, at: "@tornado", x: 1650, y: 230, r: 150, speed: 260 }
+      - { type: bars, at: "@three", x: 1050, y: 820, w: 900, h: 420, values: [345, 480, 1670], labels: ["Hurricane", "Tornado", "Earth stops"],
+          colors: ["#22d3c5", "#ffd447", "#ff4d5e"] }
+    bix:
+      - { at: 0, action: shock }
+      - { at: "@size", action: tumble, from: [260, 900], to: [2400, 500], dur: 1.3 }
+    texts:
+      - { at: "@three", text: "wind speed, km/h", style: note, x: 1050, y: 330 }
+    camera: { zoom: [1.0, 1.05] }
+    narration: "Then there's the air. The whole atmosphere keeps rushing east at up to {1,670|sixteen hundred and seventy} kilometers per hour. That's more than *three* times faster than the strongest tornado winds ever measured. Except this tornado is the size of a planet."
+
+  # ------------------------------------------------------------- oceans
+  - id: oceans
+    chapter: "The oceans"
+    transition: iris
+    background: { type: ocean, beach: true }
+    bixStart: [1500, 960]
+    bixFacing: -1
+    props:
+      - { type: wave, at: "@sloshes", h: 420, dur: 3.2, y: 900 }
+      - { type: pal, x: 300, y: 760, s: 0.6, facing: 1, seed: 4, actions: [{ at: 0, action: cheer }, { at: "@worst", action: shock }],
+          from: [200, 760], to: [1350, 560], moveAt: "@sloshes", dur: 3.2 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@piles", action: shock }
+      - { at: "@surfer", action: run, from: [1500, 960], to: [2300, 960] }
+    texts:
+      - { at: "@western", text: "→ west coasts of continents", style: label, x: 1150, y: 200 }
+    camera: { shake: ["@piles"], shakeAmp: 12 }
+    narration: "The oceans keep going too. Water sloshes east and piles up against the western coasts of every continent, in walls of tsunami-sized waves. Somewhere, a surfer is having the best and worst day of their life. [beat]"
+
+  # ------------------------------------------------------------- survivors
+  - id: survivors
+    chapter: "Who's totally fine?"
+    transition: fade
+    background: { type: space, planet: true }
+    bixStart: [380, 700]
+    props:
+      - { type: earth, x: 1250, y: 620, r: 300, spin: 0.0 }
+      - { type: satellite, kind: station, at: "@astronauts", from: [500, 230], to: [1300, 180], dur: 7, s: 0.55 }
+      - { type: ring, at: "@poles", x: 1250, y: 330, r: 80 }
+      - { type: vehicle, kind: plane, at: "@pilots", from: [800, 700], to: [1800, 520], dur: 4, s: 0.45, color: "#ffd447" }
+      - { type: icon, icon: check, at: "@view", x: 820, y: 230, s: 0.6 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@astronauts", action: point }
+      - { at: "@pilots", action: think }
+      - { at: "@nothing", action: cheer }
+    texts:
+      - { at: "@International", text: "ISS · 400 km up", style: label, x: 820, y: 120, color: "#8a5cff" }
+    narration: "So who gets through this just fine? Astronauts on the International Space Station. They orbit Earth instead of riding on it, so for them, it's just a very strange view. People at the poles barely move at all. Penguins are mostly fine too, though they don't actually live at the South Pole. [beat] And pilots? Their planes already fly with the air around them. For one second, nothing changes up there."
+
+  # ------------------------------------------------------------- restart
+  - id: restart
+    chapter: "The restart twist"
+    transition: whip
+    background: { type: land, seaEnd: 0 }
+    bixStart: [1500, 800]
+    bixFacing: -1
+    props:
+      - { type: earth, x: 1680, y: 200, r: 120, spin: 0, at: 0 }
+      - { type: earth, x: 1680, y: 200, r: 120, spin: 0.5, at: "@spinning" }
+      - { type: crack, x: 1000, y: 850, w: 700, at: "@crashed" }
+      - { type: puff, at: "@other", x: 1500, y: 800 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@twist", action: think }
+      - { at: "@Lucky", action: shrug }
+      - { at: "@crashed", action: shock }
+      - { at: "@other", action: tumble, from: [1500, 800], to: [-500, 640], dur: 1.1 }
+    chips:
+      - { at: 0.2, label: "Second 2", icon: bolt }
+    texts:
+      - { at: "@again", until: "@again+1.5", text: "NOT AGAIN!", style: shout, x: 900, y: 260, rotate: 5 }
+    camera: { shake: ["@other"], shakeAmp: 22 }
+    sfx:
+      - { name: rumble, at: "@spinning", gain: 0.5 }
+      - { name: whoosh, at: "@other", gain: 0.8 }
+    narration: "Now the twist. The second is over, and Earth starts spinning again, instantly. Anything still flying east is suddenly back in sync with the ground. Lucky. But everything that crashed and stopped during that second? The ground races back under it at full speed. So the whole disaster happens again... in the *other* direction."
+
+  # ------------------------------------------------------------- energy
+  - id: energy
+    chapter: "Where does the energy go?"
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [960, 860]
+    props:
+      - { type: sun, x: 330, y: 420, r: 190, at: "@Sun" }
+      - { type: earth, x: 1560, y: 480, r: 200, spin: 0.2, stopAt: "@Stopping" }
+      - { type: skid, x: 1560, y: 480, r: 200, at: "@Stopping+0.1" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@Stopping", action: shock }
+      - { at: "@Sun", action: point, facing: -1 }
+      - { at: "@All", action: facepalm }
+    texts:
+      - { at: "@stores", text: "2 × 10²⁹ J", style: big, x: 960, y: 220 }
+      - { at: "@minutes", text: "≈ 9 minutes of the ENTIRE Sun", style: label, x: 960, y: 340, color: "#ff7a1a" }
+    sfx:
+      - { name: screech, at: "@Stopping", gain: 0.4 }
+    narration: "Physics would like a word. Earth's spin stores about {2×10²⁹ joules|two times ten to the twenty-ninth joules} of energy. Stopping it means dumping all of that somewhere. That's roughly what the Sun pours out in nine minutes. All of the Sun."
+
+  # ------------------------------------------------------------- forever
+  - id: forever
+    chapter: "What if it never restarted?"
+    transition: fade
+    background: { type: space, tint: blue }
+    bixStart: [330, 900]
+    props:
+      - { type: sun, x: 230, y: 300, r: 120, face: false }
+      - { type: earth, x: 1150, y: 560, r: 300, spin: 0, face: smile, at: 0 }
+      - { type: arrow, at: "@poles", from: [1150, 470], to: [1150, 300], color: "#2f8cff", width: 14 }
+      - { type: arrow, at: "@poles", from: [1150, 650], to: [1150, 820], color: "#2f8cff", width: 14 }
+      - { type: calendar, at: "@year", x: 1660, y: 330, from: 1, to: 365, dur: 2.2, label: "1 DAY", s: 0.8 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@night", action: sleepy }
+      - { at: "@continent", action: present }
+    texts:
+      - { at: "@west", until: "@west+2", text: "SUNRISE: WEST", style: shout, x: 1150, y: 150, rotate: -4 }
+      - { at: "@continent", text: "one giant equatorial continent", style: label, x: 1150, y: 120 }
+    narration: "And if Earth never started again? One day would last a whole year. Six months of daylight, then six months of night. And the Sun would rise in the *west*. Over time, the oceans would migrate toward the poles, leaving one giant continent wrapped around the equator."
+
+  # ------------------------------------------------------------- real life
+  - id: leap-seconds
+    chapter: "This really happens (a tiny bit)"
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [380, 820]
+    props:
+      - { type: board, at: "@added", x: 1080, y: 380, w: 820, title: "Leap seconds", size: 50, step: 1.2,
+          lines: ["Added since 1972: 27", "Most recent: end of 2016", "Planned phase-out: by 2035"] }
+      - { type: clock, x: 1720, y: 220, r: 110, time: "11:59", speed: 0.004 }
+      - { type: icon, icon: warning, at: "@computers", x: 1700, y: 640, s: 0.8 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@milliseconds", action: think }
+      - { at: "@added", action: point }
+      - { at: "@computers", action: facepalm }
+    texts:
+      - { at: "@milliseconds", text: "± milliseconds", style: note, x: 760, y: 560 }
+    narration: "Here's the wild part: Earth's spin really does change, just a tiny bit. Tides, earthquakes and melting ice nudge the length of a day by milliseconds. In 2020, Earth even clocked some of its shortest days ever measured. To keep clocks honest, scientists have added 27 leap seconds since 1972. And they plan to stop by 2035, partly because leap seconds keep confusing computers. [beat]"
+
+  - id: wrap-up
+    transition: iris
+    background: { type: space }
+    bixStart: [960, 604]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 960, y: 1500, r: 900, spin: 0.03, tilt: 0, caps: false, band: -0.62 }
+    bix:
+      - { at: 0, action: walk }
+      - { at: "@No", action: shrug }
+      - { at: "@worse", action: shock }
+      - { at: "@sandwich", action: laugh, hold: sandwich }
+    texts:
+      - { at: "@sandwich", text: "HOLD ON TO YOUR SANDWICH", style: title, y: 165 }
+    camera: { zoom: [1.12, 1.0], focus: [960, 560] }
+    narration: "So, could Earth stop spinning for one second? No. Nothing we know of could brake a planet that fast. But if it did, the stop would be bad, and the restart would be worse. On the bright side, you'd have the best excuse ever for being late. [beat] Hold on to your sandwich."
+
+shorts:
+  # Each Short is a standalone mini-episode: the first scene is overridden so it opens on a
+  # hook line that needs no context, with motion on frame 0 and a payoff inside 3 s.
+  # A SUBSCRIBE call-to-action ("Subscribe for more what ifs!") is appended automatically.
+  - id: short-supersonic
+    title: "Earth stops for ONE second and you go supersonic"
+    from: brakes
+    to: landing
+    hook: "EARTH STOPS FOR 1 SECOND"
+    description: "If Earth's spin stopped for a single second, you'd keep moving east at about 1,670 km/h."
+    scenes:
+      brakes:
+        narration: "Earth stops for *one* second. You *don't*. Neither does the air. Or the oceans. Or that sandwich you were holding."
+        props:
+          - { type: earth, x: 1050, y: 330, r: 95, spin: 0.6, stopAt: "@stops" }
+          - { type: skid, x: 1050, y: 330, r: 95, at: "@stops+0.1" }
+          - { type: house, x: 1260, y: 800, s: 0.95, roofAt: "@air+0.25" }
+          - { type: tree, x: 1640, y: 800, s: 1.0, windAt: "@air" }
+          - { type: wind, at: "@air", count: 14, band: 650 }
+          - { type: puff, at: "@don't", x: 820, y: 800 }
+          - { type: wave, at: "@oceans", h: 340, dur: 2.6, layer: front }
+          - { type: flyer, item: sandwich, at: "@don't", hoverUntil: "@sandwich", from: [846, 707], to: [2300, 470], dur: 0.9, spin: 720, s: 0.77, layer: front }
+        bix:
+          - { at: 0, action: shock, hold: sandwich }
+          - { at: "@don't", action: fly, from: [820, 800], to: [2600, 420], dur: 0.55, params: { panic: 1 } }
+        texts:
+          - { at: "@stops", until: "@stops+1.1", text: "SCREEEECH!", style: shout, y: 230, rotate: -6 }
+          - { at: "@don't+0.1", until: "@don't+1.2", text: "WHOOSH", style: title, x: 1500, y: 360, rotate: -10 }
+        camera: { shake: ["@stops", "@don't"], shakeAmp: 20 }
+        sfx:
+          - { name: screech, at: "@stops", gain: 0.55 }
+          - { name: whoosh, at: "@don't", gain: 0.8 }
+  - id: short-speed
+    title: "You are moving at 1,670 km/h right now"
+    from: how-fast
+    to: why-dont-feel
+    hook: "YOU'RE MOVING 1,670 KM/H"
+    description: "Earth's rotation carries you at up to 1,670 km/h. So why don't you feel a thing?"
+    scenes:
+      how-fast:
+        narration: "Right now, you're *moving* at {1,670|sixteen hundred and seventy} kilometers per hour. That's how fast the ground travels at the equator, as Earth spins once a day."
+        bixStart: [330, 930]
+        props:   # Earth moved closer to Bix so both fit the vertical frame
+          - { type: earth, x: 790, y: 600, r: 250, spin: 0.12, tilt: 0, equator: true }
+          - { type: arrow, at: "@equator", from: [590, 670], to: [990, 670], bend: -55 }
+        bix:
+          - { at: 0, action: run, from: [150, 930], to: [330, 930], dur: 0.6 }
+          - { at: "@moving", action: shock }
+          - { at: "@equator", action: point }
+  - id: short-restart
+    title: "The restart would be WORSE than the stop"
+    from: restart
+    to: forever
+    hook: "THE RESTART IS WORSE"
+    description: "If Earth stopped spinning for one second and then restarted, everything would get hit twice."
+    scenes:
+      restart:
+        narration: "Stopping Earth is bad. Restarting it is *worse*. Say Earth stops for one second, then starts spinning again, instantly. Anything still flying east is suddenly back in sync with the ground. Lucky. But everything that crashed and stopped during that second? The ground races back under it at full speed. So the whole disaster happens again... in the *other* direction."
+        props:
+          - { type: earth, x: 1680, y: 200, r: 120, spin: 0.5, stopAt: "@Stopping+0.2", until: "@spinning" }
+          - { type: earth, x: 1680, y: 200, r: 120, spin: 0.5, at: "@spinning" }
+          - { type: burst, at: "@worse", until: "@worse+1.4", x: 1150, y: 330, text: "WORSE?!", r: 150, color: "#ff4d5e" }
+          - { type: skid, x: 1680, y: 200, r: 120, at: "@Stopping+0.2", until: "@spinning" }
+          - { type: crack, x: 1000, y: 850, w: 700, at: "@crashed" }
+          - { type: puff, at: "@other", x: 1500, y: 800 }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@worse", action: facepalm }
+          - { at: "@Lucky", action: shrug }
+          - { at: "@crashed", action: shock }
+          - { at: "@other", action: tumble, from: [1500, 800], to: [-500, 640], dur: 1.1 }
+        chips: []
+        texts:
+          - { at: "@Stopping+0.2", until: "@Stopping+1.5", text: "SCREEEECH!", style: shout, x: 1200, y: 250, rotate: -6 }
+          - { at: "@again", until: "@again+1.5", text: "NOT AGAIN!", style: shout, x: 900, y: 260, rotate: 5 }
+        camera: { shake: ["@Stopping", "@worse", "@other"], shakeAmp: 18 }
+        sfx:
+          - { name: screech, at: "@Stopping+0.2", gain: 0.45 }
+          - { name: boom, at: "@worse", gain: 0.5 }
+          - { name: rumble, at: "@spinning", gain: 0.5 }
+          - { name: whoosh, at: "@other", gain: 0.8 }
+
+thumbnail:
+  title: ["EARTH", "STOPS"]
+  accent: 1
+  subtitle: "for 1 second"
+  background: { type: space, tint: blue }
+  props:
+    - { type: skid, x: 1120, y: 640, r: 300 }
+    - { type: earth, x: 1120, y: 640, r: 300, spin: 0, face: shock }
+  bix: { action: shock, x: 1600, y: 1210, scale: 2.45, facing: -1, t: 0.45 }
+
+sources:
+  - "NASA Earth Fact Sheet: equatorial radius 6,378 km, sidereal rotation period 23.9345 h (equatorial speed ≈ 465 m/s ≈ 1,674 km/h; speed at latitude φ = 1,674 × cos φ): https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html"
+  - "Scientific American, 'What would happen if the Earth stopped spinning?': https://www.scientificamerican.com/article/earth-stops-spinning/"
+  - "NASA Space Place / Ask an Astronomer (Cornell): what if Earth stopped rotating: http://curious.astro.cornell.edu/about-us/41-our-solar-system/the-earth/other-catastrophes/57-what-would-happen-if-the-earth-stopped-spinning-beginner"
+  - "Speed of sound at sea level ≈ 340 m/s (U.S. Standard Atmosphere 1976, NASA): https://ntrs.nasa.gov/citations/19770009539"
+  - "Strongest measured tornado winds ≈ 300 mph / 480 km/h, Bridge Creek–Moore, Oklahoma, 1999 (NOAA NSSL): https://www.nssl.noaa.gov/education/svrwx101/tornadoes/faq/"
+  - "Hurricane Patricia (2015), strongest reliably measured hurricane winds, 215 mph ≈ 345 km/h (NOAA NHC report): https://www.nhc.noaa.gov/data/tcr/EP202015_Patricia.pdf"
+  - "ISS orbital altitude ≈ 400 km (NASA): https://www.nasa.gov/international-space-station/space-station-facts-and-figures/"
+  - "Earth's rotational kinetic energy ≈ 2.1 × 10²⁹ J (I ≈ 8.0 × 10³⁷ kg·m², ω = 7.29 × 10⁻⁵ rad/s): https://en.wikipedia.org/wiki/Earth%27s_rotation"
+  - "Solar luminosity ≈ 3.8 × 10²⁶ W (NASA Sun Fact Sheet): https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html"
+  - "Esri / W. Fraczek (2014), 'Why Bother with a Non-Rotating Earth?' (oceans migrate to the poles, equatorial megacontinent): https://www.esri.com/news/arcuser/0610/nospin.html"
+  - "IERS / NIST: 27 leap seconds added since 1972, the last on 31 Dec 2016: https://www.nist.gov/pml/time-and-frequency-division/leap-seconds-faqs"
+  - "BIPM CGPM 2022 Resolution 4: increase the tolerance for UT1−UTC by or before 2035 (ending leap seconds): https://www.bipm.org/en/cgpm-2022/resolution-4"
+  - "NASA JPL: earthquakes, tides and ice melt change the length of day by milliseconds: https://www.jpl.nasa.gov/news/nasa-details-earthquake-effects-on-the-earth"
+  - "Shortest days on record in 2020 (timeanddate.com, citing IERS data): https://www.timeanddate.com/time/earth-faster-rotation.html"
+  - "Earth's orbital speed ≈ 29.8 km/s ≈ 107,000 km/h; escape velocity 11.19 km/s ≈ 40,000 km/h (NASA Earth Fact Sheet): https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html"
+  - "The Sun orbits the Milky Way at roughly 230 km/s (~800,000 km/h): https://www.britannica.com/place/Milky-Way-Galaxy"

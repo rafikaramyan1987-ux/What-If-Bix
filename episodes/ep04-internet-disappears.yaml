@@ -1,0 +1,432 @@
+# Episode 4: escalating timeline. Chapters Minute 1 -> Hour 1 -> Day 1 -> Week 1 -> Month 1,
+# then the honest "could it really happen?" ending. The `timeline` prop fills up chapter by chapter:
+# at = "@<word>-<pos * 80>", dur = 80, so the yellow bar reaches the chapter's mark as the word is said
+# and then creeps forward slowly (never reaching the next mark within a scene).
+id: ep04-internet-disappears
+number: 4
+title: "What if the Internet disappeared worldwide?"
+description: |
+  One second you're scrolling. The next, the entire internet is gone, everywhere, all at once. Bix follows the fallout minute by minute, hour by hour, all the way to month one: what breaks first, what quietly keeps working, and why your grandparents' radio suddenly becomes the most important gadget in the house.
+  Plus the honest answer to the real question: could the whole internet actually vanish?
+tags: [science, what if, internet, technology, undersea cables, ARPANET, CrowdStrike, Facebook outage, GPS, explained, animation, what if bix]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: tense, gain: 0.2, duck: 0.55, seed: 44 }
+introAfter: cold-open
+outro:
+  narration: "Your connection survived this whole video, so put it to good use. Watch another episode, and subscribe, so Bix can find you again without a paper map. Or a carrier pigeon. The pigeon has asked to be left out of this."
+  background: { type: night-city }
+
+scenes:
+  # ------------------------------------------------------------------ MINUTE 1
+  - id: cold-open
+    chapter: "Minute 1: Everything goes quiet"
+    background: { type: night-city }
+    bixStart: [820, 820]
+    bixScale: 1.0
+    props:
+      - { type: wifi, x: 1560, y: 520, s: 1.3, crossAt: "@vanished" }
+      - { type: phone, x: 1130, y: 560, s: 0.85, rot: 8, screen: video, switchAt: "@All", screen2: nosignal }
+    bix:
+      - { at: 0, action: idle, hold: phone }
+      - { at: "@vanished", action: shock, hold: phone }
+      - { at: "@Not#2", action: think }
+      - { at: "@All", action: shock, scale: 1.05 }
+    texts:
+      - { at: "@What", text: "WHAT IF THE INTERNET\nDISAPPEARED?", style: title, y: 150 }
+      - { at: "@All", until: "@All+1.4", text: "ALL OF IT.", style: shout, x: 520, y: 400, rotate: -6 }
+    camera: { zoom: [1.0, 1.08], focus: [1000, 560], shake: ["@All"], shakeAmp: 14 }
+    sfx:
+      - { name: sting, at: "@vanished", gain: 0.5 }
+    narration: "What if the entire internet just... vanished? Not your Wi-Fi. Not one app. *All* of it, everywhere, in the same second."
+
+  - id: minute-one
+    transition: whip
+    background: { type: night-city }
+    bixStart: [760, 820]
+    props:
+      - { type: timeline, x: 960, y: 250, w: 1300, at: "@Minute", dur: 80, marks: [{ pos: 0, label: "Minute 1" }, { pos: 0.25, label: "Hour 1" }, { pos: 0.5, label: "Day 1" }, { pos: 0.75, label: "Week 1" }, { pos: 1, label: "Month 1" }] }
+      - { type: crowd, x: 1340, y: 820, w: 760, count: 14, rows: 2, s: 0.5, seed: 9, jumpAt: "@off", panicAt: "@not" }
+      - { type: pal, x: 1050, y: 820, s: 0.8, facing: -1, seed: 3, hold: phone, actions: [{ at: 0, action: idle }, { at: "@off", action: jump }, { at: "@not", action: facepalm }] }
+    bix:
+      - { at: 0, action: idle, hold: phone }
+      - { at: "@same", action: think, hold: phone }
+      - { at: "@off", action: jump, hold: phone }
+      - { at: "@not", action: facepalm }
+    chips:
+      - { at: 0.15, label: "Minute 1", icon: clock }
+    texts:
+      - { at: "@off", until: "@not", text: "OFF... AND ON AGAIN", style: label, x: 1150, y: 420, color: "#5ad1c4" }
+      - { at: "@not", text: "Restart attempt #47", style: note, x: 1150, y: 420 }
+    narration: "Minute one. About {6 billion|six billion} people do the exact same thing at the exact same time. They turn it off and on again. It does *not* help. Then they check whether it is just them. It is not just them."
+
+  - id: the-cables
+    transition: iris
+    background: { type: ocean, horizon: 230 }
+    bixStart: [960, 680]
+    bixScale: 0.8
+    focus: [960]
+    props:
+      - { type: satellite, x: 1500, y: 120, s: 0.7, at: "@satellites" }
+      - { type: icon, icon: cross, x: 1650, y: 130, s: 0.5, at: "@satellites+0.4" }
+      - { type: cable, at: "@Cables", grow: 1.6, points: [[40, 760], [400, 810], [800, 760], [1180, 830], [1560, 770], [1880, 740]], cutAt: "@dark" }
+      - { type: cable, at: "@Cables+0.4", grow: 1.6, color: "#ff8fb1", points: [[40, 860], [500, 880], [960, 850], [1400, 890], [1880, 860]], cutAt: "@dark+0.2" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@satellites", action: shrug }
+      - { at: "@Cables", action: point, facing: 1 }
+      - { at: "@hose", action: laugh }
+      - { at: "@dark", action: shock }
+    texts:
+      - { at: "@99", text: "≈ 99% of intercontinental data", style: label, x: 960, y: 250, color: "#ffd447" }
+      - { at: "@hose", until: "@dark", text: "(about garden-hose thick)", style: note, x: 960, y: 320 }
+    camera: { zoom: [1.0, 1.05], focus: [960, 600] }
+    narration: "So what actually carries the internet between continents? Not satellites, mostly. Cables. On the sea floor. About {99%|ninety-nine percent} of data between continents travels through them, and many are barely thicker than a garden hose. In our story, every single one goes *dark*."
+
+  # ------------------------------------------------------------------ HOUR 1
+  - id: hour-one
+    chapter: "Hour 1: Cash is king again"
+    transition: whip
+    background: { type: city, mood: day }
+    bixStart: [700, 820]
+    props:
+      - { type: timeline, x: 960, y: 250, w: 1300, at: "@Hour-20", dur: 80, marks: [{ pos: 0, label: "Minute 1" }, { pos: 0.25, label: "Hour 1" }, { pos: 0.5, label: "Day 1" }, { pos: 0.75, label: "Week 1" }, { pos: 1, label: "Month 1" }] }
+      - { type: phone, x: 980, y: 560, s: 0.6, rot: -4, screen: loading, switchAt: "@No", screen2: error, at: "@terminals" }
+      - { type: icon, icon: cross, x: 1110, y: 420, s: 0.55, at: "@sale" }
+      - { type: pal, x: 1360, y: 820, s: 0.85, facing: -1, seed: 5, hold: coin, actions: [{ at: 0, action: idle }, { at: "@cash", action: cheer }] }
+      - { type: burst, x: 1360, y: 400, r: 120, text: "CASH!", at: "@cash", color: "#ffd447" }
+    bix:
+      - { at: 0, action: idle, hold: phone }
+      - { at: "@terminals", action: present }
+      - { at: "@money", action: think }
+      - { at: "@sale", action: shrug }
+      - { at: "@cash", action: shock, facing: 1 }
+    chips:
+      - { at: 0.15, label: "Hour 1", icon: clock }
+    narration: "Hour one. Shopping breaks first. Most card terminals need a connection to ask your bank one question: does this person actually have money? No answer, no sale. Suddenly the coolest person in the queue is the one paying in *cash*. And the cash machine? It needs to call the bank too. Whatever is in your wallet right now... is your budget."
+
+  - id: the-cloud
+    transition: pop
+    background: { type: plain, color: "#3b3477" }
+    bixStart: [620, 820]
+    props:
+      - { type: phone, x: 900, y: 520, s: 0.6, rot: -6, screen: chat, switchAt: "@goes", screen2: error }
+      - { type: server, x: 1400, y: 820, s: 0.85, count: 3, at: "@buildings", failAt: "@reach" }
+      - { type: burst, x: 1400, y: 240, r: 110, text: "404", color: "#ff8fb1", at: "@reach" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@goes", action: shock }
+      - { at: "@never", action: think }
+      - { at: "@buildings", action: point, facing: 1 }
+      - { at: "@reach", action: facepalm }
+    texts:
+      - { at: "@cloud#2", until: "@buildings", text: "THE CLOUD", style: title, x: 1300, y: 250 }
+      - { at: "@buildings", text: "= someone else's computer", style: label, x: 1400, y: 340, color: "#ffd447" }
+    narration: "Everything in the cloud goes with it. Email, streaming, online banking, your photo backups. Fun reminder: the cloud was never a *cloud*. It's buildings full of computers, and right now, nobody can reach them."
+
+  - id: gps-works
+    transition: pop
+    background: { type: land, mood: day }
+    bixStart: [880, 820]
+    props:
+      - { type: satellite, at: "@GPS", from: [1300, 140], to: [1700, 180], dur: 7, s: 0.6 }
+      - { type: arrow, at: "@radio", from: [1400, 220], to: [1060, 560], color: "#5ad1c4", bend: 40 }
+      - { type: phone, x: 1060, y: 600, s: 0.55, rot: 6, screen: map, at: "@knows" }
+      - { type: icon, icon: check, x: 1200, y: 440, s: 0.5, at: "@never" }
+    bix:
+      - { at: 0, action: walk, from: [600, 820], to: [880, 820], hold: phone }
+      - { at: "@knows", action: cheer }
+      - { at: "@GPS", action: point, facing: 1 }
+      - { at: "@Bad", action: idle, hold: phone }
+      - { at: "@void", action: facepalm }
+    texts:
+      - { at: "@dot", text: "YOU ARE HERE.\nWHERE IS HERE?", style: label, x: 640, y: 380, color: "#ff5a6b" }
+    narration: "Good news, though. Your phone still knows exactly where you are. GPS is just radio signals from satellites, and it never needed the internet. Bad news: if you didn't download your maps, you're a little blue dot... floating in a beige *void*."
+
+  - id: meta-outage
+    chapter: "Real rehearsals"
+    transition: whip
+    background: { type: lab }
+    bixStart: [1500, 820]
+    bixFacing: -1
+    props:
+      - { type: board, x: 960, y: 330, w: 760, size: 46, title: "Oct 4, 2021", at: "@October", step: 1.6, lines: ["Facebook + Instagram + WhatsApp", "Gone for ~6 hours", "Cause: BGP routes withdrawn"] }
+      - { type: server, x: 400, y: 820, s: 0.75, count: 2, failAt: "@backbone" }
+    bix:
+      - { at: 0, action: present, facing: -1 }
+      - { at: "@backbone", action: shock }
+      - { at: "@remembered", action: laugh }
+    texts:
+      - { at: "@neighbors", text: "\"Hi... I live next door?\"", style: label, x: 1380, y: 420, color: "#ff8fb1", rotate: 3 }
+    camera: { zoom: [1.0, 1.05], focus: [960, 450] }
+    narration: "We've actually had trailers for this. On October fourth, 2021, Facebook, Instagram and WhatsApp disappeared for about six hours. A routine maintenance command took down their own backbone network, and the rest of the internet simply forgot how to find them. Group chats fell silent. Family arguments went unresolved. Billions of users briefly remembered they have *neighbors*."
+
+  - id: crowdstrike
+    transition: cut
+    background: { type: lab, board: false }
+    bixStart: [560, 820]
+    props:
+      - { type: server, x: 1180, y: 820, s: 0.9, count: 3, failAt: "@crashed" }
+      - { type: burst, x: 1180, y: 300, r: 150, text: "BLUE SCREEN", color: "#7ab8ff", at: "@crashed" }
+      - { type: vehicle, kind: plane, at: "@grounded", from: [1500, 620], to: [1650, 640], dur: 3, s: 0.6, color: "#ff5a6b" }
+      - { type: icon, icon: cross, x: 1690, y: 560, s: 0.45, at: "@grounded+0.3" }
+      - { type: item, item: clipboard, x: 830, y: 460, s: 1.4, at: "@paper" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@crashed", action: tumble }
+      - { at: "@grounded", action: shock }
+      - { at: "@less", action: facepalm }
+    texts:
+      - { at: "@Windows", text: "≈ 8.5 MILLION PCs", style: title, x: 760, y: 250 }
+      - { at: "@less", text: "< 1% of Windows machines", style: label, x: 760, y: 350, color: "#ffd447" }
+    camera: { shake: ["@crashed"], shakeAmp: 12 }
+    narration: "Then, in July 2024, one faulty security update from CrowdStrike crashed about {8.5 million|eight and a half million} Windows computers. Flights were *grounded*. Banks, broadcasters and shops scrambled at once. Some hospitals went back to paper. And that was less than one percent of Windows machines... with the internet working perfectly fine."
+
+  # ------------------------------------------------------------------ DAY 1
+  - id: day-one
+    chapter: "Day 1: The shelves stop refilling"
+    transition: whip
+    background: { type: city, mood: sunset }
+    bixStart: [620, 820]
+    props:
+      - { type: timeline, x: 960, y: 250, w: 1300, at: "@Day-40", dur: 80, marks: [{ pos: 0, label: "Minute 1" }, { pos: 0.25, label: "Hour 1" }, { pos: 0.5, label: "Day 1" }, { pos: 0.75, label: "Week 1" }, { pos: 1, label: "Month 1" }] }
+      - { type: vehicle, kind: bus, at: "@Trucks", from: [2200, 820], to: [1350, 820], dur: 2.2, s: 0.9, color: "#ffb347" }
+      - { type: icon, icon: question, x: 1350, y: 560, s: 0.55, at: "@orders" }
+      - { type: board, x: 1500, y: 470, w: 520, size: 40, at: "@Supermarkets", step: 0.8, color: "#fffdf2", lines: ["Milk: ???", "Bread: ???", "Bananas: ???"] }
+    bix:
+      - { at: 0, action: idle, hold: clipboard }
+      - { at: "@nobody", action: think, hold: clipboard }
+      - { at: "@clipboard", action: present, hold: clipboard }
+      - { at: "@quietly", action: shrug }
+    chips:
+      - { at: 0.15, label: "Day 1", icon: calendar }
+    narration: "Day one. Here's the part nobody thinks about. The internet isn't just videos and memes. It's the invisible clipboard of the economy. Trucks, ports and warehouses run on digital orders. Supermarkets restock by computer. So the shelves don't empty in one dramatic panic... they just *quietly* stop refilling."
+
+  - id: home-office
+    transition: pop
+    background: { type: plain, color: "#4a6fa5" }
+    bixStart: [760, 820]
+    props:
+      - { type: item, item: laptop, x: 1150, y: 640, s: 1.6, at: 0.2 }
+      - { type: wifi, x: 1150, y: 360, s: 0.8, crossAt: "@password" }
+      - { type: vehicle, kind: car, at: "@commute", from: [-300, 820], to: [2300, 820], dur: 3, color: "#ffb347" }
+      - { type: item, item: pillow, x: 520, y: 520, s: 1.6, at: "@nap" }
+    bix:
+      - { at: 0, action: idle, hold: laptop }
+      - { at: "@password", action: facepalm }
+      - { at: "@commute", action: shock }
+      - { at: "@nap", action: sleepy, hold: pillow }
+    texts:
+      - { at: "@office", text: "THE OFFICE:", style: label, x: 1150, y: 200, color: "#ffd447" }
+    narration: "Meanwhile, millions of people who work from home discover that their entire office was a laptop and a Wi-Fi *password*. Some rediscover the commute. Others rediscover the nap."
+
+  - id: old-tech
+    transition: iris
+    background: { type: bedroom, mood: day, bed: false, clock: "8:00" }
+    bixStart: [760, 820]
+    props:
+      - { type: badge, x: 1220, y: 400, r: 120, text: "FM", sub: "still on air", color: "#5ad1c4", at: "@Broadcast", rot: -8 }
+      - { type: icon, icon: check, x: 1380, y: 300, s: 0.5, at: "@transmitter" }
+      - { type: icon, icon: cross, x: 470, y: 420, s: 0.5, at: "@quiet" }
+      - { type: pal, x: 1260, y: 820, s: 0.85, facing: -1, seed: 4, hair: "#d8d8d8", color: "#ffe08a", actions: [{ at: 0, action: sit }, { at: "@Grandpa's", action: cheer }] }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Broadcast", action: point, facing: 1 }
+      - { at: "@quiet", action: shrug }
+      - { at: "@Grandpa's", action: wave }
+    texts:
+      - { at: "@Grandpa's", text: "MVP OF THE APOCALYPSE", style: title, x: 960, y: 170, rotate: -3 }
+    narration: "But some old tech gets a promotion. Broadcast radio and TV keep going, because a transmitter doesn't need a server. Old copper landlines may still ring... while newer phone lines that run over internet tech go *quiet*. Grandpa's radio is now the most important device in the house."
+
+  # ------------------------------------------------------------------ WEEK 1
+  - id: week-one
+    chapter: "Week 1: Paper strikes back"
+    transition: whip
+    background: { type: city, mood: day, seed: 33 }
+    bixStart: [500, 820]
+    props:
+      - { type: timeline, x: 960, y: 250, w: 1300, at: "@Week-60", dur: 80, marks: [{ pos: 0, label: "Minute 1" }, { pos: 0.25, label: "Hour 1" }, { pos: 0.5, label: "Day 1" }, { pos: 0.75, label: "Week 1" }, { pos: 1, label: "Month 1" }] }
+      - { type: vehicle, kind: plane, at: "@fly", from: [1100, 470], to: [1900, 380], dur: 4, s: 0.7, color: "#5ad1c4" }
+      - { type: icon, icon: question, x: 1500, y: 600, s: 0.5, at: "@sell" }
+      - { type: pal, x: 1500, y: 820, s: 0.8, facing: -1, seed: 6, hold: clipboard, actions: [{ at: 0, action: idle }, { at: "@Hospitals", action: walk }], from: [1500, 820], to: [1100, 820], moveAt: "@hallway", dur: 3 }
+    bix:
+      - { at: 0, action: idle, hold: book }
+      - { at: "@fly", action: point, facing: 1 }
+      - { at: "@sell", action: laugh }
+      - { at: "@Hospitals", action: think }
+    chips:
+      - { at: 0.15, label: "Week 1", icon: calendar }
+    narration: "Week one. Banks, airlines and hospitals have dusted off their paper backups. Airlines can still fly planes. They just can't easily *sell* you a seat on one. Hospitals keep treating patients, but charts and test results now move at the speed of a person walking down a hallway."
+
+  - id: the-news
+    transition: whip
+    background: { type: plain, color: "#c0563a" }
+    bixStart: [600, 820]
+    props:
+      - { type: board, x: 1220, y: 430, w: 700, size: 52, title: "THE DAILY PAPER", at: "@presses", step: 0.9, color: "#fffdf2", lines: ["INTERNET: GONE", "RADIO: TRENDING", "PIGEONS: HIRING"], rot: 3 }
+      - { type: icon, icon: heart, x: 1580, y: 220, s: 0.5, at: "@best" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@presses", action: present, facing: 1 }
+      - { at: "@group", action: laugh }
+      - { at: "@best", action: cheer }
+    narration: "And how do you even hear the news? Printing presses roar back to life, and local radio becomes everyone's *group* chat. Somewhere, a newspaper editor is quietly having the best week of their career."
+
+  - id: neighbors
+    transition: pop
+    background: { type: land, mood: sunset }
+    bixStart: [900, 820]
+    props:
+      - { type: house, x: 1500, y: 820, s: 0.85 }
+      - { type: tree, x: 300, y: 820, s: 0.9 }
+      - { type: crowd, x: 1250, y: 820, w: 500, count: 6, rows: 1, s: 0.5, seed: 12, cheerAt: "@person" }
+      - { type: item, item: book, x: 900, y: 360, s: 2.2, rot: -8, at: "@paper", float: true }
+    bix:
+      - { at: 0, action: wave }
+      - { at: "@paper", action: present }
+      - { at: "@fold", action: tumble }
+      - { at: "@Almost", action: shrug }
+    texts:
+      - { at: "@paper", until: "@fold", text: "PAPER MAP (v1.0)", style: label, x: 900, y: 220, color: "#ffd447" }
+      - { at: "@forty", text: "40 min later...", style: note, x: 600, y: 300 }
+      - { at: "@Almost", text: "ALMOST.", style: shout, x: 1250, y: 400, rotate: 6 }
+    narration: "And then something strange happens. People talk. To neighbors. In *person*. Board games come out of closets. Bix discovers a paper map, and after only forty minutes, figures out how to fold it back up. Almost."
+
+  # ------------------------------------------------------------------ MONTH 1
+  - id: month-one
+    chapter: "Month 1: The slow rebuild"
+    transition: whip
+    background: { type: night-city, seed: 8 }
+    bixStart: [760, 820]
+    props:
+      - { type: timeline, x: 960, y: 250, w: 1300, at: "@Month-80", dur: 80, marks: [{ pos: 0, label: "Minute 1" }, { pos: 0.25, label: "Hour 1" }, { pos: 0.5, label: "Day 1" }, { pos: 0.75, label: "Week 1" }, { pos: 1, label: "Month 1" }] }
+      - { type: server, x: 1350, y: 820, s: 0.8, count: 2 }
+      - { type: wifi, x: 1350, y: 400, s: 0.7, bars: 1, at: "@routers" }
+      - { type: item, item: mug, x: 1000, y: 700, s: 1.4, at: "@coffee" }
+    bix:
+      - { at: 0, action: sleepy }
+      - { at: "@Factories", action: idle }
+      - { at: "@routers", action: present, facing: 1 }
+      - { at: "@coffee", action: sleepy }
+    chips:
+      - { at: 0.15, label: "Month 1", icon: calendar }
+    texts:
+      - { at: "@email", text: "\"Ordered via email\"", style: note, x: 1350, y: 560 }
+    narration: "Month one. The world is running on cash, radio and clipboards. Factories wait for parts that were ordered by email. Rebuilding means engineers, new routers, and a truly heroic amount of *coffee*. And everyone agrees on one thing: nobody remembers a single password."
+
+  - id: upside
+    transition: pop
+    background: { type: bedroom, mood: night, clock: "21:00", clockSpeed: 0.5 }
+    bixStart: [700, 820]
+    props:
+      - { type: phone, x: 470, y: 480, s: 0.5, rot: -10, screen: nosignal, at: "@Screen" }
+      - { type: gauge, x: 1500, y: 470, r: 120, from: 90, to: 3, max: 100, at: "@Screen", dur: 1.4, label: "SCREEN TIME" }
+      - { type: pal, x: 1000, y: 820, s: 0.6, facing: -1, seed: 2, actions: [{ at: 0, action: sit }, { at: "@bored", action: shrug }] }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Screen", action: point, facing: 1 }
+      - { at: "@bored", action: think }
+      - { at: "@eleven", action: facepalm }
+    texts:
+      - { at: "@bored", text: "\"I'm bored.\"", style: label, x: 1000, y: 420, color: "#ff8fb1" }
+      - { at: "@eleven", text: "(every 11 minutes)", style: note, x: 1000, y: 500 }
+    narration: "There are upsides, though. Screen time hits an all-time low. Kids rediscover being *bored*. And parents rediscover hearing the words 'I'm bored'... roughly every eleven minutes."
+
+  # ------------------------------------------------------------------ REALITY CHECK
+  - id: honest-part
+    chapter: "Could it really happen?"
+    transition: iris
+    background: { type: plain, color: "#2b2f6b" }
+    bixStart: [380, 820]
+    props:
+      - { type: cable, at: "@ARPANET", grow: 1.2, points: [[700, 320], [1000, 220], [1400, 300], [1600, 560], [1200, 700], [800, 620], [700, 320]] }
+      - { type: cable, at: "@center", grow: 1, color: "#5ad1c4", points: [[1000, 220], [1200, 700]], cutAt: "@breaks" }
+      - { type: arrow, at: "@route", from: [1000, 240], to: [1580, 540], bend: -90, color: "#ff8fb1", label: "new route" }
+      - { type: badge, x: 600, y: 230, r: 90, text: "1969", color: "#ffd447", at: "@1969" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@Almost", action: shrug }
+      - { at: "@ARPANET", action: present, facing: 1 }
+      - { at: "@route", action: cheer }
+    texts:
+      - { at: "@Almost", until: "@ARPANET", text: "ALMOST CERTAINLY NOT", style: title, x: 1150, y: 160 }
+    narration: "Now, the honest part. Could this really happen? Almost certainly not. The internet grew out of ARPANET, which went live in 1969, and it was built with no single center. When one path breaks, data just finds another *route*. Even in the biggest outages so far, the internet as a whole kept running. Undersea cables get damaged every year, mostly by ship anchors and fishing gear, and repair ships quietly patch them up."
+
+  - id: first-message
+    transition: pop
+    background: { type: lab, board: false }
+    bixStart: [760, 820]
+    props:
+      - { type: item, item: laptop, x: 1200, y: 620, s: 1.8, at: "@first" }
+      - { type: burst, x: 1250, y: 360, r: 150, text: "LO", color: "#ffd447", at: "@crashed" }
+      - { type: icon, icon: warning, x: 1480, y: 520, s: 0.5, at: "@crashed+0.2" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@login", action: point, facing: 1 }
+      - { at: "@crashed", action: shock }
+      - { at: "@behold", action: laugh }
+    texts:
+      - { at: "@login", until: "@crashed", text: "L-O-G-I-N", style: label, x: 1200, y: 360, color: "#5ad1c4" }
+      - { at: "@Fitting", text: "Oct 29, 1969: UCLA → SRI", style: note, x: 960, y: 170 }
+    narration: "Fun fact: the very first message, from UCLA to the Stanford Research Institute, was supposed to say 'login'. The system crashed after two letters. So the first word ever sent across the network was 'lo'. Fitting. Lo and *behold*. They tried again about an hour later, and it worked."
+
+  - id: ending
+    transition: whip
+    background: { type: night-city, seed: 15 }
+    bixStart: [900, 820]
+    props:
+      - { type: wifi, x: 1350, y: 380, s: 1.1, at: "@Regional" }
+      - { type: crowd, x: 960, y: 820, w: 1600, count: 18, rows: 2, s: 0.45, seed: 21, cheerAt: "@fiction" }
+      - { type: item, item: book, x: 1120, y: 600, s: 1.3, rot: 10, at: "@map" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@hundreds", action: think }
+      - { at: "@fiction", action: laugh }
+      - { at: "@Still", action: idle, hold: book }
+      - { at: "@map", action: wave }
+    texts:
+      - { at: "@Regional", until: "@fiction", text: "Regional outages: real", style: label, x: 1350, y: 200, color: "#ffd447" }
+      - { at: "@fiction", text: "Global vanishing act: fiction", style: label, x: 960, y: 200, color: "#5ad1c4" }
+    narration: "Wiping out the whole thing would mean breaking hundreds of cables and countless separate networks, all at once. Regional outages happen. A global vanishing act is science *fiction*. Still... maybe learn where you keep the paper map."
+    hold: 0.6
+
+shorts:
+  - id: short-internet-vanishes
+    title: "What if the ENTIRE internet vanished? #Shorts"
+    from: cold-open
+    to: the-cables
+    hook: "THE INTERNET IS GONE"
+    description: "Minute one without the internet, and the cables on the sea floor that really carry it."
+  - id: short-crowdstrike
+    title: "One bad update crashed 8.5 million PCs #Shorts"
+    from: meta-outage
+    to: crowdstrike
+    hook: "WE'VE HAD TRAILERS FOR THIS"
+    description: "The 2021 Facebook outage and the 2024 CrowdStrike crash: real tastes of an internet meltdown."
+  - id: short-first-message
+    title: "The first message on the internet crashed after 2 letters #Shorts"
+    from: honest-part
+    to: first-message
+    hook: "COULD THE INTERNET DISAPPEAR?"
+
+thumbnail:
+  title: ["NO", "INTERNET"]
+  accent: 1
+  subtitle: "for a whole month"
+  background: { type: night-city }
+  props:
+    - { type: phone, x: 1150, y: 560, s: 1.25, rot: -10, screen: nosignal }
+    - { type: wifi, x: 1420, y: 300, s: 1.1, bars: 0 }
+  bix: { action: shock, x: 1620, y: 1210, scale: 2.45, facing: -1, t: 0.45 }
+
+sources:
+  - "TeleGeography, Submarine Cable FAQs (submarine cables carry about 99% of international data; deep-sea cable about the diameter of a garden hose): https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions"
+  - "TeleGeography, 2023 Mythbusting Part 3: do submarine cables account for over 99% of intercontinental data traffic?: https://blog.telegeography.com/2023-mythbusting-part-3"
+  - "ITU, Facts and Figures 2025 (about 6 billion people online): https://www.itu.int/itu-d/reports/statistics/facts-figures-2025/"
+  - "Meta Engineering, More details about the October 4 outage (backbone command, BGP withdrawal, DNS unreachable): https://engineering.fb.com/2021/10/05/networking-traffic/outage-details/"
+  - "Cloudflare, Understanding how Facebook disappeared from the Internet (about six hours): https://blog.cloudflare.com/october-2021-facebook-outage/"
+  - "Microsoft, Helping our customers through the CrowdStrike outage (about 8.5 million Windows devices, less than 1% of all Windows machines), July 20, 2024: https://blogs.microsoft.com/blog/2024/07/20/helping-our-customers-through-the-crowdstrike-outage/"
+  - "Wikipedia, 2024 CrowdStrike-related IT outages (grounded flights, hospitals reverting to paper): https://en.wikipedia.org/wiki/2024_CrowdStrike-related_IT_outages"
+  - "GPS.gov, GPS: The Global Positioning System (one-way radio broadcast from satellites; receivers need no internet): https://www.gps.gov/systems/gps/"
+  - "Encyclopaedia Britannica, ARPANET (went online in 1969; decentralized packet-switched design): https://www.britannica.com/topic/ARPANET"
+  - "Internet Society, Brief History of the Internet: https://www.internetsociety.org/internet/history-internet/brief-history-internet/"
+  - "Leonard Kleinrock (UCLA), The Day the Infant Internet Uttered its First Words ('LO', Oct 29, 1969, UCLA to SRI): https://www.lk.cs.ucla.edu/internet_first_words.html"

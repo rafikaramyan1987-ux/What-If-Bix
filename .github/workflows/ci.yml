@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Tests, typecheck, script validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: npm ci
+      - run: pip install -r requirements.txt pytest
+      - run: npm run typecheck
+      - run: npm test
+      - run: python -m pytest -q tests/python
+      - name: Validate all episode scripts
+        run: node pipeline/validate.mjs --all
+
+  smoke-render:
+    name: End-to-end render (mini episode)
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-factory
+      - name: Render mini episode (long + short + thumbnail + metadata)
+        run: node pipeline/build.mjs tests/fixtures/mini-episode.yaml --out out
+      - name: Check outputs
+        run: |
+          set -e
+          ffprobe -v error -show_entries stream=codec_name,width,height -of csv=p=0 out/ci-mini/ci-mini.mp4
+          ffprobe -v error -show_entries stream=width,height -of csv=p=0 out/ci-mini/shorts/short-test.mp4 | grep -q "1080,1920"
+          test -s out/ci-mini/thumbnail.png
+          test -s out/ci-mini/metadata.json
+          test -s out/ci-mini/ci-mini.en.srt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ci-mini-render
+          path: out/ci-mini
+          retention-days: 7
