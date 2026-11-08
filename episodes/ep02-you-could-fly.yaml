@@ -326,7 +326,7 @@ scenes:
     bixStart: [760, 560]
     bixScale: 1.0
     props:
-      - { type: cactus, x: 1600, y: 818, s: 1.1, mood: wink, floatAt: "@Newton" }
+      - { type: cactus, x: 1600, y: 818, s: 1.1, mood: wink, floatAt: "@superpower" }
     bix:
       - { at: 0, action: float, from: [760, 560], to: [760, 820], dur: 1.6 }
       - { at: "@gear", action: present }
@@ -336,6 +336,7 @@ scenes:
     sfx:
       - { name: sparkle, at: "@Newton", gain: 0.6 }
     narration: "So, could you handle flying? With the right gear, a little. Without it, your body would quit long before your superpower does. Wait... Newton?"
+    hold: 1.2
 
   - id: teaser
     transition: whip
