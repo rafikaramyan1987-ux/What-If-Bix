@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bix } from '../bix/Bix';
 import { actionPose } from '../bix/poses';
-import { C, FONT, TITLE_FONT } from '../theme';
+import { C, TITLE_FONT } from '../theme';
 import { clamp, popIn } from '../util';
 
 // Vertical safe zone (1080x1920): TikTok / YouTube Shorts overlay buttons on the right
@@ -65,12 +65,13 @@ export const CtaArt: React.FC<{ t: number; dur: number }> = ({ t, dur }) => {
   const k = popIn(t / 0.22);
   const action = pressed ? 'cheer' : 'point';
   const o = actionPose(action, pressed ? t - press : t, t);
-  const pose = pressed ? o.pose : { ...o.pose, sN: 128, eN: 0, lean: 6 };
-  const bx = 500;
-  const by = 830;
+  // pointing up at the button from below
+  const pose = pressed ? o.pose : { ...o.pose, sN: 150, eN: -6, lean: 4, head: -14 };
+  const bx = SAFE.centerX;
+  const by = 760;
   return (
     <g>
-      <g transform={`translate(${bx} 560) scale(${popIn((t - 0.1) / 0.3)})`}>
+      <g transform={`translate(${bx} 515) scale(${popIn((t - 0.1) / 0.3)})`}>
         <Bell t={t} />
       </g>
       <g transform={`translate(${bx} ${by}) scale(${k * dip})`}>
@@ -86,9 +87,7 @@ export const CtaArt: React.FC<{ t: number; dur: number }> = ({ t, dur }) => {
             fill={[C.yellow, C.teal, C.pink][i % 3]} opacity={1 - clamp((t - press) / 0.7)}>★</text>
         );
       })}
-      <Bix x={175} y={1290} scale={1.1} facing={1} pose={pose} face={o.face} emote="none" t={t} airborne={pose.bob} />
-      <text x={SAFE.centerX} y={1150} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={50} fill="#fff" opacity={clamp((t - 0.3) / 0.3)}
-        stroke={C.ink} strokeWidth={8} paintOrder="stroke">more what ifs every week</text>
+      <Bix x={300} y={1265} scale={1.15} facing={1} pose={pose} face={pressed ? o.face : { ...o.face, look: [0.6, -1] }} emote="none" t={t} airborne={pose.bob} />
     </g>
   );
 };

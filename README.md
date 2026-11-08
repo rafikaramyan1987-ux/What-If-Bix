@@ -13,7 +13,7 @@ You write one YAML script per episode. The factory turns it into:
 | Output | Spec |
 |---|---|
 | Long video | 1920×1080, 30 fps, H.264 + AAC, 4–6 min, −14 LUFS. Cold open → 2 s intro sting → story → 20 s end screen |
-| 2–3 Shorts | 1080×1920, 30–55 s, re-framed to follow Bix, big word-by-word captions, hook banner |
+| 2–3 Shorts | 1080×1920, 35–59 s, standalone hook opener (title on frame 0), re-framed to follow Bix, big captions in the safe zone, animated SUBSCRIBE ending |
 | Thumbnail | 1280×720, huge title + Bix with a strong expression |
 | Metadata | `metadata.md` / `metadata.json`: title, description with chapters, sources and credits, tags, Shorts titles |
 | Captions | `.en.srt` for the long video and every Short |

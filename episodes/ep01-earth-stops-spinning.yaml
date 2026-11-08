@@ -441,8 +441,12 @@ shorts:
     scenes:
       how-fast:
         narration: "Right now, you're *moving* at {1,670|sixteen hundred and seventy} kilometers per hour. That's how fast the ground travels at the equator, as Earth spins once a day."
+        bixStart: [330, 930]
+        props:   # Earth moved closer to Bix so both fit the vertical frame
+          - { type: earth, x: 790, y: 600, r: 250, spin: 0.12, tilt: 0, equator: true }
+          - { type: arrow, at: "@equator", from: [590, 670], to: [990, 670], bend: -55 }
         bix:
-          - { at: 0, action: run, from: [120, 930], to: [380, 930], dur: 0.7 }
+          - { at: 0, action: run, from: [150, 930], to: [330, 930], dur: 0.6 }
           - { at: "@moving", action: shock }
           - { at: "@equator", action: point }
   - id: short-restart
@@ -458,6 +462,7 @@ shorts:
           - { type: earth, x: 1680, y: 200, r: 120, spin: 0.5, stopAt: "@Stopping+0.2", until: "@spinning" }
           - { type: earth, x: 1680, y: 200, r: 120, spin: 0.5, at: "@spinning" }
           - { type: burst, at: "@worse", until: "@worse+1.4", x: 1150, y: 330, text: "WORSE?!", r: 150, color: "#ff4d5e" }
+          - { type: skid, x: 1680, y: 200, r: 120, at: "@Stopping+0.2", until: "@spinning" }
           - { type: crack, x: 1000, y: 850, w: 700, at: "@crashed" }
           - { type: puff, at: "@other", x: 1500, y: 800 }
         bix:
@@ -467,6 +472,9 @@ shorts:
           - { at: "@crashed", action: shock }
           - { at: "@other", action: tumble, from: [1500, 800], to: [-500, 640], dur: 1.1 }
         chips: []
+        texts:
+          - { at: "@Stopping+0.2", until: "@Stopping+1.5", text: "SCREEEECH!", style: shout, x: 1200, y: 250, rotate: -6 }
+          - { at: "@again", until: "@again+1.5", text: "NOT AGAIN!", style: shout, x: 900, y: 260, rotate: 5 }
         camera: { shake: ["@Stopping", "@worse", "@other"], shakeAmp: 18 }
         sfx:
           - { name: screech, at: "@Stopping+0.2", gain: 0.45 }

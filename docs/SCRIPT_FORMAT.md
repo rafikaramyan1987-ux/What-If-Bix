@@ -159,17 +159,35 @@ Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop boo
 
 ## Shorts
 
+Each Short is built as a **standalone mini-episode**: a run of consecutive scenes, with per-Short
+overrides so it opens on a hook that needs no context, followed by an automatic **SUBSCRIBE
+call-to-action** (~2 s: button pops in, bell rings, Bix points and presses it, voice line
+"Subscribe for more what ifs!"). Sentences that are unchanged reuse the long episode's audio; only new
+lines are voiced.
+
 ```yaml
 shorts:
   - id: short-supersonic
-    title: "Earth stops for ONE second — you go supersonic #Shorts"
-    from: brakes          # first scene id (inclusive)
-    to: one-second-later  # last scene id (inclusive); estimated 30–55 s
-    hook: "EARTH STOPS FOR 1 SECOND"   # banner at the top of the vertical video
-    description: "..."    # optional
+    title: "Earth stops for ONE second and you go supersonic"   # ≤ 100 chars, #Shorts is added
+    from: brakes            # first scene id (inclusive)
+    to: landing             # last scene id (inclusive); total 35–59 s including the CTA
+    hook: "EARTH STOPS FOR 1 SECOND"   # big banner, fully visible from frame 0
+    description: "..."      # optional
+    cta: "Subscribe for more what ifs!"   # optional, this is the default
+    scenes:                 # optional overrides, merged over the episode's scenes for this Short only
+      brakes:
+        narration: "Earth stops for *one* second. You *don't*. ..."   # standalone hook line first
+        bix: [ { at: 0, action: shock }, ... ]   # motion on frame 0
+        texts: [ { at: "@stops", text: "SCREEEECH!", style: shout } ]   # first payoff within ~3 s
 ```
 
-The vertical crop follows Bix automatically. Add `focus: [x]` on a scene to override it for Shorts.
+Rules of thumb (the validator checks length and @word cues, and flags hook lines over ~3.5 s):
+- First sentence = a hook that works with zero context; start it immediately (the first scene's lead is 0.1 s).
+- Something moves on frame 0 (Bix reacting, Earth spinning) and the first visual payoff lands within 3 s.
+- Cut lines that depend on earlier context ("Now the twist…", "As we saw…").
+- The vertical crop follows Bix or zooms out to keep the action. Add `focus: [x]` on a scene to pin it.
+- Vertical safe zone: the hook banner, captions, chips and CTA stay inside x 60–900 and y 140–1450,
+  clear of the TikTok / Shorts buttons on the right and the description UI at the bottom.
 
 ## Thumbnail
 
