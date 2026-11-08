@@ -59,7 +59,7 @@ what if earth stopped spinning, earth stops spinning, earth rotation, physics, s
 
 ## Shorts
 
-### shorts/short-supersonic.mp4 (40.0 s)
+### shorts/short-supersonic.mp4 (37.3 s)
 
 ```
 Earth stops for ONE second and you go supersonic #Shorts
@@ -76,7 +76,7 @@ Narration voice: Piper TTS, LibriTTS voice (CC BY 4.0).
 #Shorts #science #whatif
 ```
 
-### shorts/short-speed.mp4 (50.7 s)
+### shorts/short-speed.mp4 (48.4 s)
 
 ```
 You are moving at 1,670 km/h right now #Shorts
@@ -93,7 +93,7 @@ Narration voice: Piper TTS, LibriTTS voice (CC BY 4.0).
 #Shorts #science #whatif
 ```
 
-### shorts/short-restart.mp4 (48.0 s)
+### shorts/short-restart.mp4 (52.0 s)
 
 ```
 The restart would be WORSE than the stop #Shorts

@@ -1,135 +1,143 @@
 1
-00:00:00,500 --> 00:00:01,913
-Now the twist.
+00:00:00,100 --> 00:00:01,877
+Stopping Earth is bad.
 
 2
-00:00:01,933 --> 00:00:03,033
-The second is over,
+00:00:01,897 --> 00:00:03,740
+Restarting it is worse.
 
 3
-00:00:03,053 --> 00:00:04,184
-and Earth starts spinning
+00:00:03,760 --> 00:00:05,010
+Say Earth stops for one
 
 4
-00:00:04,184 --> 00:00:05,211
-again, instantly.
+00:00:05,010 --> 00:00:06,554
+second, then starts spinning
 
 5
-00:00:05,231 --> 00:00:06,707
-Anything still flying east is
+00:00:06,554 --> 00:00:07,641
+again, instantly.
 
 6
-00:00:06,707 --> 00:00:08,012
-suddenly back in sync with
+00:00:07,661 --> 00:00:09,137
+Anything still flying east is
 
 7
-00:00:08,012 --> 00:00:08,789
-the ground.
+00:00:09,137 --> 00:00:10,442
+suddenly back in sync with
 
 8
-00:00:08,809 --> 00:00:09,838
-Lucky.
+00:00:10,442 --> 00:00:11,219
+the ground.
 
 9
-00:00:09,858 --> 00:00:10,929
-But everything that crashed
+00:00:11,239 --> 00:00:12,268
+Lucky.
 
 10
-00:00:10,929 --> 00:00:12,557
-and stopped during that second?
+00:00:12,288 --> 00:00:13,359
+But everything that crashed
 
 11
-00:00:12,577 --> 00:00:13,956
-The ground races back under
+00:00:13,359 --> 00:00:14,987
+and stopped during that second?
 
 12
-00:00:13,956 --> 00:00:15,067
-it at full speed.
+00:00:15,007 --> 00:00:16,386
+The ground races back under
 
 13
-00:00:15,087 --> 00:00:17,139
-So the whole disaster happens again...
+00:00:16,386 --> 00:00:17,497
+it at full speed.
 
 14
-00:00:17,159 --> 00:00:18,391
-in the other direction.
+00:00:17,517 --> 00:00:19,569
+So the whole disaster happens again...
 
 15
-00:00:19,741 --> 00:00:21,188
-Physics would like a word.
+00:00:19,589 --> 00:00:20,821
+in the other direction.
 
 16
-00:00:21,208 --> 00:00:22,788
-Earth's spin stores about
+00:00:22,171 --> 00:00:23,618
+Physics would like a word.
 
 17
-00:00:22,788 --> 00:00:26,218
-2×10²⁹ joules of energy.
+00:00:23,638 --> 00:00:25,218
+Earth's spin stores about
 
 18
-00:00:26,238 --> 00:00:27,569
-Stopping it means dumping all
+00:00:25,218 --> 00:00:28,648
+2×10²⁹ joules of energy.
 
 19
-00:00:27,569 --> 00:00:28,504
-of that somewhere.
+00:00:28,668 --> 00:00:29,999
+Stopping it means dumping all
 
 20
-00:00:28,524 --> 00:00:29,574
-That's roughly what the Sun
+00:00:29,999 --> 00:00:30,934
+of that somewhere.
 
 21
-00:00:29,574 --> 00:00:31,029
-pours out in nine minutes.
+00:00:30,954 --> 00:00:32,004
+That's roughly what the Sun
 
 22
-00:00:31,049 --> 00:00:31,937
-All of the Sun.
+00:00:32,004 --> 00:00:33,459
+pours out in nine minutes.
 
 23
-00:00:33,287 --> 00:00:35,348
-And if Earth never started again?
+00:00:33,479 --> 00:00:34,367
+All of the Sun.
 
 24
-00:00:35,368 --> 00:00:36,371
-One day would last a
+00:00:35,717 --> 00:00:37,778
+And if Earth never started again?
 
 25
-00:00:36,371 --> 00:00:37,065
-whole year.
+00:00:37,798 --> 00:00:38,801
+One day would last a
 
 26
-00:00:37,085 --> 00:00:38,565
-Six months of daylight,
+00:00:38,801 --> 00:00:39,495
+whole year.
 
 27
-00:00:38,585 --> 00:00:39,959
-then six months of night.
+00:00:39,515 --> 00:00:40,995
+Six months of daylight,
 
 28
-00:00:39,979 --> 00:00:40,925
-And the Sun would rise
+00:00:41,015 --> 00:00:42,389
+then six months of night.
 
 29
-00:00:40,925 --> 00:00:41,720
-in the west.
+00:00:42,409 --> 00:00:43,355
+And the Sun would rise
 
 30
-00:00:41,740 --> 00:00:42,600
-Over time,
+00:00:43,355 --> 00:00:44,150
+in the west.
 
 31
-00:00:42,620 --> 00:00:43,599
-the oceans would migrate
+00:00:44,170 --> 00:00:45,030
+Over time,
 
 32
-00:00:43,599 --> 00:00:44,680
-toward the poles,
+00:00:45,050 --> 00:00:46,029
+the oceans would migrate
 
 33
-00:00:44,700 --> 00:00:46,025
-leaving one giant continent
+00:00:46,029 --> 00:00:47,110
+toward the poles,
 
 34
-00:00:46,025 --> 00:00:48,073
+00:00:47,130 --> 00:00:48,455
+leaving one giant continent
+
+35
+00:00:48,455 --> 00:00:50,153
 wrapped around the equator.
+
+36
+00:00:50,173 --> 00:00:51,620
+Subscribe for more what ifs!
