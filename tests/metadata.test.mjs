@@ -52,6 +52,10 @@ describe('full episode timeline', () => {
     expect(meta.tags.join(',').length).toBeLessThanOrEqual(500);
     expect(meta.shorts.every((s) => s.title.includes('#Shorts') && s.title.length <= 100)).toBe(true);
   });
+  it('keeps descriptions under 5,000 characters', () => {
+    const many = { ...ep1, sources: Array.from({ length: 60 }, (_, i) => `A very long explanation of source number ${i} that goes on and on and on: https://example.org/${i}`) };
+    expect(buildMetadata(many, manifest, []).description.length).toBeLessThanOrEqual(5000);
+  });
   it('produces SRT captions', () => {
     const srt = buildSrt(manifest.captions);
     expect(srt.startsWith('1\n00:00:0')).toBe(true);

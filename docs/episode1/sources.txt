@@ -1,0 +1,16 @@
+- NASA Earth Fact Sheet: equatorial radius 6,378 km, sidereal rotation period 23.9345 h (equatorial speed ≈ 465 m/s ≈ 1,674 km/h; speed at latitude φ = 1,674 × cos φ): https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+- Scientific American, 'What would happen if the Earth stopped spinning?': https://www.scientificamerican.com/article/earth-stops-spinning/
+- NASA Space Place / Ask an Astronomer (Cornell): what if Earth stopped rotating: http://curious.astro.cornell.edu/about-us/41-our-solar-system/the-earth/other-catastrophes/57-what-would-happen-if-the-earth-stopped-spinning-beginner
+- Speed of sound at sea level ≈ 340 m/s (U.S. Standard Atmosphere 1976, NASA): https://ntrs.nasa.gov/citations/19770009539
+- Strongest measured tornado winds ≈ 300 mph / 480 km/h, Bridge Creek–Moore, Oklahoma, 1999 (NOAA NSSL): https://www.nssl.noaa.gov/education/svrwx101/tornadoes/faq/
+- Hurricane Patricia (2015), strongest reliably measured hurricane winds, 215 mph ≈ 345 km/h (NOAA NHC report): https://www.nhc.noaa.gov/data/tcr/EP202015_Patricia.pdf
+- ISS orbital altitude ≈ 400 km (NASA): https://www.nasa.gov/international-space-station/space-station-facts-and-figures/
+- Earth's rotational kinetic energy ≈ 2.1 × 10²⁹ J (I ≈ 8.0 × 10³⁷ kg·m², ω = 7.29 × 10⁻⁵ rad/s): https://en.wikipedia.org/wiki/Earth%27s_rotation
+- Solar luminosity ≈ 3.8 × 10²⁶ W (NASA Sun Fact Sheet): https://nssdc.gsfc.nasa.gov/planetary/factsheet/sunfact.html
+- Esri / W. Fraczek (2014), 'Why Bother with a Non-Rotating Earth?' (oceans migrate to the poles, equatorial megacontinent): https://www.esri.com/news/arcuser/0610/nospin.html
+- IERS / NIST: 27 leap seconds added since 1972, the last on 31 Dec 2016: https://www.nist.gov/pml/time-and-frequency-division/leap-seconds-faqs
+- BIPM CGPM 2022 Resolution 4: increase the tolerance for UT1−UTC by or before 2035 (ending leap seconds): https://www.bipm.org/en/cgpm-2022/resolution-4
+- NASA JPL: earthquakes, tides and ice melt change the length of day by milliseconds: https://www.jpl.nasa.gov/news/nasa-details-earthquake-effects-on-the-earth
+- Shortest days on record in 2020 (timeanddate.com, citing IERS data): https://www.timeanddate.com/time/earth-faster-rotation.html
+- Earth's orbital speed ≈ 29.8 km/s ≈ 107,000 km/h; escape velocity 11.19 km/s ≈ 40,000 km/h (NASA Earth Fact Sheet): https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+- The Sun orbits the Milky Way at roughly 230 km/s (~800,000 km/h): https://www.britannica.com/place/Milky-Way-Galaxy

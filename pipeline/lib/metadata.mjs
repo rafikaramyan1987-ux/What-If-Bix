@@ -79,14 +79,14 @@ export const buildMetadata = (ep, manifest, shorts = []) => {
   const tags = [...new Set([...(ep.tags ?? []), 'what if', 'what if bix', 'science', 'animation'])];
   let tagChars = 0;
   const tagsFit = tags.filter((t) => (tagChars += t.length + 1) <= 480); // YouTube limit is 500
-  const description = [
+  const compose = (srcLines) => [
     (ep.description ?? '').trim(),
     '',
     chapters.length ? 'Chapters:' : '',
     ...chapters.map((c) => `${fmtTime(c.time)} ${c.title}`),
     '',
     'Sources:',
-    ...sources,
+    ...srcLines,
     '',
     ...CREDIT_LINES,
     '',
@@ -94,6 +94,11 @@ export const buildMetadata = (ep, manifest, shorts = []) => {
   ]
     .join('\n')
     .replace(/\n{3,}/g, '\n\n');
+  // YouTube caps descriptions at 5,000 characters: fall back to bare URLs if needed
+  let description = compose(sources);
+  if (description.length > 4900) {
+    description = compose((ep.sources ?? []).map((x) => `• ${String(x).match(/https?:\/\/\S+/)?.[0] ?? String(x).slice(0, 80)}`));
+  }
   return {
     id: ep.id,
     title: ep.title,
