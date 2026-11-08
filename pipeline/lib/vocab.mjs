@@ -2,7 +2,7 @@
 // that the renderer registries (src/) implement exactly these.
 export const BIX_ACTIONS = [
   'idle', 'walk', 'run', 'jump', 'fly', 'point', 'shock', 'laugh', 'think',
-  'shrug', 'wave', 'tumble', 'facepalm', 'sleepy', 'cheer', 'float', 'sit', 'present',
+  'shrug', 'wave', 'tumble', 'facepalm', 'sleepy', 'cheer', 'float', 'sit', 'present', 'scared',
 ];
 export const BACKGROUNDS = ['space', 'sky', 'land', 'plain', 'lab', 'city', 'night-city', 'bedroom', 'ocean', 'moon'];
 export const PROPS = [

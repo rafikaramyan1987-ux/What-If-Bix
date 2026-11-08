@@ -5,6 +5,7 @@ import { CharacterSheet } from './compositions/CharacterSheet';
 import { calculateEpisodeMetadata, Episode } from './compositions/Episode';
 import { Thumbnail } from './compositions/Thumbnail';
 import { Avatar, Banner, EndScreenTemplate, IntroSting } from './compositions/Channel';
+import { Bix2Emotions, Bix2Lineup, Bix2Phone } from './compositions/Bix2Sheets';
 import { Manifest, ThumbnailProps } from './types';
 
 const demo: Manifest = {
@@ -28,6 +29,9 @@ export const Root: React.FC = () => (
     <Composition id="EndScreen" component={EndScreenTemplate} durationInFrames={600} fps={30} width={1920} height={1080} />
     <Composition id="Avatar" component={Avatar} durationInFrames={1} fps={30} width={800} height={800} />
     <Composition id="Banner" component={Banner} durationInFrames={1} fps={30} width={2560} height={1440} />
+    <Composition id="Bix2Lineup" component={Bix2Lineup} durationInFrames={1} fps={30} width={1920} height={1080} />
+    <Composition id="Bix2Emotions" component={Bix2Emotions} defaultProps={{ variant: 'A' as const }} durationInFrames={1} fps={30} width={1920} height={1080} />
+    <Composition id="Bix2Phone" component={Bix2Phone} durationInFrames={1} fps={30} width={1920} height={1080} />
     <Composition id="CharacterSheet" component={CharacterSheet} durationInFrames={90} fps={30} width={1920} height={1080} />
   </>
 );

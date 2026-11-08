@@ -35,7 +35,7 @@ export type ActionOutput = { pose: Pose; face: Face; emote: Emote };
 
 export const ACTIONS = [
   'idle', 'walk', 'run', 'jump', 'fly', 'point', 'shock', 'laugh', 'think',
-  'shrug', 'wave', 'tumble', 'facepalm', 'sleepy', 'cheer', 'float', 'sit', 'present',
+  'shrug', 'wave', 'tumble', 'facepalm', 'sleepy', 'cheer', 'float', 'sit', 'present', 'scared',
 ] as const;
 export type BixAction = (typeof ACTIONS)[number];
 
@@ -286,9 +286,23 @@ const present: Fn = (lt, t) => {
   };
 };
 
+const scared: Fn = (lt, t) => {
+  const c = smooth(lt / 0.2);
+  const tremble = 2.6 * Math.sin(t * 62);
+  return {
+    pose: {
+      ...base, lean: -9 * c, head: -4 * c + 1.5 * Math.sin(t * 55), bob: -16 * c, dx: tremble,
+      sN: 10 + 128 * c, eN: 10 + 85 * c, sF: 10 + 112 * c, eF: 10 + 95 * c,
+      hN: 22 * c, kN: 6 + 40 * c, hF: 14 * c, kF: 6 + 36 * c, squash: 1 - 0.04 * c, beanie: 3 * Math.sin(t * 48),
+    },
+    face: { ...neutralFace, eyes: 'wide', mouth: 'wavy', brow: 0.9, browTilt: 0, look: [-0.4, 0] },
+    emote: 'sweat',
+  };
+};
+
 const TABLE: Record<BixAction, Fn> = {
   idle, walk, run, jump, fly, point, shock, laugh, think, shrug, wave, tumble, facepalm, sleepy, cheer,
-  float: float_, sit, present,
+  float: float_, sit, present, scared,
 };
 
 export const actionPose = (action: BixAction, lt: number, t: number, params: Record<string, number> = {}): ActionOutput => {
