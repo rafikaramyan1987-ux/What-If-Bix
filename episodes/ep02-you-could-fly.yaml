@@ -352,7 +352,7 @@ scenes:
     chips:
       - { at: 0.1, label: "Next time", icon: bolt }
     texts:
-      - { at: "@what#2", text: "WHAT IF YOU SLEPT LIKE A DOLPHIN?", style: title, y: 160 }
+      - { at: "@what#2", text: "WHAT IF YOU SLEPT LIKE A DOLPHIN?", style: title, y: 250 }
     narration: "Next time on What If Bix: what if you slept like a dolphin, with half your brain awake?"
 
 shorts:

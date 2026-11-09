@@ -71,6 +71,8 @@ const EXTENT: Record<string, (p: Record<string, unknown>) => number> = {
   calendar: (p) => 130 * Number(p.s ?? 1), clock: (p) => Number(p.r ?? 110), hurricane: (p) => Number(p.r ?? 200),
   house: (p) => 140 * Number(p.s ?? 1), tree: (p) => 100 * Number(p.s ?? 1), pal: () => 70, brain: (p) => 150 * Number(p.s ?? 1),
   icon: (p) => 85 * Number(p.s ?? 1), badge: (p) => Number(p.r ?? 110), burst: (p) => Number(p.r ?? 160),
+  dolphin: (p) => 200 * Number(p.s ?? 1), halfbrain: (p) => 170 * Number(p.s ?? 1), penguin: (p) => 100 * Number(p.s ?? 1),
+  huddle: (p) => Number(p.w ?? 900) / 2, cactus: (p) => 60 * Number(p.s ?? 1), item: (p) => 40 * Number(p.s ?? 2),
 };
 const WINDOW = 1080 / (1920 / 1080); // stage px visible in a full-bleed vertical crop (~608)
 
