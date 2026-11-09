@@ -310,9 +310,9 @@ shorts:
       one-eye:
         narration: "Dolphins sleep with one eye open. Literally. Half their brain sleeps while the other half stays awake. Scientists call it unihemispheric sleep. And nearly all the wiring from each eye crosses to the opposite half of the brain. So when the left half is asleep, it's often the *left* eye that stays open, wired to the half that's still awake."
         props:
-          - { type: dolphin, x: 1000, y: 560, s: 1.6, facing: -1, eye: open, label: "left eye open" }
-          - { type: halfbrain, at: "@Half", x: 1600, y: 300, s: 0.55, asleep: left, labels: true }
-          - { type: arrow, at: "@crosses", from: [880, 520], to: [1450, 330], bend: 80, color: "#ffd447" }
+          - { type: dolphin, x: 1000, y: 640, s: 1.6, facing: -1, eye: open, label: "left eye open" }
+          - { type: halfbrain, at: "@Half", x: 1060, y: 250, s: 0.55, asleep: left, labels: true }
+          - { type: arrow, at: "@crosses", from: [800, 560], to: [930, 330], bend: 50, color: "#ffd447" }
         bix:
           - { at: 0, action: shock }
           - { at: "@Literally", action: point }
@@ -329,9 +329,9 @@ shorts:
       vigilance:
         narration: "This dolphin stayed alert for {15 days|fifteen days} straight. In one study, two Navy dolphins were trained to keep finding targets with echolocation, their natural sonar. One of them kept it up for over two weeks, and its accuracy didn't drop. Bix lasts about fifteen minutes in a meeting."
         props:
-          - { type: calendar, at: 0, x: 1200, y: 360, from: 1, to: 15, dur: 2.2, label: "DAY", s: 1.1 }
-          - { type: dolphin, x: 1550, y: 740, s: 0.7, eye: open, at: 0 }
-          - { type: cactus, x: 1800, y: 818, s: 0.8, mood: shock, at: "@meeting" }
+          - { type: calendar, at: 0, x: 1150, y: 330, from: 1, to: 15, dur: 2.2, label: "DAY", s: 0.9 }
+          - { type: dolphin, x: 1150, y: 690, s: 1.3, eye: open, at: 0 }
+          - { type: cactus, x: 1460, y: 818, s: 0.8, mood: shock, at: "@meeting" }
         bix:
           - { at: 0, action: shock }
           - { at: "@trained", action: present }

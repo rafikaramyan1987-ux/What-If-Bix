@@ -45,6 +45,8 @@ export type Scene = {
   kind?: 'intro' | 'endscreen' | 'cta';
   /** Shorts: fixed horizontal crop centre for this scene (default: follow Bix). */
   focus?: number;
+  /** Shorts layout override: presenter (key objects framed, Bix at the presenter spot) or follow (frame Bix); subject = stage box [x0, y0, x1, y1]. */
+  shortLayout?: { mode?: 'presenter' | 'follow'; subject?: [number, number, number, number] };
 };
 
 export type CaptionWord = { text: string; start: number; end: number; emphasis?: boolean };
@@ -58,6 +60,8 @@ export type Manifest = {
   height: number;
   duration: number;
   format: 'long' | 'short';
+  /** Shorts: draw framing debug boxes (key objects, presenter spot, safe zone). */
+  debugBoxes?: boolean;
   scenes: Scene[];
   captions: CaptionPage[];
   /** Shorts: horizontal crop window center over the 1920-wide stage, per scene. */

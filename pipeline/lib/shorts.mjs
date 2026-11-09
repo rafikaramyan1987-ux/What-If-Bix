@@ -53,9 +53,24 @@ export const shortEpisode = (ep, sh) => {
   };
 };
 
-/** Finish a Short's manifest: vertical format, hook banner. */
+/**
+ * Props that pop in at the very start of a Short are shown fully from frame 0: the
+ * first frame must already show the subject (it is the thumbnail of the feed).
+ */
+export const showFromFrameZero = (scenes) =>
+  scenes.map((s, i) => (i > 0 ? s : {
+    ...s,
+    props: s.props.map((p) => {
+      if (typeof p.at !== 'number' || p.at > s.start + 0.05) return p;
+      const { at: _at, ...rest } = p;
+      return rest;
+    }),
+  }));
+
+/** Finish a Short's manifest: vertical format, hook banner, subject visible from frame 0. */
 export const toShortManifest = (manifest, sh, ep) => ({
   ...manifest,
+  scenes: showFromFrameZero(manifest.scenes),
   format: 'short',
   width: 1080,
   height: 1920,

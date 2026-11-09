@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 // Renders one still per gallery scene so new backgrounds/props can be checked by eye.
-//   node pipeline/gallery.mjs [outDir]
+//   node pipeline/gallery.mjs [outDir] [sceneId,sceneId…]
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.resolve(process.argv[2] ?? path.join(ROOT, 'out', 'gallery'));
+const pick = process.argv[3] ? new Set(process.argv[3].split(',')) : null;
 fs.mkdirSync(out, { recursive: true });
 
 const scene = (id, background, props, bix = [{ at: 0, action: 'idle' }], pos = [300, 820]) => ({
@@ -42,13 +43,19 @@ const G = [
     { type: 'vehicle', kind: 'plane', from: [1200, 150], to: [1201, 150], at: 0, dur: 1, s: 0.8 },
     { type: 'seismo', x: 960, y: 150, w: 500, h: 160, spikeAt: 1.5 },
   ], [{ at: 0, action: 'facepalm' }], [1300, 980]),
+  scene('octopus', { type: 'ocean', horizon: 300 }, [
+    { type: 'octopus', x: 700, y: 520, s: 1.1, xray: true, highlight: 'main', pauseAt: 1.5 },
+    { type: 'octopus', x: 1250, y: 470, s: 0.8, swim: true, mood: 'shock' },
+    { type: 'horseshoe', x: 1650, y: 760, s: 0.8, blood: true },
+    { type: 'vial', x: 1700, y: 330, s: 0.8, color: 'blue', label: 'copper' },
+  ], [{ at: 0, action: 'point' }], [250, 960]),
 ];
 
 const { bundle } = await import('@remotion/bundler');
 const { renderStill, selectComposition } = await import('@remotion/renderer');
 const browserExecutable = process.env.REMOTION_BROWSER ?? (fs.existsSync('/opt/pw-browsers/chromium') ? '/opt/pw-browsers/chromium' : undefined);
 const serveUrl = await bundle({ entryPoint: path.join(ROOT, 'src', 'index.ts') });
-for (const s of G) {
+for (const s of G.filter((g) => !pick || pick.has(g.id))) {
   const m = { id: s.id, title: s.id, fps: 30, width: 1920, height: 1080, duration: 4, format: 'long', captions: [], scenes: [s] };
   const comp = await selectComposition({ serveUrl, id: 'Episode', inputProps: m, browserExecutable });
   await renderStill({ composition: comp, serveUrl, output: path.join(out, `${s.id}.png`), frame: 60, inputProps: m, browserExecutable });

@@ -4,7 +4,7 @@ import { normWord, parseNarration, segmentUnits } from './script.mjs';
 // Keys whose numeric values are scene-relative times (converted to absolute).
 export const TIME_KEYS = new Set([
   'at', 'until', 'stopAt', 'windAt', 'roofAt', 'hoverUntil', 'shake', 'switchAt', 'crossAt', 'failAt', 'cutAt',
-  'jumpAt', 'cheerAt', 'panicAt', 'spikeAt', 'shakeAt', 'moveAt', 'stateAt', 'lightsOffAt', 'eyeAt', 'blowAt', 'swapAt', 'swaps', 'bothAt', 'floatAt', 'heatAt',
+  'jumpAt', 'cheerAt', 'panicAt', 'spikeAt', 'shakeAt', 'moveAt', 'stateAt', 'lightsOffAt', 'eyeAt', 'blowAt', 'swapAt', 'swaps', 'bothAt', 'floatAt', 'heatAt', 'pauseAt',
 ]);
 
 export const INTRO_SECONDS = 2;
@@ -238,6 +238,7 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
       ...(s.kind ? { kind: s.kind } : {}),
       ...(typeof s.focus === 'number' ? { focus: s.focus } : Array.isArray(s.focus) ? { focus: s.focus[0] } : {}),
       ...(s.chapter ? { chapter: s.chapter } : {}),
+      ...(s.shortLayout ? { shortLayout: resolveDeep(s.shortLayout, ctx) } : {}),
     };
     if (s.kind === 'intro') sfx.push({ name: 'sting', at: start, gain: 0.8 });
     const explicit = r(s.sfx);

@@ -9,7 +9,7 @@ export const PROPS = [
   'earth', 'arrow', 'tree', 'house', 'wave', 'wind', 'speedlines', 'boom', 'flyer', 'puff', 'ring', 'skid',
   'pal', 'crowd', 'bars', 'clock', 'calendar', 'gauge', 'board', 'timeline', 'seismo', 'phone', 'wifi', 'server',
   'cable', 'satellite', 'moon', 'sun', 'orbit', 'tide', 'hurricane', 'brain', 'item', 'burst', 'icon', 'vehicle',
-  'confetti', 'crack', 'building', 'badge', 'cactus', 'bird', 'frost', 'dolphin', 'halfbrain', 'penguin', 'huddle',
+  'confetti', 'crack', 'building', 'badge', 'cactus', 'bird', 'frost', 'dolphin', 'halfbrain', 'penguin', 'huddle', 'octopus', 'vial', 'horseshoe',
 ];
 export const ITEMS = ['sandwich', 'mug', 'phone', 'clipboard', 'pillow', 'laptop', 'book', 'coin', 'egg'];
 export const SFX = ['whoosh', 'pop', 'boing', 'screech', 'boom', 'ding', 'tick', 'rumble', 'wind', 'splash', 'thud', 'sparkle', 'swish', 'zip', 'sting'];

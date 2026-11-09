@@ -13,7 +13,8 @@ const STYLE: Record<NonNullable<TextSpec['style']>, { size: number; font: string
   shout: { size: 130, font: TITLE_FONT, fill: C.red, stroke: 16, y: 260 },
 };
 
-export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number }> = ({ spec, t, stageW = 1920 }) => {
+/** fit (Shorts): shrink to `width` px and centre the text vertically on `cy`. */
+export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number; fit?: { width: number; cy: number } }> = ({ spec, t, stageW = 1920, fit }) => {
   const st = STYLE[spec.style ?? 'label'];
   const lt = t - spec.at;
   const until = spec.until ?? 1e9;
@@ -26,15 +27,17 @@ export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number
     const v = c.from + (c.to - c.from) * easeOut(lt / (c.dur ?? 1.2));
     text = `${c.prefix ?? ''}${formatNumber(v, c.decimals ?? 0)}${c.suffix ?? ''}`;
   }
-  const x = spec.x ?? stageW / 2;
-  const y = spec.y ?? st.y;
-  const fill = spec.color ?? st.fill;
   const lines = text.split('\n');
+  const longest = Math.max(...lines.map((l) => l.length));
+  const f = fit ? Math.min(1, fit.width / (longest * st.size * (spec.style === 'label' ? 0.56 : 0.62) + (spec.style === 'label' ? 70 : 0))) : 1;
+  const x = spec.x ?? stageW / 2;
+  const y = fit ? (spec.style === 'label' ? fit.cy : fit.cy + 0.36 * st.size * f) : spec.y ?? st.y;
+  const fill = spec.color ?? st.fill;
   if (spec.style === 'label') {
     const w = Math.max(...lines.map((l) => l.length)) * st.size * 0.56 + 70;
     const h = lines.length * st.size * 1.15 + 34;
     return (
-      <g transform={`translate(${x} ${y}) rotate(${spec.rotate ?? -2}) scale(${k * out})`}>
+      <g transform={`translate(${x} ${y}) rotate(${spec.rotate ?? -2}) scale(${k * out * f})`}>
         <rect x={-w / 2 + 8} y={-h / 2 + 10} width={w} height={h} rx={26} fill={C.ink} opacity={0.35} />
         <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={26} fill={spec.color ?? C.purple} stroke={C.ink} strokeWidth={6} />
         {lines.map((l, i) => (
@@ -45,7 +48,7 @@ export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number
     );
   }
   return (
-    <g transform={`translate(${x} ${y}) rotate(${spec.rotate ?? 0}) scale(${k * out})`}>
+    <g transform={`translate(${x} ${y}) rotate(${spec.rotate ?? 0}) scale(${k * out * f})`}>
       {lines.map((l, i) => (
         <text key={i} x={0} y={i * st.size * 1.05} textAnchor="middle" fontFamily={st.font} fontWeight={700} fontSize={st.size}
           fill={fill} stroke={C.ink} strokeWidth={st.stroke} paintOrder="stroke" strokeLinejoin="round" letterSpacing={1}>{l}</text>
@@ -106,33 +109,40 @@ export const Chip: React.FC<{ spec: ChipSpec; t: number; x?: number; y?: number;
 
 // ---------------------------------------------------------------- captions
 
-export type CaptionLayout = { y: number; size: number; maxWidth: number; centerX: number };
+/** y: baseline of the last line (or of the first line when top = true); maxLines: shrink the text to fit. */
+export type CaptionLayout = { y: number; size: number; maxWidth: number; centerX: number; maxLines?: number; top?: boolean };
 
 export const LONG_CAPTIONS: CaptionLayout = { y: 985, size: 62, maxWidth: 1500, centerX: 960 };
 // Shorts: inside the safe zone (clear of the right-hand buttons and bottom UI of TikTok / Shorts)
-export const SHORT_CAPTIONS: CaptionLayout = { y: 1405, size: 80, maxWidth: 800, centerX: 480 };
+// and below the presenter spot (Bix's feet at y 1275): at most two lines, growing downward.
+export const SHORT_CAPTIONS: CaptionLayout = { y: 1345, size: 76, maxWidth: 800, centerX: 480, maxLines: 2, top: true };
 
 /** Word-by-word captions: the current page is shown, the spoken word pops in yellow. */
 export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: CaptionLayout }> = ({ pages, t, layout }) => {
   const page = pages.find((p) => t >= p.start - 0.05 && t <= p.end + 0.15);
   if (!page) return null;
-  const { size, centerX, maxWidth } = layout;
-  const space = size * 0.3;
-  const widths = page.words.map((w) => w.text.length * size * 0.56 + 6);
-  // wrap into at most two lines
-  const lines: number[][] = [[]];
-  let lw = 0;
-  page.words.forEach((_, i) => {
-    const w = widths[i] + space;
-    if (lw + w > maxWidth && lines[lines.length - 1].length) {
-      lines.push([]);
-      lw = 0;
-    }
-    lines[lines.length - 1].push(i);
-    lw += w;
-  });
+  const { centerX, maxWidth } = layout;
+  const wrap = (size: number) => {
+    const space = size * 0.3;
+    const widths = page.words.map((w) => w.text.length * size * 0.56 + 6);
+    const lines: number[][] = [[]];
+    let lw = 0;
+    page.words.forEach((_, i) => {
+      const w = widths[i] + space;
+      if (lw + w > maxWidth && lines[lines.length - 1].length) {
+        lines.push([]);
+        lw = 0;
+      }
+      lines[lines.length - 1].push(i);
+      lw += w;
+    });
+    return { size, space, widths, lines };
+  };
+  let fit = wrap(layout.size);
+  while (layout.maxLines && fit.lines.length > layout.maxLines && fit.size > layout.size * 0.6) fit = wrap(fit.size * 0.92);
+  const { size, space, widths, lines } = fit;
   const lineH = size * 1.2;
-  const y0 = layout.y - (lines.length - 1) * lineH;
+  const y0 = layout.top ? layout.y : layout.y - (lines.length - 1) * lineH;
   const pageIn = easeOut((t - page.start + 0.05) / 0.12);
   return (
     <g opacity={pageIn}>

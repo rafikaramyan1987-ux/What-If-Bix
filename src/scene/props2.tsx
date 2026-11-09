@@ -1036,7 +1036,165 @@ export const Huddle: React.FC<PP> = ({ spec, t }) => {
   );
 };
 
+
+/**
+ * Octopus (front view). xray: true shows the three hearts inside the mantle (two gill hearts,
+ * one main "systemic" heart) beating, with blue blood vessels; pauseAt/pauseFor stops the main
+ * heart (jet swimming). swim: true trails the arms; from/to/moveAt/dur to move; mood: calm|shock|happy;
+ * color: skin colour; highlight: gill | main (pulse ring around those hearts).
+ */
+export const Octopus: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  let [x, y] = [num(spec.x, 960), num(spec.y, 560)];
+  if (spec.to) {
+    const [x1, y1] = vec(spec.from, [x, y]);
+    const [x2, y2] = vec(spec.to, [x, y]);
+    const k = easeInOut((t - num(spec.moveAt, num(spec.at, 0))) / num(spec.dur, 2));
+    x = x1 + (x2 - x1) * k;
+    y = y1 + (y2 - y1) * k;
+  }
+  const skin = str(spec.color, '#e8735a');
+  const dark = str(spec.color2, '#c4523d');
+  const swim = spec.swim === true;
+  const xray = spec.xray === true;
+  const mood = str(spec.mood, 'calm');
+  const bob = (swim ? 14 : 8) * Math.sin(t * 1.8 + x * 0.01);
+  const beat = (ph: number) => 1 + 0.16 * Math.max(0, Math.sin(t * 7.5 + ph)) ** 6;
+  const pauseAt = typeof spec.pauseAt === 'number' ? spec.pauseAt : Infinity;
+  const paused = t >= pauseAt && t < pauseAt + num(spec.pauseFor, 1e9);
+  const hl = str(spec.highlight, '');
+  const arms = Array.from({ length: 8 }, (_, i) => {
+    const side = i < 4 ? -1 : 1;
+    const j = i % 4;
+    const base = side * (18 + j * 22);
+    const len = 190 + (j === 1 || j === 2 ? 30 : 0);
+    const w = swim ? 6 * Math.sin(t * 6 + i) : 26 * Math.sin(t * 2.2 + i * 0.9);
+    const spread = swim ? side * (8 + j * 6) : side * (40 + j * 38);
+    const ex = base + spread + w;
+    const ey = 60 + len;
+    const c1x = base + spread * 0.3 - w;
+    const c2x = base + spread * 0.9 + w * 1.5;
+    const curl = swim ? 0 : side * 34;
+    return (
+      <path key={i} d={`M ${base - side * 10} 50 C ${c1x} ${110 + len * 0.3}, ${c2x} ${ey - 70}, ${ex} ${ey} q ${curl} 10 ${curl * 0.6} -26`}
+        fill="none" stroke={C.ink} strokeWidth={34 - j * 2} strokeLinecap="round" />
+    );
+  });
+  const armsFill = Array.from({ length: 8 }, (_, i) => {
+    const side = i < 4 ? -1 : 1;
+    const j = i % 4;
+    const base = side * (18 + j * 22);
+    const len = 190 + (j === 1 || j === 2 ? 30 : 0);
+    const w = swim ? 6 * Math.sin(t * 6 + i) : 26 * Math.sin(t * 2.2 + i * 0.9);
+    const spread = swim ? side * (8 + j * 6) : side * (40 + j * 38);
+    const ex = base + spread + w;
+    const ey = 60 + len;
+    const c1x = base + spread * 0.3 - w;
+    const c2x = base + spread * 0.9 + w * 1.5;
+    const curl = swim ? 0 : side * 34;
+    return (
+      <path key={i} d={`M ${base - side * 10} 50 C ${c1x} ${110 + len * 0.3}, ${c2x} ${ey - 70}, ${ex} ${ey} q ${curl} 10 ${curl * 0.6} -26`}
+        fill="none" stroke={i % 2 ? skin : dark} strokeWidth={22 - j * 2} strokeLinecap="round" />
+    );
+  });
+  const heart = (cx: number, cy: number, r: number, k: number, stopped = false, ring = false) => (
+    <g transform={`translate(${cx} ${cy}) scale(${stopped ? 1 : k})`}>
+      {ring && <circle r={r * 1.9} fill="none" stroke={C.yellow} strokeWidth={6} opacity={0.6 + 0.4 * Math.sin(t * 6)} />}
+      <path d={`M 0 ${r * 0.9} C ${-r * 1.6} ${-r * 0.1}, ${-r * 0.7} ${-r * 1.2}, 0 ${-r * 0.45} C ${r * 0.7} ${-r * 1.2}, ${r * 1.6} ${-r * 0.1}, 0 ${r * 0.9} Z`}
+        fill={stopped ? '#9a8f9e' : C.red} stroke={C.ink} strokeWidth={5} strokeLinejoin="round" />
+    </g>
+  );
+  return (
+    <g transform={`translate(${x} ${y + bob}) scale(${num(spec.s, 1) * num(spec.facing, 1) * appearK(spec, t)} ${num(spec.s, 1) * appearK(spec, t)})`}>
+      {swim && <ellipse cx={0} cy={-230} rx={40} ry={18} fill="#dff6ff" opacity={0.5 + 0.3 * Math.sin(t * 8)} />}
+      {arms}
+      {armsFill}
+      {/* mantle (head) */}
+      <path d="M -112 40 Q -150 -110 -80 -190 Q 0 -260 80 -190 Q 150 -110 112 40 Q 60 72 0 70 Q -60 72 -112 40 Z"
+        fill={xray ? '#f6b3a6' : skin} opacity={xray ? 0.92 : 1} stroke={C.ink} strokeWidth={7} strokeLinejoin="round" />
+      {!xray && <circle cx={-40} cy={-150} r={14} fill={dark} opacity={0.6} />}
+      {!xray && <circle cx={48} cy={-120} r={10} fill={dark} opacity={0.6} />}
+      {xray && (
+        <g>
+          {/* gills + blue vessels */}
+          <path d="M -84 -120 q -22 34 0 70 M 84 -120 q 22 34 0 70" stroke="#c97a8c" strokeWidth={16} fill="none" strokeLinecap="round" />
+          <path d="M -66 -96 Q -30 -130 0 -100 Q 30 -130 66 -96 M 0 -100 L 0 -190 M 0 -80 Q -40 -20 -86 -6 M 0 -80 Q 40 -20 86 -6" stroke="#2f6dff" strokeWidth={8}
+            fill="none" strokeLinecap="round" opacity={0.9} />
+          {heart(-70, -96, 28, beat(0), false, hl === 'gill')}
+          {heart(70, -96, 28, beat(0.4), false, hl === 'gill')}
+          {heart(0, -110, 42, beat(1.2), paused, hl === 'main')}
+          {paused && <text x={0} y={-172} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={34} fill={C.ink}>paused</text>}
+        </g>
+      )}
+      {/* eyes */}
+      {[-1, 1].map((sd) => (
+        <g key={sd} transform={`translate(${sd * 52} 18)`}>
+          <ellipse rx={26} ry={mood === 'shock' ? 30 : 24} fill="#fff" stroke={C.ink} strokeWidth={5} />
+          <rect x={-12} y={-5} width={24} height={10} rx={5} fill={C.ink} />
+        </g>
+      ))}
+      {mood === 'happy' && <path d="M -22 48 q 22 16 44 0" stroke={C.ink} strokeWidth={5} fill="none" strokeLinecap="round" />}
+      {mood === 'shock' && <ellipse cx={0} cy={52} rx={10} ry={13} fill={C.mouth} />}
+    </g>
+  );
+};
+
+/** Test tube of blood. color: red | blue | any CSS colour; label under it; fill: 0..1 (animated from `at`). */
+export const Vial: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const c = str(spec.color, 'red');
+  const fill = c === 'red' ? '#d7263d' : c === 'blue' ? '#2f6dff' : c;
+  const k = num(spec.fill, 0.75) * (spec.at === undefined ? 1 : easeOut((t - num(spec.at, 0)) / 0.8));
+  const h = 220;
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 500)}) scale(${num(spec.s, 1) * appearK(spec, t)}) rotate(${num(spec.rot, 0)})`}>
+      <defs>
+        <clipPath id={`vial-${num(spec.x, 0)}-${num(spec.y, 0)}`}>
+          <path d={`M -34 ${-h / 2} L -34 ${h / 2 - 34} A 34 34 0 0 0 34 ${h / 2 - 34} L 34 ${-h / 2} Z`} />
+        </clipPath>
+      </defs>
+      <path d={`M -34 ${-h / 2} L -34 ${h / 2 - 34} A 34 34 0 0 0 34 ${h / 2 - 34} L 34 ${-h / 2} Z`} fill="#eef6ff" />
+      <g clipPath={`url(#vial-${num(spec.x, 0)}-${num(spec.y, 0)})`}>
+        <rect x={-40} y={h / 2 - h * k} width={80} height={h} fill={fill} />
+        <path d={`M -40 ${h / 2 - h * k} q 20 ${-8 * Math.sin(t * 3)} 40 0 t 40 0`} fill={fill} />
+      </g>
+      <path d={`M -34 ${-h / 2} L -34 ${h / 2 - 34} A 34 34 0 0 0 34 ${h / 2 - 34} L 34 ${-h / 2}`} fill="none" stroke={C.ink} strokeWidth={7} />
+      <rect x={-46} y={-h / 2 - 22} width={92} height={26} rx={8} fill={C.ink} />
+      <path d={`M -18 ${-h / 2 + 20} L -18 ${h / 2 - 50}`} stroke="#fff" strokeWidth={8} strokeLinecap="round" opacity={0.6} />
+      {spec.label !== undefined && (
+        <text y={h / 2 + 50} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={36} fill="#fff" stroke={C.ink} strokeWidth={7} paintOrder="stroke">
+          {str(spec.label, '')}
+        </text>
+      )}
+    </g>
+  );
+};
+
+/** Horseshoe crab, seen from above (domed shell + spiky tail). blood: true shows a blue drop next to it. */
+export const HorseshoeCrab: React.FC<PP> = ({ spec, t }) => {
+  if (!started(spec, t)) return null;
+  const wig = 4 * Math.sin(t * 2);
+  return (
+    <g transform={`translate(${num(spec.x, 960)} ${num(spec.y, 700)}) scale(${num(spec.s, 1) * appearK(spec, t)}) rotate(${num(spec.rot, 0)})`}>
+      <path d={`M 0 60 L ${wig} 200`} stroke={C.ink} strokeWidth={16} strokeLinecap="round" />
+      <path d={`M 0 60 L ${wig} 200`} stroke="#8a6a3c" strokeWidth={8} strokeLinecap="round" />
+      <path d="M -70 20 L -90 70 L 0 92 L 90 70 L 70 20 Z" fill="#7a5a30" stroke={C.ink} strokeWidth={6} strokeLinejoin="round" />
+      <path d="M -150 30 Q -150 -110 0 -112 Q 150 -110 150 30 Q 80 10 0 12 Q -80 10 -150 30 Z" fill="#9c7642" stroke={C.ink} strokeWidth={7} strokeLinejoin="round" />
+      <path d="M -90 -30 Q 0 -70 90 -30" stroke="#6e5128" strokeWidth={6} fill="none" />
+      <ellipse cx={-56} cy={-46} rx={10} ry={6} fill={C.ink} />
+      <ellipse cx={56} cy={-46} rx={10} ry={6} fill={C.ink} />
+      {spec.blood === true && (
+        <g transform={`translate(190 -40) scale(${1 + 0.05 * Math.sin(t * 4)})`}>
+          <path d="M 0 -50 C 30 -10 40 10 40 26 A 40 40 0 0 1 -40 26 C -40 10 -30 -10 0 -50 Z" fill="#2f6dff" stroke={C.ink} strokeWidth={6} />
+          <path d="M -16 14 q 0 -14 10 -22" stroke="#fff" strokeWidth={6} fill="none" strokeLinecap="round" opacity={0.7} />
+        </g>
+      )}
+    </g>
+  );
+};
+
 export const PROPS2: Record<string, React.FC<PP>> = {
+  octopus: Octopus, vial: Vial, horseshoe: HorseshoeCrab,
   penguin: Penguin, huddle: Huddle,
   dolphin: Dolphin, halfbrain: HalfBrain,
   cactus: Cactus, bird: Bird, frost: Frost,

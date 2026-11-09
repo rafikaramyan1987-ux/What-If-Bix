@@ -4,9 +4,10 @@ import { actionPose } from '../bix/poses';
 import { C, TITLE_FONT } from '../theme';
 import { clamp, popIn } from '../util';
 
-// Vertical safe zone (1080x1920): TikTok / YouTube Shorts overlay buttons on the right
-// (~180 px) and the caption/description/UI at the bottom (~470 px) and top (~140 px).
-export const SAFE = { left: 60, right: 900, top: 140, bottom: 1450, centerX: 480 };
+import { SAFE } from '../scene/shortLayout';
+
+// Vertical safe zone (1080x1920) lives in shortLayout.ts, shared with the framing check.
+export { SAFE };
 
 const splitTwo = (text: string) => {
   if (text.length <= 14) return [text];

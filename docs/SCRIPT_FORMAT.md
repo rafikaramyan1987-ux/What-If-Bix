@@ -159,6 +159,9 @@ Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop boo
 | `dolphin` | `x y s facing eye: open\|closed eyeAt eye2 from to moveAt dur blowAt label at` |
 | `penguin` | emperor penguin: `x y s facing egg: true chick: true mood: calm\|sleepy from to moveAt dur at` |
 | `huddle` | penguin huddle: `x y w h count seed wave` (shuffle speed) `heat: true heatAt at` |
+| `octopus` | octopus (front view): `x y s facing color color2 mood: calm\|shock\|happy swim: true xray: true` (3 beating hearts + blue vessels) `highlight: gill\|main pauseAt pauseFor` (main heart pauses) `from to moveAt dur at` |
+| `vial` | test tube of blood: `x y s rot color: red\|blue\|<css> fill (0–1) label at` |
+| `horseshoe` | horseshoe crab, top view: `x y s rot blood: true` (blue drop) `at` |
 | `halfbrain` | brain halves, one asleep: `x y s asleep: left\|right\|both\|none swapAt swaps: [..] bothAt labels: false at` |
 | `frost` | `x y r count at seed` (ice crystals) |
 | `crack` | `x y w at` |
@@ -221,3 +224,16 @@ university pages, encyclopedias. They are printed in the video description.
 YouTube demonetizes "mass-produced or repetitive" content. Every episode must have its own
 structure, gags, scene list and outro. `validate.mjs --all` fails if two episodes share more than 8%
 of their narration word-trigrams, use the same background sequence, or reuse an outro.
+
+
+## Shorts layout (vertical 9:16)
+
+Shorts are not a crop of the long video. Each scene is re-laid out for the vertical frame (`src/scene/shortLayout.ts`):
+
+- **presenter** (scenes with key objects such as `dolphin`, `halfbrain`, `penguin`, `octopus`, charts and badges): the key objects visible at that moment are scaled to fill the subject zone under the hook (x 100–860, y 540–1000) and centred under the hook text. Bix is drawn whole at the presenter spot (lower left, feet at 215, 1275), inside the safe zone.
+- **follow** (no key objects): the camera frames Bix himself, including where he moves in the next and previous half second.
+- The framing blends smoothly when key objects appear or leave, and across scene changes. On-screen texts sit in one band between the hook and the subject. Captions are at most two lines, below the presenter.
+- Props that pop in at the very start of a Short are shown fully from frame 0.
+- Per-scene override: `shortLayout: { mode: presenter|follow, subject: [x0, y0, x1, y1] }` (subject = a stage box to frame).
+
+**Framing check:** `build.mjs` refuses to render Shorts if, at any time in the first 3 s, Bix or a character prop (`pal`, `penguin`, `dolphin`, `octopus`) is not whole inside the safe zone, or another key object is cut by the frame edge. Run it alone with `--only check`. Use `--only strips` to render first-3-second strips, and `--debug-boxes` to draw the boxes.

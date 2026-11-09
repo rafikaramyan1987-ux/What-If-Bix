@@ -330,7 +330,7 @@ shorts:
       huddle:
         narration: "Penguins have a sauna in Antarctica. It's called a huddle. Thousands of males squeeze together through the winter. Inside, the temperature can climb above {20 degrees|twenty degrees} Celsius, warmer than many living rooms. Huddling saves so much energy that it helps them last through the fast."
         props:
-          - { type: huddle, x: 1150, y: 900, w: 1100, h: 200, count: 46, heat: true, heatAt: 0, wave: 0 }
+          - { type: huddle, x: 1150, y: 900, w: 720, h: 170, count: 34, heat: true, heatAt: 0, wave: 0 }
         bix:
           - { at: 0, action: shock }
           - { at: "@huddle", action: point }

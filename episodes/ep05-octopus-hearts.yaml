@@ -1,0 +1,342 @@
+# What If Bix — Episode 5 (Bix 2.0) — animal-facts season
+# Structure: (1) octopuses have three hearts and blue, copper-based blood, and WHY;
+# (2) what if YOU had them; (3) lab ending + teaser (giraffe sleep).
+id: ep05-octopus-hearts
+number: 5
+title: "What if you had 3 hearts and blue blood? (like an octopus)"
+character: bix2
+description: |
+  An octopus has three hearts and blue blood. Why does it need all that, and what would happen if YOU had the same setup?
+  Bix dives into copper-based blood, gill hearts, a main heart that pauses when octopuses swim, the blue-blooded horseshoe crabs that help keep medicines safe, and why your own veins only look blue.
+tags: [octopus, three hearts, blue blood, hemocyanin, what if, animal facts, ocean, marine biology, biology, science explained, what if bix]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: curious, gain: 0.2, duck: 0.55, seed: 55 }
+introAfter: why-would
+outro:
+  narration: "Thanks for watching! Pick another what if right here, and subscribe. All three hearts would."
+  background: { type: space, tint: blue }
+
+scenes:
+  # ============================================================ (1) THE FACT + WHY
+  - id: cold-open
+    chapter: "Three hearts, blue blood"
+    background: { type: ocean, horizon: 300, mood: night }
+    bixStart: [330, 960]
+    bixScale: 0.85
+    props:
+      - { type: octopus, x: 1150, y: 560, s: 1.15, xray: true, mood: happy }
+    bix:
+      - { at: 0, action: shock }
+      - { at: "@octopus", action: point }
+      - { at: "@clever", action: think }
+    texts:
+      - { at: "@What", text: "WHAT IF YOU HAD 3 HEARTS?", style: title, y: 160 }
+    sfx:
+      - { name: splash, at: 0, gain: 0.5 }
+    narration: "What if you had three hearts? And blue blood? An octopus has both. And it isn't a weird mistake of nature. It's a clever piece of engineering."
+
+  - id: why-would
+    background: { type: ocean, horizon: 300, mood: night }
+    bixStart: [330, 960]
+    bixScale: 0.85
+    props:
+      - { type: octopus, x: 1150, y: 560, s: 1.15, xray: true, mood: calm }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@why", action: think }
+      - { at: "@YOU", action: shock }
+    narration: "Why would anybody need three hearts? And what would happen to *you* with the same setup?"
+
+  - id: meet-hearts
+    chapter: "Meet the three hearts"
+    transition: iris
+    background: { type: ocean, horizon: 300 }
+    bixStart: [330, 960]
+    bixScale: 0.85
+    props:
+      - { type: octopus, x: 1150, y: 520, s: 1.3, xray: true, highlight: gill, until: "@third" }
+      - { type: octopus, x: 1150, y: 520, s: 1.3, xray: true, highlight: main, at: "@third" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@gills", action: point }
+      - { at: "@third", action: shock }
+    texts:
+      - { at: "@gills", until: "@third", text: "2 GILL HEARTS", style: label, x: 1150, y: 200, color: "#22d3c5" }
+      - { at: "@third", text: "1 MAIN HEART", style: label, x: 1150, y: 200, color: "#ff4d5e" }
+    narration: "Octopuses are mollusks, distant relatives of snails and clams. Two of their hearts sit next to the gills, and push blood through them to pick up oxygen. The third heart, the main or systemic heart, then pumps that fresh blood around the rest of the body."
+
+  - id: blue-blood
+    chapter: "Why is the blood blue?"
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [360, 820]
+    bixScale: 0.95
+    props:
+      - { type: vial, at: "@red", x: 1050, y: 470, s: 1.2, color: red, label: "iron (hemoglobin)" }
+      - { type: vial, at: "@copper", x: 1500, y: 470, s: 1.2, color: blue, label: "copper (hemocyanin)" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@red", action: point }
+      - { at: "@blue", action: shock }
+    narration: "Then there's the color. Our blood is red because of hemoglobin, a protein built around iron. Octopus blood uses hemocyanin, a protein built around copper, and it floats freely in the blood instead of riding inside blood cells. When it carries oxygen, octopus blood looks blue. A completely different chemistry from ours, for the very same job: carrying oxygen."
+
+  - id: why-copper
+    background: { type: ocean, horizon: 300 }
+    bixStart: [330, 960]
+    bixScale: 0.85
+    props:
+      - { type: octopus, x: 1150, y: 560, s: 1.1, color: "#b9a3e8", color2: "#8f74d6", mood: calm }
+      - { type: badge, at: "@40 percent", x: 1640, y: 280, r: 120, text: "+40%", sub: "hemocyanin", color: "#2f8cff" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@less", action: shrug }
+      - { at: "@Antarctic", action: scared }
+    texts:
+      - { at: "@Antarctic", text: "ANTARCTIC OCTOPUS", style: label, x: 1150, y: 170, color: "#2f8cff" }
+    narration: "Octopus blood carries less oxygen than ours. But hemocyanin can be tuned to the water an octopus lives in. One study found that an Antarctic octopus packs about {40 percent|forty percent} more hemocyanin into its blood than its warm-water cousins, to keep oxygen flowing in near-freezing water. In the cold, hemocyanin holds on to its oxygen tightly and lets go of only part of it, so carrying extra helps make up for that."
+
+  - id: why-three
+    chapter: "Why three hearts?"
+    transition: iris
+    background: { type: ocean, horizon: 300 }
+    bixStart: [330, 960]
+    bixScale: 0.85
+    props:
+      - { type: octopus, x: 1150, y: 520, s: 1.3, xray: true, highlight: gill }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@effort", action: present }
+      - { at: "@boost", action: cheer }
+    texts:
+      - { at: "@boost", text: "GILL HEARTS = BOOSTERS", style: label, x: 1150, y: 170, color: "#22d3c5" }
+    narration: "So why three hearts? Squeezing blood through gills takes effort. The two gill hearts give the blood a boost on its way through the gills, so the main heart can send it all around the body. It's teamwork, inside one animal."
+
+  - id: swim-stop
+    chapter: "The heart that pauses"
+    transition: whip
+    background: { type: ocean, horizon: 300 }
+    bixStart: [330, 960]
+    bixScale: 0.85
+    props:
+      - { type: octopus, x: 1150, y: 560, s: 1.1, xray: true, swim: true, from: [1250, 700], to: [1100, 460], moveAt: "@swims", dur: 1.5, pauseAt: "@pause", pauseFor: 2.5 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@pause", action: shock }
+      - { at: "@crawling", action: laugh }
+    texts:
+      - { at: "@crawling", text: "CRAWL > SWIM", style: label, x: 1150, y: 170, color: "#ff7a1a" }
+    narration: "Here's the strangest part. When an octopus swims by jet propulsion, blood flow from its main heart drops, and in experiments, the heartbeat could pause during the jets. Scientists think that may be one reason octopuses prefer crawling to swimming: swimming is exhausting. For an octopus, strolling along the seafloor is the comfy way to travel."
+
+  - id: blue-club
+    chapter: "The blue blood club"
+    transition: iris
+    background: { type: ocean, horizon: 300, beach: true }
+    bixStart: [330, 960]
+    bixScale: 0.85
+    props:
+      - { type: octopus, x: 900, y: 500, s: 0.6, mood: happy }
+      - { type: horseshoe, at: "@horseshoe", x: 1400, y: 640, s: 1.2, blood: true }
+    bix:
+      - { at: 0, action: cheer }
+      - { at: "@horseshoe", action: point }
+      - { at: "@medicines", action: shock }
+    texts:
+      - { at: "@medicines", text: "MEDICINE SAFETY TEST", style: label, x: 1300, y: 200, color: "#2f6dff" }
+    narration: "Octopuses aren't alone. Squid and cuttlefish have three hearts and blue blood too. And horseshoe crabs, animals that have been around for hundreds of millions of years, have blue blood as well. Theirs is so useful that it's used to test medicines and medical devices for dangerous bacterial toxins. A lab-made alternative now exists too, which could take some pressure off the crabs."
+
+  - id: brainy-arms
+    background: { type: ocean, horizon: 300 }
+    bixStart: [330, 960]
+    bixScale: 0.85
+    props:
+      - { type: octopus, x: 1150, y: 540, s: 1.2, mood: happy }
+      - { type: badge, at: "@500 million", x: 1660, y: 260, r: 125, text: "500 M+", sub: "neurons", color: "#8a5cff" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@500 million", action: shock }
+      - { at: "@arms", action: point }
+    texts:
+      - { at: "@arms", text: "2/3 OF NEURONS: ARMS & BODY", style: label, x: 1150, y: 170, color: "#8a5cff" }
+    narration: "And the hearts aren't even the weirdest part. An octopus has more than {500 million|five hundred million} neurons, about as many as a dog, and more than two thirds of them sit in its arms and body, not in its central brain."
+
+  # ============================================================ (2) WHAT IF YOU
+  - id: you-two-pumps
+    chapter: "What if YOU had three hearts?"
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [400, 820]
+    bixScale: 0.95
+    props:
+      - { type: icon, icon: heart, at: "@sort", x: 1300, y: 460, s: 1.6 }
+      - { type: arrow, at: "@lungs", from: [1200, 520], to: [960, 320], color: "#2f8cff", label: "right side: lungs" }
+      - { type: arrow, at: "@body", from: [1400, 520], to: [1640, 320], color: "#ff4d5e", label: "left side: body" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@Surprise", action: shock }
+      - { at: "@split", action: present }
+    narration: "So, what if *you* had three hearts? Surprise: you sort of already have two pumps in one. The right side of your heart sends blood to your lungs, and the left side sends it to your body. An octopus simply split those jobs into separate hearts. And your lungs do the job of its gills."
+
+  - id: you-beats
+    background: { type: lab, board: false }
+    bixStart: [400, 820]
+    bixScale: 0.95
+    props:
+      - { type: icon, icon: heart, x: 1300, y: 460, s: 1.6 }
+      - { type: badge, at: "@100,000", x: 1640, y: 280, r: 125, text: "100,000", sub: "beats a day", color: "#ff4d5e" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@100,000", action: shock }
+      - { at: "@thinking", action: laugh }
+    narration: "Your one heart already beats about {100,000|a hundred thousand} times a day, pumping around {7,500 liters|seven and a half thousand liters} of blood, without you ever thinking about it. Two extra hearts would just be two more things to keep beating."
+
+  - id: you-blue-blood
+    chapter: "What if YOU had blue blood?"
+    transition: iris
+    background: { type: city, mood: day }
+    bixStart: [400, 820]
+    bixScale: 0.95
+    props:
+      - { type: vial, x: 1050, y: 470, s: 1.2, color: red, fill: 0.85, label: "you" }
+      - { type: vial, at: "@octopus", x: 1500, y: 470, s: 1.2, color: blue, fill: 0.2, label: "octopus" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@less", action: shock }
+      - { at: "@stairs", action: scared }
+    texts:
+      - { at: "@stairs", text: "OUT OF BREATH", style: shout, x: 900, y: 220, rotate: -4 }
+    narration: "And blue blood? Bad trade. Your blood carries about {20 milliliters|twenty milliliters} of oxygen in every {100|hundred}. Octopus blood carries several times less. With octopus blood in your body, you'd probably run out of breath halfway up the stairs. To keep up, you'd need a lot more blood, or a heart pumping a lot faster. Or, well, a couple of extra hearts."
+
+  - id: vein-myth
+    background: { type: city, mood: day }
+    bixStart: [400, 820]
+    bixScale: 0.95
+    props:
+      - { type: vial, x: 1300, y: 470, s: 1.2, color: red, fill: 0.85, label: "always red" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@never", action: point }
+      - { at: "@light", action: think }
+    texts:
+      - { at: "@never", text: "MYTH: BLUE BLOOD IN VEINS", style: label, x: 1300, y: 170, color: "#ff4d5e" }
+    narration: "By the way, human blood is never blue, not even in your veins. Veins only look bluish because of the way light travels through your skin. How blue they look depends on how deep and how wide the vein is, and on how your eyes read the light. Blood itself is red every time."
+
+  - id: you-swim
+    background: { type: ocean, horizon: 420 }
+    bixStart: [700, 720]
+    bixScale: 0.85
+    props:
+      - { type: icon, icon: warning, at: "@paused", x: 1300, y: 300, s: 0.9 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@paused", action: shock }
+      - { at: "@short", action: laugh }
+    narration: "And if your main heart paused every time you swam? Swimming lessons would be very, very short."
+
+  # ============================================================ (3) LAB ENDING + TEASER
+  - id: lab-ending
+    chapter: "Back in the lab"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [700, 820]
+    bixScale: 1.0
+    props:
+      - { type: burst, at: "@popped", until: "@popped+1.2", x: 760, y: 420, text: "POP!", r: 120, color: "#ff4d5e" }
+      - { type: cactus, x: 1600, y: 818, s: 1.1, mood: happy, until: "@impressed" }
+      - { type: cactus, x: 1600, y: 818, s: 1.1, mood: shock, at: "@impressed" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@popped", action: shock }
+      - { at: "@impressed", action: facepalm }
+    texts:
+      - { at: "@balloons", text: "BIX'S EXTRA HEARTS: 6 SECONDS", style: shout, x: 900, y: 200, rotate: -4 }
+    narration: "So Bix built himself two extra hearts in the lab. Out of balloons. He named them Lefty and Righty. They beat for about six seconds, then popped. Newton was not impressed. Newton has zero hearts."
+    hold: 0.6
+
+  - id: teaser
+    transition: whip
+    background: { type: sky, mood: day, speed: 20 }
+    bixStart: [400, 900]
+    bixScale: 0.85
+    props:
+      - { type: clock, at: "@thirty", x: 1300, y: 460, r: 130, time: "0:30", speed: 1 }
+    bix:
+      - { at: 0, action: sleepy }
+      - { at: "@giraffe", action: shock }
+    chips:
+      - { at: 0.1, label: "Next time", icon: bolt }
+    texts:
+      - { at: "@what#2", text: "WHAT IF YOU SLEPT 30 MINUTES A DAY?", style: title, y: 200 }
+    narration: "Next time on What If Bix: what if you slept only thirty minutes a day, like a giraffe?"
+
+shorts:
+  - id: short-three-hearts
+    title: "Why an octopus has 3 hearts and blue blood"
+    from: meet-hearts
+    to: blue-blood
+    hook: "OCTOPUSES HAVE 3 HEARTS"
+    description: "Two hearts push blood through the gills, one pumps it around the body, and the blood is blue thanks to copper."
+    scenes:
+      meet-hearts:
+        narration: "An octopus has three hearts. Two of them sit next to the gills, and push blood through them to pick up oxygen. The third heart, the main or systemic heart, then pumps that fresh blood around the rest of the body. Octopuses are mollusks, distant relatives of snails and clams."
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@gills", action: point }
+          - { at: "@third", action: present }
+        texts:
+          - { at: "@three", until: "@three+1.4", text: "THREE?!", style: shout, x: 760, y: 230, rotate: -5 }
+          - { at: "@gills", until: "@third", text: "2 GILL HEARTS", style: label, x: 1150, y: 200, color: "#22d3c5" }
+          - { at: "@third", text: "1 MAIN HEART", style: label, x: 1150, y: 200, color: "#ff4d5e" }
+  - id: short-heart-pause
+    title: "An octopus heart can pause when it swims"
+    from: why-three
+    to: swim-stop
+    hook: "ITS HEART PAUSES WHEN IT SWIMS"
+    description: "Octopuses have two gill hearts and one main heart. When they jet-swim, the main heart's output drops and can pause."
+    scenes:
+      why-three:
+        narration: "This animal's main heart can pause when it swims. It's an octopus, and it has three hearts. Squeezing blood through gills takes effort. The two gill hearts give the blood a boost on its way through the gills, so the main heart can send it all around the body."
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@effort", action: present }
+          - { at: "@boost", action: cheer }
+        texts:
+          - { at: "@pause", until: "@pause+1.4", text: "PAUSE?!", style: shout, x: 760, y: 230, rotate: -5 }
+  - id: short-blue-blood-you
+    title: "What if you had octopus blood?"
+    from: you-blue-blood
+    to: you-swim
+    hook: "WHAT IF YOUR BLOOD WAS BLUE?"
+    description: "Octopus blood is blue and carries much less oxygen than ours. Also: human blood is never blue, not even in veins."
+    scenes:
+      you-blue-blood:
+        narration: "What if your blood was blue, like an octopus? Bad trade. Your blood carries about {20 milliliters|twenty milliliters} of oxygen in every {100|hundred}. Octopus blood carries several times less. With octopus blood in your body, you'd probably run out of breath halfway up the stairs."
+        props:
+          - { type: vial, x: 1050, y: 470, s: 1.2, color: red, fill: 0.85, label: "you" }
+          - { type: vial, x: 1500, y: 470, s: 1.2, color: blue, fill: 0.2, label: "octopus" }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@trade", action: shrug }
+          - { at: "@stairs", action: scared }
+        texts:
+          - { at: "@trade", until: "@trade+1.4", text: "BAD TRADE.", style: shout, x: 760, y: 230, rotate: -5 }
+          - { at: "@stairs", text: "OUT OF BREATH", style: shout, x: 900, y: 220, rotate: -4 }
+
+thumbnail:
+  title: ["3", "HEARTS?!"]
+  accent: 1
+  background: { type: ocean, horizon: 300, mood: night }
+  props:
+    - { type: octopus, x: 1150, y: 620, s: 1.45, xray: true, mood: shock }
+  bix: { action: shock, x: 1680, y: 1180, scale: 1.9, facing: -1, t: 0.6 }
+
+sources:
+  - "Smithsonian Magazine, Ten wild facts about octopuses — three hearts (two pump blood through the gills, one to the body), blue copper-based blood, the systemic heart stops beating during swimming, which may explain why octopuses prefer crawling: https://www.smithsonianmag.com/science-nature/ten-wild-facts-about-octopuses-they-have-three-hearts-big-brains-and-blue-blood-7625828/"
+  - "Schipp, R. (1987). General morphological and functional characteristics of the cephalopod circulatory system. An introduction. Experientia 43: 474–477 — systemic heart plus two branchial (gill) hearts in coleoid cephalopods (octopus, squid, cuttlefish): https://doi.org/10.1007/BF02143574"
+  - "Wells, M. J., Duthie, G. G., Houlihan, D. F., Smith, P. J. S. & Wells, J. (1987). Blood flow and pressure changes in exercising octopuses (Octopus vulgaris). Journal of Experimental Biology 131: 175–187 — aortic flow and pressure pulses interrupted during jet swimming: https://doi.org/10.1242/jeb.131.1.175"
+  - "Oellermann, M., Lieb, B., Pörtner, H.-O., Semmens, J. M. & Mark, F. C. (2015). Blue blood on ice: modulated blood oxygen transport facilitates cold compensation and eurythermy in an Antarctic octopod. Frontiers in Zoology 12: 6 — Pareledone charcoti has about 40% more haemocyanin than warm-water octopods; haemocyanin is extracellular, copper-based: https://doi.org/10.1186/s12983-015-0097-x"
+  - "Zielinski, S., Sartoris, F. J. & Pörtner, H.-O. (2001). Temperature effects on hemocyanin oxygen binding in an Antarctic cephalopod. Biological Bulletin 200: 67–76 — octopod blood oxygen capacity about 0.6–1.6 mmol per litre, limited by extracellular pigment concentration: https://doi.org/10.2307/1543086"
+  - "NCBI StatPearls, Physiology, Oxygen Transport / Oxyhemoglobin dissociation curve — hemoglobin carries oxygen on iron-containing heme; arterial blood holds about 20 mL of oxygen per 100 mL: https://www.ncbi.nlm.nih.gov/books/NBK538336/"
+  - "U.S. National Heart, Lung, and Blood Institute (NIH), How the Heart Works — the right side pumps blood to the lungs, the left side to the body; the heart beats about 100,000 times a day and pumps about 2,000 gallons (about 7,500 L) of blood a day: https://www.nhlbi.nih.gov/health/heart"
+  - "Kienle, A., Lilge, L., Vitkin, I. A., Patterson, M. S., Wilson, B. C., Hibst, R. & Steiner, R. (1996). Why do veins appear blue? A new look at an old question. Applied Optics 35(7): 1151–1160: https://doi.org/10.1364/AO.35.001151"
+  - "Okinawa Institute of Science and Technology (OIST), Do octopuses' arms have a mind of their own? (2020, on Gutnick et al. 2020, Current Biology 30: 4322) — over 500 million neurons, similar to a dog; over two thirds in the arms and body: https://www.oist.jp/node/35601"
+  - "Krisfalusi-Gannon, J., Ali, W., Dellinger, K., Robertson, L., Brady, T. E., Goddard, M. K. M., Tinker-Kulberg, R., Kepley, C. L. & Dellinger, A. L. (2018). The role of horseshoe crabs in the biomedical industry and recent trends impacting species sustainability. Frontiers in Marine Science 5: 185 — horseshoe crab blood (LAL) used to test injectable drugs and medical devices for bacterial endotoxins; horseshoe crabs have existed for hundreds of millions of years; a synthetic alternative (recombinant Factor C) is available: https://doi.org/10.3389/fmars.2018.00185"

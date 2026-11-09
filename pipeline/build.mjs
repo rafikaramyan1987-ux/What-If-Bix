@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // What If Bix — episode builder.
 //
-//   node pipeline/build.mjs <episode.yaml> [--only long,shorts,thumb,meta,frames] [--out out] [--frames 2,9.5,20]
+//   node pipeline/build.mjs <episode.yaml> [--only long,shorts,thumb,meta,frames,strips,check] [--out out] [--frames 2,9.5,20]
+//     [--debug-boxes] (Shorts: draw framing boxes) [--no-framing-check]
 //
 // Steps: parse script -> TTS (+word timings) -> timeline/manifest -> music & SFX
 // -> audio mix -> Remotion render (silent) -> mux audio -> Shorts -> thumbnail
@@ -15,6 +16,7 @@ import { loadEpisode } from './lib/script.mjs';
 import { buildTimeline, planNarration } from './lib/timeline.mjs';
 import { buildMetadata, buildSrt, metadataMarkdown } from './lib/metadata.mjs';
 import { shortEpisode, SHORT_MAX, SHORT_MIN, toShortManifest } from './lib/shorts.mjs';
+import { checkShort, loadShortLayout } from './lib/framing.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PY = process.env.PYTHON ?? 'python3';
@@ -122,6 +124,16 @@ const main = async () => {
     log(`short ${s.short.id}: ${d.toFixed(1)} s${d < SHORT_MIN || d > SHORT_MAX ? ` — WARNING outside ${SHORT_MIN}–${SHORT_MAX} s` : ''}`);
   }
 
+  // Shorts framing check: in the first 3 s Bix (and character props) must be whole inside the
+  // safe zone and every key object whole inside the frame. Fails the build otherwise.
+  if (shorts.length && ['shorts', 'strips', 'check'].some((k) => only.has(k)) && !args.includes('--no-framing-check')) {
+    const layout = await loadShortLayout(ROOT);
+    const problems = shorts.flatMap((s) => checkShort(layout, s.manifest).map((p) => `short ${s.short.id}: ${p}`));
+    if (problems.length) throw new Error(`Shorts framing check failed (first 3 s):\n  ${problems.join('\n  ')}`);
+    log('shorts framing check: OK (Bix and key objects whole and in the safe zone for the first 3 s)');
+  }
+  if (args.includes('--debug-boxes')) for (const s of shorts) s.manifest.debugBoxes = true;
+
   // 3-4. music + mix
   const mixFile = only.has('long') ? mixAudio(manifest, audio, ep.music ?? { style: 'curious' }, 'long') : null;
   if (mixFile) log('audio mixed');
@@ -130,7 +142,7 @@ const main = async () => {
   const { bundle } = await import('@remotion/bundler');
   const { renderMedia, renderStill, selectComposition } = await import('@remotion/renderer');
   const browserExecutable = findBrowser();
-  const needsRender = ['long', 'shorts', 'thumb', 'frames'].some((k) => only.has(k));
+  const needsRender = ['long', 'shorts', 'thumb', 'frames', 'strips'].some((k) => only.has(k));
   const serveUrl = needsRender ? await bundle({ entryPoint: path.join(ROOT, 'src', 'index.ts') }) : '';
   const concurrency = Math.max(1, Math.min(os.cpus().length, 8));
 
@@ -169,6 +181,26 @@ const main = async () => {
       fs.writeFileSync(path.join(out, 'shorts', `${s.short.id}.en.srt`), buildSrt(s.manifest.captions));
       log(`short ${s.short.id} (${d.toFixed(1)} s) -> ${path.relative(ROOT, final)}`);
     }
+  }
+
+  // First-3-seconds strips of each Short (0, 0.5 … 3 s), for reviewing the hook and framing.
+  if (only.has('strips') && shorts.length) {
+    const dir = path.join(out, 'shorts', 'strips');
+    fs.mkdirSync(dir, { recursive: true });
+    for (const s of shorts) {
+      const comp = await selectComposition({ serveUrl, id: 'Episode', inputProps: s.manifest, browserExecutable });
+      const items = [];
+      for (let k = 0; k <= 6; k++) {
+        const tt = k * 0.5;
+        const f = path.join(build, `strip-${s.short.id}-${k}.png`);
+        const frame = Math.min(comp.durationInFrames - 1, Math.round(tt * s.manifest.fps));
+        await renderStill({ composition: comp, serveUrl, output: f, frame, inputProps: s.manifest, browserExecutable, scale: 0.5 });
+        items.push(`${tt.toFixed(1)}s=${f}`);
+      }
+      const suffix = s.manifest.debugBoxes ? '-debug' : '';
+      run(PY, [path.join(ROOT, 'pipeline', 'strip.py'), path.join(dir, `${s.short.id}-first3s${suffix}.png`), ...items]);
+    }
+    log(`strips -> ${path.relative(ROOT, dir)}`);
   }
 
   if (only.has('thumb') && ep.thumbnail) {
