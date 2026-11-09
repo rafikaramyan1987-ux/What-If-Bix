@@ -29,8 +29,11 @@ export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number
   }
   const lines = text.split('\n');
   const longest = Math.max(...lines.map((l) => l.length));
-  const f = fit ? Math.min(1, fit.width / (longest * st.size * (spec.style === 'label' ? 0.56 : 0.62) + (spec.style === 'label' ? 70 : 0))) : 1;
-  const x = spec.x ?? stageW / 2;
+  const estW = longest * st.size * (spec.style === 'label' ? 0.56 : 0.62) + (spec.style === 'label' ? 70 : 0);
+  // never wider than the stage (or the Shorts text band), and never past its edges
+  const f = Math.min(1, (fit ? fit.width : stageW - 120) / estW);
+  const half = (estW * f) / 2;
+  const x = clamp(spec.x ?? stageW / 2, Math.min(stageW / 2, half + 60), Math.max(stageW / 2, stageW - half - 60));
   const y = fit ? (spec.style === 'label' ? fit.cy : fit.cy + 0.36 * st.size * f) : spec.y ?? st.y;
   const fill = spec.color ?? st.fill;
   if (spec.style === 'label') {
