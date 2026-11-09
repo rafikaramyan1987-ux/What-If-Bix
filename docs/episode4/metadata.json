@@ -1,0 +1,104 @@
+{
+  "id": "ep04-penguin-dads",
+  "title": "What if dads had to sit on the egg? (the emperor penguin challenge)",
+  "description": "Emperor penguin dads balance an egg on their feet through the Antarctic winter, for about two months, without eating. How do they survive, and what if human dads had to do it?\nBix visits the coldest daycare on Earth: brood pouches, 20-degree penguin huddles, \"penguin milk\", and what fatherhood really does to human dads.\n\nChapters:\n0:00 The coldest dad job\n0:16 Meet the emperor\n0:33 Why winter?\n0:55 The hand-off\n1:10 The brood pouch\n1:37 The penguin sauna\n2:11 Penguin dad milk\n2:31 What if human dads had to do it?\n3:12 Human dads change too\n3:36 Back in the lab\n\nSources:\n• Australian Antarctic Program (Australian Government), Emperor penguin: https://www.antarctica.gov.au/about-antarctica/animals/penguins/emperor-penguin/\n• Fretwell et al. 2023: https://doi.org/10.1038/s43247-023-00927-x\n• British Antarctic Survey, Emperor penguin: https://www.bas.ac.uk/about/antarctica/wildlife/penguins/emperor-penguin/\n• National Geographic, Emperor penguin: https://www.nationalgeographic.com/animals/birds/facts/emperor-penguin\n• Groscolas 1986: https://doi.org/10.1007/BF00691038\n• Ancel et al. 1997: https://doi.org/10.1038/385304a0\n• Gilbert et al. 2006: https://doi.org/10.1016/j.physbeh.2006.04.024\n• Zitterbart et al. 2011: https://doi.org/10.1371/journal.pone.0020260\n• U.S. National Weather Service, Wind chill chart: https://www.weather.gov/safety/cold-wind-chill-chart\n• Peel 1997: https://doi.org/10.1136/bmj.315.7112.829\n• Gettler et al. 2011: https://doi.org/10.1073/pnas.1105403108\n• Stölting et al. 2007: https://doi.org/10.1002/bies.20626\n\nAnimation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).\nNarration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)\n\n#science #whatif #animation",
+  "tags": [
+    "emperor penguin",
+    "penguin dads",
+    "what if",
+    "animal facts",
+    "antarctica",
+    "penguin huddle",
+    "fatherhood",
+    "biology",
+    "science explained",
+    "nature documentary",
+    "what if bix",
+    "science",
+    "animation"
+  ],
+  "chapters": [
+    {
+      "time": "0:00",
+      "seconds": 0,
+      "title": "The coldest dad job"
+    },
+    {
+      "time": "0:16",
+      "seconds": 17,
+      "title": "Meet the emperor"
+    },
+    {
+      "time": "0:33",
+      "seconds": 34,
+      "title": "Why winter?"
+    },
+    {
+      "time": "0:55",
+      "seconds": 55,
+      "title": "The hand-off"
+    },
+    {
+      "time": "1:10",
+      "seconds": 70,
+      "title": "The brood pouch"
+    },
+    {
+      "time": "1:37",
+      "seconds": 98,
+      "title": "The penguin sauna"
+    },
+    {
+      "time": "2:11",
+      "seconds": 132,
+      "title": "Penguin dad milk"
+    },
+    {
+      "time": "2:31",
+      "seconds": 151,
+      "title": "What if human dads had to do it?"
+    },
+    {
+      "time": "3:12",
+      "seconds": 193,
+      "title": "Human dads change too"
+    },
+    {
+      "time": "3:36",
+      "seconds": 216,
+      "title": "Back in the lab"
+    }
+  ],
+  "duration": 252.53333333333333,
+  "categoryId": 27,
+  "madeForKids": false,
+  "defaultLanguage": "en",
+  "files": {
+    "video": "ep04-penguin-dads.mp4",
+    "thumbnail": "thumbnail.png",
+    "captions": "ep04-penguin-dads.en.srt"
+  },
+  "shorts": [
+    {
+      "id": "short-no-food",
+      "file": "shorts/short-no-food.mp4",
+      "title": "Penguin dads don't eat for about 4 months #Shorts",
+      "description": "Emperor penguin dads incubate the egg on their feet through the Antarctic winter, and fast for about 115 days.\n\nFull episode: \"What if dads had to sit on the egg? (the emperor penguin challenge)\" on the channel.\n\nAnimation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).\nNarration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)\n\n#Shorts #science #whatif",
+      "duration": 44.1
+    },
+    {
+      "id": "short-sauna",
+      "file": "shorts/short-sauna.mp4",
+      "title": "Penguins built a 20 °C sauna in Antarctica #Shorts",
+      "description": "Thousands of emperor penguin dads huddle through the winter. Inside, it can get warmer than 20 °C.\n\nFull episode: \"What if dads had to sit on the egg? (the emperor penguin challenge)\" on the channel.\n\nAnimation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).\nNarration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)\n\n#Shorts #science #whatif",
+      "duration": 46.36666666666667
+    },
+    {
+      "id": "short-human-dads",
+      "file": "shorts/short-human-dads.mp4",
+      "title": "What if human dads had to sit on the egg? #Shorts",
+      "description": "Emperor penguin dads fast and freeze for months. Human dads would not survive the same job, and here's why.\n\nFull episode: \"What if dads had to sit on the egg? (the emperor penguin challenge)\" on the channel.\n\nAnimation, music and sound effects: made entirely in code for What If Bix (original; music/SFX CC0).\nNarration voice: Piper TTS, en_US LibriTTS voice (CC BY 4.0: https://creativecommons.org/licenses/by/4.0/)\n\n#Shorts #science #whatif",
+      "duration": 42.63333333333333
+    }
+  ]
+}
