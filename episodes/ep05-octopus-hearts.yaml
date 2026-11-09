@@ -294,7 +294,7 @@ shorts:
     description: "Octopuses have two gill hearts and one main heart. When they jet-swim, the main heart's output drops and can pause."
     scenes:
       why-three:
-        narration: "This animal's main heart can pause when it swims. It's an octopus, and it has three hearts. Squeezing blood through gills takes effort. The two gill hearts give the blood a boost on its way through the gills, so the main heart can send it all around the body."
+        narration: "This animal's main heart can pause when it swims. It's an octopus, and it has three hearts. That's a lot of hearts for one animal, so here's how they work together. Squeezing blood through gills takes effort. The two gill hearts give the blood a boost on its way through the gills, so the main heart can send it all around the body."
         bix:
           - { at: 0, action: shock }
           - { at: "@effort", action: present }

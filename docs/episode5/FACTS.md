@@ -1,6 +1,6 @@
 # Episode 5 — "What if you had 3 hearts and blue blood? (like an octopus)" — fact list for review
 
-Status: **script written and validated, not rendered.** Script: [`episodes/ep05-octopus-hearts.yaml`](../../episodes/ep05-octopus-hearts.yaml).
+Status: **script written and validated, not rendered** (with real voice timings: about 4:08; Shorts 38.3 / 37.7 / 38.5 s, framing check passes). Script: [`episodes/ep05-octopus-hearts.yaml`](../../episodes/ep05-octopus-hearts.yaml).
 
 Legend: ✅ well established · ⚠️ debated, approximate or simplified (worded carefully in the script) · 🧮 my reasoning or extrapolation, not a measured result.
 
