@@ -23,6 +23,11 @@ export const SAFE = { left: 60, right: 900, top: 140, bottom: 1450, centerX: 480
 export const SUBJECT_ZONE: Box = { x0: 100, y0: 540, x1: 860, y1: 1000 };
 /** Bix as presenter: feet position and on-screen height (px). */
 export const PRESENTER = { x: 215, y: 1275, height: 300 };
+/** A layout profile: where the subject goes and where Bix presents. */
+export type Profile = { zone: Box; presenter: { x: number; y: number; height: number } };
+export const CLASSIC: Profile = { zone: SUBJECT_ZONE, presenter: PRESENTER };
+/** TikTok-optimised Shorts: a taller subject zone, a slightly smaller presenter above the captions. */
+export const TIKTOK: Profile = { zone: { x0: 100, y0: 450, x1: 860, y1: 1030 }, presenter: { x: 205, y: 1232, height: 265 } };
 /** Bix 2.0 standing height at scale 1 (feet to beanie top), plus room for emotes. */
 export const BIX_H = 378;
 const BIX_HALF_W = 0.4 * BIX_H;
@@ -67,7 +72,11 @@ const camBox = (scene: Scene, t: number, b: Box): Box => {
 
 // ---------------------------------------------------------------------------------
 // Key objects: local bounding box at scale 1 around the prop's anchor (x, y).
-type Geo = { box: (p: Spec) => Box; s?: (p: Spec) => number; y?: number; move?: 'ease' | 'linear'; bob?: number; flip?: boolean };
+type Geo = {
+  box: (p: Spec) => Box; s?: (p: Spec) => number; y?: number; move?: 'ease' | 'linear'; bob?: number; flip?: boolean;
+  /** default travel time and start point when the prop has from/to but no x/y (e.g. birds) */
+  dur?: number; from?: [number, number]; to?: [number, number]; flipDir?: boolean;
+};
 const sq = (r: number): Box => ({ x0: -r, y0: -r, x1: r, y1: r });
 const GEO: Record<string, Geo> = {
   dolphin: { box: (p) => ({ x0: -212, y0: -122, x1: 214, y1: p.label !== undefined ? 112 : 72 }), s: (p) => num(p.s, 1), y: 600, move: 'ease', bob: 10, flip: true },
@@ -96,6 +105,7 @@ const GEO: Record<string, Geo> = {
   server: { box: (p) => ({ x0: -num(p.count, 3) * 85, y0: -300, x1: num(p.count, 3) * 85, y1: 20 }), s: (p) => num(p.s, 1) },
   phone: { box: () => ({ x0: -110, y0: -200, x1: 110, y1: 200 }), s: (p) => num(p.s, 1) },
   hurricane: { box: (p) => sq(num(p.r, 200)) },
+  bird: { box: () => ({ x0: -116, y0: -78, x1: 78, y1: 32 }), s: (p) => num(p.s, 1), move: 'linear', bob: 8, dur: 3, from: [-200, 300], to: [2200, 300], flipDir: true },
   octopus: { box: (p) => ({ x0: -235, y0: p.swim === true ? -265 : -245, x1: 235, y1: 285 }), s: (p) => num(p.s, 1), y: 560, move: 'ease', bob: 14 },
   vial: { box: (p) => ({ x0: -50, y0: -138, x1: 50, y1: p.label !== undefined ? 170 : 116 }), s: (p) => num(p.s, 1), y: 500 },
   horseshoe: { box: (p) => ({ x0: -156, y0: -118, x1: p.blood === true ? 240 : 156, y1: 206 }), s: (p) => num(p.s, 1), y: 700 },
@@ -105,6 +115,9 @@ export const KEY_TYPES = Object.keys(GEO);
 /** Key objects that are characters (must stay inside the safe zone, like Bix). */
 export const CHARACTER_TYPES = ['pal', 'penguin', 'dolphin', 'octopus'];
 
+/** Key objects the camera frames at time t: visible now, or popping in within the next BLEND seconds. */
+const framed = (p: Spec, t: number) =>
+  (p.at === undefined || t >= num(p.at, 0) - BLEND - 1e-6) && (p.until === undefined || t <= num(p.until, 1e9));
 const active = (p: Spec, t: number) =>
   (p.at === undefined || t >= num(p.at, 0) - 1e-6) && (p.until === undefined || t <= num(p.until, 1e9));
 
@@ -114,17 +127,19 @@ export const propBox = (p: Spec, t: number): Box | null => {
   if (!g) return null;
   let x = num(p.x, 960);
   let y = num(p.y, g.y ?? 400);
-  if (g.move && p.to) {
-    const [x1, y1] = vec(p.from, [x, y]);
-    const [x2, y2] = vec(p.to, [x, y]);
-    const raw = (t - num(p.moveAt, num(p.at, 0))) / num(p.dur, g.move === 'ease' ? 3 : 1);
+  let dir = 1;
+  if (g.move && (p.to || g.to)) {
+    const [x1, y1] = vec(p.from, g.from ?? [x, y]);
+    const [x2, y2] = vec(p.to, g.to ?? [x, y]);
+    dir = x2 >= x1 ? 1 : -1;
+    const raw = (t - num(p.moveAt, num(p.at, 0))) / num(p.dur, g.dur ?? (g.move === 'ease' ? 3 : 1));
     const k = g.move === 'ease' ? ease(raw) : clamp(raw);
     x = lerp(x1, x2, k);
     y = lerp(y1, y2, k);
   }
   const s = g.s ? g.s(p) : 1;
   const b = g.box(p);
-  const flip = g.flip && num(p.facing, 1) < 0;
+  const flip = (g.flip && num(p.facing, 1) < 0) || (g.flipDir && dir < 0);
   const lx0 = flip ? -b.x1 : b.x0;
   const lx1 = flip ? -b.x0 : b.x1;
   const bob = g.bob ?? 0;
@@ -167,14 +182,15 @@ export const shortMode = (scene: Scene): ShortMode => {
 };
 
 /** Presenter Bix: position, scale and box in frame space. */
-export const presenter = () => {
-  const scale = PRESENTER.height / BIX_H;
+export const presenter = (profile: Profile = CLASSIC) => {
+  const P = profile.presenter;
+  const scale = P.height / BIX_H;
   const w = BIX_HALF_W * scale;
   return {
-    x: PRESENTER.x,
-    y: PRESENTER.y,
+    x: P.x,
+    y: P.y,
     scale,
-    box: { x0: PRESENTER.x - w, x1: PRESENTER.x + w, y0: PRESENTER.y - PRESENTER.height - BIX_TOP_EXTRA * scale, y1: PRESENTER.y + 8 * scale } as Box,
+    box: { x0: P.x - w, x1: P.x + w, y0: P.y - P.height - BIX_TOP_EXTRA * scale, y1: P.y + 8 * scale } as Box,
   };
 };
 
@@ -206,21 +222,23 @@ const eventTimes = (scene: Scene) => {
   const ts = new Set<number>();
   for (const p of scene.props) {
     if (!GEO[String(p.type)]) continue;
-    for (const k of ['at', 'until']) if (typeof p[k] === 'number' && (p[k] as number) > scene.start) ts.add(p[k] as number);
+    // appearances are anticipated (the camera makes room before the object pops in); exits blend after
+    if (typeof p.at === 'number' && p.at - BLEND > scene.start) ts.add(p.at - BLEND);
+    if (typeof p.until === 'number' && p.until > scene.start) ts.add(p.until);
   }
   return [...ts].sort((a, b) => a - b);
 };
 
 /** Raw framing: the key-object set chosen at `setT`, positions at `t`. */
-const rawFraming = (scene: Scene, t: number, index: number, setT: number): Framing => {
+const rawFraming = (scene: Scene, t: number, index: number, setT: number, zone: Box): Framing => {
   const o = scene.shortLayout?.subject;
-  if (Array.isArray(o) && o.length === 4) return fitBox({ x0: o[0], y0: o[1], x1: o[2], y1: o[3] });
+  if (Array.isArray(o) && o.length === 4) return fitBox({ x0: o[0], y0: o[1], x1: o[2], y1: o[3] }, zone);
   if (shortMode(scene) === 'presenter') {
-    const ids = scene.props.filter((p) => GEO[String(p.type)] && active(p, setT));
+    const ids = scene.props.filter((p) => GEO[String(p.type)] && framed(p, setT));
     const set = ids.length ? ids : scene.props.filter((p) => GEO[String(p.type)]);
     const tt = ids.length ? t : Math.max(t, Math.min(...set.map((p) => num(p.at, scene.start))));
     const b = union(set.map((p) => camBox(scene, tt, propBox(p, tt) as Box)));
-    if (b) return fitBox(b);
+    if (b) return fitBox(b, zone);
   }
   // follow Bix: union of his box over ±0.5 s so a walk or jump never leaves the frame
   const boxes: Box[] = [];
@@ -229,15 +247,15 @@ const rawFraming = (scene: Scene, t: number, index: number, setT: number): Frami
     if (b) boxes.push(b);
   }
   const b = union(boxes);
-  return b ? fitBox(b) : fitBox({ x0: 660, y0: 240, x1: 1260, y1: 840 });
+  return b ? fitBox(b, zone) : fitBox({ x0: 660, y0: 240, x1: 1260, y1: 840 }, zone);
 };
 
 /** Framing of one scene at time t, blending smoothly when key objects appear or leave. */
-export const sceneFraming = (scene: Scene, t: number, index: number): Framing => {
-  const cur = rawFraming(scene, t, index, t);
+export const sceneFraming = (scene: Scene, t: number, index: number, profile: Profile = CLASSIC): Framing => {
+  const cur = rawFraming(scene, t, index, t, profile.zone);
   const e = eventTimes(scene).filter((x) => x <= t).pop();
   if (e === undefined || t - e >= BLEND) return cur;
-  const before = rawFraming(scene, t, index, e - 1e-3);
+  const before = rawFraming(scene, t, index, e - 1e-3, profile.zone);
   const k = ease((t - e) / BLEND);
   return { s: lerp(before.s, cur.s, k), tx: lerp(before.tx, cur.tx, k), ty: lerp(before.ty, cur.ty, k) };
 };
@@ -251,18 +269,44 @@ export const activeIndex = (scenes: Scene[], t: number) => {
 };
 
 /** Framing of a Short at time t, blended across scene changes. */
-export const shortFramingAt = (scenes: Scene[], t: number, timeOffset = 0): Framing => {
+/** TikTok pacing options: snap zooms on `beats`, hard cuts between scenes, zoom back to 1 at `end` (loop). */
+export type Pacing = { beats?: number[]; end?: number; hardCuts?: boolean; profile?: Profile };
+/** Zoom factor of a snap ("punch") zoom: each beat toggles between 1 and PUNCH in 0.12 s. */
+export const PUNCH = 1.1;
+export const punchZoom = (t: number, p: Pacing = {}) => {
+  const beats = p.beats ?? [];
+  let i = -1;
+  for (let k = 0; k < beats.length; k++) if (beats[k] <= t) i = k;
+  let z = 1;
+  if (i >= 0) {
+    const from = i % 2 === 0 ? 1 : PUNCH;
+    const to = i % 2 === 0 ? PUNCH : 1;
+    z = lerp(from, to, ease((t - beats[i]) / 0.12));
+  }
+  // loop: the last frame matches the first one (zoom 1)
+  if (p.end !== undefined && t > p.end - 0.45) z = lerp(z, 1, ease((t - (p.end - 0.45)) / 0.3));
+  return z;
+};
+/** Zoom a framing about the centre of the subject zone. */
+export const zoomFraming = (f: Framing, z: number, zone: Box = SUBJECT_ZONE): Framing => {
+  const cx = (zone.x0 + zone.x1) / 2;
+  const cy = (zone.y0 + zone.y1) / 2;
+  return { s: f.s * z, tx: cx - (cx - f.tx) * z, ty: cy - (cy - f.ty) * z };
+};
+
+export const shortFramingAt = (scenes: Scene[], t: number, timeOffset = 0, pacing?: Pacing): Framing => {
   const i = activeIndex(scenes, t);
   const s = scenes[i];
-  const f = sceneFraming(s, t, i);
+  const profile = pacing?.profile ?? CLASSIC;
+  let f = sceneFraming(s, t, i, profile);
   const prev = scenes[i - 1];
   const k = clamp((t - s.start) / 0.5);
-  if (prev && !prev.kind && k < 1 && timeOffset < s.start) {
-    const p = sceneFraming(prev, Math.min(t, prev.end), i - 1);
+  if (prev && !prev.kind && k < 1 && timeOffset < s.start && !pacing?.hardCuts) {
+    const p = sceneFraming(prev, Math.min(t, prev.end), i - 1, profile);
     const e = ease(k);
-    return { s: lerp(p.s, f.s, e), tx: lerp(p.tx, f.tx, e), ty: lerp(p.ty, f.ty, e) };
+    f = { s: lerp(p.s, f.s, e), tx: lerp(p.tx, f.tx, e), ty: lerp(p.ty, f.ty, e) };
   }
-  return f;
+  return pacing?.beats ? zoomFraming(f, punchZoom(t, pacing), profile.zone) : f;
 };
 
 export type FramingIssue = { t: number; scene: string; what: string; box: Box; zone: 'safe' | 'frame' };
@@ -271,7 +315,7 @@ export type FramingIssue = { t: number; scene: string; what: string; box: Box; z
  * Check the first seconds of a Short: Bix (and character props) must be whole and inside
  * the safe zone, and every key object must be whole inside the frame (not cut by an edge).
  */
-export const checkShortFraming = (scenes: Scene[], opts: { from?: number; seconds?: number; step?: number } = {}): FramingIssue[] => {
+export const checkShortFraming = (scenes: Scene[], opts: { from?: number; seconds?: number; step?: number; pacing?: Pacing } = {}): FramingIssue[] => {
   const issues: FramingIssue[] = [];
   const from = opts.from ?? 0;
   const until = from + (opts.seconds ?? 3);
@@ -280,10 +324,10 @@ export const checkShortFraming = (scenes: Scene[], opts: { from?: number; second
     const i = activeIndex(scenes, t);
     const scene = scenes[i];
     if (scene.kind) continue;
-    const f = shortFramingAt(scenes, t);
+    const f = shortFramingAt(scenes, t, 0, opts.pacing);
     const st = bixState(scene, t, i);
     if (st && !st.hidden) {
-      const box = shortMode(scene) === 'presenter' ? presenter().box : mapBox(bixBox(scene, t, i) as Box, f);
+      const box = shortMode(scene) === 'presenter' ? presenter(opts.pacing?.profile).box : mapBox(bixBox(scene, t, i) as Box, f);
       if (!inside(box, SAFE_BOX)) issues.push({ t, scene: scene.id, what: 'Bix', box, zone: 'safe' });
     }
     for (const k of keyObjects(scene, t)) {

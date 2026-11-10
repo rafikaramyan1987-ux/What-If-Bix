@@ -1,0 +1,133 @@
+# TikTok-optimised Shorts for episode 2. Every number comes from the episode's verified script.
+episode: ep02-you-could-fly
+shorts:
+  - n: 1
+    slug: plane-height
+    hook: "30–60 seconds at plane height"
+    question: "How high would YOU fly? 👇"
+    tiktokCaption: "If you could fly to plane height, you'd have roughly 30–60 seconds of useful consciousness ✈️ #science #whatif #flying #aviation"
+    youtubeTitle: "Fly to plane height? You'd have 30–60 seconds"
+    scenes:
+      - like: plane-height
+        narration: "Fly up to plane height, and you'd have roughly 30 to 60 seconds of useful consciousness."
+        props:
+          - { type: frost, at: 0, x: 760, y: 450, r: 240 }
+          - { type: clock, at: 0, x: 1100, y: 560, r: 150, time: "12:00", speed: 0.6 }
+        bix:
+          - { at: 0, action: scared }
+          - { at: "@seconds", action: shock }
+        texts:
+          - { at: "@30", text: "30–60 SECONDS", style: shout, rotate: -4 }
+      - like: plane-height
+        narration: "That's how long people who lose cabin pressure up there can still think clearly enough to act."
+        props:
+          - { type: vehicle, kind: plane, at: 0, from: [2100, 330], to: [-300, 300], dur: 4, s: 1.1, color: "#ff4d5e" }
+          - { type: clock, at: 0, x: 1100, y: 560, r: 150, time: "12:00", speed: 0.6 }
+        bix:
+          - { at: 0, action: think }
+          - { at: "@clearly", action: scared }
+        texts:
+          - { at: "@pressure", text: "useful consciousness", style: label, color: "#ff4d5e" }
+      - like: cold
+        narration: "Ten kilometers up, it's around minus fifty outside."
+        props:
+          - { type: frost, at: 0, x: 1000, y: 520, r: 260 }
+        bix:
+          - { at: 0, action: scared }
+          - { at: "@fifty", action: shock }
+        texts:
+          - { at: "@fifty", text: "≈ −50 °C", style: big }
+      - like: plane-height
+        narration: "Airliners keep their cabins at the pressure of about {2,400 meters|two thousand four hundred meters}. You don't have a cabin. So before you try it:"
+        props:
+          - { type: frost, at: 0, x: 760, y: 450, r: 240 }
+          - { type: clock, at: 0, x: 1100, y: 560, r: 150, time: "12:00", speed: 0.6 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@cabin", action: facepalm }
+        texts:
+          - { at: "@2,400 meters", text: "cabin ≈ 2,400 m", style: label, color: "#22d3c5" }
+
+  - n: 2
+    slug: one-sharp-turn
+    hook: "One turn could knock you out"
+    question: "Would you risk the turn? 👇"
+    tiktokCaption: "Flying sounds fun until a tight turn hits you with about 7 g. Most people black out at 4–6 g 😵 #science #physics #whatif #superpowers"
+    youtubeTitle: "If you could fly, one sharp turn could knock you out"
+    scenes:
+      - like: turning
+        narration: "If you could fly, one sharp turn could knock you out."
+        props:
+          - { type: gauge, at: 0, x: 1150, y: 500, r: 190, from: 1, to: 7, max: 8, dur: 1.4, label: "g" }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@knock", action: scared }
+        texts:
+          - { at: "@turn", text: "7 g", style: shout, rotate: -5 }
+      - like: speed
+        narration: "Take a tight turn at {300 km/h|three hundred kilometers per hour}, on a curve a hundred meters across."
+        props:
+          - { type: orbit, x: 1150, y: 520, rx: 420, ry: 200, body: dot, r: 18, period: 2, at: 0 }
+          - { type: gauge, at: 0, x: 1150, y: 500, r: 120, from: 1, to: 3, max: 8, dur: 1.4, label: "g" }
+        bix:
+          - { at: 0, action: fly, params: { panic: 0.2 } }
+          - { at: "@curve", action: point }
+        texts:
+          - { at: "@300 km/h", text: "300 km/h", style: label, color: "#ff7a1a" }
+      - like: turning
+        narration: "That squeezes you with around *seven* g, seven times your body weight. Without training or a g-suit, many people black out somewhere between four and six g."
+        props:
+          - { type: gauge, at: 0, x: 1150, y: 500, r: 190, from: 3, to: 7, max: 8, dur: 1.2, label: "g" }
+        bix:
+          - { at: 0, action: scared }
+          - { at: "@black", action: sleepy }
+        texts:
+          - { at: "@four", text: "BLACKOUT: 4–6 g", style: label, color: "#ff4d5e" }
+      - like: turning
+        narration: "First your vision goes gray. Then black. So remember:"
+        props:
+          - { type: gauge, at: 0, x: 1150, y: 500, r: 190, from: 7, to: 7, max: 8, dur: 0.1, label: "g" }
+        bix:
+          - { at: 0, action: sleepy }
+          - { at: "@remember", action: shock }
+        texts:
+          - { at: "@gray", until: "@black", text: "GRAY…", style: shout, color: "#8b93ad" }
+          - { at: "@black", until: "@remember", text: "BLACK.", style: shout, color: "#1b1e33" }
+
+  - n: 3
+    slug: highest-vulture
+    hook: "A vulture flew 11 km up"
+    question: "Would you fly that high? 👇"
+    tiktokCaption: "In 1973 a Rüppell's vulture hit an airliner at about 11,300 m: the highest-flying bird ever recorded 🦅 #birds #science #animals #aviation"
+    youtubeTitle: "This vulture hit a plane 11 km up"
+    scenes:
+      - like: vulture
+        narration: "A vulture once flew more than eleven kilometers up."
+        props:
+          - { type: bird, kind: vulture, at: 0, from: [1300, 400], to: [1100, 420], dur: 6, s: 1.8 }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@eleven", action: point }
+        texts:
+          - { at: "@eleven", text: "11,300 m", style: shout, rotate: -5 }
+      - like: vulture
+        narration: "In 1973, a Rüppell's vulture hit an airliner at about {11,300 meters|eleven thousand three hundred meters}, over West Africa."
+        props:
+          - { type: bird, kind: vulture, at: 0, from: [1300, 400], to: [1150, 400], dur: 3, s: 1.5 }
+          - { type: vehicle, kind: plane, at: "@hit", from: [2100, 380], to: [-500, 420], dur: 2.2, s: 1.0, color: "#22d3c5" }
+          - { type: burst, at: "@hit+0.8", until: "@hit+2.0", x: 1150, y: 300, text: "BONK", r: 120 }
+        bix:
+          - { at: 0, action: float }
+          - { at: "@hit", action: shock }
+        texts:
+          - { at: "@1973", text: "1973", style: label, color: "#6b4a2b" }
+      - like: vulture
+        narration: "Yes, eleven kilometers. It's the highest-flying bird ever recorded. It did not end well for the vulture. But the record stands:"
+        props:
+          - { type: bird, kind: vulture, at: 0, from: [1300, 400], to: [1100, 420], dur: 6, s: 1.8 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@end", action: facepalm }
+          - { at: "@record", action: point }
+        texts:
+          - { at: "@highest-flying", text: "HIGHEST BIRD EVER RECORDED", style: label, color: "#6b4a2b" }

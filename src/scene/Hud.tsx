@@ -13,8 +13,8 @@ const STYLE: Record<NonNullable<TextSpec['style']>, { size: number; font: string
   shout: { size: 130, font: TITLE_FONT, fill: C.red, stroke: 16, y: 260 },
 };
 
-/** fit (Shorts): shrink to `width` px and centre the text vertically on `cy`. */
-export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number; fit?: { width: number; cy: number } }> = ({ spec, t, stageW = 1920, fit }) => {
+/** fit (Shorts): shrink to `width` px (and to `maxSize` px font) and centre the text vertically on `cy`. */
+export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number; fit?: { width: number; cy: number; maxSize?: number } }> = ({ spec, t, stageW = 1920, fit }) => {
   const st = STYLE[spec.style ?? 'label'];
   const lt = t - spec.at;
   const until = spec.until ?? 1e9;
@@ -31,7 +31,7 @@ export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number
   const longest = Math.max(...lines.map((l) => l.length));
   const estW = longest * st.size * (spec.style === 'label' ? 0.56 : 0.62) + (spec.style === 'label' ? 70 : 0);
   // never wider than the stage (or the Shorts text band), and never past its edges
-  const f = Math.min(1, (fit ? fit.width : stageW - 120) / estW);
+  const f = Math.min(1, (fit ? fit.width : stageW - 120) / estW, fit?.maxSize ? fit.maxSize / st.size : 1);
   const half = (estW * f) / 2;
   const x = clamp(spec.x ?? stageW / 2, Math.min(stageW / 2, half + 60), Math.max(stageW / 2, stageW - half - 60));
   const y = fit ? (spec.style === 'label' ? fit.cy : fit.cy + 0.36 * st.size * f) : spec.y ?? st.y;
@@ -113,12 +113,18 @@ export const Chip: React.FC<{ spec: ChipSpec; t: number; x?: number; y?: number;
 // ---------------------------------------------------------------- captions
 
 /** y: baseline of the last line (or of the first line when top = true); maxLines: shrink the text to fit. */
-export type CaptionLayout = { y: number; size: number; maxWidth: number; centerX: number; maxLines?: number; top?: boolean };
+/** fadeIn: false shows each caption page at full opacity from its first frame; dim: opacity of words not yet spoken. */
+export type CaptionLayout = {
+  y: number; size: number; maxWidth: number; centerX: number; maxLines?: number; top?: boolean; pill?: boolean; dim?: number; fadeIn?: boolean;
+};
 
 export const LONG_CAPTIONS: CaptionLayout = { y: 985, size: 62, maxWidth: 1500, centerX: 960 };
 // Shorts: inside the safe zone (clear of the right-hand buttons and bottom UI of TikTok / Shorts)
 // and below the presenter spot (Bix's feet at y 1275): at most two lines, growing downward.
 export const SHORT_CAPTIONS: CaptionLayout = { y: 1345, size: 76, maxWidth: 800, centerX: 480, maxLines: 2, top: true };
+// TikTok-optimised Shorts: bigger captions, same safe position.
+// TikTok Shorts: fully visible from frame 0 (no fade-in, no dimmed words); the spoken word still turns yellow.
+export const TIKTOK_CAPTIONS: CaptionLayout = { y: 1325, size: 84, maxWidth: 800, centerX: 480, maxLines: 2, top: true, pill: true, dim: 1, fadeIn: false };
 
 /** Word-by-word captions: the current page is shown, the spoken word pops in yellow. */
 export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: CaptionLayout }> = ({ pages, t, layout }) => {
@@ -146,9 +152,15 @@ export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: Capti
   const { size, space, widths, lines } = fit;
   const lineH = size * 1.2;
   const y0 = layout.top ? layout.y : layout.y - (lines.length - 1) * lineH;
-  const pageIn = easeOut((t - page.start + 0.05) / 0.12);
+  const pageIn = layout.fadeIn === false ? 1 : easeOut((t - page.start + 0.05) / 0.12);
+  const lineW = lines.map((ln) => ln.reduce((sum, i) => sum + widths[i], 0) + space * (ln.length - 1));
+  const pillW = Math.max(...lineW) + size * 0.9;
   return (
     <g opacity={pageIn}>
+      {layout.pill && (
+        <rect x={centerX - pillW / 2} y={y0 - size * 0.95} width={pillW} height={lines.length * lineH + size * 0.22} rx={size * 0.4}
+          fill={C.ink} opacity={0.62} />
+      )}
       {lines.map((ln, li) => {
         const total = ln.reduce((s, i) => s + widths[i], 0) + space * (ln.length - 1);
         let x = centerX - total / 2;
@@ -163,7 +175,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: Capti
           return (
             <text key={i} x={cx} y={y0 + li * lineH} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={size}
               fill={fill} stroke={C.ink} strokeWidth={size * 0.2} paintOrder="stroke" strokeLinejoin="round"
-              opacity={spoken ? 1 : 0.55} transform={`translate(${cx} ${y0 + li * lineH}) scale(${active ? 1 + 0.12 * pop : 1}) translate(${-cx} ${-(y0 + li * lineH)})`}>
+              opacity={spoken ? 1 : layout.dim ?? 0.55} transform={`translate(${cx} ${y0 + li * lineH}) scale(${active ? 1 + 0.12 * pop : 1}) translate(${-cx} ${-(y0 + li * lineH)})`}>
               {w.text}
             </text>
           );

@@ -1,0 +1,51 @@
+1
+00:00:00,020 --> 00:00:01,770
+When an octopus swims,
+
+2
+00:00:01,790 --> 00:00:03,413
+its main heart can pause.
+
+3
+00:00:03,433 --> 00:00:04,615
+When it swims by jet
+
+4
+00:00:04,615 --> 00:00:06,321
+propulsion, blood flow from
+
+5
+00:00:06,321 --> 00:00:07,566
+its main heart drops.
+
+6
+00:00:07,586 --> 00:00:08,516
+In experiments,
+
+7
+00:00:08,536 --> 00:00:09,519
+the heartbeat could pause
+
+8
+00:00:09,519 --> 00:00:10,425
+during the jets.
+
+9
+00:00:10,445 --> 00:00:11,832
+Scientists think that may be
+
+10
+00:00:11,832 --> 00:00:13,839
+one reason octopuses prefer crawling.
+
+11
+00:00:13,859 --> 00:00:15,316
+Swimming is exhausting.
+
+12
+00:00:15,336 --> 00:00:16,529
+So every time it jets
+
+13
+00:00:16,529 --> 00:00:17,547
+away, remember:

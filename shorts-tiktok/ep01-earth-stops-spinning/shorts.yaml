@@ -1,0 +1,138 @@
+# TikTok-optimised Shorts for episode 1. Every number comes from the episode's verified script.
+# Each Short: hook claim in the first second, one idea, 15–25 s, last line runs back into the first.
+episode: ep01-earth-stops-spinning
+shorts:
+  - n: 1
+    slug: sound-barrier
+    hook: "You'd break the sound barrier"
+    question: "Would you survive the landing? 👇"
+    tiktokCaption: "If Earth stopped spinning for one second, you'd keep flying east at about Mach 1.4 😳 #science #physics #whatif #earth"
+    youtubeTitle: "If Earth stopped for 1 second, you'd go supersonic"
+    scenes:
+      - like: one-second-later
+        narration: "If Earth stopped spinning for one second, you'd break the sound barrier."
+        props:
+          - { type: speedlines, count: 20, y: 540, spread: 900 }
+          - { type: boom, at: "@sound", x: 860, y: 520 }
+        bix:
+          - { at: 0, action: fly, params: { panic: 0.8 } }
+        chips: []
+        texts:
+          - { at: "@sound", text: "MACH 1.4", style: shout, rotate: -5 }
+        camera: { shake: ["@sound"], shakeAmp: 14 }
+      - like: brakes
+        narration: "The planet stops. You don't. You keep flying east, at about {Mach 1.4|Mach one point four}."
+        props:
+          - { type: house, x: 1260, y: 800, s: 0.95, roofAt: "@don't+0.25" }
+          - { type: tree, x: 1640, y: 800, s: 1.0, windAt: "@don't" }
+          - { type: wind, at: "@don't", count: 14, band: 650 }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@don't", action: scared }
+          - { at: "@east", action: shock }
+        texts:
+          - { at: "@stops", until: "@stops+1.0", text: "SCREEECH!", style: shout, rotate: -6 }
+          - { at: "@east", text: "≈ 465 m/s", style: label, color: "#ff4d5e" }
+        camera: { shake: ["@stops", "@don't"], shakeAmp: 20 }
+      - like: one-second-later
+        narration: "In that one second, you'd cover {465 meters|four hundred sixty-five meters}. Four and a half football pitches. And it all starts with one tiny glitch:"
+        props:
+          - { type: speedlines, count: 20, y: 540, spread: 900 }
+        bix:
+          - { at: 0, action: fly, params: { panic: 0.8 } }
+        chips: []
+        texts:
+          - { at: "@465 meters", text: "465 METERS", style: shout, rotate: -5 }
+          - { at: "@Four", text: "4.5 football pitches", style: label, color: "#3fcf6e" }
+        camera: {}
+
+  - n: 2
+    slug: moving-right-now
+    hook: "You're moving 1,670 km/h"
+    question: "How fast is YOUR city? 👇"
+    tiktokCaption: "Right now you're spinning with Earth at up to 1,670 km/h. So why don't you feel it? 🌍 #science #earth #space #physics"
+    youtubeTitle: "You're moving 1,670 km/h right now (and can't feel it)"
+    scenes:
+      - like: how-fast
+        narration: "Right now, you're moving at up to {1,670|sixteen hundred and seventy} kilometers per hour."
+        props:
+          - { type: earth, x: 1200, y: 610, r: 330, spin: 0.12, tilt: 0, equator: true }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@kilometers", action: point }
+        texts:
+          - { at: "@1,670", text: "1,670 km/h", style: big, count: { from: 0, to: 1670, dur: 1.0, suffix: " km/h" } }
+        camera: { zoom: [1.0, 1.04] }
+      - like: your-city
+        narration: "Earth spins once a day. At the equator, that's about {1,670|sixteen hundred and seventy}. New York cruises at about {1,270|twelve hundred and seventy}. London, about {1,040|one thousand and forty}."
+        props:
+          - { type: board, x: 960, y: 335, w: 780, h: 400, title: "Your speed right now", size: 46, step: 0.9, at: 0,
+              lines: ["Equator ............ 1,670 km/h", "New York .......... 1,270 km/h", "London .............. 1,040 km/h"] }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@York", action: point }
+          - { at: "@London", action: shock }
+        texts: []
+      - like: why-dont-feel
+        narration: "You don't feel it, because everything moves with you: the ground, the air, the oceans."
+        props:
+          - { type: vehicle, kind: plane, from: [2300, 330], to: [-400, 300], at: 0, dur: 4, s: 1.1, color: "#8a5cff" }
+        bix:
+          - { at: 0, action: float, hold: mug }
+          - { at: "@everything", action: present, hold: mug }
+        texts:
+          - { at: "@everything", text: "Everything moves together", style: label, color: "#22d3c5" }
+      - like: how-fast
+        narration: "So sitting still or not:"
+        props:
+          - { type: earth, x: 1200, y: 610, r: 330, spin: 0.12, tilt: 0, equator: true }
+        bix:
+          - { at: 0, action: shrug }
+        texts: []
+        camera: { zoom: [1.0, 1.0] }
+
+  - n: 3
+    slug: planet-tornado
+    hook: "Winds 3x faster than any tornado"
+    question: "Where would you hide? 👇"
+    tiktokCaption: "If Earth stopped spinning, the air wouldn't: winds of up to 1,670 km/h 🌪️ #science #weather #whatif #earth"
+    youtubeTitle: "If Earth stopped, the wind would beat every tornado"
+    scenes:
+      - like: wind
+        narration: "If Earth stopped spinning, the wind would be more than three times faster than the strongest tornado ever measured."
+        props:
+          - { type: wind, at: 0, count: 18, band: 900, speed: 3200 }
+          - { type: hurricane, at: 0, x: 1150, y: 520, r: 220, speed: 260 }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@tornado", action: scared }
+        texts:
+          - { at: "@three", text: "3X", style: shout, rotate: -5 }
+      - like: wind
+        narration: "The whole atmosphere keeps rushing east, at up to {1,670|sixteen hundred and seventy} kilometers per hour."
+        props:
+          - { type: wind, at: 0, count: 18, band: 900, speed: 3200 }
+          - { type: bars, at: 0, x: 1050, y: 820, w: 900, h: 420, values: [480, 1670], labels: ["Tornado", "Earth stops"], colors: ["#ffd447", "#ff4d5e"] }
+        bix:
+          - { at: 0, action: scared }
+          - { at: "@east", action: shock }
+        texts:
+          - { at: 0.2, text: "wind speed, km/h", style: label, color: "#ff4d5e" }
+      - like: oceans
+        narration: "And the oceans slosh east too, piling up in walls of tsunami-sized waves."
+        props:
+          - { type: wave, at: "@slosh", h: 420, dur: 2.6, y: 900 }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@waves", action: scared }
+        texts:
+          - { at: "@waves", text: "TSUNAMI-SIZED", style: shout, rotate: -5 }
+        camera: { shake: ["@waves"], shakeAmp: 12 }
+      - like: wind
+        narration: "All because, for one second,"
+        props:
+          - { type: wind, at: 0, count: 18, band: 900, speed: 3200 }
+          - { type: hurricane, at: 0, x: 1150, y: 520, r: 220, speed: 260 }
+        bix:
+          - { at: 0, action: shock }
+        texts: []

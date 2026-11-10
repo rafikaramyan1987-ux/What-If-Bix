@@ -23,7 +23,8 @@ const fmt = (b) => `[${Math.round(b.x0)}, ${Math.round(b.y0)}, ${Math.round(b.x1
  * Bix and character props must be whole inside the safe zone, other key objects whole inside the frame.
  */
 export const checkShort = (layout, manifest, seconds = 3) => {
-  const issues = layout.checkShortFraming(manifest.scenes, { from: manifest.timeOffset ?? 0, seconds });
+  const pacing = manifest.tiktok ? { beats: manifest.tiktok.beats, end: manifest.duration, hardCuts: true, profile: layout.TIKTOK } : undefined;
+  const issues = layout.checkShortFraming(manifest.scenes, { from: manifest.timeOffset ?? 0, seconds, pacing });
   const seen = new Set();
   const out = [];
   for (const i of issues) {

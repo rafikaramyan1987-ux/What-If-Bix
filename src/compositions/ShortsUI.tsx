@@ -25,19 +25,21 @@ const splitTwo = (text: string) => {
 };
 
 /** Big hook title: fully visible from frame 0 (no slide or fade), gentle pulse for motion. */
-export const HookBanner: React.FC<{ text: string; t: number }> = ({ text, t }) => {
+export const HookBanner: React.FC<{ text: string; t: number; maxSize?: number; fill?: string; color?: string; pop?: boolean }> = ({
+  text, t, maxSize = 100, fill = C.yellow, color = C.ink, pop = false,
+}) => {
   const lines = splitTwo(text);
   const longest = Math.max(...lines.map((l) => l.length));
-  const size = Math.min(100, 760 / (longest * 0.56));
+  const size = Math.min(maxSize, 760 / (longest * 0.56));
   const h = lines.length * size * 1.02 + 54;
   const w = SAFE.right - SAFE.left;
-  const pulse = 1 + 0.025 * Math.sin(t * 7) * Math.exp(-t * 0.6);
+  const pulse = (pop ? popIn(t / 0.25) : 1) * (1 + 0.025 * Math.sin(t * 7) * Math.exp(-t * 0.6));
   return (
     <g transform={`translate(${SAFE.centerX} ${SAFE.top + 20 + h / 2}) rotate(-2) scale(${pulse})`}>
       <rect x={-w / 2 + 8} y={-h / 2 + 12} width={w} height={h} rx={36} fill={C.ink} opacity={0.4} />
-      <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={36} fill={C.yellow} stroke={C.ink} strokeWidth={9} />
+      <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={36} fill={fill} stroke={C.ink} strokeWidth={9} />
       {lines.map((l, i) => (
-        <text key={i} y={-h / 2 + 27 + size * 0.86 + i * size * 1.02} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={size} fill={C.ink}>{l}</text>
+        <text key={i} y={-h / 2 + 27 + size * 0.86 + i * size * 1.02} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={size} fill={color}>{l}</text>
       ))}
     </g>
   );

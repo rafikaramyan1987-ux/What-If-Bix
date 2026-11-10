@@ -1,0 +1,59 @@
+1
+00:00:00,020 --> 00:00:01,642
+An octopus has three hearts.
+
+2
+00:00:01,662 --> 00:00:02,577
+Two of them sit next
+
+3
+00:00:02,577 --> 00:00:03,192
+to the gills,
+
+4
+00:00:03,212 --> 00:00:04,189
+and push blood through them
+
+5
+00:00:04,189 --> 00:00:05,226
+to pick up oxygen.
+
+6
+00:00:05,246 --> 00:00:06,788
+Like two booster pumps.
+
+7
+00:00:06,808 --> 00:00:08,098
+The third, the main heart,
+
+8
+00:00:08,118 --> 00:00:09,376
+pumps that fresh blood around
+
+9
+00:00:09,376 --> 00:00:10,465
+the rest of the body.
+
+10
+00:00:10,485 --> 00:00:11,214
+And the blood?
+
+11
+00:00:11,234 --> 00:00:11,784
+It's blue,
+
+12
+00:00:11,804 --> 00:00:13,254
+thanks to hemocyanin,
+
+13
+00:00:13,274 --> 00:00:14,838
+a protein built around copper.
+
+14
+00:00:14,858 --> 00:00:15,742
+Count them again:
+
+15
+00:00:15,762 --> 00:00:16,645
+one, two, three.
