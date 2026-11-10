@@ -74,17 +74,20 @@ const verify = (all) => {
     const v = probe.streams.find((x) => x.codec_type === 'video');
     const a = probe.streams.find((x) => x.codec_type === 'audio');
     const dur = Number(probe.format.duration);
-    const sd = spawnSync('ffmpeg', ['-v', 'info', '-i', f, '-af', 'silencedetect=noise=-35dB:d=0.05', '-f', 'null', '-'], { encoding: 'utf8' }).stderr;
-    const firstEnd = sd.match(/silence_start: (-?[\d.]+)[\s\S]*?silence_end: ([\d.]+)/);
-    const onset = firstEnd && Number(firstEnd[1]) <= 0.01 ? Number(firstEnd[2]) : 0;
+    // the music starts at frame 0, so measure the voice itself: where the first narration clip
+    // is placed plus the silence at the start of that clip
+    const first = s.audio.narration[0];
+    const sd = spawnSync('ffmpeg', ['-v', 'info', '-i', first.file, '-af', 'silencedetect=noise=-40dB:d=0.02', '-f', 'null', '-'], { encoding: 'utf8' }).stderr;
+    const lead = sd.match(/silence_start: (-?[\d.]+)[\s\S]*?silence_end: ([\d.]+)/);
+    const onset = first.at + (lead && Number(lead[1]) <= 0.01 ? Number(lead[2]) : 0);
     const issues = [];
     if (v.width !== 1080 || v.height !== 1920) issues.push(`${v.width}x${v.height}`);
     if (v.codec_name !== 'h264' || a?.codec_name !== 'aac') issues.push(`${v.codec_name}/${a?.codec_name}`);
     if (v.r_frame_rate !== '30/1') issues.push(`fps ${v.r_frame_rate}`);
     if (!(dur >= 15 && dur < 25)) issues.push(`length ${dur.toFixed(2)} s`);
-    if (onset > 0.3) issues.push(`sound starts at ${onset.toFixed(2)} s`);
+    if (onset > 0.3) issues.push(`voice starts at ${onset.toFixed(2)} s`);
     if (issues.length) bad++;
-    log(`verify ${path.relative(ROOT, f)}: ${dur.toFixed(2)} s, ${v.width}x${v.height} ${v.r_frame_rate} ${v.codec_name}+${a?.codec_name}, sound at ${onset.toFixed(2)} s`
+    log(`verify ${path.relative(ROOT, f)}: ${dur.toFixed(2)} s, ${v.width}x${v.height} ${v.r_frame_rate} ${v.codec_name}+${a?.codec_name}, voice at ${onset.toFixed(2)} s`
       + (issues.length ? ` — PROBLEM ${issues.join(', ')}` : ' — OK'));
   }
   if (bad) throw new Error(`${bad} file(s) failed verification`);
