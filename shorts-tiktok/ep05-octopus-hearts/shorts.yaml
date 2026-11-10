@@ -1,0 +1,139 @@
+# TikTok-optimised Shorts for episode 5. Claims come from docs/episode5/FACTS.md
+# (that fact list is still awaiting review: check it before publishing these Shorts).
+episode: ep05-octopus-hearts
+shorts:
+  - n: 1
+    slug: three-hearts
+    hook: "Octopuses have three hearts"
+    question: "What would YOU do with 3 hearts? 👇"
+    tiktokCaption: "Two hearts pump blood through the gills, one pumps it around the body, and the blood is blue 🐙 #octopus #animalfacts #ocean #science"
+    youtubeTitle: "Why an octopus has 3 hearts (and blue blood)"
+    scenes:
+      - like: meet-hearts
+        narration: "An octopus has three hearts."
+        props:
+          - { type: octopus, x: 1150, y: 520, s: 1.3, xray: true, highlight: main }
+        bix:
+          - { at: 0, action: shock }
+        texts: []
+      - like: meet-hearts
+        narration: "Two of them sit next to the gills, and push blood through them to pick up oxygen. Like two booster pumps."
+        props:
+          - { type: octopus, x: 1150, y: 520, s: 1.3, xray: true, highlight: gill }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@gills", action: point }
+        texts:
+          - { at: "@gills", text: "2 GILL HEARTS", style: label, color: "#22d3c5" }
+      - like: meet-hearts
+        narration: "The third, the main heart, pumps that fresh blood around the rest of the body."
+        props:
+          - { type: octopus, x: 1150, y: 520, s: 1.3, xray: true, highlight: main }
+        bix:
+          - { at: 0, action: point }
+          - { at: "@body", action: cheer }
+        texts:
+          - { at: "@main", text: "1 MAIN HEART", style: label, color: "#ff4d5e" }
+      - like: blue-blood
+        narration: "And the blood? It's blue, thanks to hemocyanin, a protein built around copper. Count them again:"
+        props:
+          - { type: vial, at: 0, x: 1150, y: 470, s: 1.5, color: blue, label: "copper" }
+        bix:
+          - { at: 0, action: think }
+          - { at: "@blue", action: shock }
+          - { at: "@Count", action: point }
+        texts:
+          - { at: "@blue", text: "BLUE BLOOD", style: shout, rotate: -5 }
+      - like: meet-hearts
+        narration: "one, two, three."
+        props:
+          - { type: octopus, x: 1150, y: 520, s: 1.3, xray: true, highlight: main }
+        bix:
+          - { at: 0, action: shock }
+        texts: []
+
+  - n: 2
+    slug: heart-pauses-swimming
+    hook: "Its heart can pause mid-swim"
+    question: "Crawl or swim: your pick? 👇"
+    tiktokCaption: "When an octopus jet-swims, blood flow from its main heart drops, and in experiments the beat could pause 🐙 #octopus #animalfacts #ocean #biology"
+    youtubeTitle: "An octopus heart can pause when it swims"
+    scenes:
+      - like: swim-stop
+        narration: "When an octopus swims, its main heart can pause."
+        props:
+          - { type: octopus, x: 1150, y: 520, s: 1.1, xray: true, swim: true, pauseAt: 0, pauseFor: 2.6 }
+        bix:
+          - { at: 0, action: shock }
+        texts: []
+      - like: swim-stop
+        narration: "When it swims by jet propulsion, blood flow from its main heart drops. In experiments, the heartbeat could pause during the jets."
+        props:
+          - { type: octopus, x: 1150, y: 560, s: 1.1, xray: true, swim: true, from: [1200, 680], to: [1100, 460], moveAt: "@jet", dur: 1.4, pauseAt: "@pause", pauseFor: 2 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@drops", action: scared }
+          - { at: "@pause", action: shock }
+        texts:
+          - { at: "@pause", text: "PAUSED", style: shout, rotate: -5 }
+      - like: swim-stop
+        narration: "Scientists think that may be one reason octopuses prefer crawling. Swimming is exhausting. So every time it jets away,"
+        props:
+          - { type: octopus, x: 1150, y: 560, s: 1.1, mood: happy }
+        bix:
+          - { at: 0, action: think }
+          - { at: "@crawling", action: laugh }
+          - { at: "@jets", action: point }
+        texts:
+          - { at: "@crawling", text: "CRAWL > SWIM", style: label, color: "#ff7a1a" }
+      - like: swim-stop
+        narration: "remember:"
+        props:
+          - { type: octopus, x: 1150, y: 520, s: 1.1, xray: true, swim: true, pauseAt: 0, pauseFor: 2.6 }
+        bix:
+          - { at: 0, action: shock }
+        texts: []
+
+  - n: 3
+    slug: blood-never-blue
+    hook: "Your blood is never blue"
+    question: "Did you believe the myth? 👇"
+    tiktokCaption: "Your veins look bluish, but your blood is red every time. It's all about how light travels through skin 🩸 #science #biology #mythbusting #body"
+    youtubeTitle: "Your blood is never blue (not even in veins)"
+    scenes:
+      - like: vein-myth
+        narration: "Your blood is never blue. Not even in your veins."
+        props:
+          - { type: vial, x: 1150, y: 470, s: 1.5, color: red, fill: 0.85, label: "always red" }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@veins", action: point }
+        texts:
+          - { at: "@veins", text: "MYTH!", style: shout, rotate: -5 }
+      - like: vein-myth
+        narration: "Veins only look bluish because of the way light travels through your skin. How blue they look depends on how deep and how wide the vein is."
+        props:
+          - { type: vial, x: 1150, y: 470, s: 1.5, color: red, fill: 0.85, label: "always red" }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@light", action: think }
+          - { at: "@deep", action: point }
+        texts:
+          - { at: "@light", text: "IT'S THE LIGHT", style: label, color: "#2f6dff" }
+      - like: you-blue-blood
+        narration: "Octopuses really do have blue blood, built around copper. But you? Yours is red every time. So no matter what you heard,"
+        props:
+          - { type: vial, x: 1000, y: 470, s: 1.2, color: red, fill: 0.85, label: "you" }
+          - { type: vial, x: 1400, y: 470, s: 1.2, color: blue, fill: 0.5, label: "octopus" }
+        bix:
+          - { at: 0, action: think }
+          - { at: "@you", action: point }
+          - { at: "@heard", action: shrug }
+        texts: []
+      - like: vein-myth
+        narration: "really:"
+        props:
+          - { type: vial, x: 1150, y: 470, s: 1.5, color: red, fill: 0.85, label: "always red" }
+        bix:
+          - { at: 0, action: shock }
+        texts: []

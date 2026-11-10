@@ -1,10 +1,10 @@
 import React from 'react';
 import { AbsoluteFill, CalculateMetadataFunction, useCurrentFrame, useVideoConfig } from 'remotion';
-import { Captions, Chip, LONG_CAPTIONS, OnScreenText, SHORT_CAPTIONS } from '../scene/Hud';
+import { Captions, Chip, LONG_CAPTIONS, OnScreenText, SHORT_CAPTIONS, TIKTOK_CAPTIONS } from '../scene/Hud';
 import { SceneView } from '../scene/SceneView';
 import { CtaArt, HookBanner, SAFE } from './ShortsUI';
 import { Character, CharacterContext } from '../bix/Character';
-import { bixState, keyObjects, mapBox, presenter, SAFE_BOX, shortFramingAt, shortMode } from '../scene/shortLayout';
+import { bixState, keyObjects, mapBox, Pacing, presenter, SAFE_BOX, shortFramingAt, shortMode, TIKTOK } from '../scene/shortLayout';
 import { C, FONT, TITLE_FONT } from '../theme';
 import { Manifest, Scene } from '../types';
 import { clamp, easeInOut } from '../util';
@@ -12,6 +12,8 @@ import { clamp, easeInOut } from '../util';
 const TRANSITION = 0.4;
 /** Shorts: on-screen texts sit in one band between the hook banner and the subject zone. */
 const TEXT_FIT = { width: 800, cy: 478 };
+/** TikTok Shorts: the hook is taller, so texts sit a little lower and never get huge. */
+const TIKTOK_TEXT_FIT = { width: 760, cy: 488, maxSize: 112 };
 
 export const activeSceneIndex = (scenes: Scene[], t: number) => {
   let idx = 0;
@@ -75,15 +77,20 @@ const Hud: React.FC<{ m: Manifest; t: number; vertical: boolean }> = ({ m, t, ve
   <g>
     {m.scenes.flatMap((s, si) =>
       s.texts
-        .filter((tx) => t >= tx.at - 0.01 && t <= (tx.until ?? s.end) + 0.3)
+        // TikTok: the end question owns the top of the frame for the last 2 s
+        .filter((tx) => t >= tx.at - 0.01 && t <= (tx.until ?? s.end) + 0.3 && !(m.tiktok && t >= m.tiktok.questionAt))
         .map((tx, j) => (
           <OnScreenText key={`${si}-${j}`} spec={{ ...tx, until: tx.until ?? s.end, ...(vertical ? { x: SAFE.centerX } : {}) }} t={t}
-            stageW={vertical ? 1080 : 1920} fit={vertical ? TEXT_FIT : undefined} />
+            stageW={vertical ? 1080 : 1920} fit={vertical ? (m.tiktok ? TIKTOK_TEXT_FIT : TEXT_FIT) : undefined} />
         )),
     )}
     {m.scenes.flatMap((s, si) => s.chips.map((c, j) => <Chip key={`${si}-${j}`} spec={c} t={t} x={vertical ? SAFE.left : 70} y={vertical ? 430 : 70} scale={vertical ? 1.1 : 1} />))}
   </g>
 );
+
+/** TikTok pacing (snap zooms, hard cuts, loop) for a manifest, if any. */
+export const pacingOf = (m: Manifest): Pacing | undefined =>
+  m.tiktok ? { beats: m.tiktok.beats, end: m.duration + (m.timeOffset ?? 0), hardCuts: true, profile: TIKTOK } : undefined;
 
 /** Bix at the presenter spot of a vertical Short (always whole, inside the safe zone). */
 const PresenterBix: React.FC<{ m: Manifest; t: number }> = ({ m, t }) => {
@@ -92,7 +99,7 @@ const PresenterBix: React.FC<{ m: Manifest; t: number }> = ({ m, t }) => {
   if (scene.kind || shortMode(scene) !== 'presenter') return null;
   const st = bixState(scene, t, i);
   if (!st || st.hidden) return null;
-  const p = presenter();
+  const p = presenter(pacingOf(m)?.profile);
   return (
     <Character x={p.x} y={p.y} scale={p.scale} facing={1} pose={st.pose} face={st.face} emote={st.emote} t={t} hold={st.hold}
       airborne={st.airborne} shadow={st.action !== 'fly' && st.action !== 'float' && st.action !== 'tumble'} seed={i} />
@@ -104,14 +111,14 @@ const DebugBoxes: React.FC<{ m: Manifest; t: number }> = ({ m, t }) => {
   const i = activeSceneIndex(m.scenes, t);
   const scene = m.scenes[i];
   if (scene.kind) return null;
-  const f = shortFramingAt(m.scenes, t, m.timeOffset ?? 0);
+  const f = shortFramingAt(m.scenes, t, m.timeOffset ?? 0, pacingOf(m));
   const r = (b: { x0: number; y0: number; x1: number; y1: number }, c: string, k: number) => (
     <rect key={k} x={b.x0} y={b.y0} width={b.x1 - b.x0} height={b.y1 - b.y0} fill="none" stroke={c} strokeWidth={4} strokeDasharray="14 8" />
   );
   return (
     <g>
       {r(SAFE_BOX, '#00ff88', -1)}
-      {shortMode(scene) === 'presenter' && r(presenter().box, '#ff00ff', -2)}
+      {shortMode(scene) === 'presenter' && r(presenter(pacingOf(m)?.profile).box, '#ff00ff', -2)}
       {keyObjects(scene, t).map((o, j) => r(mapBox(o.box, f), '#ff3030', j))}
     </g>
   );
@@ -150,7 +157,7 @@ const EpisodeInner: React.FC<Manifest> = (m) => {
       </AbsoluteFill>
     );
   }
-  const f = shortFramingAt(m.scenes, t, m.timeOffset ?? 0);
+  const f = shortFramingAt(m.scenes, t, m.timeOffset ?? 0, pacingOf(m));
   const active = m.scenes[activeSceneIndex(m.scenes, t)];
   if (active.kind === 'cta') {
     return (
@@ -174,8 +181,16 @@ const EpisodeInner: React.FC<Manifest> = (m) => {
         </g>
         <PresenterBix m={m} t={t} />
         <Hud m={m} t={t} vertical />
-        <Captions pages={m.captions} t={t} layout={SHORT_CAPTIONS} />
-        {m.hook && <HookBanner text={m.hook} t={t - (m.timeOffset ?? 0)} />}
+        <Captions pages={m.captions} t={t} layout={m.tiktok ? TIKTOK_CAPTIONS : SHORT_CAPTIONS} />
+        {m.tiktok ? (
+          t < m.tiktok.questionAt ? (
+            m.hook && <HookBanner text={m.hook} t={t - (m.timeOffset ?? 0)} maxSize={120} />
+          ) : (
+            <HookBanner text={m.tiktok.question} t={t - m.tiktok.questionAt} maxSize={110} fill={C.pink} color="#ffffff" pop />
+          )
+        ) : (
+          m.hook && <HookBanner text={m.hook} t={t - (m.timeOffset ?? 0)} />
+        )}
         {m.debugBoxes && <DebugBoxes m={m} t={t} />}
       </svg>
     </AbsoluteFill>

@@ -62,6 +62,8 @@ export type Manifest = {
   format: 'long' | 'short';
   /** Shorts: draw framing debug boxes (key objects, presenter spot, safe zone). */
   debugBoxes?: boolean;
+  /** TikTok-optimised Short: snap zooms on `beats`, hard cuts, end question shown from `questionAt`. */
+  tiktok?: { beats: number[]; question: string; questionAt: number };
   scenes: Scene[];
   captions: CaptionPage[];
   /** Shorts: horizontal crop window center over the 1920-wide stage, per scene. */

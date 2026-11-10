@@ -1,0 +1,131 @@
+# TikTok-optimised Shorts for episode 3. Every claim comes from the episode's approved fact list.
+episode: ep03-sleep-like-a-dolphin
+shorts:
+  - n: 1
+    slug: one-eye-open
+    hook: "Dolphins sleep with one eye open"
+    question: "Could YOU sleep like this? 👇"
+    tiktokCaption: "Dolphins rest one half of the brain at a time, often with one eye open 🐬 #dolphins #animalfacts #sleep #science"
+    youtubeTitle: "Dolphins sleep with one eye open (literally)"
+    scenes:
+      - like: one-eye
+        narration: "Dolphins sleep with one eye open."
+        props:
+          - { type: dolphin, x: 1000, y: 600, s: 1.6, facing: -1, eye: open, label: "left eye open" }
+        bix:
+          - { at: 0, action: shock }
+        texts: []
+      - like: two-halves
+        narration: "One half of the brain drops into deep sleep, while the other half stays awake. Later, they swap. Scientists call it unihemispheric sleep."
+        props:
+          - { type: halfbrain, at: 0, x: 1150, y: 420, s: 1.0, asleep: left, swapAt: "@swap" }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@awake", action: point }
+          - { at: "@swap", action: shock }
+        texts:
+          - { at: "@swap", text: "SWAP!", style: shout, rotate: -5 }
+      - like: why-breathe
+        narration: "The leading idea is breathing. Dolphins are voluntary breathers, so half the brain stays awake to keep coming up for air."
+        props:
+          - { type: dolphin, x: 1100, y: 640, s: 1.4, eye: open, from: [1100, 760], to: [1100, 440], moveAt: "@air", dur: 1.2, blowAt: "@air+0.8" }
+        bix:
+          - { at: 0, action: think }
+          - { at: "@voluntary", action: point }
+          - { at: "@air", action: cheer }
+        texts:
+          - { at: "@breathing", text: "BREATHING", style: shout, rotate: -5 }
+      - like: one-eye
+        narration: "That's why, every single night,"
+        props:
+          - { type: dolphin, x: 1000, y: 600, s: 1.6, facing: -1, eye: open, label: "left eye open" }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 2
+    slug: fifteen-days-alert
+    hook: "This dolphin stayed alert 15 days"
+    question: "How long could YOU last? 👇"
+    tiktokCaption: "A Navy dolphin kept finding targets with its sonar for 15 days straight, without slipping 🐬 #dolphins #animalfacts #science #brain"
+    youtubeTitle: "This dolphin stayed alert for 15 days straight"
+    scenes:
+      - like: vigilance
+        narration: "This dolphin stayed alert for {15 days|fifteen days} straight."
+        props:
+          - { type: calendar, at: 0, x: 1150, y: 330, from: 1, to: 15, dur: 1.6, label: "DAY", s: 0.9 }
+          - { type: dolphin, x: 1150, y: 690, s: 1.3, eye: open, at: 0 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@straight", text: "NO BREAK", style: shout, rotate: -5 }
+      - like: vigilance
+        narration: "In one study, two Navy dolphins were trained to keep finding targets with echolocation, their natural sonar."
+        props:
+          - { type: dolphin, x: 1150, y: 600, s: 1.5, eye: open, at: 0 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@echolocation", action: point }
+        texts:
+          - { at: "@sonar", text: "natural sonar", style: label, color: "#22d3c5" }
+      - like: vigilance
+        narration: "One of them kept it up for over two weeks, and its accuracy didn't drop. Bix lasts about fifteen minutes in a meeting. Meanwhile,"
+        props:
+          - { type: calendar, at: 0, x: 1000, y: 400, from: 15, to: 15, dur: 0.1, label: "DAY", s: 0.9 }
+          - { type: cactus, x: 1260, y: 760, s: 1.1, mood: shock, at: "@meeting" }
+        bix:
+          - { at: 0, action: cheer }
+          - { at: "@meeting", action: sleepy }
+        texts:
+          - { at: "@meeting", text: "BIX: 15 MINUTES", style: shout, rotate: -5 }
+      - like: vigilance
+        narration: "this one?"
+        props:
+          - { type: calendar, at: 0, x: 1150, y: 330, from: 15, to: 15, dur: 0.1, label: "DAY", s: 0.9 }
+          - { type: dolphin, x: 1150, y: 690, s: 1.3, eye: open, at: 0 }
+        bix:
+          - { at: 0, action: point }
+        texts: []
+
+  - n: 3
+    slug: sleep-while-flying
+    hook: "These birds sleep while flying"
+    question: "Could you live on 40 minutes? 👇"
+    tiktokCaption: "Great frigatebirds can sleep in flight on ocean trips of up to 10 days, about 40 min a day in the air 🐦 #birds #animalfacts #sleep #science"
+    youtubeTitle: "These birds sleep while flying over the ocean"
+    scenes:
+      - like: birds-too
+        narration: "These birds sleep while they fly."
+        props:
+          - { type: bird, kind: frigate, at: 0, from: [1050, 420], to: [1250, 400], dur: 8, s: 2.2, sleepy: true }
+        bix:
+          - { at: 0, action: shock }
+        texts: []
+      - like: birds-too
+        narration: "Great frigatebirds can sleep while flying over the ocean, on trips lasting up to ten days. Bix can't even nap on a bus."
+        props:
+          - { type: bird, kind: frigate, at: 0, from: [800, 420], to: [1500, 380], dur: 6, s: 1.6 }
+        bix:
+          - { at: 0, action: point }
+          - { at: "@ten", action: shock }
+          - { at: "@nap", action: facepalm }
+        texts:
+          - { at: "@ten", until: "@nap", text: "UP TO 10 DAYS", style: shout, rotate: -5 }
+      - like: birds-too
+        narration: "In one study, they slept only about {40|forty} minutes a day in the air, compared with over {12|twelve} hours a day on land. So, up there, over the ocean,"
+        props:
+          - { type: bars, at: 0, x: 1150, y: 760, w: 520, h: 300, values: [0.7, 12], labels: ["in flight", "on land"], unit: " h", decimals: 1,
+              colors: ["#22d3c5", "#ffd447"] }
+        bix:
+          - { at: 0, action: think }
+          - { at: "@40", action: shock }
+          - { at: "@12", action: sleepy }
+        texts:
+          - { at: "@40", text: "≈ 40 MIN A DAY", style: shout, rotate: -5 }
+      - like: birds-too
+        narration: "these birds"
+        props:
+          - { type: bird, kind: frigate, at: 0, from: [1050, 420], to: [1250, 400], dur: 8, s: 2.2, sleepy: true }
+        bix:
+          - { at: 0, action: present }
+        texts: []

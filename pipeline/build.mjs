@@ -10,16 +10,11 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
 import { loadEpisode } from './lib/script.mjs';
-import { buildTimeline, planNarration } from './lib/timeline.mjs';
+import { channelVoice, findBrowser, log, mixAudio as mixWith, narrateAndTime as narrateWith, PY, ROOT, run } from './lib/produce.mjs';
 import { buildMetadata, buildSrt, metadataMarkdown } from './lib/metadata.mjs';
 import { shortEpisode, SHORT_MAX, SHORT_MIN, toShortManifest } from './lib/shorts.mjs';
 import { checkShort, loadShortLayout } from './lib/framing.mjs';
-
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const PY = process.env.PYTHON ?? 'python3';
 
 const args = process.argv.slice(2);
 const flag = (name, def) => {
@@ -34,27 +29,6 @@ if (!file) {
 const only = new Set((flag('only', 'long,shorts,thumb,meta')).split(','));
 const outRoot = path.resolve(flag('out', path.join(ROOT, 'out')));
 
-const log = (...m) => console.log('[bix]', ...m);
-const run = (cmd, argv, opts = {}) => {
-  const r = spawnSync(cmd, argv, { stdio: opts.capture ? ['inherit', 'pipe', 'inherit'] : 'inherit', encoding: 'utf8', maxBuffer: 1 << 28, ...opts });
-  if (r.status !== 0) throw new Error(`${cmd} ${argv.slice(0, 3).join(' ')}… failed (${r.status})`);
-  return r.stdout;
-};
-
-export const resolveVoiceModel = (voice) => {
-  const name = voice.model ?? 'en-us-libritts-high';
-  if (name.endsWith('.onnx') && fs.existsSync(name)) return name;
-  const p = path.join(ROOT, 'models', 'piper', `${name}.onnx`);
-  if (!fs.existsSync(p)) throw new Error(`voice model ${p} not found — run: bash pipeline/fetch_voice.sh ${name}`);
-  return p;
-};
-
-const findBrowser = () => {
-  if (process.env.REMOTION_BROWSER) return process.env.REMOTION_BROWSER;
-  for (const p of ['/opt/pw-browsers/chromium']) if (fs.existsSync(p)) return p;
-  return undefined; // Remotion downloads its own headless shell
-};
-
 const main = async () => {
   const ep = loadEpisode(file);
   const build = path.join(ROOT, 'build', ep.id);
@@ -63,49 +37,10 @@ const main = async () => {
   fs.mkdirSync(out, { recursive: true });
   log(`episode ${ep.id}: ${ep.title}`);
 
-  // Defaults: Piper LibriTTS speaker 92 at lengthScale 1.05 (approved channel voice and pace).
-  const voice = { provider: 'piper', model: 'en-us-libritts-high', speaker: 92, lengthScale: 1.05, ...(ep.voice ?? {}) };
-  // BIX_TTS_PROVIDER=elevenlabs|openai switches to a paid voice (API key from the environment).
-  if (process.env.BIX_TTS_PROVIDER) voice.provider = process.env.BIX_TTS_PROVIDER;
-  if (voice.provider === 'piper') voice.model = resolveVoiceModel(voice);
-  if (process.env.BIX_VOICE_ID) voice.voiceId = process.env.BIX_VOICE_ID;
-  const sfxDir = path.join(ROOT, 'build', '_sfx');
-  if (!fs.existsSync(path.join(sfxDir, 'sting.wav'))) run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'sfx', sfxDir]);
-
-  /** TTS for every sentence (cached by content in build/<id>/tts) + timeline. */
-  const narrateAndTime = (epLike, name) => {
-    const plan = planNarration(epLike);
-    const job = {
-      voice,
-      outDir: path.join(build, 'tts'),
-      segments: plan.flatMap((p) => p.segments.map((s) => ({ id: s.id, units: s.units }))),
-    };
-    const jobFile = path.join(build, `tts-job-${name}.json`);
-    fs.writeFileSync(jobFile, JSON.stringify(job, null, 1));
-    const ttsOut = JSON.parse(run(PY, [path.join(ROOT, 'pipeline', 'tts.py'), jobFile], { capture: true }));
-    const tts = Object.fromEntries(ttsOut.segments.map((s) => [s.id, s]));
-    return buildTimeline(epLike, plan, tts);
-  };
-
-  /** Music (synthesized, deterministic) + narration + SFX -> loudness-normalised mix. */
-  const mixAudio = (manifestX, audioX, musicCfg, name) => {
-    const offset = musicCfg.offset ?? 0;
-    const musicFile = path.join(build, `music-${musicCfg.style}-${name}.wav`);
-    run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'music', musicCfg.style, String(manifestX.duration + offset + 1), musicFile,
-      '--seed', String(musicCfg.seed ?? 7)]);
-    const mixFile = path.join(build, `mix-${name}.wav`);
-    const mixJob = {
-      duration: manifestX.duration,
-      out: mixFile,
-      workDir: path.join(build, `mix-${name}`),
-      narration: audioX.narration,
-      sfx: audioX.sfx.map((f) => ({ ...f, file: path.join(sfxDir, `${f.name}.wav`) })),
-      music: { file: musicFile, gain: musicCfg.gain ?? 0.22, duck: musicCfg.duck ?? 0.55, offset, fadeOut: musicCfg.fadeOut ?? 1.5 },
-    };
-    fs.writeFileSync(path.join(build, `mix-job-${name}.json`), JSON.stringify(mixJob, null, 1));
-    run(PY, [path.join(ROOT, 'pipeline', 'mix.py'), path.join(build, `mix-job-${name}.json`)], { capture: true });
-    return mixFile;
-  };
+  // Piper LibriTTS speaker 92 at lengthScale 1.05 (approved channel voice and pace).
+  const voice = channelVoice(ep);
+  const narrateAndTime = (epLike, name) => narrateWith(epLike, name, { build, voice });
+  const mixAudio = (manifestX, audioX, musicCfg, name) => mixWith(manifestX, audioX, musicCfg, name, { build });
 
   // 1-2. narration + timeline (long episode)
   const { manifest, audio } = narrateAndTime(ep, 'long');
