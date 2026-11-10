@@ -113,14 +113,18 @@ export const Chip: React.FC<{ spec: ChipSpec; t: number; x?: number; y?: number;
 // ---------------------------------------------------------------- captions
 
 /** y: baseline of the last line (or of the first line when top = true); maxLines: shrink the text to fit. */
-export type CaptionLayout = { y: number; size: number; maxWidth: number; centerX: number; maxLines?: number; top?: boolean; pill?: boolean; dim?: number };
+/** fadeIn: false shows each caption page at full opacity from its first frame; dim: opacity of words not yet spoken. */
+export type CaptionLayout = {
+  y: number; size: number; maxWidth: number; centerX: number; maxLines?: number; top?: boolean; pill?: boolean; dim?: number; fadeIn?: boolean;
+};
 
 export const LONG_CAPTIONS: CaptionLayout = { y: 985, size: 62, maxWidth: 1500, centerX: 960 };
 // Shorts: inside the safe zone (clear of the right-hand buttons and bottom UI of TikTok / Shorts)
 // and below the presenter spot (Bix's feet at y 1275): at most two lines, growing downward.
 export const SHORT_CAPTIONS: CaptionLayout = { y: 1345, size: 76, maxWidth: 800, centerX: 480, maxLines: 2, top: true };
 // TikTok-optimised Shorts: bigger captions, same safe position.
-export const TIKTOK_CAPTIONS: CaptionLayout = { y: 1325, size: 84, maxWidth: 800, centerX: 480, maxLines: 2, top: true, pill: true, dim: 0.8 };
+// TikTok Shorts: fully visible from frame 0 (no fade-in, no dimmed words); the spoken word still turns yellow.
+export const TIKTOK_CAPTIONS: CaptionLayout = { y: 1325, size: 84, maxWidth: 800, centerX: 480, maxLines: 2, top: true, pill: true, dim: 1, fadeIn: false };
 
 /** Word-by-word captions: the current page is shown, the spoken word pops in yellow. */
 export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: CaptionLayout }> = ({ pages, t, layout }) => {
@@ -148,7 +152,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: Capti
   const { size, space, widths, lines } = fit;
   const lineH = size * 1.2;
   const y0 = layout.top ? layout.y : layout.y - (lines.length - 1) * lineH;
-  const pageIn = easeOut((t - page.start + 0.05) / 0.12);
+  const pageIn = layout.fadeIn === false ? 1 : easeOut((t - page.start + 0.05) / 0.12);
   const lineW = lines.map((ln) => ln.reduce((sum, i) => sum + widths[i], 0) + space * (ln.length - 1));
   const pillW = Math.max(...lineW) + size * 0.9;
   return (

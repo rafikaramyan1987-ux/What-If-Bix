@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import fs from 'node:fs';
 import path from 'node:path';
 import { checkShortFraming, punchZoom, TIKTOK } from '../src/scene/shortLayout';
+import { TIKTOK_CAPTIONS } from '../src/scene/Hud';
 // @ts-expect-error plain ES module
 import { loadEpisode } from '../pipeline/lib/script.mjs';
 // @ts-expect-error plain ES module
@@ -43,6 +44,11 @@ describe('TikTok-optimised Shorts', () => {
     expect(bad).toMatch(/must reuse the first scene/);
   });
 
+  it('burns captions in at full opacity from frame 0 (no fade-in, no dimmed words)', () => {
+    expect(TIKTOK_CAPTIONS.fadeIn).toBe(false);
+    expect(TIKTOK_CAPTIONS.dim).toBe(1);
+  });
+
   it('snap zooms toggle on beats and return to 1 at the end (seamless loop)', () => {
     const p = { beats: [1, 2], end: 5 };
     expect(punchZoom(0.5, p)).toBe(1);
@@ -72,6 +78,8 @@ describe('TikTok-optimised Shorts', () => {
         expect(manifest.scenes.some((s: { kind?: string }) => s.kind === 'cta')).toBe(false);
         expect(longestGap(events, manifest.duration)).toBeLessThanOrEqual(MAX_GAP);
         expect(manifest.captions[0].words[0].start).toBeLessThanOrEqual(0.3);
+        // the first caption page is already on screen at frame 0 (Captions shows a page from start - 0.05 s)
+        expect(manifest.captions[0].start).toBeLessThanOrEqual(0.05);
         const pacing = { beats: manifest.tiktok.beats, end: manifest.duration, hardCuts: true, profile: TIKTOK };
         expect(checkShortFraming(manifest.scenes, { seconds: manifest.duration, pacing }), `${id} #${sh.n}`).toEqual([]);
         expect(sidecarText(sh, manifest.duration)).toMatch(/On-screen hook: .*\nTikTok caption: .*\nYouTube Shorts title: .*\nEnd question: /);
