@@ -41,7 +41,7 @@ scenes:
     background: { type: land, mood: day }
     bixStart: [420, 820]
     props:
-      - { type: badge, at: "@quintillion", x: 1250, y: 420, r: 150, text: "10¹⁹", color: "#ffd447" }
+      - { type: badge, at: "@quintillion", x: 1250, y: 420, r: 150, text: "10", sub: "quintillion", color: "#ffd447" }
     bix:
       - { at: 0, action: think }
       - { at: "@quintillion", action: shock }
@@ -325,12 +325,12 @@ tiktokShorts:
     scenes:
       - like: how-many
         narration: "Right now, as you watch this, about ten *quintillion* insects are alive on Earth."
-        props: [{ type: badge, x: 1250, y: 420, r: 150, text: "10¹⁹", color: "#ffd447" }]
+        props: [{ type: badge, x: 1250, y: 420, r: 150, text: "10", sub: "quintillion", color: "#ffd447" }]
         bix: [{ at: 0, action: shock }]
         texts: [{ at: "@quintillion", text: "10 QUINTILLION", style: big }]
       - like: how-many
         narration: "That's a one followed by nineteen zeros. It's a rough estimate from the Smithsonian, and it's mind-blowing."
-        props: [{ type: badge, x: 1250, y: 420, r: 150, text: "10¹⁹", color: "#ffd447" }]
+        props: [{ type: badge, x: 1250, y: 420, r: 150, text: "10", sub: "quintillion", color: "#ffd447" }]
         bix: [{ at: 0, action: point }]
         texts: [{ at: "@zeros", text: "1 + 19 ZEROS", style: label, color: "#8a5cff" }]
       - like: species
@@ -340,7 +340,7 @@ tiktokShorts:
         texts: []
       - like: how-many
         narration: "So, at this very moment,"
-        props: [{ type: badge, x: 1250, y: 420, r: 150, text: "10¹⁹", color: "#ffd447" }]
+        props: [{ type: badge, x: 1250, y: 420, r: 150, text: "10", sub: "quintillion", color: "#ffd447" }]
         bix: [{ at: 0, action: present }]
         texts: []
 
@@ -383,7 +383,7 @@ tiktokShorts:
     scenes:
       - like: birds
         narration: "Every year, the world's birds eat about 400 to 500 *million* tonnes of insects. That's a scientific estimate."
-        props: [{ type: bird, kind: pigeon, from: [-200, 330], to: [2200, 360], at: 0, dur: 5, s: 1.0 }]
+        props: &perch [{ type: bird, kind: pigeon, from: [1150, 360], to: [1180, 360], at: 0, dur: 40, s: 1.2 }]
         bix: [{ at: 0, action: shock }]
         texts: [{ at: "@million", text: "400–500 MILLION TONNES", style: label, color: "#ff7a1a" }]
       - like: birds
@@ -398,7 +398,7 @@ tiktokShorts:
         texts: []
       - like: birds
         narration: "Which is why, every single year,"
-        props: [{ type: bird, kind: pigeon, from: [-200, 330], to: [2200, 360], at: 0, dur: 5, s: 1.0 }]
+        props: *perch
         bix: [{ at: 0, action: present }]
         texts: []
 

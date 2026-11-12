@@ -276,7 +276,7 @@ tiktokShorts:
     scenes:
       - like: pressure
         narration: "At the bottom of the Mariana Trench, about eight *tons* of water press on every single square inch."
-        props: [{ type: gauge, x: 1250, y: 480, r: 180, from: 0, to: 98, max: 100, at: 0.2, dur: 2.0, label: "pressure" }]
+        props: [{ type: gauge, x: 1250, y: 480, r: 180, from: 98, to: 98, max: 100, label: "pressure" }]
         bix: [{ at: 0, action: shock }]
         texts: [{ at: "@tons", text: "8 TONS!", style: shout, rotate: -5 }]
       - like: pressure
