@@ -1,0 +1,59 @@
+1
+00:00:00,000 --> 00:00:01,317
+Six heures du matin.
+
+2
+00:00:01,337 --> 00:00:02,585
+La cellule du génie le
+
+3
+00:00:02,585 --> 00:00:04,226
+plus dangereux du monde est vide.
+
+4
+00:00:04,246 --> 00:00:05,519
+Le comptage du matin ne
+
+5
+00:00:05,519 --> 00:00:06,404
+tombe pas juste.
+
+6
+00:00:06,424 --> 00:00:07,531
+Il en manque un.
+
+7
+00:00:07,551 --> 00:00:08,959
+Toute la prison se fige.
+
+8
+00:00:08,979 --> 00:00:10,259
+En quelques minutes :
+
+9
+00:00:10,279 --> 00:00:11,169
+la police,
+
+10
+00:00:11,189 --> 00:00:11,949
+les gares,
+
+11
+00:00:11,969 --> 00:00:12,862
+les frontières.
+
+12
+00:00:12,882 --> 00:00:14,182
+Un cercle se forme autour
+
+13
+00:00:14,182 --> 00:00:15,232
+de la prison,
+
+14
+00:00:15,252 --> 00:00:16,330
+et il se resserre.
+
+15
+00:00:16,350 --> 00:00:17,582
+Tout ça parce qu’à six heures,

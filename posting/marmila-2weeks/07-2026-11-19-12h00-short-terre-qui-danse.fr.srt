@@ -1,0 +1,55 @@
+1
+00:00:00,000 --> 00:00:00,850
+Chaque mois,
+
+2
+00:00:00,870 --> 00:00:02,625
+la Terre fait une petite valse.
+
+3
+00:00:02,645 --> 00:00:03,720
+La Lune ne tourne pas
+
+4
+00:00:03,720 --> 00:00:05,251
+autour du centre de la Terre.
+
+5
+00:00:05,271 --> 00:00:06,422
+Les deux tournent autour d’un
+
+6
+00:00:06,422 --> 00:00:07,187
+point commun.
+
+7
+00:00:07,207 --> 00:00:08,109
+Il est à environ
+
+8
+00:00:08,109 --> 00:00:10,428
+4 670 kilomètres du centre de
+
+9
+00:00:10,428 --> 00:00:11,248
+la Terre.
+
+10
+00:00:11,268 --> 00:00:12,794
+Donc encore à l'intérieur de
+
+11
+00:00:12,794 --> 00:00:13,648
+la planète,
+
+12
+00:00:13,668 --> 00:00:15,194
+à environ 1 700 kilomètres
+
+13
+00:00:15,194 --> 00:00:16,332
+sous la surface.
+
+14
+00:00:16,352 --> 00:00:17,335
+Et donc, en ce moment :

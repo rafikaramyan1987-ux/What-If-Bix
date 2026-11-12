@@ -1,0 +1,51 @@
+1
+00:00:00,000 --> 00:00:01,522
+Le Soleil est 400 fois
+
+2
+00:00:01,522 --> 00:00:03,139
+plus large que la Lune.
+
+3
+00:00:03,159 --> 00:00:04,315
+Mais il est aussi environ
+
+4
+00:00:04,315 --> 00:00:05,838
+400 fois plus loin.
+
+5
+00:00:05,858 --> 00:00:07,618
+Résultat : vus d’ici,
+
+6
+00:00:07,638 --> 00:00:08,946
+ils ont presque exactement la
+
+7
+00:00:08,946 --> 00:00:10,194
+même taille dans le ciel.
+
+8
+00:00:10,214 --> 00:00:11,083
+C’est pour ça que la
+
+9
+00:00:11,083 --> 00:00:12,284
+Lune peut le cacher pile,
+
+10
+00:00:12,304 --> 00:00:13,726
+pendant une éclipse totale.
+
+11
+00:00:13,746 --> 00:00:14,575
+Pur hasard ?
+
+12
+00:00:14,595 --> 00:00:15,263
+Oui.
+
+13
+00:00:15,283 --> 00:00:16,281
+Alors retiens ça :

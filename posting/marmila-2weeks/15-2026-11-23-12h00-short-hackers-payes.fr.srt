@@ -1,0 +1,59 @@
+1
+00:00:00,000 --> 00:00:01,493
+Il existe des pirates payés
+
+2
+00:00:01,493 --> 00:00:02,307
+pour pirater.
+
+3
+00:00:02,327 --> 00:00:03,286
+Légalement.
+
+4
+00:00:03,306 --> 00:00:04,269
+Des entreprises les
+
+5
+00:00:04,269 --> 00:00:05,232
+récompensent quand ils
+
+6
+00:00:05,232 --> 00:00:06,256
+trouvent une faille,
+
+7
+00:00:06,276 --> 00:00:07,164
+avant les méchants.
+
+8
+00:00:07,184 --> 00:00:08,804
+Rien que chez Google,
+
+9
+00:00:08,824 --> 00:00:09,797
+ça fait des millions de
+
+10
+00:00:09,797 --> 00:00:10,637
+dollars par an.
+
+11
+00:00:10,657 --> 00:00:11,882
+Chaque faille trouvée par un
+
+12
+00:00:11,882 --> 00:00:13,616
+gentil, c’est une porte fermée
+
+13
+00:00:13,616 --> 00:00:14,640
+au nez d’un méchant.
+
+14
+00:00:14,660 --> 00:00:16,222
+Et une récompense en plus.
+
+15
+00:00:16,242 --> 00:00:16,781
+Alors oui,

@@ -1,0 +1,51 @@
+1
+00:00:00,000 --> 00:00:01,210
+Pour aller sur la Lune,
+
+2
+00:00:01,230 --> 00:00:03,732
+il a fallu environ 400 000 personnes.
+
+3
+00:00:03,752 --> 00:00:05,081
+Ingénieurs, couturières pour
+
+4
+00:00:05,081 --> 00:00:05,952
+les combinaisons,
+
+5
+00:00:05,972 --> 00:00:07,611
+programmeuses, soudeurs.
+
+6
+00:00:07,631 --> 00:00:09,395
+Chacun avec sa petite pièce
+
+7
+00:00:09,395 --> 00:00:10,260
+du puzzle.
+
+8
+00:00:10,280 --> 00:00:11,320
+Aucun cerveau,
+
+9
+00:00:11,340 --> 00:00:12,400
+même génial,
+
+10
+00:00:12,420 --> 00:00:13,675
+n’aurait pu le faire seul.
+
+11
+00:00:13,695 --> 00:00:14,926
+Les grands exploits sont
+
+12
+00:00:14,926 --> 00:00:16,454
+toujours des exploits d'équipe.
+
+13
+00:00:16,474 --> 00:00:17,726
+Retiens bien ce chiffre :
