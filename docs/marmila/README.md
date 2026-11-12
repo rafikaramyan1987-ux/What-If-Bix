@@ -44,3 +44,14 @@ no video appears on two channels.
 | posting_pack / commit_pack | tick both to rebuild `posting/marmila-2weeks/` and commit it to the branch |
 
 Locally: `node pipeline/build.mjs episodes/fr01-lune-disparait.yaml` then `node pipeline/posting.mjs --renders out`.
+
+## Rendered pack
+
+`posting/marmila-2weeks/` was rendered by the Render episode workflow (run 43235331089): 4 long videos (4:07–4:16) and
+24 Shorts (16.1–19.9 s), loudness −14.4 to −13.4 LUFS. The first frame of every Short:
+
+![Shorts, first frames](shorts-first-frames.png)
+
+Thumbnails:
+
+![Thumbnails](thumbnails.png)
