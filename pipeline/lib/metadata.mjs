@@ -65,6 +65,7 @@ export const CREDIT_LINES = [
 
 export const buildMetadata = (ep, manifest, shorts = []) => {
   if (langOf(ep) === 'fr') return buildFrenchMetadata(ep, manifest, shorts);
+  if (ep.tiktokShorts) return buildPackMetadata(ep, manifest, shorts);
   const chapters = buildChapters(manifest);
   const sources = (ep.sources ?? []).map((s) => `• ${shortSource(s)}`);
   const tags = [...new Set([...(ep.tags ?? []), 'what if', 'what if bix', 'science', 'animation'])];
@@ -108,6 +109,73 @@ export const buildMetadata = (ep, manifest, shorts = []) => {
       description: `${s.short.description ?? ep.description?.split('\n')[0] ?? ''}\n\nFull episode: "${ep.title}" on the channel.\n\n${CREDIT_LINES.join('\n')}\n\n#Shorts #science #whatif`,
       duration: s.manifest.duration,
     })),
+  };
+};
+
+const hashtagsIn = (text) => String(text ?? '').match(/#[\p{L}\p{N}_]+/gu) ?? [];
+const withoutHashtags = (text) => String(text ?? '').replace(/#[\p{L}\p{N}_]+/gu, '').replace(/[ \t]+$/gm, '').trim();
+
+/**
+ * What If Bix pack metadata (episodes with inline `tiktokShorts:`, from episode 6): the long video gets a short
+ * description, the end question, chapters, sources, the standard credits block and 3–5 hashtags; every Short gets its
+ * own 2–3 line description, its end question, a "Full episode" line, the credits and 3–5 hashtags with #Shorts first.
+ */
+export const buildPackMetadata = (ep, manifest, shorts = []) => {
+  const chapters = buildChapters(manifest);
+  const tags = [...new Set([...(ep.tags ?? []), 'what if', 'what if bix', 'science', 'animation'])];
+  let tagChars = 0;
+  const tagsFit = tags.filter((t) => (tagChars += t.length + 1) <= 480);
+  const hashtags = ep.hashtags ?? ['#whatif', '#science', '#animation'];
+  const compose = (srcLines) => [
+    (ep.description ?? '').trim(),
+    '',
+    ep.pinnedQuestion ?? '',
+    '',
+    chapters.length ? 'Chapters:' : '',
+    ...chapters.map((c) => `${fmtTime(c.time)} ${c.title}`),
+    '',
+    'Sources:',
+    ...srcLines,
+    '',
+    ...CREDIT_LINES,
+    '',
+    hashtags.join(' '),
+  ].join('\n').replace(/\n{3,}/g, '\n\n');
+  let description = compose((ep.sources ?? []).map((x) => `• ${shortSource(x)}`));
+  if (description.length > 4900) description = compose((ep.sources ?? []).map((x) => `• ${String(x).match(/https?:\/\/\S+/)?.[0] ?? String(x).slice(0, 80)}`));
+  return {
+    id: ep.id,
+    channel: 'What If Bix',
+    title: ep.title,
+    description,
+    tags: tagsFit,
+    hashtags,
+    endQuestion: ep.pinnedQuestion ?? null,
+    pinnedComment: ep.pinnedQuestion ?? null,
+    chapters: chapters.map((c) => ({ time: fmtTime(c.time), seconds: Math.round(c.time), title: c.title })),
+    duration: manifest.duration,
+    categoryId: 27,
+    madeForKids: false,
+    defaultLanguage: 'en',
+    files: { video: `${ep.id}.mp4`, thumbnail: 'thumbnail.png', captions: `${ep.id}.en.srt` },
+    shorts: shorts.map((s) => {
+      const sh = s.short;
+      const shTags = [...new Set(['#Shorts', ...hashtagsIn(sh.tiktokCaption)])].slice(0, 5);
+      return {
+        id: `${sh.n}-${sh.slug}`,
+        n: sh.n,
+        kind: sh.kind ?? 'cut',
+        file: `shorts/${sh.n}-${sh.slug}.mp4`,
+        captions: `shorts/${sh.n}-${sh.slug}.en.srt`,
+        title: sh.youtubeTitle,
+        hook: sh.hook,
+        description: `${withoutHashtags(sh.tiktokCaption)}\n${sh.question}\n\nFull episode: "${ep.title}" on the channel.\n\n${CREDIT_LINES.join('\n')}\n\n${shTags.join(' ')}`,
+        hashtags: shTags,
+        endQuestion: sh.question,
+        pinnedComment: sh.question,
+        duration: s.manifest.duration,
+      };
+    }),
   };
 };
 
@@ -209,8 +277,8 @@ export const metadataMarkdown = (meta) => {
   ];
   for (const s of meta.shorts) {
     lines.push(`### ${s.file} (${s.duration.toFixed(1)} s)`, '', '```', s.title, '```', '', '```', s.description, '```', '');
-    if (s.pinnedComment) lines.push(`Commentaire épinglé : ${s.pinnedComment}`, '');
+    if (s.pinnedComment) lines.push(`${fr ? 'Commentaire épinglé :' : 'End question / pinned comment:'} ${s.pinnedComment}`, '');
   }
-  if (meta.pinnedComment) lines.push('## Commentaire épinglé', '', '```', meta.pinnedComment, '```', '');
+  if (meta.pinnedComment) lines.push(fr ? '## Commentaire épinglé' : '## End question / pinned comment', '', '```', meta.pinnedComment, '```', '');
   return lines.join('\n');
 };

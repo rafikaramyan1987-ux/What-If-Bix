@@ -172,6 +172,7 @@ YouTube demonetizes "mass-produced or repetitive" content. Every episode uses it
 | 1 | Earth stops spinning for 1 second (Bix 1) | cause-and-effect chain + "the restart is worse" twist |
 | 2 | What if you could fly? (Bix 2.0) | a climb: each stage is one complaint from your body |
 | 3+ | Animal-facts season: dolphin sleep, penguin dads, octopus hearts, giraffe sleep | fact + why → what if YOU → lab ending + teaser |
+| 6–9 | Space without a suit, black hole, Mariana Trench, insects vanish | hook in 5 s → chapters of real facts → lab ending + teaser; 6 TikTok-rule Shorts each, pack in `posting-pack/whatifbix-ep06-ep09/` |
 
 The full plan and backlog are in [docs/EPISODE_PLAN.md](docs/EPISODE_PLAN.md). Older scripts are kept in `episodes/archive/`.
 

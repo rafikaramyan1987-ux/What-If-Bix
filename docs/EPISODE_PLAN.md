@@ -25,10 +25,17 @@ The production rules are the same as episode 2:
 | 3 | What if you slept like a dolphin? (unihemispheric sleep, one eye open) | facts approved, rendered (PR #2); Shorts re-rendered with the vertical layout |
 | 4 | What if dads had to sit on the egg? (emperor penguin males incubate on their feet through the Antarctic winter while fasting) | facts approved, rendered (PR #2) |
 | 5 | What if you had 3 hearts and blue blood like an octopus? | **script written, awaiting fact review** (`docs/episode5/FACTS.md`) |
-| 6 | What if you slept only 30 minutes a day like a giraffe? | planned (check sources carefully: wild-giraffe sleep figures vary between studies) |
+| 6 | What if you were thrown into space without a spacesuit? | rendered, posting pack `posting-pack/whatifbix-ep06-ep09/` |
+| 7 | What if you fell into a black hole? | rendered, same pack |
+| 8 | What if you dove to the bottom of the Mariana Trench? | rendered, same pack |
+| 9 | What if all the insects disappeared? | rendered, same pack; teaser points to "See like a bee" |
+
+From episode 6 the long videos are 3:45–4:30 (`lengthRange: [225, 270]`) and each episode has 6 TikTok-rule Shorts
+inline (`tiktokShorts:`, 15–25 s, hook title on frame 0, loop, end question), like the MarMila channel.
 
 ## Backlog (scripts later)
 
+- What if you slept only 30 minutes a day like a giraffe? (check sources carefully: wild-giraffe sleep figures vary between studies)
 - See like a bee (UV vision)
 - Keep swimming to breathe, like some sharks (only some species are obligate ram ventilators; many sharks can pump water while resting)
 - Snail dormancy (check "sleeps 3 years" carefully: the sources describe **estivation/dormancy**, not sleep)
