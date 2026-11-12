@@ -1,0 +1,647 @@
+1
+00:00:00,450 --> 00:00:01,868
+You're in space.
+
+2
+00:00:01,888 --> 00:00:03,067
+No helmet.
+
+3
+00:00:03,087 --> 00:00:04,231
+No suit.
+
+4
+00:00:04,251 --> 00:00:05,997
+You have about fifteen seconds.
+
+5
+00:00:06,017 --> 00:00:06,671
+Let's count them.
+
+6
+00:00:08,021 --> 00:00:09,913
+First, forget the movies.
+
+7
+00:00:09,933 --> 00:00:10,892
+Exploding heads,
+
+8
+00:00:10,892 --> 00:00:12,553
+instant ice statues:
+
+9
+00:00:12,573 --> 00:00:13,520
+that's Hollywood.
+
+10
+00:00:13,540 --> 00:00:14,999
+You would not explode.
+
+11
+00:00:15,019 --> 00:00:16,032
+And you would not freeze
+
+12
+00:00:16,032 --> 00:00:17,011
+into an ice cube in
+
+13
+00:00:17,011 --> 00:00:18,107
+a second, either.
+
+14
+00:00:18,127 --> 00:00:19,479
+The real danger is quieter.
+
+15
+00:00:22,479 --> 00:00:23,807
+Here's why.
+
+16
+00:00:23,827 --> 00:00:24,657
+At the beach,
+
+17
+00:00:24,677 --> 00:00:25,869
+the air above you presses
+
+18
+00:00:25,869 --> 00:00:27,538
+on you with about 101
+
+19
+00:00:27,538 --> 00:00:29,256
+kilopascals of pressure.
+
+20
+00:00:29,276 --> 00:00:30,416
+You never notice it,
+
+21
+00:00:30,436 --> 00:00:31,616
+but your body is built
+
+22
+00:00:31,616 --> 00:00:32,265
+for it.
+
+23
+00:00:32,285 --> 00:00:32,555
+In space,
+
+24
+00:00:32,575 --> 00:00:35,515
+that number is practically zero.
+
+25
+00:00:35,535 --> 00:00:37,362
+The real enemy is oxygen.
+
+26
+00:00:37,382 --> 00:00:38,362
+Or rather,
+
+27
+00:00:38,382 --> 00:00:39,228
+the lack of it.
+
+28
+00:00:39,248 --> 00:00:40,368
+In a near vacuum,
+
+29
+00:00:40,388 --> 00:00:41,816
+there's no air pushing oxygen
+
+30
+00:00:41,816 --> 00:00:42,781
+into your blood.
+
+31
+00:00:42,801 --> 00:00:43,929
+You'd have about ten to
+
+32
+00:00:43,929 --> 00:00:45,949
+fifteen seconds of useful consciousness.
+
+33
+00:00:45,969 --> 00:00:46,912
+Then you'd pass out.
+
+34
+00:00:48,262 --> 00:00:49,612
+And one important rule:
+
+35
+00:00:49,632 --> 00:00:50,767
+don't hold your breath.
+
+36
+00:00:50,787 --> 00:00:51,701
+The air in your lungs
+
+37
+00:00:51,701 --> 00:00:53,476
+would expand and could damage them.
+
+38
+00:00:53,496 --> 00:00:54,698
+So you'd want to breathe out.
+
+39
+00:00:55,699 --> 00:00:57,606
+Next, something strange.
+
+40
+00:00:57,626 --> 00:00:58,976
+With almost no pressure,
+
+41
+00:00:58,976 --> 00:01:00,989
+water boils at body temperature.
+
+42
+00:01:01,009 --> 00:01:02,023
+So the moisture on your
+
+43
+00:01:02,023 --> 00:01:02,927
+tongue and in your eyes
+
+44
+00:01:02,927 --> 00:01:04,142
+would start to bubble.
+
+45
+00:01:04,162 --> 00:01:05,660
+Your blood is safe, though.
+
+46
+00:01:05,680 --> 00:01:07,009
+Your own blood pressure keeps
+
+47
+00:01:07,009 --> 00:01:07,790
+it from boiling.
+
+48
+00:01:08,790 --> 00:01:09,968
+This already happens high in
+
+49
+00:01:09,968 --> 00:01:10,619
+our own sky,
+
+50
+00:01:10,619 --> 00:01:12,263
+at about nineteen kilometres up.
+
+51
+00:01:12,283 --> 00:01:14,174
+Pilots call it the Armstrong limit.
+
+52
+00:01:14,194 --> 00:01:16,154
+Above it, without a pressure suit,
+
+53
+00:01:16,174 --> 00:01:18,466
+the same bubbling starts.
+
+54
+00:01:18,486 --> 00:01:19,635
+Those bubbles make your body
+
+55
+00:01:19,635 --> 00:01:20,256
+swell up,
+
+56
+00:01:20,276 --> 00:01:21,580
+maybe to about twice its
+
+57
+00:01:21,580 --> 00:01:22,483
+normal size.
+
+58
+00:01:22,503 --> 00:01:24,380
+Doctors call it ebullism.
+
+59
+00:01:24,400 --> 00:01:25,753
+But your skin is strong.
+
+60
+00:01:25,773 --> 00:01:27,464
+It holds you together.
+
+61
+00:01:27,484 --> 00:01:28,173
+No popping.
+
+62
+00:01:29,522 --> 00:01:30,768
+It really happened to a
+
+63
+00:01:30,768 --> 00:01:33,066
+pilot in 1960.
+
+64
+00:01:33,086 --> 00:01:34,516
+During a record balloon flight
+
+65
+00:01:34,516 --> 00:01:35,770
+more than thirty kilometres
+
+66
+00:01:35,770 --> 00:01:37,202
+up, his glove lost pressure.
+
+67
+00:01:37,222 --> 00:01:38,550
+His hand swelled to about
+
+68
+00:01:38,550 --> 00:01:39,592
+twice its size.
+
+69
+00:01:39,612 --> 00:01:40,792
+He still made his jump,
+
+70
+00:01:40,812 --> 00:01:41,877
+and a few hours after
+
+71
+00:01:41,877 --> 00:01:43,358
+landing, his hand was back
+
+72
+00:01:43,358 --> 00:01:43,907
+to normal.
+
+73
+00:01:44,907 --> 00:01:46,240
+And here's a true story.
+
+74
+00:01:46,260 --> 00:01:48,660
+In December 1966,
+
+75
+00:01:48,680 --> 00:01:50,880
+at NASA's centre in Houston,
+
+76
+00:01:50,900 --> 00:01:52,328
+a suit tester named Jim
+
+77
+00:01:52,328 --> 00:01:55,006
+LeBlanc was inside a vacuum chamber.
+
+78
+00:01:55,026 --> 00:01:56,776
+Suddenly, a hose came loose,
+
+79
+00:01:56,796 --> 00:01:58,034
+and his suit lost almost
+
+80
+00:01:58,034 --> 00:01:59,698
+all its pressure.
+
+81
+00:01:59,718 --> 00:02:00,805
+He later said he felt
+
+82
+00:02:00,805 --> 00:02:01,891
+the saliva on his tongue
+
+83
+00:02:01,891 --> 00:02:02,931
+start to bubble.
+
+84
+00:02:02,951 --> 00:02:04,224
+He passed out after about
+
+85
+00:02:04,224 --> 00:02:05,322
+fourteen seconds.
+
+86
+00:02:05,342 --> 00:02:06,355
+Normally, refilling that
+
+87
+00:02:06,355 --> 00:02:08,026
+chamber took about half an hour.
+
+88
+00:02:08,046 --> 00:02:08,716
+That day,
+
+89
+00:02:08,736 --> 00:02:09,660
+his team flooded it with
+
+90
+00:02:09,660 --> 00:02:10,856
+air in about a minute,
+
+91
+00:02:10,876 --> 00:02:11,813
+and he recovered.
+
+92
+00:02:11,833 --> 00:02:13,091
+His main complaint?
+
+93
+00:02:13,111 --> 00:02:13,829
+Sore ears.
+
+94
+00:02:15,180 --> 00:02:17,061
+So how long would rescuers have?
+
+95
+00:02:17,081 --> 00:02:19,325
+Experiments in the 1960s found
+
+96
+00:02:19,325 --> 00:02:20,755
+that animals usually recovered
+
+97
+00:02:20,755 --> 00:02:22,125
+from about ninety seconds of
+
+98
+00:02:22,125 --> 00:02:23,031
+near vacuum,
+
+99
+00:02:23,051 --> 00:02:24,780
+sometimes a bit more.
+
+100
+00:02:24,800 --> 00:02:26,586
+Much longer was often deadly.
+
+101
+00:02:26,606 --> 00:02:27,700
+Scientists think a short
+
+102
+00:02:27,700 --> 00:02:29,052
+exposure, under about thirty
+
+103
+00:02:29,052 --> 00:02:30,810
+seconds, may cause no lasting
+
+104
+00:02:30,810 --> 00:02:32,465
+harm at all.
+
+105
+00:02:32,485 --> 00:02:33,374
+And the cold?
+
+106
+00:02:33,394 --> 00:02:35,031
+Space works like a thermos.
+
+107
+00:02:35,051 --> 00:02:36,097
+With no air to carry
+
+108
+00:02:36,097 --> 00:02:36,911
+heat away,
+
+109
+00:02:36,931 --> 00:02:38,334
+you'd cool down slowly.
+
+110
+00:02:38,354 --> 00:02:39,916
+The bigger problem is the Sun.
+
+111
+00:02:39,936 --> 00:02:41,109
+Without our air and ozone
+
+112
+00:02:41,109 --> 00:02:42,266
+layer to filter it,
+
+113
+00:02:42,286 --> 00:02:43,513
+its ultraviolet light would
+
+114
+00:02:43,513 --> 00:02:44,683
+give you a sunburn far
+
+115
+00:02:44,683 --> 00:02:46,833
+faster than on any beach.
+
+116
+00:02:46,853 --> 00:02:48,208
+This is why astronauts take
+
+117
+00:02:48,208 --> 00:02:49,273
+it so seriously.
+
+118
+00:02:49,293 --> 00:02:51,103
+In 1971,
+
+119
+00:02:51,123 --> 00:02:53,098
+three cosmonauts on Soyuz 11
+
+120
+00:02:53,098 --> 00:02:54,598
+died when a valve opened
+
+121
+00:02:54,598 --> 00:02:57,463
+about 168 kilometres up,
+
+122
+00:02:57,483 --> 00:02:58,392
+letting the air out of
+
+123
+00:02:58,392 --> 00:02:59,556
+their capsule.
+
+124
+00:02:59,576 --> 00:03:00,768
+They are the only people
+
+125
+00:03:00,768 --> 00:03:02,181
+ever to die in space.
+
+126
+00:03:02,201 --> 00:03:03,251
+Since then,
+
+127
+00:03:03,271 --> 00:03:04,595
+crews wear pressure suits for
+
+128
+00:03:04,595 --> 00:03:06,463
+launch and landing.
+
+129
+00:03:06,483 --> 00:03:07,973
+And on the Space Station,
+
+130
+00:03:07,993 --> 00:03:08,996
+the cabin is kept at
+
+131
+00:03:08,996 --> 00:03:10,203
+about the same air pressure
+
+132
+00:03:10,203 --> 00:03:11,246
+as at sea level here
+
+133
+00:03:11,246 --> 00:03:11,916
+on Earth.
+
+134
+00:03:11,936 --> 00:03:13,259
+Which means astronauts can
+
+135
+00:03:13,259 --> 00:03:14,421
+work in T-shirts.
+
+136
+00:03:14,441 --> 00:03:15,937
+The station's walls hold that
+
+137
+00:03:15,937 --> 00:03:16,631
+air in,
+
+138
+00:03:16,651 --> 00:03:18,203
+like a giant flying bottle.
+
+139
+00:03:18,223 --> 00:03:20,101
+Outside, it's vacuum.
+
+140
+00:03:20,121 --> 00:03:21,149
+Inside, it's home.
+
+141
+00:03:22,498 --> 00:03:23,762
+So: about fifteen seconds
+
+142
+00:03:23,762 --> 00:03:25,324
+awake, about ninety seconds
+
+143
+00:03:25,324 --> 00:03:26,268
+for a rescue,
+
+144
+00:03:26,288 --> 00:03:27,517
+and no explosions.
+
+145
+00:03:27,537 --> 00:03:28,867
+Space is dangerous,
+
+146
+00:03:28,887 --> 00:03:29,699
+but not in the way
+
+147
+00:03:29,699 --> 00:03:30,397
+movies show.
+
+148
+00:03:30,417 --> 00:03:32,107
+The real killer is simple:
+
+149
+00:03:32,127 --> 00:03:33,430
+no air to breathe.
+
+150
+00:03:33,450 --> 00:03:35,324
+That's why every spacesuit is
+
+151
+00:03:35,324 --> 00:03:36,530
+really a tiny,
+
+152
+00:03:36,550 --> 00:03:37,217
+personal spaceship.
+
+153
+00:03:37,237 --> 00:03:37,597
+Next time,
+
+154
+00:03:37,617 --> 00:03:39,427
+we go somewhere far worse:
+
+155
+00:03:39,447 --> 00:03:40,175
+a black hole.
+
+156
+00:03:41,576 --> 00:03:42,639
+How many seconds do you
+
+157
+00:03:42,639 --> 00:03:43,577
+think you'd last?
+
+158
+00:03:43,597 --> 00:03:44,830
+Tell me in the comments.
+
+159
+00:03:44,850 --> 00:03:46,900
+Next time, we fall even farther:
+
+160
+00:03:46,920 --> 00:03:48,292
+straight into a black hole.
+
+161
+00:03:48,312 --> 00:03:49,924
+Subscribe, and hold on to
+
+162
+00:03:49,924 --> 00:03:50,432
+your spaghetti.

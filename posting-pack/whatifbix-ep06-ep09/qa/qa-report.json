@@ -1,0 +1,530 @@
+[
+ {
+  "file": "01-2026-11-20-18h00-short-15-seconds-in-space.mp4",
+  "type": "short",
+  "duration": 16.97,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 15,
+  "cuesInSync": "15/15",
+  "speechEndsAt": 16.66,
+  "frames": [
+   "frames/01-2026-11-20-18h00-short-15-seconds-in-space-0s.png",
+   "frames/01-2026-11-20-18h00-short-15-seconds-in-space-mid.png",
+   "frames/01-2026-11-20-18h00-short-15-seconds-in-space-last1s.png"
+  ],
+  "loopSSIM": 0.864
+ },
+ {
+  "file": "02-2026-11-20-20h00-long-space-without-spacesuit.mp4",
+  "type": "long",
+  "duration": 240.67,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 162,
+  "cuesInSync": "162/162",
+  "speechEndsAt": 237.5,
+  "frames": [
+   "frames/02-2026-11-20-20h00-long-space-without-spacesuit-0s.png",
+   "frames/02-2026-11-20-20h00-long-space-without-spacesuit-mid.png",
+   "frames/02-2026-11-20-20h00-long-space-without-spacesuit-last1s.png"
+  ]
+ },
+ {
+  "file": "03-2026-11-21-18h00-short-saliva-boils.mp4",
+  "type": "short",
+  "duration": 18.5,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 17,
+  "cuesInSync": "17/17",
+  "speechEndsAt": 18.18,
+  "frames": [
+   "frames/03-2026-11-21-18h00-short-saliva-boils-0s.png",
+   "frames/03-2026-11-21-18h00-short-saliva-boils-mid.png",
+   "frames/03-2026-11-21-18h00-short-saliva-boils-last1s.png"
+  ],
+  "loopSSIM": 0.873
+ },
+ {
+  "file": "04-2026-11-22-18h00-short-nasa-vacuum-accident-1966.mp4",
+  "type": "short",
+  "duration": 17.7,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 17.38,
+  "frames": [
+   "frames/04-2026-11-22-18h00-short-nasa-vacuum-accident-1966-0s.png",
+   "frames/04-2026-11-22-18h00-short-nasa-vacuum-accident-1966-mid.png",
+   "frames/04-2026-11-22-18h00-short-nasa-vacuum-accident-1966-last1s.png"
+  ],
+  "loopSSIM": 0.951
+ },
+ {
+  "file": "05-2026-11-23-18h00-short-you-would-not-explode.mp4",
+  "type": "short",
+  "duration": 17.23,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 16.88,
+  "frames": [
+   "frames/05-2026-11-23-18h00-short-you-would-not-explode-0s.png",
+   "frames/05-2026-11-23-18h00-short-you-would-not-explode-mid.png",
+   "frames/05-2026-11-23-18h00-short-you-would-not-explode-last1s.png"
+  ],
+  "loopSSIM": 0.865
+ },
+ {
+  "file": "06-2026-11-24-18h00-short-ninety-second-rescue.mp4",
+  "type": "short",
+  "duration": 19.73,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 19.4,
+  "frames": [
+   "frames/06-2026-11-24-18h00-short-ninety-second-rescue-0s.png",
+   "frames/06-2026-11-24-18h00-short-ninety-second-rescue-mid.png",
+   "frames/06-2026-11-24-18h00-short-ninety-second-rescue-last1s.png"
+  ],
+  "loopSSIM": 0.918
+ },
+ {
+  "file": "07-2026-11-25-18h00-short-space-is-a-thermos.mp4",
+  "type": "short",
+  "duration": 17.2,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 16.82,
+  "frames": [
+   "frames/07-2026-11-25-18h00-short-space-is-a-thermos-0s.png",
+   "frames/07-2026-11-25-18h00-short-space-is-a-thermos-mid.png",
+   "frames/07-2026-11-25-18h00-short-space-is-a-thermos-last1s.png"
+  ],
+  "loopSSIM": 0.863
+ },
+ {
+  "file": "08-2026-11-26-18h00-short-spaghettification.mp4",
+  "type": "short",
+  "duration": 18.2,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 17,
+  "cuesInSync": "17/17",
+  "speechEndsAt": 17.92,
+  "frames": [
+   "frames/08-2026-11-26-18h00-short-spaghettification-0s.png",
+   "frames/08-2026-11-26-18h00-short-spaghettification-mid.png",
+   "frames/08-2026-11-26-18h00-short-spaghettification-last1s.png"
+  ],
+  "loopSSIM": 0.903
+ },
+ {
+  "file": "09-2026-11-26-20h00-long-fall-into-black-hole.mp4",
+  "type": "long",
+  "duration": 241.27,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 174,
+  "cuesInSync": "174/174",
+  "speechEndsAt": 239.72,
+  "frames": [
+   "frames/09-2026-11-26-20h00-long-fall-into-black-hole-0s.png",
+   "frames/09-2026-11-26-20h00-long-fall-into-black-hole-mid.png",
+   "frames/09-2026-11-26-20h00-long-fall-into-black-hole-last1s.png"
+  ]
+ },
+ {
+  "file": "10-2026-11-27-18h00-short-black-holes-dont-suck.mp4",
+  "type": "short",
+  "duration": 16.8,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 13,
+  "cuesInSync": "13/13",
+  "speechEndsAt": 16.46,
+  "frames": [
+   "frames/10-2026-11-27-18h00-short-black-holes-dont-suck-0s.png",
+   "frames/10-2026-11-27-18h00-short-black-holes-dont-suck-mid.png",
+   "frames/10-2026-11-27-18h00-short-black-holes-dont-suck-last1s.png"
+  ],
+  "loopSSIM": 0.874
+ },
+ {
+  "file": "11-2026-11-28-18h00-short-earth-the-size-of-a-marble.mp4",
+  "type": "short",
+  "duration": 17.67,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 15,
+  "cuesInSync": "15/15",
+  "speechEndsAt": 17.3,
+  "frames": [
+   "frames/11-2026-11-28-18h00-short-earth-the-size-of-a-marble-0s.png",
+   "frames/11-2026-11-28-18h00-short-earth-the-size-of-a-marble-mid.png",
+   "frames/11-2026-11-28-18h00-short-earth-the-size-of-a-marble-last1s.png"
+  ],
+  "loopSSIM": 0.862
+ },
+ {
+  "file": "12-2026-11-29-18h00-short-frozen-in-time.mp4",
+  "type": "short",
+  "duration": 16.97,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 15,
+  "cuesInSync": "15/15",
+  "speechEndsAt": 16.58,
+  "frames": [
+   "frames/12-2026-11-29-18h00-short-frozen-in-time-0s.png",
+   "frames/12-2026-11-29-18h00-short-frozen-in-time-mid.png",
+   "frames/12-2026-11-29-18h00-short-frozen-in-time-last1s.png"
+  ],
+  "loopSSIM": 0.901
+ },
+ {
+  "file": "13-2026-11-30-18h00-short-our-galaxys-black-hole.mp4",
+  "type": "short",
+  "duration": 19.3,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 16,
+  "cuesInSync": "16/16",
+  "speechEndsAt": 18.96,
+  "frames": [
+   "frames/13-2026-11-30-18h00-short-our-galaxys-black-hole-0s.png",
+   "frames/13-2026-11-30-18h00-short-our-galaxys-black-hole-mid.png",
+   "frames/13-2026-11-30-18h00-short-our-galaxys-black-hole-last1s.png"
+  ],
+  "loopSSIM": 0.908
+ },
+ {
+  "file": "14-2026-12-01-18h00-short-brighter-than-all-stars.mp4",
+  "type": "short",
+  "duration": 19.03,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 15,
+  "cuesInSync": "15/15",
+  "speechEndsAt": 18.7,
+  "frames": [
+   "frames/14-2026-12-01-18h00-short-brighter-than-all-stars-0s.png",
+   "frames/14-2026-12-01-18h00-short-brighter-than-all-stars-mid.png",
+   "frames/14-2026-12-01-18h00-short-brighter-than-all-stars-last1s.png"
+  ],
+  "loopSSIM": 0.922
+ },
+ {
+  "file": "15-2026-12-02-18h00-short-everest-would-sink.mp4",
+  "type": "short",
+  "duration": 22.17,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 21.84,
+  "frames": [
+   "frames/15-2026-12-02-18h00-short-everest-would-sink-0s.png",
+   "frames/15-2026-12-02-18h00-short-everest-would-sink-mid.png",
+   "frames/15-2026-12-02-18h00-short-everest-would-sink-last1s.png"
+  ],
+  "loopSSIM": 0.849
+ },
+ {
+  "file": "16-2026-12-02-20h00-long-mariana-trench-dive.mp4",
+  "type": "long",
+  "duration": 250.2,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 168,
+  "cuesInSync": "168/168",
+  "speechEndsAt": 245.44,
+  "frames": [
+   "frames/16-2026-12-02-20h00-long-mariana-trench-dive-0s.png",
+   "frames/16-2026-12-02-20h00-long-mariana-trench-dive-mid.png",
+   "frames/16-2026-12-02-20h00-long-mariana-trench-dive-last1s.png"
+  ]
+ },
+ {
+  "file": "17-2026-12-03-18h00-short-eight-tons-per-square-inch.mp4",
+  "type": "short",
+  "duration": 16.2,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 15.88,
+  "frames": [
+   "frames/17-2026-12-03-18h00-short-eight-tons-per-square-inch-0s.png",
+   "frames/17-2026-12-03-18h00-short-eight-tons-per-square-inch-mid.png",
+   "frames/17-2026-12-03-18h00-short-eight-tons-per-square-inch-last1s.png"
+  ],
+  "loopSSIM": 0.915
+ },
+ {
+  "file": "18-2026-12-04-18h00-short-first-dive-1960.mp4",
+  "type": "short",
+  "duration": 17.27,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 16.88,
+  "frames": [
+   "frames/18-2026-12-04-18h00-short-first-dive-1960-0s.png",
+   "frames/18-2026-12-04-18h00-short-first-dive-1960-mid.png",
+   "frames/18-2026-12-04-18h00-short-first-dive-1960-last1s.png"
+  ],
+  "loopSSIM": 0.911
+ },
+ {
+  "file": "19-2026-12-05-18h00-short-fish-cant-go-deeper.mp4",
+  "type": "short",
+  "duration": 20.0,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 15,
+  "cuesInSync": "15/15",
+  "speechEndsAt": 19.56,
+  "frames": [
+   "frames/19-2026-12-05-18h00-short-fish-cant-go-deeper-0s.png",
+   "frames/19-2026-12-05-18h00-short-fish-cant-go-deeper-mid.png",
+   "frames/19-2026-12-05-18h00-short-fish-cant-go-deeper-last1s.png"
+  ],
+  "loopSSIM": 0.882
+ },
+ {
+  "file": "20-2026-12-06-18h00-short-plastic-bag-11-km-down.mp4",
+  "type": "short",
+  "duration": 18.33,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 12,
+  "cuesInSync": "12/12",
+  "speechEndsAt": 18.0,
+  "frames": [
+   "frames/20-2026-12-06-18h00-short-plastic-bag-11-km-down-0s.png",
+   "frames/20-2026-12-06-18h00-short-plastic-bag-11-km-down-mid.png",
+   "frames/20-2026-12-06-18h00-short-plastic-bag-11-km-down-last1s.png"
+  ],
+  "loopSSIM": 0.906
+ },
+ {
+  "file": "21-2026-12-07-18h00-short-wood-eating-amphipod.mp4",
+  "type": "short",
+  "duration": 17.73,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 17.3,
+  "frames": [
+   "frames/21-2026-12-07-18h00-short-wood-eating-amphipod-0s.png",
+   "frames/21-2026-12-07-18h00-short-wood-eating-amphipod-mid.png",
+   "frames/21-2026-12-07-18h00-short-wood-eating-amphipod-last1s.png"
+  ],
+  "loopSSIM": 0.871
+ },
+ {
+  "file": "22-2026-12-08-18h00-short-chocolate-needs-tiny-flies.mp4",
+  "type": "short",
+  "duration": 19.1,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 16,
+  "cuesInSync": "16/16",
+  "speechEndsAt": 18.7,
+  "frames": [
+   "frames/22-2026-12-08-18h00-short-chocolate-needs-tiny-flies-0s.png",
+   "frames/22-2026-12-08-18h00-short-chocolate-needs-tiny-flies-mid.png",
+   "frames/22-2026-12-08-18h00-short-chocolate-needs-tiny-flies-last1s.png"
+  ],
+  "loopSSIM": 0.903
+ },
+ {
+  "file": "23-2026-12-08-20h00-long-insects-disappear.mp4",
+  "type": "long",
+  "duration": 248.33,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 168,
+  "cuesInSync": "168/168",
+  "speechEndsAt": 244.58,
+  "frames": [
+   "frames/23-2026-12-08-20h00-long-insects-disappear-0s.png",
+   "frames/23-2026-12-08-20h00-long-insects-disappear-mid.png",
+   "frames/23-2026-12-08-20h00-long-insects-disappear-last1s.png"
+  ]
+ },
+ {
+  "file": "24-2026-12-09-18h00-short-bread-would-survive.mp4",
+  "type": "short",
+  "duration": 18.47,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 15,
+  "cuesInSync": "15/15",
+  "speechEndsAt": 18.12,
+  "frames": [
+   "frames/24-2026-12-09-18h00-short-bread-would-survive-0s.png",
+   "frames/24-2026-12-09-18h00-short-bread-would-survive-mid.png",
+   "frames/24-2026-12-09-18h00-short-bread-would-survive-last1s.png"
+  ],
+  "loopSSIM": 0.886
+ },
+ {
+  "file": "25-2026-12-10-18h00-short-dung-beetles-saved-australia.mp4",
+  "type": "short",
+  "duration": 17.93,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 13,
+  "cuesInSync": "13/13",
+  "speechEndsAt": 17.56,
+  "frames": [
+   "frames/25-2026-12-10-18h00-short-dung-beetles-saved-australia-0s.png",
+   "frames/25-2026-12-10-18h00-short-dung-beetles-saved-australia-mid.png",
+   "frames/25-2026-12-10-18h00-short-dung-beetles-saved-australia-last1s.png"
+  ],
+  "loopSSIM": 0.879
+ },
+ {
+  "file": "26-2026-12-11-18h00-short-ten-quintillion-insects.mp4",
+  "type": "short",
+  "duration": 18.07,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 17.66,
+  "frames": [
+   "frames/26-2026-12-11-18h00-short-ten-quintillion-insects-0s.png",
+   "frames/26-2026-12-11-18h00-short-ten-quintillion-insects-mid.png",
+   "frames/26-2026-12-11-18h00-short-ten-quintillion-insects-last1s.png"
+  ],
+  "loopSSIM": 0.858
+ },
+ {
+  "file": "27-2026-12-12-18h00-short-farmers-pollinate-by-hand.mp4",
+  "type": "short",
+  "duration": 17.9,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.2,
+  "freezes": [],
+  "captions": 14,
+  "cuesInSync": "14/14",
+  "speechEndsAt": 17.56,
+  "frames": [
+   "frames/27-2026-12-12-18h00-short-farmers-pollinate-by-hand-0s.png",
+   "frames/27-2026-12-12-18h00-short-farmers-pollinate-by-hand-mid.png",
+   "frames/27-2026-12-12-18h00-short-farmers-pollinate-by-hand-last1s.png"
+  ],
+  "loopSSIM": 0.896
+ },
+ {
+  "file": "28-2026-12-13-18h00-short-birds-eat-500-million-tonnes.mp4",
+  "type": "short",
+  "duration": 19.53,
+  "problems": [],
+  "notes": [],
+  "playedEndToEnd": true,
+  "lufs": -14.1,
+  "freezes": [],
+  "captions": 15,
+  "cuesInSync": "15/15",
+  "speechEndsAt": 19.16,
+  "frames": [
+   "frames/28-2026-12-13-18h00-short-birds-eat-500-million-tonnes-0s.png",
+   "frames/28-2026-12-13-18h00-short-birds-eat-500-million-tonnes-mid.png",
+   "frames/28-2026-12-13-18h00-short-birds-eat-500-million-tonnes-last1s.png"
+  ],
+  "loopSSIM": 0.845
+ }
+]

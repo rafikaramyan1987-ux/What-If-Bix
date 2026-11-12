@@ -1,0 +1,695 @@
+1
+00:00:00,450 --> 00:00:02,197
+You're falling into a black hole.
+
+2
+00:00:02,217 --> 00:00:03,167
+And the first thing it
+
+3
+00:00:03,167 --> 00:00:04,128
+does to you...
+
+4
+00:00:04,148 --> 00:00:05,410
+is stretch you like spaghetti.
+
+5
+00:00:06,410 --> 00:00:06,935
+But first,
+
+6
+00:00:06,935 --> 00:00:07,918
+a myth.
+
+7
+00:00:07,938 --> 00:00:09,091
+Black holes don't suck things
+
+8
+00:00:09,091 --> 00:00:10,498
+in like a vacuum cleaner.
+
+9
+00:00:10,518 --> 00:00:11,466
+If the Sun were swapped
+
+10
+00:00:11,466 --> 00:00:12,488
+for a black hole with
+
+11
+00:00:12,488 --> 00:00:13,101
+the same mass,
+
+12
+00:00:13,101 --> 00:00:14,420
+Earth would keep orbiting just
+
+13
+00:00:14,420 --> 00:00:15,123
+as before.
+
+14
+00:00:15,143 --> 00:00:16,037
+It would just get very
+
+15
+00:00:16,037 --> 00:00:17,303
+dark, and very cold.
+
+16
+00:00:20,304 --> 00:00:21,440
+A black hole is matter
+
+17
+00:00:21,440 --> 00:00:22,824
+squeezed so tightly that its
+
+18
+00:00:22,824 --> 00:00:24,220
+gravity traps everything.
+
+19
+00:00:24,240 --> 00:00:25,167
+If you could squeeze the
+
+20
+00:00:25,167 --> 00:00:26,220
+Sun into one,
+
+21
+00:00:26,240 --> 00:00:27,662
+it would be only about
+
+22
+00:00:27,662 --> 00:00:29,398
+three kilometres in radius.
+
+23
+00:00:30,399 --> 00:00:31,570
+Many black holes are born
+
+24
+00:00:31,570 --> 00:00:32,859
+when a giant star,
+
+25
+00:00:32,879 --> 00:00:34,189
+much heavier than our Sun,
+
+26
+00:00:34,209 --> 00:00:35,303
+runs out of fuel.
+
+27
+00:00:35,323 --> 00:00:36,616
+Its core collapses under its
+
+28
+00:00:36,616 --> 00:00:37,563
+own weight,
+
+29
+00:00:37,583 --> 00:00:37,743
+and keeps collapsing,
+
+30
+00:00:37,763 --> 00:00:41,247
+into a point of incredible density.
+
+31
+00:00:41,267 --> 00:00:42,175
+And Earth?
+
+32
+00:00:42,195 --> 00:00:43,993
+About nine millimetres.
+
+33
+00:00:44,013 --> 00:00:45,670
+Smaller than a marble.
+
+34
+00:00:45,690 --> 00:00:46,402
+Same mass,
+
+35
+00:00:46,402 --> 00:00:47,661
+unbelievably small.
+
+36
+00:00:49,011 --> 00:00:50,082
+Its edge is called the
+
+37
+00:00:50,082 --> 00:00:51,132
+event horizon.
+
+38
+00:00:51,152 --> 00:00:52,392
+It's not a wall or
+
+39
+00:00:52,392 --> 00:00:53,268
+a surface.
+
+40
+00:00:53,288 --> 00:00:54,780
+It's a point of no return.
+
+41
+00:00:54,800 --> 00:00:55,720
+Once you're inside it,
+
+42
+00:00:55,740 --> 00:00:57,030
+nothing can get back out.
+
+43
+00:00:57,050 --> 00:00:58,349
+Not even light.
+
+44
+00:00:58,369 --> 00:00:59,257
+That's why it's black.
+
+45
+00:01:00,607 --> 00:01:02,384
+Now, the fall.
+
+46
+00:01:02,404 --> 00:01:03,645
+Gravity pulls much harder on
+
+47
+00:01:03,645 --> 00:01:04,364
+your feet,
+
+48
+00:01:04,384 --> 00:01:05,354
+which are closer,
+
+49
+00:01:05,374 --> 00:01:06,236
+than on your head.
+
+50
+00:01:06,256 --> 00:01:07,334
+That difference stretches you
+
+51
+00:01:07,334 --> 00:01:08,147
+long and thin.
+
+52
+00:01:08,167 --> 00:01:11,432
+Scientists really call it spaghettification.
+
+53
+00:01:11,452 --> 00:01:12,925
+Here's the twist.
+
+54
+00:01:12,945 --> 00:01:13,854
+The size of the black
+
+55
+00:01:13,854 --> 00:01:15,216
+hole changes everything.
+
+56
+00:01:15,236 --> 00:01:16,186
+Near a small one,
+
+57
+00:01:16,206 --> 00:01:17,517
+about ten times the Sun's
+
+58
+00:01:17,517 --> 00:01:19,346
+mass, you'd be stretched apart
+
+59
+00:01:19,346 --> 00:01:20,584
+well before you even reached
+
+60
+00:01:20,584 --> 00:01:20,943
+the edge.
+
+61
+00:01:21,943 --> 00:01:23,256
+But near a supermassive black
+
+62
+00:01:23,256 --> 00:01:24,753
+hole, the stretching at the
+
+63
+00:01:24,753 --> 00:01:25,976
+edge is so gentle that
+
+64
+00:01:25,976 --> 00:01:27,157
+you could cross it without
+
+65
+00:01:27,157 --> 00:01:28,972
+feeling anything special at first.
+
+66
+00:01:28,992 --> 00:01:29,478
+Deeper in,
+
+67
+00:01:29,478 --> 00:01:30,451
+though, the stretching would
+
+68
+00:01:30,451 --> 00:01:31,918
+still win.
+
+69
+00:01:31,938 --> 00:01:33,390
+And we've actually seen them.
+
+70
+00:01:33,410 --> 00:01:35,150
+In 2019,
+
+71
+00:01:35,170 --> 00:01:36,585
+the Event Horizon Telescope
+
+72
+00:01:36,585 --> 00:01:37,770
+showed the first image of
+
+73
+00:01:37,770 --> 00:01:38,910
+a black hole,
+
+74
+00:01:38,930 --> 00:01:40,960
+called M87 star.
+
+75
+00:01:40,980 --> 00:01:42,763
+It's about 55 million
+
+76
+00:01:42,763 --> 00:01:44,050
+light-years away,
+
+77
+00:01:44,070 --> 00:01:45,961
+and about 6.5 billion times
+
+78
+00:01:45,961 --> 00:01:47,486
+the mass of the Sun.
+
+79
+00:01:47,506 --> 00:01:48,565
+The light in that photo
+
+80
+00:01:48,565 --> 00:01:49,996
+left it about 55 million
+
+81
+00:01:49,996 --> 00:01:50,856
+years ago,
+
+82
+00:01:50,876 --> 00:01:51,866
+long before there were any
+
+83
+00:01:51,866 --> 00:01:52,704
+humans to see it.
+
+84
+00:01:54,054 --> 00:01:55,003
+How do you photograph
+
+85
+00:01:55,003 --> 00:01:56,046
+something that's black?
+
+86
+00:01:56,066 --> 00:01:57,490
+Astronomers linked radio
+
+87
+00:01:57,490 --> 00:01:58,849
+telescopes all around the
+
+88
+00:01:58,849 --> 00:02:00,624
+world into one giant virtual
+
+89
+00:02:00,624 --> 00:02:02,137
+telescope, as big as the Earth.
+
+90
+00:02:03,137 --> 00:02:05,365
+In 2022 we saw Sagittarius
+
+91
+00:02:05,365 --> 00:02:06,257
+A star,
+
+92
+00:02:06,277 --> 00:02:07,173
+the black hole at the
+
+93
+00:02:07,173 --> 00:02:09,115
+centre of our own Milky Way.
+
+94
+00:02:09,135 --> 00:02:11,505
+About 27,000 light-years away,
+
+95
+00:02:11,525 --> 00:02:12,930
+about 4 million times the
+
+96
+00:02:12,930 --> 00:02:14,045
+Sun's mass.
+
+97
+00:02:14,065 --> 00:02:15,230
+And its dark centre would
+
+98
+00:02:15,230 --> 00:02:17,829
+fit inside the orbit of Mercury.
+
+99
+00:02:17,849 --> 00:02:19,029
+Fun twist:
+
+100
+00:02:19,049 --> 00:02:20,527
+M87 star is about a
+
+101
+00:02:20,527 --> 00:02:21,813
+thousand times bigger than our
+
+102
+00:02:21,813 --> 00:02:23,323
+galaxy's black hole.
+
+103
+00:02:23,343 --> 00:02:24,829
+But it's so much farther
+
+104
+00:02:24,829 --> 00:02:25,533
+away that,
+
+105
+00:02:25,553 --> 00:02:25,995
+in the sky,
+
+106
+00:02:25,995 --> 00:02:28,029
+both look about the same size.
+
+107
+00:02:28,049 --> 00:02:29,299
+Now imagine a friend watching
+
+108
+00:02:29,299 --> 00:02:30,564
+you fall from far away.
+
+109
+00:02:30,584 --> 00:02:30,997
+To them,
+
+110
+00:02:30,997 --> 00:02:32,474
+you'd seem to slow down,
+
+111
+00:02:32,494 --> 00:02:33,554
+turn redder and dimmer,
+
+112
+00:02:33,574 --> 00:02:34,584
+and fade away,
+
+113
+00:02:34,604 --> 00:02:36,947
+as if frozen near the edge.
+
+114
+00:02:36,967 --> 00:02:37,889
+That's because gravity
+
+115
+00:02:37,889 --> 00:02:39,247
+stretches time and light.
+
+116
+00:02:39,267 --> 00:02:40,225
+From your own point of
+
+117
+00:02:40,225 --> 00:02:41,693
+view, nothing freezes at all.
+
+118
+00:02:41,713 --> 00:02:42,706
+You just keep falling.
+
+119
+00:02:44,055 --> 00:02:45,183
+Should we worry?
+
+120
+00:02:45,203 --> 00:02:46,809
+The nearest black hole we
+
+121
+00:02:46,809 --> 00:02:47,653
+know of,
+
+122
+00:02:47,673 --> 00:02:48,383
+Gaia BH1,
+
+123
+00:02:48,403 --> 00:02:52,543
+is about 1,560 light-years away.
+
+124
+00:02:52,563 --> 00:02:53,626
+Scientists think there are
+
+125
+00:02:53,626 --> 00:02:54,762
+probably closer ones we
+
+126
+00:02:54,762 --> 00:02:55,806
+haven't found yet.
+
+127
+00:02:55,826 --> 00:02:56,626
+But close,
+
+128
+00:02:56,646 --> 00:02:57,098
+in space,
+
+129
+00:02:57,098 --> 00:02:57,796
+is still very,
+
+130
+00:02:57,816 --> 00:02:58,475
+very far.
+
+131
+00:02:59,475 --> 00:03:00,822
+Sometimes black holes crash
+
+132
+00:03:00,822 --> 00:03:01,890
+into each other.
+
+133
+00:03:01,910 --> 00:03:03,640
+On the 14th of September,
+
+134
+00:03:03,660 --> 00:03:05,787
+2015, LIGO detected
+
+135
+00:03:05,787 --> 00:03:07,034
+gravitational waves for the
+
+136
+00:03:07,034 --> 00:03:07,840
+first time,
+
+137
+00:03:07,860 --> 00:03:09,150
+from two black holes,
+
+138
+00:03:09,170 --> 00:03:11,007
+about 36 and 29 times
+
+139
+00:03:11,007 --> 00:03:12,097
+the Sun's mass, merging.
+
+140
+00:03:13,447 --> 00:03:14,691
+About three Suns' worth of
+
+141
+00:03:14,691 --> 00:03:16,016
+mass turned into ripples in
+
+142
+00:03:16,016 --> 00:03:16,930
+space itself.
+
+143
+00:03:16,950 --> 00:03:18,020
+For a split second,
+
+144
+00:03:18,040 --> 00:03:19,088
+that gave off more power
+
+145
+00:03:19,088 --> 00:03:20,029
+than all the stars in
+
+146
+00:03:20,029 --> 00:03:21,040
+the visible universe,
+
+147
+00:03:21,060 --> 00:03:22,589
+put together.
+
+148
+00:03:22,609 --> 00:03:23,915
+So, could you survive falling
+
+149
+00:03:23,915 --> 00:03:25,169
+into a black hole?
+
+150
+00:03:25,189 --> 00:03:25,859
+Pick a giant one,
+
+151
+00:03:25,879 --> 00:03:26,859
+and you'd at least enjoy
+
+152
+00:03:26,859 --> 00:03:27,993
+the view for a while.
+
+153
+00:03:28,013 --> 00:03:28,927
+A small one?
+
+154
+00:03:28,947 --> 00:03:30,535
+Not a great idea.
+
+155
+00:03:30,555 --> 00:03:31,022
+Either way,
+
+156
+00:03:31,022 --> 00:03:32,011
+the black hole wins in
+
+157
+00:03:32,011 --> 00:03:32,591
+the end.
+
+158
+00:03:32,611 --> 00:03:33,171
+Next time,
+
+159
+00:03:33,171 --> 00:03:34,342
+we go the other way.
+
+160
+00:03:34,362 --> 00:03:35,312
+Down.
+
+161
+00:03:35,332 --> 00:03:37,342
+About eleven kilometres down,
+
+162
+00:03:37,362 --> 00:03:38,174
+to the very bottom of
+
+163
+00:03:38,174 --> 00:03:38,732
+the ocean,
+
+164
+00:03:38,752 --> 00:03:40,164
+where the water itself becomes
+
+165
+00:03:40,164 --> 00:03:40,755
+the danger.
+
+166
+00:03:42,154 --> 00:03:43,082
+Would you jump into a
+
+167
+00:03:43,082 --> 00:03:43,602
+giant one,
+
+168
+00:03:43,602 --> 00:03:44,485
+just to see?
+
+169
+00:03:44,505 --> 00:03:45,812
+Tell me in the comments.
+
+170
+00:03:45,832 --> 00:03:46,792
+Next time,
+
+171
+00:03:46,812 --> 00:03:47,955
+we stop falling up and
+
+172
+00:03:47,955 --> 00:03:49,126
+start sinking down.
+
+173
+00:03:49,146 --> 00:03:50,854
+Subscribe, and bring a very
+
+174
+00:03:50,854 --> 00:03:51,521
+strong submarine.
