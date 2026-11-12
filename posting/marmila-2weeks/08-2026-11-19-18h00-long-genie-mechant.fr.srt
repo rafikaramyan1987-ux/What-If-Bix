@@ -1,0 +1,691 @@
+1
+00:00:00,450 --> 00:00:01,934
+Imagine la personne la plus
+
+2
+00:00:01,934 --> 00:00:03,239
+intelligente du monde.
+
+3
+00:00:03,259 --> 00:00:04,119
+Et un matin,
+
+4
+00:00:04,139 --> 00:00:05,271
+elle se lève…
+
+5
+00:00:05,291 --> 00:00:06,957
+et décide de devenir méchante.
+
+6
+00:00:07,957 --> 00:00:09,819
+Voici le Docteur Méga.
+
+7
+00:00:09,839 --> 00:00:11,237
+Rassure-toi, il est
+
+8
+00:00:11,237 --> 00:00:12,429
+complètement inventé.
+
+9
+00:00:12,449 --> 00:00:13,234
+Mais tout ce qui va
+
+10
+00:00:13,234 --> 00:00:14,252
+lui arriver repose sur de
+
+11
+00:00:14,252 --> 00:00:14,839
+vrais faits.
+
+12
+00:00:14,859 --> 00:00:16,129
+Alors, que pourrait-il
+
+13
+00:00:16,129 --> 00:00:16,770
+vraiment faire ?
+
+14
+00:00:19,770 --> 00:00:20,620
+Soyons honnêtes :
+
+15
+00:00:20,640 --> 00:00:22,394
+un génie peut faire beaucoup.
+
+16
+00:00:22,414 --> 00:00:23,494
+Apprendre très vite,
+
+17
+00:00:23,514 --> 00:00:24,722
+repérer des erreurs que
+
+18
+00:00:24,722 --> 00:00:25,854
+personne ne voit,
+
+19
+00:00:25,874 --> 00:00:27,528
+convaincre avec de bons arguments.
+
+20
+00:00:27,548 --> 00:00:28,928
+Mais pour changer le monde,
+
+21
+00:00:28,948 --> 00:00:30,098
+il faut des machines,
+
+22
+00:00:30,118 --> 00:00:30,528
+du temps,
+
+23
+00:00:30,548 --> 00:00:31,774
+et surtout des gens.
+
+24
+00:00:31,794 --> 00:00:32,764
+Voyons ses plans,
+
+25
+00:00:32,784 --> 00:00:33,460
+un par un.
+
+26
+00:00:34,461 --> 00:00:35,721
+Premier plan :
+
+27
+00:00:35,741 --> 00:00:37,120
+tout construire lui-même.
+
+28
+00:00:37,140 --> 00:00:38,580
+Il est le plus intelligent,
+
+29
+00:00:38,600 --> 00:00:39,226
+non ?
+
+30
+00:00:39,246 --> 00:00:40,828
+Il n’a besoin de personne.
+
+31
+00:00:40,848 --> 00:00:42,197
+Il fera tout.
+
+32
+00:00:42,217 --> 00:00:42,766
+Seul.
+
+33
+00:00:44,116 --> 00:00:45,324
+Problème.
+
+34
+00:00:45,344 --> 00:00:46,454
+En 2009,
+
+35
+00:00:46,474 --> 00:00:47,699
+un designer a essayé de
+
+36
+00:00:47,699 --> 00:00:48,592
+fabriquer un simple
+
+37
+00:00:48,592 --> 00:00:50,174
+grille-pain à partir de zéro :
+
+38
+00:00:50,194 --> 00:00:51,564
+extraire le métal,
+
+39
+00:00:51,584 --> 00:00:52,734
+faire le plastique,
+
+40
+00:00:52,754 --> 00:00:53,502
+tout.
+
+41
+00:00:53,522 --> 00:00:54,617
+Ça lui a pris neuf
+
+42
+00:00:54,617 --> 00:00:56,266
+mois et plus de mille livres.
+
+43
+00:00:56,286 --> 00:00:57,564
+Et le grille-pain a fondu
+
+44
+00:00:57,564 --> 00:00:59,277
+au premier essai.
+
+45
+00:00:59,297 --> 00:01:00,307
+La leçon :
+
+46
+00:01:00,327 --> 00:01:01,812
+notre monde est trop compliqué
+
+47
+00:01:01,812 --> 00:01:03,069
+pour une seule tête.
+
+48
+00:01:03,089 --> 00:01:04,746
+Personne ne sait tout fabriquer.
+
+49
+00:01:04,766 --> 00:01:06,026
+Même un grille-pain,
+
+50
+00:01:06,046 --> 00:01:08,026
+on le fait ensemble.
+
+51
+00:01:08,046 --> 00:01:09,226
+Deuxième plan :
+
+52
+00:01:09,246 --> 00:01:10,590
+recruter des aides.
+
+53
+00:01:10,610 --> 00:01:12,034
+Beaucoup d’aides.
+
+54
+00:01:12,054 --> 00:01:13,178
+Parce que les grands projets
+
+55
+00:01:13,178 --> 00:01:14,209
+demandent des foules entières.
+
+56
+00:01:15,209 --> 00:01:16,379
+Pour aller sur la Lune,
+
+57
+00:01:16,399 --> 00:01:17,717
+le programme Apollo a fait
+
+58
+00:01:17,717 --> 00:01:20,144
+travailler environ 400 000 personnes.
+
+59
+00:01:20,164 --> 00:01:21,614
+Ingénieurs, couturières,
+
+60
+00:01:21,634 --> 00:01:23,478
+programmeuses, soudeurs.
+
+61
+00:01:23,498 --> 00:01:24,308
+Une armée,
+
+62
+00:01:24,328 --> 00:01:25,673
+mais une armée de volontaires.
+
+63
+00:01:26,673 --> 00:01:28,150
+Et c’est là que ça coince.
+
+64
+00:01:28,170 --> 00:01:29,310
+Plus il a d’aides,
+
+65
+00:01:29,330 --> 00:01:30,436
+plus il y a de
+
+66
+00:01:30,436 --> 00:01:31,730
+gens qui peuvent refuser,
+
+67
+00:01:31,750 --> 00:01:32,786
+parler, ou tout simplement
+
+68
+00:01:32,786 --> 00:01:33,783
+prévenir quelqu’un.
+
+69
+00:01:33,803 --> 00:01:35,217
+Un secret partagé par mille
+
+70
+00:01:35,217 --> 00:01:37,981
+personnes ne reste pas secret longtemps.
+
+71
+00:01:38,001 --> 00:01:39,411
+Troisième plan :
+
+72
+00:01:39,431 --> 00:01:40,533
+prendre le contrôle des
+
+73
+00:01:40,533 --> 00:01:41,893
+systèmes les plus sensibles.
+
+74
+00:01:41,913 --> 00:01:43,170
+Sauf que beaucoup d’entre eux
+
+75
+00:01:43,170 --> 00:01:44,683
+suivent une vieille règle :
+
+76
+00:01:44,703 --> 00:01:46,323
+pour les actions critiques,
+
+77
+00:01:46,343 --> 00:01:47,740
+il faut deux personnes.
+
+78
+00:01:47,760 --> 00:01:48,610
+Deux clés,
+
+79
+00:01:48,630 --> 00:01:49,580
+deux codes,
+
+80
+00:01:49,600 --> 00:01:50,399
+deux accords.
+
+81
+00:01:51,399 --> 00:01:52,834
+Même si le Docteur Méga
+
+82
+00:01:52,834 --> 00:01:54,109
+convainc une personne,
+
+83
+00:01:54,129 --> 00:01:55,399
+il en faut une deuxième,
+
+84
+00:01:55,419 --> 00:01:56,267
+qui ne le connaît pas
+
+85
+00:01:56,267 --> 00:01:57,990
+forcément, et qui peut dire non.
+
+86
+00:01:58,010 --> 00:01:59,227
+Les systèmes sérieux sont
+
+87
+00:01:59,227 --> 00:02:00,602
+pensés pour qu’aucune tête ne
+
+88
+00:02:00,602 --> 00:02:02,213
+décide seule.
+
+89
+00:02:02,233 --> 00:02:03,443
+Et contre les pirates,
+
+90
+00:02:03,463 --> 00:02:04,329
+il y a…
+
+91
+00:02:04,349 --> 00:02:05,499
+d’autres pirates,
+
+92
+00:02:05,519 --> 00:02:06,845
+gentils ceux-là.
+
+93
+00:02:06,865 --> 00:02:08,121
+Des entreprises payent des
+
+94
+00:02:08,121 --> 00:02:09,425
+chercheurs pour trouver leurs
+
+95
+00:02:09,425 --> 00:02:10,901
+failles avant les méchants.
+
+96
+00:02:10,921 --> 00:02:12,521
+Rien que chez Google,
+
+97
+00:02:12,541 --> 00:02:13,927
+ça représente des millions de
+
+98
+00:02:13,927 --> 00:02:15,673
+dollars par an.
+
+99
+00:02:15,693 --> 00:02:17,323
+Autre détail gênant pour lui :
+
+100
+00:02:17,343 --> 00:02:18,283
+être un génie,
+
+101
+00:02:18,303 --> 00:02:19,609
+ce n’est pas être unique.
+
+102
+00:02:19,629 --> 00:02:21,142
+Statistiquement, environ une
+
+103
+00:02:21,142 --> 00:02:22,246
+personne sur huit cents a
+
+104
+00:02:22,246 --> 00:02:23,506
+un QI de cent quarante-cinq
+
+105
+00:02:23,506 --> 00:02:24,075
+ou plus.
+
+106
+00:02:24,095 --> 00:02:25,645
+Sur huit milliards d’humains,
+
+107
+00:02:25,665 --> 00:02:26,617
+ça fait plus de dix
+
+108
+00:02:26,617 --> 00:02:28,761
+millions de cerveaux brillants.
+
+109
+00:02:28,782 --> 00:02:30,002
+Et presque tous sont de
+
+110
+00:02:30,002 --> 00:02:30,842
+l’autre côté.
+
+111
+00:02:30,862 --> 00:02:33,368
+Chercheuses, ingénieurs, enquêteurs.
+
+112
+00:02:33,388 --> 00:02:34,778
+Le Docteur Méga ne joue
+
+113
+00:02:34,778 --> 00:02:36,222
+pas contre une personne.
+
+114
+00:02:36,242 --> 00:02:37,275
+Il joue contre une équipe
+
+115
+00:02:37,275 --> 00:02:38,228
+de dix millions.
+
+116
+00:02:38,248 --> 00:02:39,343
+Et cette équipe-là ne dort
+
+117
+00:02:39,343 --> 00:02:41,239
+jamais en même temps.
+
+118
+00:02:41,259 --> 00:02:41,899
+Et puis,
+
+119
+00:02:41,919 --> 00:02:42,735
+il y a un ennemi
+
+120
+00:02:42,735 --> 00:02:43,664
+que personne ne bat.
+
+121
+00:02:43,684 --> 00:02:45,044
+Même le plus grand cerveau
+
+122
+00:02:45,044 --> 00:02:46,539
+du monde tourne avec environ
+
+123
+00:02:46,539 --> 00:02:47,134
+vingt watts,
+
+124
+00:02:47,154 --> 00:02:48,234
+comme une petite ampoule.
+
+125
+00:02:48,254 --> 00:02:49,307
+Et il se fatigue.
+
+126
+00:02:50,657 --> 00:02:51,915
+Une étude a montré qu’après
+
+127
+00:02:51,915 --> 00:02:52,988
+dix-sept à dix-neuf heures
+
+128
+00:02:52,988 --> 00:02:53,817
+sans dormir,
+
+129
+00:02:53,837 --> 00:02:54,769
+nos performances chutent
+
+130
+00:02:54,769 --> 00:02:56,134
+autant qu’avec un peu d’alcool
+
+131
+00:02:56,134 --> 00:02:57,113
+dans le sang.
+
+132
+00:02:57,133 --> 00:02:58,535
+Un génie épuisé fait des
+
+133
+00:02:58,535 --> 00:02:59,812
+erreurs de débutant.
+
+134
+00:02:59,832 --> 00:03:01,012
+Et ses adversaires,
+
+135
+00:03:01,032 --> 00:03:02,788
+eux, se relaient.
+
+136
+00:03:02,808 --> 00:03:04,318
+Finalement, le monde a une
+
+137
+00:03:04,318 --> 00:03:05,608
+arme contre les méchants :
+
+138
+00:03:05,628 --> 00:03:06,815
+la coopération.
+
+139
+00:03:06,835 --> 00:03:08,519
+Interpol relie les polices de
+
+140
+00:03:08,519 --> 00:03:10,308
+196 pays.
+
+141
+00:03:10,328 --> 00:03:11,458
+Une seule erreur,
+
+142
+00:03:11,478 --> 00:03:12,638
+une seule trace,
+
+143
+00:03:12,658 --> 00:03:13,758
+et c’est toute la planète
+
+144
+00:03:13,758 --> 00:03:14,679
+qui le cherche.
+
+145
+00:03:14,699 --> 00:03:16,034
+Les enquêteurs partagent les
+
+146
+00:03:16,034 --> 00:03:17,609
+infos, les signalements,
+
+147
+00:03:17,629 --> 00:03:19,375
+les visages.
+
+148
+00:03:19,395 --> 00:03:21,425
+Fatigué, trahi par une aide,
+
+149
+00:03:21,445 --> 00:03:22,680
+repéré par une équipe de
+
+150
+00:03:22,680 --> 00:03:23,667
+gentils génies…
+
+151
+00:03:23,687 --> 00:03:25,379
+le Docteur Méga est arrêté.
+
+152
+00:03:25,399 --> 00:03:27,489
+Son intelligence ne l’a pas sauvé.
+
+153
+00:03:27,509 --> 00:03:28,539
+Parce qu’un cerveau,
+
+154
+00:03:28,559 --> 00:03:29,969
+aussi brillant soit-il,
+
+155
+00:03:29,989 --> 00:03:32,101
+reste un seul cerveau.
+
+156
+00:03:32,121 --> 00:03:33,234
+La vraie leçon ?
+
+157
+00:03:33,254 --> 00:03:35,510
+L’intelligence, c’est puissant…
+
+158
+00:03:35,530 --> 00:03:36,496
+mais ce qui change le
+
+159
+00:03:36,496 --> 00:03:38,017
+monde, c’est quand beaucoup de
+
+160
+00:03:38,017 --> 00:03:39,457
+cerveaux travaillent ensemble.
+
+161
+00:03:39,477 --> 00:03:40,817
+Quant au Docteur Méga,
+
+162
+00:03:40,837 --> 00:03:41,708
+il est maintenant dans la
+
+163
+00:03:41,708 --> 00:03:43,089
+prison la plus sûre du monde.
+
+164
+00:03:43,109 --> 00:03:44,383
+Pour l’instant.
+
+165
+00:03:44,403 --> 00:03:45,053
+Et ça,
+
+166
+00:03:45,073 --> 00:03:46,209
+c’est une autre histoire.
+
+167
+00:03:47,609 --> 00:03:48,568
+La suite ?
+
+168
+00:03:48,588 --> 00:03:49,915
+Le Docteur Méga est enfermé
+
+169
+00:03:49,915 --> 00:03:51,123
+dans la prison la plus
+
+170
+00:03:51,123 --> 00:03:52,075
+sûre du monde.
+
+171
+00:03:52,095 --> 00:03:54,067
+Il prépare quelque chose.
+
+172
+00:03:54,087 --> 00:03:55,851
+Abonne-toi à MarMila pour ne
+
+173
+00:03:55,851 --> 00:03:56,951
+pas rater l’épisode.

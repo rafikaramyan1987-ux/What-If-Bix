@@ -18,10 +18,17 @@ You write one YAML script per episode. The factory turns it into:
 | Metadata | `metadata.md` / `metadata.json`: title, description with chapters, sources and credits, tags, Shorts titles |
 | Captions | `.en.srt` for the long video and every Short |
 
+**French channel MarMila:** the same factory renders French episodes (`language: fr`): French narration
+(Piper `fr_FR-siwis-medium`), French on-screen text and typography, `.fr.srt` captions, French metadata, MarMila
+branding, 6 TikTok-rule Shorts per episode and a 2-week posting pack. See [docs/marmila/](docs/marmila/README.md).
+The ready-to-schedule pack is in [`posting/marmila-2weeks/`](posting/marmila-2weeks).
+
 Episode 1 renders are attached to the pull request in [`docs/episode1/`](docs/episode1). Channel assets are in
 [`docs/channel/`](docs/channel). Step-1 style test: [`docs/step1/`](docs/step1).
 
-![Bix character sheet](docs/step1/bix-character-sheet.png)
+![Bix 2.0](docs/bix2/bix2-C-emotions.png)
+
+Since episode 2 the channel uses **Bix 2.0 (variant C, "Chibi")**: big head, orange beanie, round glasses, purple "?" sweater. Set `character: bix1` in a script to use the original thin Bix. His lab sidekick is **Newton the cactus** (`cactus` prop).
 
 ---
 
@@ -162,11 +169,11 @@ YouTube demonetizes "mass-produced or repetitive" content. Every episode uses it
 
 | # | Episode | Structure |
 |---|---|---|
-| 1 | Earth stops spinning for 1 second | cause-and-effect chain + "the restart is worse" twist |
-| 2 | Never sleep for 30 days | diary / day counter |
-| 3 | Everyone on Earth jumps at once | three-scenario experiment |
-| 4 | The Internet disappears worldwide | escalating timeline (minute → month) |
-| 5 | The Moon is twice as close | "Ask Bix" Q&A on location |
+| 1 | Earth stops spinning for 1 second (Bix 1) | cause-and-effect chain + "the restart is worse" twist |
+| 2 | What if you could fly? (Bix 2.0) | a climb: each stage is one complaint from your body |
+| 3+ | Animal-facts season: dolphin sleep, penguin dads, octopus hearts, giraffe sleep | fact + why → what if YOU → lab ending + teaser |
+
+The full plan and backlog are in [docs/EPISODE_PLAN.md](docs/EPISODE_PLAN.md). Older scripts are kept in `episodes/archive/`.
 
 Each episode also has its own scenes, jokes, music seed and outro. `validate.mjs --all` fails if two episodes share
 more than 8% of their narration, the same background sequence, or the same outro.

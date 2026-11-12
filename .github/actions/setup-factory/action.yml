@@ -1,5 +1,5 @@
 name: Set up the What If Bix factory
-description: Node, Python, ffmpeg, Chrome deps, npm/pip packages and the Piper voice (cached).
+description: Node, Python, ffmpeg, Chrome deps, npm/pip packages and the Piper voices (cached).
 runs:
   using: composite
   steps:
@@ -25,10 +25,12 @@ runs:
     - uses: actions/cache@v4
       with:
         path: models/piper
-        key: piper-voice-en-us-libritts-high-v1
-    - name: Fetch Piper voice
+        key: piper-voices-en-us-libritts-high-fr_FR-siwis-medium-v2
+    - name: Fetch Piper voices (English channel + MarMila)
       shell: bash
-      run: bash pipeline/fetch_voice.sh en-us-libritts-high
+      run: |
+        bash pipeline/fetch_voice.sh en-us-libritts-high
+        bash pipeline/fetch_voice.sh fr_FR-siwis-medium
     - name: Download Remotion's headless browser
       shell: bash
       run: npx remotion browser ensure

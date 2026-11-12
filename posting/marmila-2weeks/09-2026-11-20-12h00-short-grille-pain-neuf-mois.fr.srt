@@ -1,0 +1,55 @@
+1
+00:00:00,000 --> 00:00:00,968
+Neuf mois.
+
+2
+00:00:00,988 --> 00:00:01,953
+C’est le temps qu’il a
+
+3
+00:00:01,953 --> 00:00:03,272
+fallu pour fabriquer un simple
+
+4
+00:00:03,272 --> 00:00:04,790
+grille-pain à partir de zéro.
+
+5
+00:00:04,810 --> 00:00:06,180
+Extraire le métal,
+
+6
+00:00:06,200 --> 00:00:07,411
+faire le plastique, tout.
+
+7
+00:00:07,431 --> 00:00:09,005
+Plus de mille livres dépensées.
+
+8
+00:00:09,025 --> 00:00:10,294
+Et au premier essai…
+
+9
+00:00:10,314 --> 00:00:11,307
+il a fondu.
+
+10
+00:00:11,327 --> 00:00:12,465
+Même le plus grand génie
+
+11
+00:00:12,465 --> 00:00:13,410
+du monde ne sait pas
+
+12
+00:00:13,410 --> 00:00:14,313
+tout fabriquer seul.
+
+13
+00:00:14,333 --> 00:00:15,616
+Personne ne le sait.
+
+14
+00:00:15,636 --> 00:00:16,310
+La preuve :

@@ -1,0 +1,707 @@
+1
+00:00:00,450 --> 00:00:01,909
+Imagine un trou qui traverse
+
+2
+00:00:01,909 --> 00:00:02,915
+toute la Terre.
+
+3
+00:00:02,935 --> 00:00:04,702
+D’un côté à l’autre.
+
+4
+00:00:04,722 --> 00:00:05,732
+Tu t’approches,
+
+5
+00:00:05,752 --> 00:00:07,088
+tu regardes en bas…
+
+6
+00:00:07,108 --> 00:00:07,922
+et tu sautes.
+
+7
+00:00:09,272 --> 00:00:10,142
+Devant toi :
+
+8
+00:00:10,162 --> 00:00:12,502
+12 742 kilomètres de chute,
+
+9
+00:00:12,522 --> 00:00:14,841
+jusqu’à l’autre bout de la planète.
+
+10
+00:00:14,861 --> 00:00:16,518
+Combien de temps pour traverser ?
+
+11
+00:00:16,538 --> 00:00:17,616
+Et surtout…
+
+12
+00:00:17,636 --> 00:00:18,669
+est-ce que tu ressors ?
+
+13
+00:00:21,669 --> 00:00:23,381
+Commençons par tricher un peu.
+
+14
+00:00:23,401 --> 00:00:24,441
+Trois règles :
+
+15
+00:00:24,461 --> 00:00:25,511
+pas d’air dans le trou,
+
+16
+00:00:25,531 --> 00:00:26,451
+pas de chaleur,
+
+17
+00:00:26,471 --> 00:00:27,234
+et une Terre qui ne
+
+18
+00:00:27,234 --> 00:00:27,861
+tourne pas.
+
+19
+00:00:27,881 --> 00:00:29,479
+On triche, oui.
+
+20
+00:00:29,499 --> 00:00:30,451
+Mais c’est comme ça qu’on
+
+21
+00:00:30,451 --> 00:00:32,345
+comprend la physique.
+
+22
+00:00:32,365 --> 00:00:33,195
+Tu tombes,
+
+23
+00:00:33,215 --> 00:00:34,406
+et tu accélères.
+
+24
+00:00:34,426 --> 00:00:35,924
+La gravité te tire vers
+
+25
+00:00:35,924 --> 00:00:36,831
+le centre.
+
+26
+00:00:36,851 --> 00:00:37,971
+Mais plus tu descends,
+
+27
+00:00:37,991 --> 00:00:38,728
+plus il y a de
+
+28
+00:00:38,728 --> 00:00:39,631
+Terre au-dessus de toi,
+
+29
+00:00:39,651 --> 00:00:40,842
+qui te tire vers le haut.
+
+30
+00:00:40,862 --> 00:00:42,365
+La force diminue…
+
+31
+00:00:42,385 --> 00:00:43,677
+sans jamais s’inverser avant
+
+32
+00:00:43,677 --> 00:00:45,281
+le centre.
+
+33
+00:00:45,301 --> 00:00:46,631
+Les premiers kilomètres,
+
+34
+00:00:46,651 --> 00:00:47,501
+c’est la croûte.
+
+35
+00:00:47,521 --> 00:00:48,551
+Sous les océans,
+
+36
+00:00:48,571 --> 00:00:49,626
+elle fait à peine cinq
+
+37
+00:00:49,626 --> 00:00:51,138
+à dix kilomètres d’épaisseur.
+
+38
+00:00:51,158 --> 00:00:52,398
+Sous les montagnes,
+
+39
+00:00:52,418 --> 00:00:53,783
+jusqu’à soixante-dix.
+
+40
+00:00:53,803 --> 00:00:54,967
+À l’échelle de la Terre,
+
+41
+00:00:54,967 --> 00:00:55,933
+c’est une pellicule,
+
+42
+00:00:55,953 --> 00:00:56,910
+plus fine que la peau
+
+43
+00:00:56,910 --> 00:00:57,580
+d’une pomme.
+
+44
+00:00:57,600 --> 00:00:58,730
+Dessous, le manteau :
+
+45
+00:00:58,750 --> 00:01:00,210
+de la roche chaude,
+
+46
+00:01:00,230 --> 00:01:00,960
+qui coule très,
+
+47
+00:01:00,980 --> 00:01:02,616
+très lentement.
+
+48
+00:01:02,636 --> 00:01:03,426
+Au centre,
+
+49
+00:01:03,446 --> 00:01:04,368
+tu files à près de
+
+50
+00:01:04,368 --> 00:01:06,214
+28 000 kilomètres à l’heure.
+
+51
+00:01:06,234 --> 00:01:07,295
+À peu près la vitesse
+
+52
+00:01:07,295 --> 00:01:09,337
+de la Station spatiale internationale.
+
+53
+00:01:09,357 --> 00:01:11,037
+Et là, tu ne t’arrêtes pas :
+
+54
+00:01:11,057 --> 00:01:11,737
+tu remontes,
+
+55
+00:01:11,757 --> 00:01:12,857
+en ralentissant,
+
+56
+00:01:12,877 --> 00:01:14,837
+vers l’autre côté.
+
+57
+00:01:14,857 --> 00:01:15,921
+Tu arrives pile à la
+
+58
+00:01:15,921 --> 00:01:16,927
+surface d’en face,
+
+59
+00:01:16,947 --> 00:01:18,111
+à vitesse nulle.
+
+60
+00:01:18,131 --> 00:01:19,239
+Le voyage ?
+
+61
+00:01:19,259 --> 00:01:20,596
+Environ quarante-deux minutes
+
+62
+00:01:20,596 --> 00:01:22,292
+si la Terre était uniforme.
+
+63
+00:01:22,312 --> 00:01:23,602
+Avec sa vraie densité,
+
+64
+00:01:23,622 --> 00:01:24,879
+des physiciens ont calculé
+
+65
+00:01:24,879 --> 00:01:26,379
+environ trente-huit minutes.
+
+66
+00:01:26,399 --> 00:01:27,726
+Moins qu’un épisode de série.
+
+67
+00:01:28,726 --> 00:01:30,488
+Et si personne ne t'attrape là-haut ?
+
+68
+00:01:30,508 --> 00:01:31,871
+Tu retombes.
+
+69
+00:01:31,891 --> 00:01:33,668
+Et tu fais l’aller-retour.
+
+70
+00:01:33,688 --> 00:01:35,366
+Encore et encore.
+
+71
+00:01:35,386 --> 00:01:36,626
+Un yoyo humain,
+
+72
+00:01:36,646 --> 00:01:38,287
+pour toujours.
+
+73
+00:01:38,307 --> 00:01:40,422
+Les physiciens adorent ce problème.
+
+74
+00:01:40,442 --> 00:01:41,765
+Ils ont même imaginé un
+
+75
+00:01:41,765 --> 00:01:43,012
+train gravitationnel :
+
+76
+00:01:43,032 --> 00:01:44,270
+un tunnel tout droit entre
+
+77
+00:01:44,270 --> 00:01:44,852
+deux villes,
+
+78
+00:01:44,872 --> 00:01:45,856
+sans moteur.
+
+79
+00:01:45,876 --> 00:01:46,986
+Le train tombe,
+
+80
+00:01:47,006 --> 00:01:48,001
+puis remonte.
+
+81
+00:01:48,021 --> 00:01:49,851
+Et dans une Terre uniforme,
+
+82
+00:01:49,871 --> 00:01:51,102
+le trajet prendrait environ
+
+83
+00:01:51,102 --> 00:01:51,941
+quarante-deux minutes,
+
+84
+00:01:51,961 --> 00:01:54,529
+quelle que soit la distance.
+
+85
+00:01:54,549 --> 00:01:56,681
+Maintenant, la réalité.
+
+86
+00:01:56,701 --> 00:01:58,503
+D’abord, l'air.
+
+87
+00:01:58,523 --> 00:01:59,823
+Dans un trou plein d’air,
+
+88
+00:01:59,843 --> 00:02:00,903
+il te freine.
+
+89
+00:02:00,923 --> 00:02:02,293
+Comme un parachutiste,
+
+90
+00:02:02,313 --> 00:02:03,138
+tu plafonnes vers
+
+91
+00:02:03,138 --> 00:02:04,935
+200 kilomètres à l’heure.
+
+92
+00:02:04,955 --> 00:02:05,936
+Tu n’atteindrais jamais
+
+93
+00:02:05,936 --> 00:02:06,775
+l’autre côté :
+
+94
+00:02:06,795 --> 00:02:08,389
+tu finirais par flotter…
+
+95
+00:02:08,409 --> 00:02:09,457
+coincé au centre.
+
+96
+00:02:10,806 --> 00:02:12,813
+Ensuite, la chaleur.
+
+97
+00:02:12,833 --> 00:02:13,823
+Plus tu descends,
+
+98
+00:02:13,843 --> 00:02:14,863
+plus il fait chaud :
+
+99
+00:02:14,883 --> 00:02:16,093
+près de la surface,
+
+100
+00:02:16,113 --> 00:02:17,584
+on gagne environ vingt-cinq à
+
+101
+00:02:17,584 --> 00:02:19,169
+trente degrés par kilomètre.
+
+102
+00:02:19,189 --> 00:02:20,019
+Au centre,
+
+103
+00:02:20,039 --> 00:02:22,578
+le noyau atteint environ 6 000 degrés.
+
+104
+00:02:22,598 --> 00:02:23,803
+À peu près la température
+
+105
+00:02:23,803 --> 00:02:25,988
+de la surface du Soleil.
+
+106
+00:02:26,008 --> 00:02:26,941
+Le plus fou ?
+
+107
+00:02:26,961 --> 00:02:29,012
+Le noyau interne est solide.
+
+108
+00:02:29,032 --> 00:02:29,902
+Du fer,
+
+109
+00:02:29,922 --> 00:02:31,012
+à six mille degrés,
+
+110
+00:02:31,032 --> 00:02:32,365
+et pourtant solide.
+
+111
+00:02:32,385 --> 00:02:33,184
+Pourquoi ?
+
+112
+00:02:33,204 --> 00:02:35,292
+À cause de la pression.
+
+113
+00:02:35,312 --> 00:02:36,662
+Au centre de la Terre,
+
+114
+00:02:36,682 --> 00:02:38,172
+la pression est environ trois
+
+115
+00:02:38,172 --> 00:02:39,576
+virgule six millions de fois
+
+116
+00:02:39,576 --> 00:02:41,264
+celle de l’air que tu respires.
+
+117
+00:02:41,284 --> 00:02:42,339
+Imagine tout le poids de
+
+118
+00:02:42,339 --> 00:02:43,064
+la planète,
+
+119
+00:02:43,084 --> 00:02:44,352
+appuyé sur un seul point.
+
+120
+00:02:45,352 --> 00:02:46,498
+Aucun matériau connu ne
+
+121
+00:02:46,498 --> 00:02:48,396
+tiendrait un tunnel ouvert là-dedans.
+
+122
+00:02:48,416 --> 00:02:50,318
+Les parois se refermeraient.
+
+123
+00:02:50,338 --> 00:02:51,608
+Le trou s'écrase avant même
+
+124
+00:02:51,608 --> 00:02:52,233
+que tu sautes.
+
+125
+00:02:53,233 --> 00:02:54,791
+Et la Terre tourne.
+
+126
+00:02:54,811 --> 00:02:55,851
+En surface,
+
+127
+00:02:55,871 --> 00:02:56,879
+tu files vers l’est avec
+
+128
+00:02:56,879 --> 00:02:57,555
+le sol.
+
+129
+00:02:57,575 --> 00:02:58,585
+En descendant,
+
+130
+00:02:58,605 --> 00:03:00,015
+tu gardes cette vitesse,
+
+131
+00:03:00,035 --> 00:03:00,815
+mais le trou,
+
+132
+00:03:00,835 --> 00:03:02,266
+lui, va moins vite près
+
+133
+00:03:02,266 --> 00:03:03,018
+du centre.
+
+134
+00:03:03,038 --> 00:03:05,389
+Résultat : tu cognes la paroi.
+
+135
+00:03:05,409 --> 00:03:06,719
+Seule solution :
+
+136
+00:03:06,739 --> 00:03:07,983
+creuser d’un pôle à l’autre.
+
+137
+00:03:08,983 --> 00:03:10,675
+Et si tu partais de France ?
+
+138
+00:03:10,695 --> 00:03:12,285
+Le point exactement opposé,
+
+139
+00:03:12,305 --> 00:03:13,259
+ce qu’on appelle les
+
+140
+00:03:13,259 --> 00:03:14,674
+antipodes, tombe en plein
+
+141
+00:03:14,674 --> 00:03:15,625
+océan Pacifique,
+
+142
+00:03:15,645 --> 00:03:17,570
+au sud-est de la Nouvelle-Zélande.
+
+143
+00:03:17,590 --> 00:03:18,508
+Prévois un maillot.
+
+144
+00:03:19,858 --> 00:03:20,956
+Et dans la vraie vie ?
+
+145
+00:03:20,976 --> 00:03:22,149
+Le trou le plus profond
+
+146
+00:03:22,149 --> 00:03:22,876
+jamais creusé,
+
+147
+00:03:22,896 --> 00:03:23,936
+c’est le puits de Kola,
+
+148
+00:03:23,956 --> 00:03:24,693
+en Russie.
+
+149
+00:03:24,713 --> 00:03:25,900
+Après près de vingt ans
+
+150
+00:03:25,900 --> 00:03:26,613
+de forage,
+
+151
+00:03:26,633 --> 00:03:29,344
+il a atteint 12 262 mètres.
+
+152
+00:03:29,364 --> 00:03:30,681
+Puis il a fallu s’arrêter.
+
+153
+00:03:31,681 --> 00:03:32,291
+En bas,
+
+154
+00:03:32,311 --> 00:03:34,311
+il faisait environ 180 degrés,
+
+155
+00:03:34,331 --> 00:03:35,368
+et la roche devenait trop
+
+156
+00:03:35,368 --> 00:03:36,806
+molle pour les outils.
+
+157
+00:03:36,826 --> 00:03:37,716
+Et tout ça,
+
+158
+00:03:37,736 --> 00:03:38,844
+c’est à peine deux dixièmes
+
+159
+00:03:38,844 --> 00:03:41,413
+pour cent du chemin jusqu’au centre.
+
+160
+00:03:41,433 --> 00:03:42,213
+Alors non,
+
+161
+00:03:42,233 --> 00:03:43,883
+personne ne traversera la Terre.
+
+162
+00:03:43,903 --> 00:03:45,353
+Mais grâce à la physique,
+
+163
+00:03:45,373 --> 00:03:46,400
+on peut faire le voyage
+
+164
+00:03:46,400 --> 00:03:47,214
+dans sa tête.
+
+165
+00:03:47,234 --> 00:03:48,664
+Trente-huit minutes de chute,
+
+166
+00:03:48,684 --> 00:03:50,058
+en un seul calcul.
+
+167
+00:03:50,078 --> 00:03:50,858
+Pas mal,
+
+168
+00:03:50,878 --> 00:03:52,469
+pour un trou qui n’existe pas.
+
+169
+00:03:52,489 --> 00:03:53,601
+La prochaine fois que tu
+
+170
+00:03:53,601 --> 00:03:54,779
+creuses à la plage,
+
+171
+00:03:54,799 --> 00:03:55,762
+pense au voyage.
+
+172
+00:03:57,161 --> 00:03:58,437
+Si tu ressortais de l’autre
+
+173
+00:03:58,437 --> 00:04:00,050
+côté, tu atterrirais où ?
+
+174
+00:04:00,070 --> 00:04:01,868
+Dis-le en commentaire.
+
+175
+00:04:01,888 --> 00:04:03,488
+Et abonne-toi à MarMila :
+
+176
+00:04:03,508 --> 00:04:04,704
+le prochain et si va
+
+177
+00:04:04,704 --> 00:04:05,630
+encore plus loin.

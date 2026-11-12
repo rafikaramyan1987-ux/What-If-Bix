@@ -2,6 +2,7 @@ import React from 'react';
 import { C, FONT, TITLE_FONT } from '../theme';
 import { CaptionPage, ChipSpec, TextSpec } from '../types';
 import { clamp, easeOut, formatNumber, popIn } from '../util';
+import { LangContext } from '../lang';
 
 // ---------------------------------------------------------------- on-screen text
 
@@ -13,7 +14,9 @@ const STYLE: Record<NonNullable<TextSpec['style']>, { size: number; font: string
   shout: { size: 130, font: TITLE_FONT, fill: C.red, stroke: 16, y: 260 },
 };
 
-export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number }> = ({ spec, t, stageW = 1920 }) => {
+/** fit (Shorts): shrink to `width` px (and to `maxSize` px font) and centre the text vertically on `cy`. */
+export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number; fit?: { width: number; cy: number; maxSize?: number } }> = ({ spec, t, stageW = 1920, fit }) => {
+  const lang = React.useContext(LangContext);
   const st = STYLE[spec.style ?? 'label'];
   const lt = t - spec.at;
   const until = spec.until ?? 1e9;
@@ -24,17 +27,22 @@ export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number
   if (spec.count) {
     const c = spec.count;
     const v = c.from + (c.to - c.from) * easeOut(lt / (c.dur ?? 1.2));
-    text = `${c.prefix ?? ''}${formatNumber(v, c.decimals ?? 0)}${c.suffix ?? ''}`;
+    text = `${c.prefix ?? ''}${formatNumber(v, c.decimals ?? 0, lang)}${c.suffix ?? ''}`;
   }
-  const x = spec.x ?? stageW / 2;
-  const y = spec.y ?? st.y;
-  const fill = spec.color ?? st.fill;
   const lines = text.split('\n');
+  const longest = Math.max(...lines.map((l) => l.length));
+  const estW = longest * st.size * (spec.style === 'label' ? 0.56 : 0.62) + (spec.style === 'label' ? 70 : 0);
+  // never wider than the stage (or the Shorts text band), and never past its edges
+  const f = Math.min(1, (fit ? fit.width : stageW - 120) / estW, fit?.maxSize ? fit.maxSize / st.size : 1);
+  const half = (estW * f) / 2;
+  const x = clamp(spec.x ?? stageW / 2, Math.min(stageW / 2, half + 60), Math.max(stageW / 2, stageW - half - 60));
+  const y = fit ? (spec.style === 'label' ? fit.cy : fit.cy + 0.36 * st.size * f) : spec.y ?? st.y;
+  const fill = spec.color ?? st.fill;
   if (spec.style === 'label') {
     const w = Math.max(...lines.map((l) => l.length)) * st.size * 0.56 + 70;
     const h = lines.length * st.size * 1.15 + 34;
     return (
-      <g transform={`translate(${x} ${y}) rotate(${spec.rotate ?? -2}) scale(${k * out})`}>
+      <g transform={`translate(${x} ${y}) rotate(${spec.rotate ?? -2}) scale(${k * out * f})`}>
         <rect x={-w / 2 + 8} y={-h / 2 + 10} width={w} height={h} rx={26} fill={C.ink} opacity={0.35} />
         <rect x={-w / 2} y={-h / 2} width={w} height={h} rx={26} fill={spec.color ?? C.purple} stroke={C.ink} strokeWidth={6} />
         {lines.map((l, i) => (
@@ -45,7 +53,7 @@ export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number
     );
   }
   return (
-    <g transform={`translate(${x} ${y}) rotate(${spec.rotate ?? 0}) scale(${k * out})`}>
+    <g transform={`translate(${x} ${y}) rotate(${spec.rotate ?? 0}) scale(${k * out * f})`}>
       {lines.map((l, i) => (
         <text key={i} x={0} y={i * st.size * 1.05} textAnchor="middle" fontFamily={st.font} fontWeight={700} fontSize={st.size}
           fill={fill} stroke={C.ink} strokeWidth={st.stroke} paintOrder="stroke" strokeLinejoin="round" letterSpacing={1}>{l}</text>
@@ -106,36 +114,55 @@ export const Chip: React.FC<{ spec: ChipSpec; t: number; x?: number; y?: number;
 
 // ---------------------------------------------------------------- captions
 
-export type CaptionLayout = { y: number; size: number; maxWidth: number; centerX: number };
+/** y: baseline of the last line (or of the first line when top = true); maxLines: shrink the text to fit. */
+/** fadeIn: false shows each caption page at full opacity from its first frame; dim: opacity of words not yet spoken. */
+export type CaptionLayout = {
+  y: number; size: number; maxWidth: number; centerX: number; maxLines?: number; top?: boolean; pill?: boolean; dim?: number; fadeIn?: boolean;
+};
 
 export const LONG_CAPTIONS: CaptionLayout = { y: 985, size: 62, maxWidth: 1500, centerX: 960 };
 // Shorts: inside the safe zone (clear of the right-hand buttons and bottom UI of TikTok / Shorts)
-export const SHORT_CAPTIONS: CaptionLayout = { y: 1405, size: 80, maxWidth: 800, centerX: 480 };
+// and below the presenter spot (Bix's feet at y 1275): at most two lines, growing downward.
+export const SHORT_CAPTIONS: CaptionLayout = { y: 1345, size: 76, maxWidth: 800, centerX: 480, maxLines: 2, top: true };
+// TikTok-optimised Shorts: bigger captions, same safe position.
+// TikTok Shorts: fully visible from frame 0 (no fade-in, no dimmed words); the spoken word still turns yellow.
+export const TIKTOK_CAPTIONS: CaptionLayout = { y: 1325, size: 84, maxWidth: 800, centerX: 480, maxLines: 2, top: true, pill: true, dim: 1, fadeIn: false };
 
 /** Word-by-word captions: the current page is shown, the spoken word pops in yellow. */
 export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: CaptionLayout }> = ({ pages, t, layout }) => {
   const page = pages.find((p) => t >= p.start - 0.05 && t <= p.end + 0.15);
   if (!page) return null;
-  const { size, centerX, maxWidth } = layout;
-  const space = size * 0.3;
-  const widths = page.words.map((w) => w.text.length * size * 0.56 + 6);
-  // wrap into at most two lines
-  const lines: number[][] = [[]];
-  let lw = 0;
-  page.words.forEach((_, i) => {
-    const w = widths[i] + space;
-    if (lw + w > maxWidth && lines[lines.length - 1].length) {
-      lines.push([]);
-      lw = 0;
-    }
-    lines[lines.length - 1].push(i);
-    lw += w;
-  });
+  const { centerX, maxWidth } = layout;
+  const wrap = (size: number) => {
+    const space = size * 0.3;
+    const widths = page.words.map((w) => w.text.length * size * 0.56 + 6);
+    const lines: number[][] = [[]];
+    let lw = 0;
+    page.words.forEach((_, i) => {
+      const w = widths[i] + space;
+      if (lw + w > maxWidth && lines[lines.length - 1].length) {
+        lines.push([]);
+        lw = 0;
+      }
+      lines[lines.length - 1].push(i);
+      lw += w;
+    });
+    return { size, space, widths, lines };
+  };
+  let fit = wrap(layout.size);
+  while (layout.maxLines && fit.lines.length > layout.maxLines && fit.size > layout.size * 0.6) fit = wrap(fit.size * 0.92);
+  const { size, space, widths, lines } = fit;
   const lineH = size * 1.2;
-  const y0 = layout.y - (lines.length - 1) * lineH;
-  const pageIn = easeOut((t - page.start + 0.05) / 0.12);
+  const y0 = layout.top ? layout.y : layout.y - (lines.length - 1) * lineH;
+  const pageIn = layout.fadeIn === false ? 1 : easeOut((t - page.start + 0.05) / 0.12);
+  const lineW = lines.map((ln) => ln.reduce((sum, i) => sum + widths[i], 0) + space * (ln.length - 1));
+  const pillW = Math.max(...lineW) + size * 0.9;
   return (
     <g opacity={pageIn}>
+      {layout.pill && (
+        <rect x={centerX - pillW / 2} y={y0 - size * 0.95} width={pillW} height={lines.length * lineH + size * 0.22} rx={size * 0.4}
+          fill={C.ink} opacity={0.62} />
+      )}
       {lines.map((ln, li) => {
         const total = ln.reduce((s, i) => s + widths[i], 0) + space * (ln.length - 1);
         let x = centerX - total / 2;
@@ -150,7 +177,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; t: number; layout: Capti
           return (
             <text key={i} x={cx} y={y0 + li * lineH} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={size}
               fill={fill} stroke={C.ink} strokeWidth={size * 0.2} paintOrder="stroke" strokeLinejoin="round"
-              opacity={spoken ? 1 : 0.55} transform={`translate(${cx} ${y0 + li * lineH}) scale(${active ? 1 + 0.12 * pop : 1}) translate(${-cx} ${-(y0 + li * lineH)})`}>
+              opacity={spoken ? 1 : layout.dim ?? 0.55} transform={`translate(${cx} ${y0 + li * lineH}) scale(${active ? 1 + 0.12 * pop : 1}) translate(${-cx} ${-(y0 + li * lineH)})`}>
               {w.text}
             </text>
           );

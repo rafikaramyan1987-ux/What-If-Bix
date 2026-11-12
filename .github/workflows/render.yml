@@ -1,17 +1,20 @@
 name: Render episode
 
 # Run from the Actions tab: "Render episode" -> "Run workflow".
-# Pick the episode script; the MP4s, Shorts, thumbnail, captions and metadata
-# are attached to the run as a downloadable artifact.
+# Pick one episode script, several (comma-separated), or "marmila" for the four MarMila episodes.
+# Each episode renders in its own job; the MP4s, Shorts, thumbnail, captions and metadata are
+# attached to the run as downloadable artifacts. With "posting_pack", the MarMila videos are
+# also renamed in posting order with posting-schedule.csv (artifact "marmila-2weeks"), and
+# with "commit_pack" that folder is committed to the branch the workflow ran on.
 on:
   workflow_dispatch:
     inputs:
       episode:
-        description: "Episode script (path in the repo)"
+        description: "Episode script(s): a path, a comma list, or marmila"
         required: true
         default: episodes/ep01-earth-stops-spinning.yaml
       outputs:
-        description: "What to build (comma list of long, shorts, thumb, meta, frames)"
+        description: "What to build (comma list of long, shorts, thumb, meta, frames, strips)"
         required: true
         default: long,shorts,thumb,meta
       tts_provider:
@@ -20,7 +23,15 @@ on:
         options: [piper, elevenlabs, openai]
         default: piper
       channel_assets:
-        description: "Also render channel assets (avatar, banner, intro, end screen)"
+        description: "Also render channel assets (avatar, banner, intro, end screen; MarMila too for French episodes)"
+        type: boolean
+        default: false
+      posting_pack:
+        description: "Build the MarMila 2-week posting pack (needs episode = marmila and long,shorts,thumb,meta)"
+        type: boolean
+        default: false
+      commit_pack:
+        description: "Commit posting/marmila-2weeks to this branch"
         type: boolean
         default: false
 
@@ -28,11 +39,30 @@ permissions:
   contents: read
 
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      episodes: ${{ steps.list.outputs.episodes }}
+    steps:
+      - id: list
+        env:
+          EPISODE: ${{ inputs.episode }}
+        run: |
+          if [ "$EPISODE" = "marmila" ]; then
+            EPISODE="episodes/fr01-lune-disparait.yaml,episodes/fr02-genie-mechant.yaml,episodes/fr03-evasion-prison.yaml,episodes/fr04-trou-traverse-terre.yaml"
+          fi
+          echo "episodes=$(echo "$EPISODE" | tr ',' '\n' | sed 's/^ *//;s/ *$//' | grep -v '^$' | jq -R . | jq -cs .)" >> "$GITHUB_OUTPUT"
+
   render:
+    needs: plan
     runs-on: ubuntu-latest
     timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        episode: ${{ fromJSON(needs.plan.outputs.episodes) }}
     env:
-      EPISODE: ${{ inputs.episode }}
+      EPISODE: ${{ matrix.episode }}
       OUTPUTS: ${{ inputs.outputs }}
     steps:
       - uses: actions/checkout@v4
@@ -49,6 +79,16 @@ jobs:
           BIX_VOICE_ID: ${{ vars.BIX_VOICE_ID }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - name: Check the files (size, length, loudness)
+        run: |
+          set -e
+          for f in out/${{ steps.ep.outputs.id }}/*.mp4 out/${{ steps.ep.outputs.id }}/shorts/*.mp4; do
+            [ -f "$f" ] || continue
+            d=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
+            wh=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$f")
+            i=$(ffmpeg -hide_banner -nostats -i "$f" -af ebur128 -f null - 2>&1 | grep -E '^ +I:' | tail -1 | awk '{print $2}')
+            echo "$f  ${d}s  ${wh}  ${i} LUFS"
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.ep.outputs.id }}
@@ -57,13 +97,17 @@ jobs:
             !out/${{ steps.ep.outputs.id }}/manifest.json
           retention-days: 30
       - name: Channel assets
-        if: ${{ inputs.channel_assets }}
-        run: node pipeline/channel.mjs out/channel
+        if: ${{ inputs.channel_assets && strategy.job-index == 0 }}
+        run: |
+          node pipeline/channel.mjs out/channel
+          node pipeline/channel.mjs out/channel-marmila --lang fr
       - uses: actions/upload-artifact@v4
-        if: ${{ inputs.channel_assets }}
+        if: ${{ inputs.channel_assets && strategy.job-index == 0 }}
         with:
           name: channel-assets
-          path: out/channel
+          path: |
+            out/channel
+            out/channel-marmila
           retention-days: 30
       - name: Summary
         run: |
@@ -72,5 +116,40 @@ jobs:
             echo
             echo "Download the **${{ steps.ep.outputs.id }}** artifact below. Upload steps are in the README."
             echo
-            ls -la "out/${{ steps.ep.outputs.id }}" | sed 's/^/    /'
+            ls -la "out/${{ steps.ep.outputs.id }}" "out/${{ steps.ep.outputs.id }}/shorts" 2>/dev/null | sed 's/^/    /'
           } >> "$GITHUB_STEP_SUMMARY"
+
+  posting-pack:
+    needs: render
+    if: ${{ inputs.posting_pack }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: fr0*
+          path: out
+      - name: Build the posting pack (checks length, size, loudness, uniqueness)
+        run: node pipeline/posting.mjs --renders out --out posting/marmila-2weeks
+      - uses: actions/upload-artifact@v4
+        with:
+          name: marmila-2weeks
+          path: posting/marmila-2weeks
+          retention-days: 30
+      - name: Commit the pack to this branch
+        if: ${{ inputs.commit_pack }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add posting/marmila-2weeks
+          git commit -m "MarMila posting pack: 2 weeks from 2026-11-16 (rendered by the Render episode workflow, run ${{ github.run_id }})"
+          for i in 1 2 3 4; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && break; sleep $((i * 10)); done

@@ -1,0 +1,626 @@
+# MarMila — Épisode 1 (français)
+# Structure : une liste de « changements », du plus visible au plus profond
+# (nuits -> vie nocturne -> marées -> la Terre qui « danse » -> durée du jour -> inclinaison),
+# puis un retournement (la Lune s'en va déjà, pour de vrai) et une fin au labo.
+# Tous les chiffres viennent des sources en bas du fichier (imprimées dans la description).
+id: fr01-lune-disparait
+number: 1
+language: fr
+channel: marmila
+title: "Et si la Lune disparaissait demain ?"
+description: |
+  Un matin, la Lune n'est plus là. Pas d'explosion, pas de débris : elle a juste disparu.
+  Bix découvre ce qui changerait vraiment : des nuits jusqu'à cent fois plus noires, des marées trois fois plus faibles, des coraux perdus, une Terre qui arrête de « danser », et un danger caché sur des millions d'années.
+tags: [et si la lune disparaissait, lune, marées, astronomie, espace, science, vulgarisation, inclinaison de la terre, éclipse, marmila]
+hashtags: ["#etsi", "#lune", "#espace", "#science"]
+pinnedQuestion: "Sans la Lune, qu'est-ce qui te manquerait le plus ?"
+character: bix2
+music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 101 }
+introAfter: no-noise
+outro:
+  narration: "Et toi, sans la Lune, qu'est-ce qui te manquerait le plus ? Dis-le en commentaire. Et abonne-toi à MarMila pour d'autres et si complètement fous."
+  background: { type: space, tint: purple }
+
+scenes:
+  # ------------------------------------------------------------- ouverture
+  - id: cold-open
+    chapter: "La Lune a disparu"
+    background: { type: space, tint: blue }
+    bixStart: [520, 880]
+    bixScale: 0.9
+    props:
+      - { type: earth, x: 1250, y: 760, r: 300, spin: 0.04, tilt: -23 }
+      - { type: moon, x: 1560, y: 260, grow: [120, 0], at: "@pouf", dur: 0.6 }
+    bix:
+      - { at: 0, action: point }
+      - { at: "@pouf", action: shock }
+    texts:
+      - { at: "@Lune", text: "ET SI LA LUNE DISPARAISSAIT ?", style: title, y: 160 }
+      - { at: "@pouf", until: "@pouf+1.2", text: "POUF !", style: shout, x: 1560, y: 300, rotate: -8 }
+    camera: { zoom: [1.0, 1.05], focus: [1100, 540] }
+    sfx:
+      - { name: sparkle, at: "@pouf", gain: 0.6 }
+    narration: "Et si la Lune disparaissait demain ? Pas d'explosion. Pas de débris. Juste… [beat 0.2] pouf. Plus de Lune."
+
+  - id: no-noise
+    background: { type: space, tint: blue }
+    bixStart: [520, 880]
+    bixScale: 0.9
+    props:
+      - { type: earth, x: 1250, y: 760, r: 300, spin: 0.04, tilt: -23 }
+      - { type: arrow, at: "@kilomètres", from: [1250, 430], to: [1600, 230], bend: -40, color: "#ffd447" }
+    bix:
+      - { at: 0, action: shrug }
+      - { at: "@rien", action: laugh }
+      - { at: "@vide", action: think }
+    texts:
+      - { at: "@kilomètres", text: "384 400 km", style: big, x: 1250, y: 230, count: { from: 0, to: 384400, dur: 1.2, suffix: " km" } }
+    narration: "Bonne nouvelle : tu ne sentirais *rien*. La Lune est à {384 400 kilomètres|trois cent quatre-vingt-quatre mille quatre cents kilomètres}. Pas de secousse, pas de vague géante. Le ciel serait juste… un peu vide."
+
+  # ------------------------------------------------------------- les nuits
+  - id: dark-nights
+    chapter: "Des nuits vraiment noires"
+    transition: whip
+    background: { type: land, mood: night }
+    bixStart: [760, 820]
+    props:
+      - { type: tree, x: 1780, y: 820, s: 0.9 }
+      - { type: bars, at: "@cent", x: 1300, y: 760, w: 560, h: 360, values: [100, 1], labels: ["Pleine Lune", "Sans Lune"], colors: ["#ffd447", "#4a4f6e"] }
+    bix:
+      - { at: 0, action: walk, from: [500, 820], to: [760, 820] }
+      - { at: "@noires", action: scared }
+      - { at: "@cent", action: point }
+    texts:
+      - { at: "@cent", text: "JUSQU'À 100× PLUS SOMBRE", style: label, x: 1300, y: 220, color: "#8a5cff" }
+    narration: "Premier changement : les nuits. Une nuit de pleine Lune peut être jusqu'à *cent* fois plus claire qu'une nuit sans Lune. Sans elle, toutes les nuits seraient noires. Vraiment noires."
+
+  - id: city-lights
+    background: { type: night-city }
+    bixStart: [500, 820]
+    props:
+      - { type: pal, x: 1250, y: 820, s: 0.8, facing: -1, seed: 3, actions: [{ at: 0, action: idle }, { at: "@lampadaires", action: shrug }] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@lampadaires", action: laugh }
+      - { at: "@animaux", action: shock }
+    texts:
+      - { at: "@animaux", text: "Beaucoup d'animaux", style: label, x: 1150, y: 300, color: "#22d3c5" }
+    narration: "Pour nous, ça change peu : on a des lampadaires. Mais beaucoup d'animaux règlent leur vie sur la Lune. Et certains ont un rendez-vous très précis."
+
+  - id: coral
+    background: { type: ocean, horizon: 220, mood: night }
+    bixStart: [330, 900]
+    bixScale: 0.85
+    props:
+      - { type: coral, x: 1150, y: 900, w: 800, spawnAt: "@ensemble", count: 80 }
+      - { type: moon, x: 1600, y: 140, r: 70, at: 0 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@ensemble", action: shock }
+      - { at: "@signal", action: shrug }
+    texts:
+      - { at: "@ensemble", text: "TOUS EN MÊME TEMPS", style: shout, x: 1150, y: 260, rotate: -4 }
+    narration: "Sur la Grande Barrière de corail, des coraux libèrent leurs œufs *ensemble*, la même nuit, quelques jours après une pleine Lune. Le clair de Lune fait partie de leur signal. Sans Lune, plus de rendez-vous."
+
+  # ------------------------------------------------------------- les marées
+  - id: tides
+    chapter: "Des marées trois fois plus faibles"
+    transition: whip
+    background: { type: ocean, horizon: 560, beach: true }
+    bixStart: [400, 820]
+    props:
+      - { type: tide, x0: 0, x1: 1920, from: 760, to: 900, at: "@faibles", dur: 2.2, marker: true }
+      - { type: moon, x: 1500, y: 220, r: 90, grow: [90, 0], at: "@Sans", dur: 0.6 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@Sans", action: shock }
+      - { at: "@faibles", action: point }
+    texts:
+      - { at: "@trois", text: "3× PLUS FAIBLES", style: shout, x: 1150, y: 260, rotate: -5 }
+    narration: "Deuxième changement, et il est énorme : les marées. Ce qui fait monter la mer deux fois par jour, c'est surtout la Lune. Sans elle, les marées seraient environ *trois* fois plus faibles."
+
+  - id: sun-tides
+    background: { type: space, tint: purple }
+    bixStart: [380, 880]
+    props:
+      - { type: sun, x: 1500, y: 360, r: 150 }
+      - { type: earth, x: 900, y: 420, r: 160, spin: 0.08 }
+      - { type: bars, at: "@Soleil", x: 1150, y: 830, w: 520, h: 230, values: [100, 46], labels: ["Lune", "Soleil"], colors: ["#d9deec", "#ffd447"] }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@Soleil", action: point }
+      - { at: "@moitié", action: shrug }
+    texts:
+      - { at: "@moitié", text: "≈ 46 %", style: label, x: 1500, y: 140, color: "#ff7a1a" }
+    narration: "Le Soleil aussi tire sur les océans, mais sa force de marée fait à peine moins de la *moitié* de celle de la Lune. Il resterait donc de petites marées. Juste beaucoup plus timides."
+
+  - id: shore-life
+    background: { type: ocean, horizon: 560, beach: true }
+    bixStart: [400, 820]
+    props:
+      - { type: tide, x0: 0, x1: 1920, from: 900, to: 900 }
+      - { type: bird, kind: pigeon, from: [2100, 300], to: [-200, 340], at: "@oiseaux", dur: 3, s: 0.8 }
+    bix:
+      - { at: 0, action: sit }
+      - { at: "@crabes", action: point }
+      - { at: "@cuisine", action: facepalm }
+    texts:
+      - { at: "@crabes", text: "crabes · moules · oiseaux", style: label, x: 1150, y: 300, color: "#3fcf6e" }
+    narration: "Et toute la vie des bords de mer, celle qui vit entre la marée haute et la marée basse, serait bouleversée. Crabes, moules, oiseaux qui viennent y manger : leur cuisine rétrécirait d'un coup."
+
+  # ------------------------------------------------------------- la danse
+  - id: barycenter
+    chapter: "La Terre arrête de danser"
+    transition: iris
+    background: { type: space, tint: blue }
+    bixStart: [360, 900]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 1050, y: 520, r: 210, spin: 0.08 }
+      - { type: orbit, x: 1050, y: 520, rx: 620, ry: 230, body: moon, r: 60, period: 7 }
+      - { type: ring, at: "@point", x: 1130, y: 520, r: 26, color: "#ff6fb5" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@point", action: point }
+      - { at: "@valse", action: laugh }
+    texts:
+      - { at: "@kilomètres", text: "4 670 km du centre", style: label, x: 1100, y: 170, color: "#ff6fb5" }
+    narration: "Troisième effet, plus discret. La Lune ne tourne pas autour du centre de la Terre. Les deux tournent autour d'un *point* commun, à environ {4 670 kilomètres|quatre mille six cent soixante-dix kilomètres} du centre de la Terre. La Terre fait donc une petite valse, chaque mois."
+
+  - id: no-waltz
+    background: { type: space, tint: blue }
+    bixStart: [360, 900]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 1050, y: 520, r: 210, spin: 0.08, face: smile }
+    bix:
+      - { at: 0, action: shrug }
+      - { at: "@valse", action: wave }
+    narration: "Sans Lune, fini la valse. La Terre tournerait toute seule, bien droite autour du Soleil. Personne ne s'en rendrait compte. Mais les astronomes, eux, le verraient tout de suite."
+
+  # ------------------------------------------------------------- les jours
+  - id: day-length
+    chapter: "Des journées plus courtes ?"
+    transition: whip
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: clock, x: 1350, y: 420, r: 170, time: "18:00", speed: 2, at: "@heures" }
+      - { type: board, at: "@freine", x: 960, y: 335, w: 700, h: 360, title: "La Lune freine la Terre", size: 44, step: 0.9,
+          lines: ["+ ~1,8 ms par siècle", "Il y a 1,4 milliard d'années :", "une journée ≈ 18 heures"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@freine", action: point }
+      - { at: "@heures", action: shock }
+    narration: "Et nos journées ? Avec ses marées, la Lune *freine* la rotation de la Terre. Chaque siècle, la journée s'allonge de presque deux millisecondes. Il y a {1,4 milliard|un virgule quatre milliard} d'années, une journée durait environ dix-huit heures."
+
+  - id: brakes-off
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: cactus, x: 1500, y: 760, s: 1.1, mood: shock, at: 0 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@presque", action: shrug }
+      - { at: "@millions", action: laugh }
+    texts:
+      - { at: "@presque", text: "Freinage presque coupé", style: label, x: 1100, y: 280, color: "#ff7a1a" }
+    narration: "Sans Lune, ce frein serait *presque* coupé. Le Soleil freinerait encore un peu, mais beaucoup moins. Les journées s'allongeraient bien plus lentement. Pas de quoi rater ton réveil, rassure-toi : ça se joue sur des millions d'années."
+
+  # ------------------------------------------------------------- l'inclinaison
+  - id: tilt
+    chapter: "Le vrai danger : la Terre qui penche"
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [360, 900]
+    bixScale: 0.85
+    props:
+      - { type: sun, x: 220, y: 280, r: 110 }
+      - { type: earth, x: 1150, y: 520, r: 260, spin: 0.08, tilt: -23 }
+      - { type: arrow, at: "@saisons", from: [1150, 180], to: [1250, 860], bend: 0, color: "#ff6fb5" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@penchée", action: point }
+      - { at: "@stable", action: cheer }
+    texts:
+      - { at: "@degrés", text: "23,4°", style: big, x: 1500, y: 260 }
+    narration: "Mais le vrai danger se cache sur le très long terme. La Terre est *penchée* de {23,4 degrés|vingt-trois virgule quatre degrés}. C'est cette inclinaison qui fait les saisons. Et la Lune aide à la garder bien stable."
+
+  - id: chaos
+    background: { type: space, tint: purple }
+    bixStart: [360, 900]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 1150, y: 520, r: 260, spin: 0.08, tilt: -40 }
+      - { type: board, at: "@débattent", x: 1150, y: 760, w: 760, h: 230, size: 40, step: 0.6, title: "Sans Lune ?", lines: ["1993 : variations chaotiques", "2012 : plus lent, plus modéré"] }
+    bix:
+      - { at: 0, action: scared }
+      - { at: "@chaotique", action: shock }
+      - { at: "@débattent", action: think }
+    texts:
+      - { at: "@chaotique", until: "@chaotique+1.5", text: "CHAOS ?!", style: shout, x: 1150, y: 220, rotate: -6 }
+    narration: "Sans elle, l'inclinaison pourrait varier beaucoup plus. En 1993, des astronomes ont même calculé qu'elle pourrait devenir *chaotique*. Depuis, d'autres études pensent que ce serait plus lent et plus modéré. Les scientifiques en débattent encore."
+
+  - id: seasons
+    background: { type: land, mood: sunset }
+    bixStart: [700, 820]
+    props:
+      - { type: gauge, x: 1350, y: 520, r: 170, from: 20, to: 95, max: 100, at: "@étés", dur: 2.5, label: "saisons" }
+      - { type: frost, x: 1350, y: 520, r: 220, count: 14, at: "@hivers" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@étés", action: shock }
+      - { at: "@hivers", action: scared }
+      - { at: "@millénaires", action: shrug }
+    narration: "Ça pourrait vouloir dire des étés plus brûlants, et des hivers plus glacials, qui changent au fil des millénaires. Pas demain matin. Mais pour la vie sur Terre, sur le long terme, ce serait un vrai bouleversement."
+
+  # ------------------------------------------------------------- les éclipses
+  - id: eclipses
+    chapter: "Adieu les éclipses"
+    transition: whip
+    background: { type: sky, mood: day, sun: false }
+    bixStart: [420, 820]
+    props:
+      - { type: sun, x: 1250, y: 380, r: 160 }
+      - { type: moon, x: 1250, y: 380, r: 160, grow: [0, 160], at: "@éclipses", dur: 1.2 }
+      - { type: badge, at: "@400", x: 1650, y: 760, r: 110, text: "×400", color: "#ffd447" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@éclipses", action: shock }
+      - { at: "@pile", action: cheer }
+    narration: "Et puis, adieu les éclipses de Soleil. Il y a une coïncidence incroyable : le Soleil est environ {400|quatre cents} fois plus large que la Lune, mais aussi environ {400|quatre cents} fois plus loin. C'est pour ça qu'elle peut le cacher *pile*."
+
+  - id: origin
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [360, 900]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 1150, y: 560, r: 200, spin: 0.05 }
+      - { type: boom, at: "@percuté", x: 1000, y: 470 }
+      - { type: moon, x: 1600, y: 260, r: 60, at: "@former" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@percuté", action: shock }
+      - { at: "@former", action: point }
+    texts:
+      - { at: "@milliards", text: "≈ 4,5 MILLIARDS D'ANNÉES", style: label, x: 1150, y: 170, color: "#8a5cff" }
+    narration: "D'ailleurs, d'où vient-elle ? L'idée la plus acceptée : il y a environ {4,5 milliards|quatre virgule cinq milliards} d'années, un astre de la taille de Mars aurait *percuté* la jeune Terre. Les débris se seraient rassemblés… pour former la Lune."
+
+  # ------------------------------------------------------------- le retournement
+  - id: leaving
+    chapter: "Le plus fou : elle s'en va déjà"
+    transition: iris
+    background: { type: moon }
+    bixStart: [520, 860]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 1700, y: 220, r: 120, spin: 0.06 }
+      - { type: arrow, at: "@éloigne", from: [900, 520], to: [1300, 520], color: "#ff6fb5", label: "3,8 cm / an", labelX: 1100, labelY: 470 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@éloigne", action: shock }
+      - { at: "@ongles", action: laugh }
+    texts:
+      - { at: "@centimètres", text: "3,8 cm PAR AN", style: big, x: 1100, y: 300 }
+    narration: "Le plus fou ? La Lune s'*éloigne* déjà. D'environ {3,8 centimètres|trois virgule huit centimètres} par an, à peu près la vitesse à laquelle poussent tes ongles."
+
+  - id: lasers
+    background: { type: moon }
+    bixStart: [520, 860]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 1450, y: 260, r: 130, spin: 0.06 }
+      - { type: arrow, at: "@lasers", from: [1380, 340], to: [980, 800], color: "#ff4d5e", width: 6 }
+      - { type: item, item: book, x: 980, y: 830, s: 1.4, at: "@miroirs" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@miroirs", action: point }
+      - { at: "@cinquante", action: cheer }
+    texts:
+      - { at: "@miroirs", text: "Miroirs Apollo", style: label, x: 980, y: 640, color: "#8a5cff" }
+    narration: "Comment on le sait ? Les missions Apollo ont laissé des *miroirs* là-haut. Depuis plus de cinquante ans, des lasers tirés depuis la Terre rebondissent dessus, et mesurent la distance au centimètre près."
+
+  # ------------------------------------------------------------- fin au labo
+  - id: lab-ending
+    chapter: "Merci, la Lune"
+    transition: whip
+    background: { type: lab }
+    bixStart: [520, 820]
+    props:
+      - { type: cactus, x: 1350, y: 760, s: 1.1, mood: happy, at: 0 }
+      - { type: moon, x: 960, y: 260, r: 110, face: smile, at: "@merci" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@échapper", action: shrug }
+      - { at: "@merci", action: wave }
+    narration: "Rassure-toi : elle ne va pas s'échapper. Le Soleil aura changé bien avant, dans des milliards d'années. Alors ce soir, lève les yeux… et dis-lui *merci*."
+
+# ======================================================================= Shorts (règles TikTok)
+# 6 Shorts différents : 3 coupés de l'épisode (kind: cut), 3 mini-histoires (kind: standalone).
+# Chaque Short : la phrase la plus forte à la première seconde, 15–25 s, la dernière phrase
+# reboucle sur la première, une question à la fin (commentaires), sous-titres dès l'image 0.
+tiktokShorts:
+  - n: 1
+    kind: cut
+    slug: marees-trois-fois
+    hook: "Sans Lune, la mer s'endort"
+    question: "Tu habites près de la mer ?"
+    tiktokCaption: "Sans la Lune, les marées seraient environ trois fois plus faibles 🌊 #lune #ocean #science #etsi"
+    youtubeTitle: "Sans la Lune, les marées s'effondrent"
+    scenes:
+      - like: tides
+        narration: "Sans la Lune, les marées seraient environ *trois* fois plus faibles."
+        props:
+          - { type: tide, x0: 0, x1: 1920, from: 760, to: 900, at: 0.6, dur: 2.0, marker: true }
+          - { type: moon, x: 1500, y: 220, r: 90 }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@faibles", action: point }
+        texts:
+          - { at: "@trois", text: "3× PLUS FAIBLES", style: shout, rotate: -5 }
+      - like: sun-tides
+        narration: "Ce qui soulève la mer deux fois par jour, c'est surtout elle. Le Soleil tire aussi, mais moins de *moitié* autant. Il ne resterait que de toutes petites marées."
+        bix:
+          - { at: 0, action: point }
+          - { at: "@moitié", action: shrug }
+        texts:
+          - { at: "@moitié", text: "≈ 46 %", style: label, color: "#ff7a1a" }
+      - like: shore-life
+        narration: "Crabes, moules, oiseaux du bord de mer : leur garde-manger rétrécirait d'un coup."
+        props:
+          - { type: tide, x0: 0, x1: 1920, from: 900, to: 900 }
+        bix:
+          - { at: 0, action: facepalm }
+        texts:
+          - { at: "@Crabes", text: "crabes · moules · oiseaux", style: label, color: "#3fcf6e" }
+      - like: tides
+        narration: "Alors, retiens bien ça :"
+        props:
+          - { type: tide, x0: 0, x1: 1920, from: 760, to: 760 }
+          - { type: moon, x: 1500, y: 220, r: 90 }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 2
+    kind: cut
+    slug: nuits-cent-fois
+    hook: "Des nuits 100 fois plus noires"
+    question: "Tu as peur du noir ?"
+    tiktokCaption: "Une nuit de pleine Lune peut être jusqu'à 100 fois plus claire qu'une nuit sans Lune 🌕 #lune #nuit #science #etsi"
+    youtubeTitle: "Sans la Lune, des nuits 100 fois plus noires"
+    scenes:
+      - like: dark-nights
+        narration: "Sans la Lune, une nuit pourrait être *cent* fois plus noire."
+        props:
+          - { type: tree, x: 1780, y: 820, s: 0.9 }
+          - { type: bars, x: 1300, y: 760, w: 560, h: 360, values: [100, 1], labels: ["Pleine Lune", "Sans Lune"], colors: ["#ffd447", "#4a4f6e"] }
+        bix:
+          - { at: 0, action: scared }
+          - { at: "@noire", action: shock }
+        texts:
+          - { at: "@cent", text: "100× PLUS SOMBRE", style: shout, rotate: -5 }
+      - like: city-lights
+        narration: "En ville, on a des lampadaires. Mais beaucoup d'animaux se règlent sur la Lune."
+        bix:
+          - { at: 0, action: present }
+          - { at: "@animaux", action: shock }
+        texts:
+          - { at: "@animaux", text: "Beaucoup d'animaux", style: label, color: "#22d3c5" }
+      - like: coral
+        narration: "Sur la Grande Barrière, des coraux pondent tous *ensemble*, quelques nuits après la pleine Lune. Le clair de Lune fait partie du signal. Sans elle, plus de rendez-vous."
+        props:
+          - { type: coral, x: 1150, y: 900, w: 800, spawnAt: "@ensemble", count: 80 }
+        bix:
+          - { at: 0, action: float }
+          - { at: "@ensemble", action: shock }
+        texts:
+          - { at: "@ensemble", text: "TOUS ENSEMBLE", style: shout, rotate: -4 }
+      - like: dark-nights
+        narration: "Et chaque soir, dans le noir total…"
+        props:
+          - { type: tree, x: 1380, y: 820, s: 1.0 }
+        bix:
+          - { at: 0, action: scared }
+        texts: []
+
+  - n: 3
+    kind: cut
+    slug: elle-s-en-va
+    hook: "La Lune nous quitte déjà"
+    question: "Tu l'avais remarqué ?"
+    tiktokCaption: "La Lune s'éloigne de la Terre d'environ 3,8 cm par an, mesuré au laser 🚀 #lune #espace #apollo #science"
+    youtubeTitle: "La Lune s'éloigne de nous chaque année"
+    scenes:
+      - like: leaving
+        narration: "La Lune s'*éloigne* de nous. En ce moment même, pendant que tu regardes cette vidéo."
+        props:
+          - { type: earth, x: 1450, y: 260, r: 130, spin: 0.06 }
+          - { type: arrow, from: [900, 520], to: [1300, 520], color: "#ff6fb5", label: "3,8 cm / an", labelX: 1100, labelY: 470 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@éloigne", text: "ELLE S'EN VA !", style: shout, rotate: -5 }
+      - like: leaving
+        narration: "Environ {3,8 centimètres|trois virgule huit centimètres} par an. À peu près la vitesse de tes ongles."
+        props:
+          - { type: earth, x: 1450, y: 260, r: 130, spin: 0.06 }
+        bix:
+          - { at: 0, action: point }
+          - { at: "@ongles", action: laugh }
+        texts:
+          - { at: "@centimètres", text: "3,8 cm PAR AN", style: big }
+      - like: lasers
+        narration: "Comment on le sait ? Des lasers rebondissent sur des *miroirs* laissés par Apollo. Depuis plus de cinquante ans, au centimètre près."
+        bix:
+          - { at: 0, action: present }
+          - { at: "@miroirs", action: point }
+        texts:
+          - { at: "@miroirs", text: "Miroirs Apollo", style: label, color: "#8a5cff" }
+      - like: leaving
+        narration: "Verdict des lasers :"
+        props:
+          - { type: earth, x: 1450, y: 260, r: 130, spin: 0.06 }
+        bix:
+          - { at: 0, action: float }
+        texts: []
+
+  - n: 4
+    kind: standalone
+    slug: eclipse-400
+    hook: "Une coïncidence de 400 fois"
+    question: "Tu as déjà vu une éclipse ?"
+    tiktokCaption: "Le Soleil est environ 400 fois plus large que la Lune… et 400 fois plus loin ☀️🌑 #eclipse #espace #science #etsi"
+    youtubeTitle: "La coïncidence folle des éclipses"
+    scenes:
+      - like: eclipses
+        narration: "Le Soleil est {400|quatre cents} fois plus large que la Lune."
+        props:
+          - { type: sun, x: 1250, y: 380, r: 160 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@large", text: "×400 PLUS LARGE", style: shout, rotate: -5 }
+      - like: eclipses
+        narration: "Mais il est aussi environ {400|quatre cents} fois plus *loin*. Résultat : vus d'ici, ils ont presque exactement la même *taille* dans le ciel."
+        props:
+          - { type: sun, x: 1250, y: 380, r: 160 }
+          - { type: badge, x: 1650, y: 760, r: 110, text: "×400", color: "#ffd447" }
+        bix:
+          - { at: 0, action: point }
+          - { at: "@taille", action: think }
+        texts:
+          - { at: "@loin", text: "×400 PLUS LOIN", style: label, color: "#ff7a1a" }
+      - like: eclipses
+        narration: "C'est pour ça que la Lune peut le cacher *pile*, pendant une éclipse totale."
+        props:
+          - { type: sun, x: 1250, y: 380, r: 160 }
+          - { type: moon, x: 1250, y: 380, r: 160, grow: [0, 160], at: "@pile", dur: 1.0 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@pile", action: cheer }
+      - like: eclipses
+        narration: "Pur hasard ? Oui. Alors retiens ça :"
+        props:
+          - { type: sun, x: 1250, y: 380, r: 160 }
+        bix:
+          - { at: 0, action: shrug }
+        texts: []
+
+  - n: 5
+    kind: standalone
+    slug: journee-18-heures
+    hook: "Une journée durait 18 heures"
+    question: "Tu ferais quoi d'une heure en plus ?"
+    tiktokCaption: "Il y a 1,4 milliard d'années, une journée sur Terre durait environ 18 heures ⏰ #terre #lune #science #etsi"
+    youtubeTitle: "Avant, une journée durait 18 heures"
+    scenes:
+      - like: day-length
+        narration: "Il y a {1,4 milliard|un virgule quatre milliard} d'années, une journée durait environ dix-huit heures."
+        props:
+          - { type: clock, x: 1350, y: 420, r: 170, time: "18:00", speed: 2 }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@heures", action: point }
+        texts:
+          - { at: "@heures", text: "18 HEURES", style: big }
+      - like: day-length
+        narration: "Le coupable ? La Lune. Avec ses marées, elle *freine* la rotation de la Terre."
+        props:
+          - { type: clock, x: 1350, y: 420, r: 170, time: "18:00", speed: 0.5 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@freine", action: point }
+        texts:
+          - { at: "@freine", text: "LA LUNE FREINE", style: shout, rotate: -5 }
+      - like: brakes-off
+        narration: "Et ça continue : aujourd'hui encore, la journée s'allonge de presque deux millisecondes par siècle. Pas de quoi rater ton réveil."
+        props:
+          - { type: cactus, x: 1500, y: 760, s: 1.1, mood: shock }
+        bix:
+          - { at: 0, action: think }
+          - { at: "@millisecondes", action: laugh }
+        texts:
+          - { at: "@millisecondes", text: "+ ~1,8 ms / siècle", style: label, color: "#ff7a1a" }
+      - like: day-length
+        narration: "Alors, souviens-toi :"
+        props:
+          - { type: clock, x: 1350, y: 420, r: 170, time: "18:00", speed: 2 }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 6
+    kind: standalone
+    slug: terre-qui-danse
+    hook: "La Terre danse la valse"
+    question: "Tu le savais ?"
+    tiktokCaption: "La Terre et la Lune tournent autour d'un point commun, à 4 670 km du centre de la Terre 🌍🌙 #terre #lune #espace #science"
+    youtubeTitle: "La Terre fait une valse avec la Lune"
+    scenes:
+      - like: barycenter
+        narration: "Chaque mois, la Terre fait une petite *valse*."
+        props:
+          - { type: earth, x: 1050, y: 520, r: 210, spin: 0.08 }
+          - { type: orbit, x: 1050, y: 520, rx: 620, ry: 230, body: moon, r: 60, period: 7 }
+        bix:
+          - { at: 0, action: laugh }
+        texts:
+          - { at: "@valse", text: "UNE VALSE ?!", style: shout, rotate: -5 }
+      - like: barycenter
+        narration: "La Lune ne tourne pas autour du centre de la Terre. Les deux tournent autour d'un *point* commun."
+        props:
+          - { type: earth, x: 1050, y: 520, r: 210, spin: 0.08 }
+          - { type: orbit, x: 1050, y: 520, rx: 620, ry: 230, body: moon, r: 60, period: 7 }
+          - { type: ring, x: 1130, y: 520, r: 26, color: "#ff6fb5", at: "@point" }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@point", action: point }
+        texts: []
+      - like: barycenter
+        narration: "Il est à environ {4 670 kilomètres|quatre mille six cent soixante-dix kilomètres} du centre de la Terre. Donc encore à l'*intérieur* de la planète, à environ {1 700 kilomètres|mille sept cents kilomètres} sous la surface."
+        props:
+          - { type: earth, x: 1050, y: 520, r: 210, spin: 0.08 }
+          - { type: ring, x: 1130, y: 520, r: 26, color: "#ff6fb5" }
+        bix:
+          - { at: 0, action: point }
+          - { at: "@intérieur", action: shock }
+        texts:
+          - { at: "@kilomètres", text: "4 670 km", style: big }
+      - like: barycenter
+        narration: "Et donc, en ce moment :"
+        props:
+          - { type: earth, x: 1050, y: 520, r: 210, spin: 0.08 }
+          - { type: orbit, x: 1050, y: 520, rx: 620, ry: 230, body: moon, r: 60, period: 7 }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+thumbnail:
+  title: ["LA LUNE", "A DISPARU"]
+  accent: 0
+  subtitle: "et si ?"
+  background: { type: space, tint: blue }
+  props:
+    - { type: earth, x: 1180, y: 700, r: 280, face: shock }
+    - { type: ring, x: 1560, y: 230, r: 120, color: "#ff6fb5" }
+  bix: { action: shock, x: 1620, y: 1230, scale: 2.4, facing: -1, t: 0.45 }
+
+sources:
+  - "NASA Science, Moon Facts (distance moyenne 384 400 km; la Lune s'éloigne d'environ 3,8 cm par an): https://science.nasa.gov/moon/facts/"
+  - "NOAA National Ocean Service, What causes tides? (force de marée du Soleil ≈ 46 % de celle de la Lune): https://oceanservice.noaa.gov/education/tutorial_tides/tides02_cause.html"
+  - "Kyba, C. C. M., Mohar, A. & Posch, T. (2017). How bright is moonlight? Astronomy & Geophysics 58(1), 1.31–1.32 (pleine Lune ≈ 0,1–0,3 lux; nuit sans Lune ≈ 0,001–0,002 lux): https://doi.org/10.1093/astrogeo/atx025"
+  - "Kaniewska, P. et al. (2015). Signaling cascades and the importance of moonlight in coral broadcast mass spawning. eLife 4:e09991: https://doi.org/10.7554/eLife.09991"
+  - "Australian Institute of Marine Science, Coral spawning (ponte synchronisée après la pleine Lune, Grande Barrière): https://www.aims.gov.au/research-topics/marine-life/coral-spawning"
+  - "NOAA, Intertidal zone (la vie entre marée haute et marée basse): https://oceanservice.noaa.gov/facts/intertidal-zone.html"
+  - "NASA Space Place, What is a barycenter? (barycentre Terre-Lune à ~4 670 km du centre de la Terre, ~1 700 km sous la surface): https://spaceplace.nasa.gov/barycenter/"
+  - "Stephenson, F. R., Morrison, L. V. & Hohenkerk, C. Y. (2016). Measurement of the Earth's rotation: 720 BC to AD 2015. Proc. R. Soc. A 472: 20160404 (+1,8 ms par siècle): https://doi.org/10.1098/rspa.2016.0404"
+  - "Meyers, S. R. & Malinverno, A. (2018). Proterozoic Milankovitch cycles and the history of the solar system. PNAS 115(25), 6363–6368 (journée ≈ 18 h il y a 1,4 milliard d'années): https://doi.org/10.1073/pnas.1717689115"
+  - "Laskar, J., Joutel, F. & Robutel, P. (1993). Stabilization of the Earth's obliquity by the Moon. Nature 361, 615–617: https://doi.org/10.1038/361615a0"
+  - "Lissauer, J. J., Barnes, J. W. & Chambers, J. E. (2012). Obliquity variations of a moonless Earth. Icarus 217(1), 77–87: https://doi.org/10.1016/j.icarus.2011.10.013"
+  - "NASA Science, Earth facts (axe incliné d'environ 23,4°, à l'origine des saisons): https://science.nasa.gov/earth/facts/"
+  - "Kronfeld-Schor, N. et al. (2013). Chronobiology by moonlight. Proc. R. Soc. B 280: 20123088 (de nombreux animaux règlent leur activité sur la Lune): https://doi.org/10.1098/rspb.2012.3088"
+  - "NASA Science, Eclipses: Solar eclipses (le Soleil ≈ 400 fois plus large et ≈ 400 fois plus loin que la Lune): https://science.nasa.gov/eclipses/types/"
+  - "NASA Science, Moon formation (hypothèse de l'impact géant, il y a environ 4,5 milliards d'années, avec un astre de la taille de Mars): https://science.nasa.gov/moon/formation/"
+  - "NASA, Apollo 11 Lunar Laser Ranging Retroreflector, toujours utilisé 50 ans plus tard: https://www.nasa.gov/missions/apollo/apollo-11-lunar-laser-ranging-experiment/"

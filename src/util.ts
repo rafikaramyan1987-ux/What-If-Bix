@@ -34,5 +34,5 @@ export const str = (v: unknown, d: string): string => (typeof v === 'string' ? v
 export const vec = (v: unknown, d: [number, number]): [number, number] =>
   Array.isArray(v) && v.length === 2 && typeof v[0] === 'number' ? [v[0], v[1] as number] : d;
 
-export const formatNumber = (v: number, decimals = 0) =>
-  v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+export const formatNumber = (v: number, decimals = 0, lang: 'en' | 'fr' = 'en') =>
+  v.toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });

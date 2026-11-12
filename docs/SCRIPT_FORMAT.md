@@ -6,6 +6,7 @@ chapters, sources and estimated lengths without rendering.
 
 ## Stage and timing basics
 
+- Bix 2.0 stands about 378 px tall at scale 1 (big head ≈ 55% of that); use `bixScale` 0.85–1.0 for most scenes.
 - The stage is **1920 × 1080**. `x` grows to the right, `y` grows **down**. The ground line in
   `land`, `lab`, `city`, `night-city` and `bedroom` is at **y = 820**. Bix's position is the point
   between his feet. At scale 1 he is about 330 px tall.
@@ -37,6 +38,7 @@ title: "What if you never slept for 30 days?"   # YouTube title, ≤ 100 chars
 description: |                     # first lines of the YouTube description (chapters/sources/credits are appended)
   ...
 tags: [science, what if, ...]      # ≥ 5
+character: bix2                    # bix2 = Bix 2.0 "Chibi" (default since episode 2); bix1 = original thin Bix
 voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
 music: { style: curious, gain: 0.2, duck: 0.55, seed: 7 }   # styles: curious | tense | dreamy; change seed per episode
 introAfter: cold-open              # scene id after which the 2 s intro sting plays (default: first scene)
@@ -86,7 +88,7 @@ Cue fields: `at`, `action`, `from: [x,y]`, `to: [x,y]`, `dur` (travel seconds), 
 upward arc while travelling), `facing`, `scale`, `hold` (item in hand), `params: { panic: 0..1 }`
 (fly), `hidden: true`. Walk/run become idle when they arrive. Jump lasts 0.95 s.
 
-Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop book coin`.
+Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop book coin egg`.
 
 ### On-screen text styles
 
@@ -107,6 +109,7 @@ Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop boo
 | `ocean` | horizon at `horizon` (default 560), `beach: true` |
 | `moon` | lunar surface + black sky (add an `earth` prop to show Earth) |
 | `plain` | `color` |
+| `ice` | Antarctic sea ice: `mood: night\|day aurora: false blizzard` (snow speed, px/s) |
 
 ### Props (all fields optional unless noted; `at` = appear time with a pop)
 
@@ -151,6 +154,16 @@ Items (`hold`, `item`, `flyer`): `sandwich mug phone clipboard pillow laptop boo
 | `badge` | `x y r text sub color rot at` |
 | `vehicle` | `kind: car\|bus\|plane from to at dur s color` |
 | `confetti` | `at dur count` |
+| `cactus` | **Newton**, Bix's lab cactus (recurring): `x y s mood: happy\|shock\|sleepy\|wink float: true floatAt label: false at` |
+| `bird` | `kind: falcon\|vulture\|pigeon\|duck\|frigate from to at dur s sleepy: true` |
+| `dolphin` | `x y s facing eye: open\|closed eyeAt eye2 from to moveAt dur blowAt label at` |
+| `penguin` | emperor penguin: `x y s facing egg: true chick: true mood: calm\|sleepy from to moveAt dur at` |
+| `huddle` | penguin huddle: `x y w h count seed wave` (shuffle speed) `heat: true heatAt at` |
+| `octopus` | octopus (front view): `x y s facing color color2 mood: calm\|shock\|happy swim: true xray: true` (3 beating hearts + blue vessels) `highlight: gill\|main pauseAt pauseFor` (main heart pauses) `from to moveAt dur at` |
+| `vial` | test tube of blood: `x y s rot color: red\|blue\|<css> fill (0–1) label at` |
+| `horseshoe` | horseshoe crab, top view: `x y s rot blood: true` (blue drop) `at` |
+| `halfbrain` | brain halves, one asleep: `x y s asleep: left\|right\|both\|none swapAt swaps: [..] bothAt labels: false at` |
+| `frost` | `x y r count at seed` (ice crystals) |
 | `crack` | `x y w at` |
 
 ### SFX names
@@ -211,3 +224,46 @@ university pages, encyclopedias. They are printed in the video description.
 YouTube demonetizes "mass-produced or repetitive" content. Every episode must have its own
 structure, gags, scene list and outro. `validate.mjs --all` fails if two episodes share more than 8%
 of their narration word-trigrams, use the same background sequence, or reuse an outro.
+
+
+## Shorts layout (vertical 9:16)
+
+Shorts are not a crop of the long video. Each scene is re-laid out for the vertical frame (`src/scene/shortLayout.ts`):
+
+- **presenter** (scenes with key objects such as `dolphin`, `halfbrain`, `penguin`, `octopus`, charts and badges): the key objects visible at that moment are scaled to fill the subject zone under the hook (x 100–860, y 540–1000) and centred under the hook text. Bix is drawn whole at the presenter spot (lower left, feet at 215, 1275), inside the safe zone.
+- **follow** (no key objects): the camera frames Bix himself, including where he moves in the next and previous half second.
+- The framing blends smoothly when key objects appear or leave, and across scene changes. On-screen texts sit in one band between the hook and the subject. Captions are at most two lines, below the presenter.
+- Props that pop in at the very start of a Short are shown fully from frame 0.
+- Per-scene override: `shortLayout: { mode: presenter|follow, subject: [x0, y0, x1, y1] }` (subject = a stage box to frame).
+
+**Framing check:** `build.mjs` refuses to render Shorts if, at any time in the first 3 s, Bix or a character prop (`pal`, `penguin`, `dolphin`, `octopus`) is not whole inside the safe zone, or another key object is cut by the frame edge. Run it alone with `--only check`. Use `--only strips` to render first-3-second strips, and `--debug-boxes` to draw the boxes.
+
+
+## French episodes (MarMila)
+
+Add `language: fr` and `channel: marmila`. Everything else is the same format, plus:
+
+```yaml
+language: fr
+channel: marmila
+hashtags: ["#etsi", "#lune", "#espace", "#science"]   # 3–5, at the end of the description
+pinnedQuestion: "Sans la Lune, qu'est-ce qui te manquerait le plus ?"
+tiktokShorts:                       # exactly 6, instead of `shorts:`
+  - n: 1
+    kind: cut                       # cut (from the episode) | standalone (mini-story on the same topic)
+    slug: marees-trois-fois
+    hook: "Sans Lune, la mer s'endort"          # ≤ 6 words, on screen from frame 0
+    question: "Tu habites près de la mer ?"      # last 2 s + pinned comment
+    tiktokCaption: "… #lune #ocean #science"     # description text + 3–4 hashtags (#Shorts is added)
+    youtubeTitle: "Sans la Lune, les marées s'effondrent"   # ≤ 60 characters
+    scenes:                         # like: <scene id> + overrides; the last scene reuses the first one (loop)
+      - { like: tides, narration: "Sans la Lune, les marées seraient environ *trois* fois plus faibles." }
+```
+
+- Write normal French: the factory adds the typography (espace fine insécable before `? ! ;`, espace insécable before
+  `:` and inside `« »`, between digit groups and before units, typographic apostrophes) to captions, on-screen texts,
+  titles and descriptions. The voice gets plain text.
+- `@word` cues accept accents and elisions: `"@éloigne"` matches *s'éloigne*, `"@animaux"` matches *d'animaux*, and
+  `"@kilomètres"` matches `{384 400 kilomètres|…}`.
+- Write numbers the voice must read in words with `{shown|spoken}`.
+- Counters (`count:`) and charts format numbers the French way (384 400, 3,8).

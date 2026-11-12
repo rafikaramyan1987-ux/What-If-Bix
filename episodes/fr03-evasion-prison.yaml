@@ -1,0 +1,527 @@
+# MarMila — Épisode 3 (français)
+# Suite de l'épisode 2 : le Docteur Méga (personnage 100 % fictif) dans une prison fictive,
+# « la Forteresse », inspirée des prisons de très haute sécurité. L'histoire montre comment
+# fonctionnent les prisons modernes et les recherches. AUCUNE méthode d'évasion : le récit
+# saute volontairement le « comment » et se concentre sur ce qui se passe après.
+id: fr03-evasion-prison
+number: 3
+language: fr
+channel: marmila
+title: "Et si un génie s'évadait de la prison la plus sûre du monde ?"
+description: |
+  Le Docteur Méga, notre génie maléfique 100 % inventé, est enfermé dans la Forteresse, une prison de très haute sécurité. Un matin, sa cellule est vide.
+  Comment il est sorti ? On ne le dira pas, et ce n'est pas le sujet. Le sujet, c'est tout ce qui se met en marche juste après : les comptages, les chiens au flair 50 fois meilleur que le nôtre, les caméras thermiques, Interpol… et pourquoi l'histoire d'Alcatraz finit presque toujours de la même façon.
+tags: [et si, évasion, prison, haute sécurité, alcatraz, chien policier, caméra thermique, interpol, histoire fictive, marmila]
+hashtags: ["#etsi", "#evasion", "#prison", "#science"]
+pinnedQuestion: "À ton avis, combien de temps il tiendrait dehors ?"
+character: bix2
+music: { style: tense, gain: 0.18, duck: 0.55, seed: 303 }
+introAfter: empty-cell
+outro:
+  narration: "Et toi, tu aurais parié sur qui : le génie, ou l'équipe ? Réponds en commentaire, et abonne-toi à MarMila pour le prochain et si."
+  background: { type: night-city }
+
+scenes:
+  # ------------------------------------------------------------- ouverture
+  - id: cold-open
+    chapter: "La cellule est vide"
+    background: { type: night-city, mood: night }
+    bixStart: [420, 820]
+    props:
+      - { type: prison, x: 1250, y: 820, s: 1.0, alarmAt: "@vide", label: "LA FORTERESSE" }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@vide", action: shock }
+    texts:
+      - { at: "@génie", text: "ET SI UN GÉNIE S'ÉVADAIT ?", style: title, y: 160 }
+    camera: { zoom: [1.0, 1.05], focus: [1000, 560] }
+    sfx:
+      - { name: rumble, at: "@vide", gain: 0.5 }
+    narration: "Six heures du matin. Prison de la Forteresse. Le gardien ouvre la cellule du génie le plus dangereux du monde. Et la cellule est… *vide*."
+
+  - id: empty-cell
+    background: { type: night-city, mood: night }
+    bixStart: [420, 820]
+    props:
+      - { type: prison, x: 1250, y: 820, s: 1.0, alarmAt: 0 }
+      - { type: icon, icon: question, x: 1250, y: 300, s: 1.4, at: "@comment" }
+    bix:
+      - { at: 0, action: scared }
+      - { at: "@comment", action: shrug }
+      - { at: "@après", action: point }
+    narration: "Le Docteur Méga s'est évadé. *Comment* ? On ne le dira pas. Ce n'est pas un tuto, et de toute façon, ce n'est pas le plus intéressant. Le plus intéressant, c'est ce qui se passe *après*."
+
+  # ------------------------------------------------------------- la forteresse
+  - id: fortress
+    chapter: "La Forteresse"
+    transition: whip
+    background: { type: land, mood: day }
+    bixStart: [380, 820]
+    props:
+      - { type: prison, x: 1250, y: 820, s: 1.1, fences: 3 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@couches", action: point }
+    texts:
+      - { at: "@couches", text: "DES COUCHES ET DES COUCHES", style: label, x: 1250, y: 200, color: "#8a5cff" }
+    narration: "D'abord, la Forteresse. Elle s'inspire des vraies prisons de très haute sécurité, les « supermax ». La sécurité y est faite de *couches* : murs, grillages, tours, caméras, portes. Chaque couche suppose que la précédente peut lâcher."
+
+  - id: cameras
+    background: { type: city, mood: night }
+    bixStart: [380, 820]
+    props:
+      - { type: building, x: 1250, y: 820, w: 520, h: 560, color: "#8b93ad" }
+      - { type: icon, icon: check, x: 1100, y: 420, s: 1.0, at: "@caméras" }
+      - { type: icon, icon: check, x: 1400, y: 420, s: 1.0, at: "@sas" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@caméras", action: point }
+      - { at: "@sas", action: think }
+    narration: "À l'intérieur, des *caméras* regardent chaque couloir, jour et nuit. Les portes fonctionnent souvent comme un *sas* : la deuxième ne s'ouvre que quand la première est fermée. Et chaque mouvement de détenu est noté, minute par minute."
+
+  - id: cell-life
+    background: { type: plain, color: "#4a4f6e" }
+    bixStart: [600, 820]
+    props:
+      - { type: clock, x: 1300, y: 380, r: 160, time: "6:00", speed: 3 }
+      - { type: board, at: "@heures", x: 1300, y: 640, w: 640, h: 220, size: 42, step: 0.7, title: "Supermax", lines: ["≈ 23 h par jour en cellule", "meubles en béton"] }
+    bix:
+      - { at: 0, action: sit }
+      - { at: "@heures", action: shock }
+    texts:
+      - { at: "@heures", text: "23 H / 24", style: big, x: 1300, y: 180 }
+    narration: "Dans ce genre de prison, un détenu peut passer environ vingt-trois *heures* par jour seul dans sa cellule. Le lit, le bureau, même le tabouret sont souvent en béton, coulés dans le sol."
+
+  - id: counts
+    background: { type: plain, color: "#4a4f6e" }
+    bixStart: [600, 820]
+    props:
+      - { type: pal, x: 1250, y: 820, s: 0.85, facing: -1, seed: 4, hold: clipboard, actions: [{ at: 0, action: present }, { at: "@manque", action: shock }] }
+      - { type: icon, icon: warning, x: 1250, y: 330, s: 1.3, at: "@manque" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@manque", action: point }
+    narration: "Et les détenus sont *comptés* plusieurs fois par jour, et la nuit aussi. Un comptage qui ne tombe pas juste, et toute la prison se fige. C'est exactement ce qui vient de se passer. Il en *manque* un."
+
+  # ------------------------------------------------------------- l'alerte
+  - id: alarm
+    chapter: "L'alerte"
+    transition: whip
+    background: { type: night-city }
+    bixStart: [380, 820]
+    props:
+      - { type: prison, x: 1250, y: 820, s: 0.9, alarmAt: 0 }
+      - { type: phone, x: 1700, y: 520, s: 0.9, screen: map, at: "@prévient" }
+    bix:
+      - { at: 0, action: scared }
+      - { at: "@prévient", action: point }
+    texts:
+      - { at: "@cercle", text: "LE CERCLE SE REFERME", style: shout, x: 1150, y: 200, rotate: -4 }
+    narration: "En quelques minutes, l'alerte part. Les gardiens bouclent la prison, puis les environs. La police, la gendarmerie, les gares, les frontières : on les *prévient* tous. Un *cercle* se forme autour de la prison, et il se resserre."
+
+  # ------------------------------------------------------------- les chiens
+  - id: dogs
+    chapter: "Les chiens et leur super-flair"
+    transition: whip
+    background: { type: land, mood: day }
+    bixStart: [380, 820]
+    props:
+      - { type: dog, x: 1250, y: 820, s: 1.1, facing: -1, sniff: true }
+      - { type: pal, x: 1600, y: 820, s: 0.8, facing: -1, seed: 6, actions: [{ at: 0, action: idle }] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@millions", action: shock }
+    texts:
+      - { at: "@millions", text: "300 MILLIONS vs 6 MILLIONS", style: label, x: 1250, y: 220, color: "#ff7a1a" }
+    narration: "Premiers sur la piste : les chiens. Le nez d'un chien compte jusqu'à trois cents *millions* de récepteurs olfactifs. Le tien ? Environ six millions. Cinquante fois moins."
+
+  - id: dogs-2
+    background: { type: land, mood: day }
+    bixStart: [380, 820]
+    props:
+      - { type: dog, x: 900, y: 820, s: 1.1, facing: 1, sniff: true, to: [1550, 820], moveAt: "@piste", dur: 2.5 }
+    bix:
+      - { at: 0, action: point }
+      - { at: "@piste", action: run, from: [380, 820], to: [700, 820], dur: 1.6 }
+    narration: "Chacun de nous laisse derrière lui une traînée invisible : de minuscules particules de peau, des odeurs. Pour un chien entraîné, c'est une *piste*, aussi claire qu'une ligne tracée au sol."
+
+  # ------------------------------------------------------------- la nuit
+  - id: dogs-3
+    background: { type: land, mood: sunset }
+    bixStart: [380, 820]
+    props:
+      - { type: dog, x: 1250, y: 820, s: 1.1, facing: -1, sniff: true }
+      - { type: clock, x: 1600, y: 380, r: 120, time: "9:00", speed: 2 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@heures", action: shock }
+    narration: "Et cette piste ne s'efface pas tout de suite. Un bon chien pisteur peut la suivre des *heures* après le passage de quelqu'un. Le génie a beau avoir une longueur d'avance, son odeur, elle, traîne derrière."
+
+  - id: thermal
+    chapter: "La nuit ne cache plus rien"
+    transition: iris
+    background: { type: land, mood: night }
+    bixStart: [380, 820]
+    props:
+      - { type: helicopter, x: 1250, y: 230, s: 1.0, thermal: true, at: 0 }
+      - { type: tree, x: 1250, y: 820, s: 1.0 }
+      - { type: ring, at: "@chaleur", x: 1250, y: 760, r: 60, color: "#ff7a1a" }
+    bix:
+      - { at: 0, action: scared }
+      - { at: "@chaleur", action: point }
+    texts:
+      - { at: "@37", text: "37 °C", style: big, x: 1620, y: 560 }
+    narration: "La nuit, le génie pense se cacher. Mais un corps humain est à environ {37 degrés|trente-sept degrés}. Il brille en infrarouge. Depuis un hélicoptère, une caméra thermique voit cette *chaleur*, même dans le noir complet."
+
+  - id: thermal-2
+    background: { type: land, mood: night }
+    bixStart: [380, 820]
+    props:
+      - { type: helicopter, x: 1350, y: 230, s: 1.0, light: true, from: [1600, 230], to: [1150, 230], at: 0, dur: 3 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@jamais", action: shrug }
+    narration: "Et les équipes se relaient. Les chercheurs dorment, mangent, changent de quart. Le fugitif, lui, est seul. Il ne peut *jamais* vraiment se reposer."
+
+  # ------------------------------------------------------------- tout le monde regarde
+  - id: everyone
+    chapter: "Tout le monde le cherche"
+    transition: whip
+    background: { type: city }
+    bixStart: [380, 820]
+    props:
+      - { type: crowd, x: 1250, y: 820, w: 1000, count: 22, rows: 3, s: 0.42, seed: 9 }
+      - { type: phone, x: 1250, y: 380, s: 1.0, screen: video, at: "@visage" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@visage", action: point }
+      - { at: "@témoin", action: laugh }
+    narration: "Son *visage* passe aux infos, sur les téléphones, dans les gares. D'un coup, des millions de personnes deviennent des yeux. Il suffit d'un seul *témoin* qui le reconnaît dans une boulangerie. Un seul appel, et tout le dispositif converge."
+
+  - id: interpol
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    props:
+      - { type: earth, x: 1150, y: 540, r: 280, spin: 0.08 }
+      - { type: badge, at: "@rouge", x: 1600, y: 300, r: 110, text: "196", sub: "pays", color: "#ff4d5e" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@rouge", action: shock }
+    texts:
+      - { at: "@rouge", text: "NOTICE ROUGE", style: shout, x: 1150, y: 200, rotate: -5 }
+    narration: "Et s'il quitte le pays ? Interpol peut diffuser une notice *rouge* : une demande, envoyée aux polices de {196|cent quatre-vingt-seize} pays, de le localiser et de l'arrêter. La planète entière devient sa prison."
+
+  # ------------------------------------------------------------- l'histoire
+  - id: alcatraz
+    chapter: "La leçon d'Alcatraz"
+    transition: iris
+    background: { type: ocean, horizon: 520 }
+    bixStart: [380, 860]
+    props:
+      - { type: prison, x: 1250, y: 560, s: 0.6, label: "ALCATRAZ" }
+      - { type: bars, at: "@quatorze", x: 1300, y: 840, w: 640, h: 170, values: [23, 6, 2, 5], labels: ["repris", "tués", "noyés", "disparus"], colors: ["#3fcf6e", "#ff4d5e", "#2f8cff", "#8b93ad"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@quatorze", action: point }
+    texts:
+      - { at: "@trente-six", text: "36 HOMMES, 14 TENTATIVES", style: label, x: 1250, y: 170, color: "#8a5cff" }
+    narration: "L'histoire a déjà fait l'expérience. Pendant ses vingt-neuf ans de prison, Alcatraz a connu *trente-six* hommes et *quatorze* tentatives d'évasion. Vingt-trois ont été repris, six abattus, deux noyés. Cinq n'ont jamais été retrouvés, et sont portés disparus, sans doute noyés."
+
+  - id: alcatraz-2
+    background: { type: ocean, horizon: 520 }
+    bixStart: [380, 860]
+    props:
+      - { type: wave, at: "@froide", h: 260, dur: 2.6, y: 900 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@froide", action: scared }
+    narration: "Sortir, c'est la partie que tout le monde imagine. Mais dehors, il reste l'eau *froide*, la faim, la fatigue, et le monde entier qui cherche. Les murs ne sont que la première couche. La plus visible, mais pas la plus difficile."
+
+  - id: needs
+    background: { type: city }
+    bixStart: [380, 820]
+    props:
+      - { type: genius, x: 1250, y: 820, s: 0.9, facing: -1, actions: [{ at: 0, action: sleepy }] }
+      - { type: board, at: "@besoin", x: 1250, y: 300, w: 640, h: 260, size: 44, step: 0.7, title: "Dehors, il doit…", lines: ["manger", "dormir", "se déplacer"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@besoin", action: point }
+    narration: "Dehors, le temps joue contre lui. Il doit manger, dormir, se déplacer. Et chaque *besoin* est une occasion d'être vu. Le génie peut tout calculer… sauf la faim."
+
+  # ------------------------------------------------------------- la fin
+  - id: caught-again
+    chapter: "Le génie et l'équipe"
+    transition: whip
+    background: { type: night-city }
+    bixStart: [380, 820]
+    props:
+      - { type: genius, x: 1250, y: 820, s: 0.9, facing: -1, actions: [{ at: 0, action: sleepy }, { at: "@repris", action: facepalm }] }
+      - { type: dog, x: 1550, y: 820, s: 0.9, facing: -1, sniff: true }
+      - { type: helicopter, x: 1250, y: 230, s: 0.85, light: true }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@repris", action: cheer }
+    texts:
+      - { at: "@repris", text: "REPRIS !", style: shout, x: 1250, y: 430, rotate: -6 }
+    narration: "Trois jours plus tard, épuisé, affamé, reconnu par un chauffeur de bus, le Docteur Méga est *repris*. Sans un coup de feu. Juste par une équipe qui ne s'est jamais arrêtée."
+
+  - id: moral
+    background: { type: lab }
+    bixStart: [400, 820]
+    props:
+      - { type: cactus, x: 1450, y: 760, s: 1.1, mood: happy, at: 0 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@coup", action: laugh }
+    narration: "Le vrai coup de génie, au fond, ça aurait été de ne jamais finir en prison. Un cerveau comme le sien aurait pu soigner, inventer, construire. Ça, c'est le seul plan qui marche à tous les coups. Et toi, tu aurais choisi quel camp ?"
+
+# ======================================================================= Shorts (règles TikTok)
+tiktokShorts:
+  - n: 1
+    kind: cut
+    slug: cellule-vide
+    hook: "La cellule est vide"
+    question: "Tu l'aurais cherché où ?"
+    tiktokCaption: "Six heures du matin, la cellule du génie le plus dangereux du monde est vide. Ce qui se passe ensuite 😳 #evasion #histoire #etsi"
+    youtubeTitle: "Le génie s'est évadé : ce qui se passe ensuite"
+    scenes:
+      - like: cold-open
+        narration: "Six heures du matin. La cellule du génie le plus dangereux du monde est *vide*."
+        props:
+          - { type: prison, x: 1250, y: 820, s: 1.0, alarmAt: "@vide" }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@vide", text: "VIDE !", style: shout, rotate: -5 }
+      - like: counts
+        narration: "Le comptage du matin ne tombe pas juste. Il en *manque* un. Toute la prison se fige."
+        bix:
+          - { at: 0, action: present }
+          - { at: "@manque", action: point }
+      - like: alarm
+        narration: "En quelques minutes : la police, les gares, les frontières. Un *cercle* se forme autour de la prison, et il se resserre."
+        props:
+          - { type: prison, x: 1250, y: 820, s: 0.9, alarmAt: 0 }
+        bix:
+          - { at: 0, action: scared }
+        texts:
+          - { at: "@cercle", text: "LE CERCLE SE REFERME", style: shout, rotate: -4 }
+      - like: cold-open
+        narration: "Tout ça parce qu'à six heures,"
+        props:
+          - { type: prison, x: 1250, y: 820, s: 1.0 }
+        bix:
+          - { at: 0, action: idle }
+        texts: []
+
+  - n: 2
+    kind: cut
+    slug: flair-du-chien
+    hook: "Un nez à 300 millions"
+    question: "Ton chien a un super-pouvoir ?"
+    tiktokCaption: "Le nez d'un chien compte jusqu'à 300 millions de récepteurs olfactifs. Le tien, environ 6 millions 🐕 #chien #animaux #science #etsi"
+    youtubeTitle: "Le nez d'un chien bat le tien 50 fois"
+    scenes:
+      - like: dogs
+        narration: "Le nez d'un chien compte jusqu'à trois cents *millions* de récepteurs olfactifs."
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@millions", text: "300 MILLIONS", style: big }
+      - like: dogs
+        narration: "Le tien ? Environ six millions. Cinquante fois moins. Désolé pour ton nez."
+        bix:
+          - { at: 0, action: point }
+          - { at: "@Cinquante", action: facepalm }
+        texts:
+          - { at: "@Cinquante", text: "×50", style: shout, rotate: -5 }
+      - like: dogs-2
+        narration: "Tu laisses partout de minuscules particules de peau. Pour un chien entraîné, c'est une *piste*, aussi claire qu'une ligne au sol."
+        bix:
+          - { at: 0, action: point }
+          - { at: "@piste", action: run, from: [380, 820], to: [700, 820], dur: 1.6 }
+      - like: dogs
+        narration: "Et tout ça grâce à un nez :"
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 3
+    kind: cut
+    slug: camera-thermique
+    hook: "Dans le noir, ton corps brille"
+    question: "Tu savais que tu brillais ?"
+    tiktokCaption: "À 37 °C, ton corps brille en infrarouge : une caméra thermique te voit même dans le noir complet 🔥 #science #infrarouge #etsi"
+    youtubeTitle: "Une caméra thermique te voit dans le noir"
+    scenes:
+      - like: thermal
+        narration: "Dans le noir complet, ton corps *brille*. Oui, le tien, là, maintenant."
+        props:
+          - { type: helicopter, x: 1250, y: 230, s: 1.0, thermal: true }
+          - { type: tree, x: 1250, y: 820, s: 1.0 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@brille", text: "TU BRILLES !", style: shout, rotate: -5 }
+      - like: thermal
+        narration: "À environ {37 degrés|trente-sept degrés}, il émet de la lumière infrarouge. Invisible pour tes yeux, mais pas pour une caméra thermique."
+        props:
+          - { type: helicopter, x: 1250, y: 230, s: 1.0, thermal: true }
+          - { type: tree, x: 1250, y: 820, s: 1.0 }
+          - { type: ring, x: 1250, y: 760, r: 60, color: "#ff7a1a", at: "@caméra" }
+        bix:
+          - { at: 0, action: point }
+        texts:
+          - { at: "@37", text: "37 °C", style: big }
+      - like: thermal-2
+        narration: "C'est pour ça qu'un hélicoptère peut repérer quelqu'un caché dans un champ, même à minuit, sans aucune lampe."
+        bix:
+          - { at: 0, action: think }
+      - like: thermal
+        narration: "Alors souviens-toi :"
+        props:
+          - { type: helicopter, x: 1250, y: 230, s: 1.0, thermal: true }
+          - { type: tree, x: 1250, y: 820, s: 1.0 }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 4
+    kind: standalone
+    slug: alcatraz-chiffres
+    hook: "Alcatraz : 14 évasions ratées ?"
+    question: "Les 5 disparus ont survécu ?"
+    tiktokCaption: "Alcatraz : 36 hommes, 14 tentatives d'évasion en 29 ans. Aucune réussite prouvée 🏝️ #alcatraz #histoire #etsi #prison"
+    youtubeTitle: "Alcatraz : 14 tentatives d'évasion en 29 ans"
+    scenes:
+      - like: alcatraz
+        narration: "Trente-six hommes ont essayé de s'évader d'Alcatraz, la prison sur son île."
+        props:
+          - { type: prison, x: 1250, y: 560, s: 0.6, label: "ALCATRAZ" }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@Trente-six", text: "36 HOMMES", style: big }
+      - like: alcatraz
+        narration: "En quatorze tentatives, en vingt-neuf ans. Vingt-trois ont été repris, six abattus, deux se sont noyés."
+        props:
+          - { type: prison, x: 1250, y: 560, s: 0.6, label: "ALCATRAZ" }
+          - { type: bars, x: 1300, y: 840, w: 640, h: 170, values: [23, 6, 2, 5], labels: ["repris", "tués", "noyés", "disparus"], colors: ["#3fcf6e", "#ff4d5e", "#2f8cff", "#8b93ad"] }
+        bix:
+          - { at: 0, action: point }
+        texts: []
+      - like: alcatraz-2
+        narration: "Et cinq n'ont jamais été retrouvés. Officiellement : disparus, sans doute noyés dans l'eau *froide* de la baie."
+        props:
+          - { type: wave, at: "@froide", h: 260, dur: 2.6, y: 900 }
+        bix:
+          - { at: 0, action: think }
+          - { at: "@froide", action: scared }
+      - like: alcatraz
+        narration: "Alors, depuis tout ce temps, le bilan officiel reste le même :"
+        props:
+          - { type: prison, x: 1250, y: 560, s: 0.6, label: "ALCATRAZ" }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 5
+    kind: standalone
+    slug: vingt-trois-heures
+    hook: "23 heures par jour enfermé"
+    question: "Tu tiendrais combien de jours ?"
+    tiktokCaption: "Dans les prisons supermax, un détenu peut passer environ 23 heures par jour seul en cellule 🧱 #prison #histoire #etsi #science"
+    youtubeTitle: "23 heures par jour dans une cellule"
+    scenes:
+      - like: cell-life
+        narration: "Vingt-trois *heures* par jour. Seul, dans une cellule de quelques mètres carrés."
+        props:
+          - { type: clock, x: 1300, y: 380, r: 160, time: "6:00", speed: 3 }
+        bix:
+          - { at: 0, action: sit }
+        texts:
+          - { at: "@heures", text: "23 H / 24", style: big }
+      - like: cell-life
+        narration: "C'est la vie dans les prisons « supermax ». Le lit, le bureau, même le tabouret : en béton, coulés dans le sol."
+        props:
+          - { type: clock, x: 1300, y: 380, r: 160, time: "6:00", speed: 3 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@béton", action: shock }
+        texts:
+          - { at: "@béton", text: "TOUT EN BÉTON", style: shout, rotate: -5 }
+      - like: counts
+        narration: "Et on compte les détenus plusieurs fois par jour. La nuit aussi. Chaque mouvement est noté."
+        props:
+          - { type: pal, x: 1250, y: 820, s: 0.85, facing: -1, seed: 4, hold: clipboard, actions: [{ at: 0, action: present }] }
+        bix:
+          - { at: 0, action: point }
+      - like: cell-life
+        narration: "Une heure dehors, puis :"
+        props:
+          - { type: clock, x: 1300, y: 380, r: 160, time: "6:00", speed: 3 }
+        bix:
+          - { at: 0, action: sit }
+        texts: []
+
+  - n: 6
+    kind: standalone
+    slug: notice-rouge
+    hook: "Un fugitif contre 196 pays"
+    question: "Tu connaissais la notice rouge ?"
+    tiktokCaption: "Une notice rouge d'Interpol demande aux polices de 196 pays de localiser un fugitif 🌍🚨 #interpol #histoire #etsi #science"
+    youtubeTitle: "Comment 196 pays cherchent un seul fugitif"
+    scenes:
+      - like: interpol
+        narration: "Un seul fugitif. Contre {196|cent quatre-vingt-seize} pays."
+        props:
+          - { type: earth, x: 1150, y: 540, r: 280, spin: 0.08 }
+          - { type: badge, x: 1600, y: 300, r: 110, text: "196", sub: "pays", color: "#ff4d5e" }
+        bix:
+          - { at: 0, action: shock }
+        texts: []
+      - like: interpol
+        narration: "Interpol peut diffuser une notice *rouge* : une demande de le localiser et de l'arrêter, envoyée à toutes ses polices membres."
+        props:
+          - { type: earth, x: 1150, y: 540, r: 280, spin: 0.08 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@rouge", action: point }
+        texts:
+          - { at: "@rouge", text: "NOTICE ROUGE", style: shout, rotate: -5 }
+      - like: everyone
+        narration: "Son visage circule partout : infos, téléphones, gares. Il suffit d'un seul témoin."
+        props:
+          - { type: crowd, x: 1250, y: 820, w: 1000, count: 22, rows: 3, s: 0.42, seed: 9 }
+          - { type: phone, x: 1250, y: 380, s: 1.0, screen: video }
+        bix:
+          - { at: 0, action: point }
+      - like: interpol
+        narration: "Et c'est comme ça qu'on se retrouve :"
+        props:
+          - { type: earth, x: 1150, y: 540, r: 280, spin: 0.08 }
+          - { type: badge, x: 1600, y: 300, r: 110, text: "196", sub: "pays", color: "#ff4d5e" }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+thumbnail:
+  title: ["ÉVADÉ", "DE LA", "FORTERESSE"]
+  accent: 0
+  background: { type: night-city, mood: night }
+  props:
+    - { type: prison, x: 1050, y: 1000, s: 1.0, alarmAt: 0 }
+    - { type: helicopter, x: 1100, y: 280, s: 0.9, light: true }
+  bix: { action: shock, x: 1650, y: 1230, scale: 2.3, facing: -1, t: 0.45 }
+
+sources:
+  - "Federal Bureau of Prisons, USP Florence ADMAX (prison fédérale de très haute sécurité, ouverte en 1994) : https://www.bop.gov/locations/institutions/flm/"
+  - "Shalev, S. (2009). Supermax: Controlling Risk Through Solitary Confinement. Willan / Routledge (environ 23 h par jour en cellule, mobilier en béton) : https://doi.org/10.4324/9781843927143"
+  - "Wikipedia, ADX Florence (cellules d'environ 2,1 × 3,7 m, mobilier en béton, détenus seuls 23 h par jour) : https://en.wikipedia.org/wiki/ADX_Florence"
+  - "Federal Bureau of Prisons, Program Statement 5500 Correctional Services Manual (comptages officiels plusieurs fois par jour, y compris la nuit) : https://www.bop.gov/policy/progstat/5500_014.pdf"
+  - "PBS NOVA, Dogs' Dazzling Sense of Smell (jusqu'à 300 millions de récepteurs olfactifs chez le chien, environ 6 millions chez l'humain) : https://www.pbs.org/wgbh/nova/article/dogs-sense-of-smell/"
+  - "Syrotuck, W. G. (1972). Scent and the Scenting Dog (les humains perdent en permanence de minuscules particules de peau que les chiens pisteurs suivent), résumé : https://en.wikipedia.org/wiki/Detection_dog"
+  - "NASA Science, Infrared Waves (les corps chauds émettent des infrarouges, vus par les caméras thermiques) : https://science.nasa.gov/ems/07_infraredwaves/"
+  - "INTERPOL, Red Notices (demande aux polices du monde de localiser et d'arrêter provisoirement une personne) : https://www.interpol.int/en/How-we-work/Notices/Red-Notices"
+  - "INTERPOL, Member countries (196 pays membres) : https://www.interpol.int/en/Who-we-are/Member-countries"
+  - "National Park Service, Alcatraz Escape Attempts (1934-1963 : 36 hommes, 14 tentatives; 23 repris, 6 abattus, 2 noyés, 5 portés disparus et présumés noyés) : https://www.nps.gov/alca/learn/historyculture/alcatraz-escape-attempts.htm"

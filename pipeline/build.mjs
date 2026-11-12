@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // What If Bix — episode builder.
 //
-//   node pipeline/build.mjs <episode.yaml> [--only long,shorts,thumb,meta,frames] [--out out] [--frames 2,9.5,20]
+//   node pipeline/build.mjs <episode.yaml> [--only long,shorts,thumb,meta,frames,strips,check] [--out out] [--frames 2,9.5,20]
+//     [--debug-boxes] (Shorts: draw framing boxes) [--no-framing-check]
 //
 // Steps: parse script -> TTS (+word timings) -> timeline/manifest -> music & SFX
 // -> audio mix -> Remotion render (silent) -> mux audio -> Shorts -> thumbnail
@@ -9,15 +10,13 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
-import { fileURLToPath } from 'node:url';
 import { loadEpisode } from './lib/script.mjs';
-import { buildTimeline, planNarration } from './lib/timeline.mjs';
+import { channelVoice, findBrowser, log, mixAudio as mixWith, narrateAndTime as narrateWith, PY, ROOT, run } from './lib/produce.mjs';
 import { buildMetadata, buildSrt, metadataMarkdown } from './lib/metadata.mjs';
 import { shortEpisode, SHORT_MAX, SHORT_MIN, toShortManifest } from './lib/shorts.mjs';
-
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const PY = process.env.PYTHON ?? 'python3';
+import { checkShort, loadShortLayout } from './lib/framing.mjs';
+import { channelStrings, langOf } from './lib/lang.mjs';
+import { sidecarText, specProblems, tightenPlan, tiktokEpisode, tiktokProblems, toTiktokManifest } from './lib/tiktok.mjs';
 
 const args = process.argv.slice(2);
 const flag = (name, def) => {
@@ -32,27 +31,6 @@ if (!file) {
 const only = new Set((flag('only', 'long,shorts,thumb,meta')).split(','));
 const outRoot = path.resolve(flag('out', path.join(ROOT, 'out')));
 
-const log = (...m) => console.log('[bix]', ...m);
-const run = (cmd, argv, opts = {}) => {
-  const r = spawnSync(cmd, argv, { stdio: opts.capture ? ['inherit', 'pipe', 'inherit'] : 'inherit', encoding: 'utf8', maxBuffer: 1 << 28, ...opts });
-  if (r.status !== 0) throw new Error(`${cmd} ${argv.slice(0, 3).join(' ')}… failed (${r.status})`);
-  return r.stdout;
-};
-
-export const resolveVoiceModel = (voice) => {
-  const name = voice.model ?? 'en-us-libritts-high';
-  if (name.endsWith('.onnx') && fs.existsSync(name)) return name;
-  const p = path.join(ROOT, 'models', 'piper', `${name}.onnx`);
-  if (!fs.existsSync(p)) throw new Error(`voice model ${p} not found — run: bash pipeline/fetch_voice.sh ${name}`);
-  return p;
-};
-
-const findBrowser = () => {
-  if (process.env.REMOTION_BROWSER) return process.env.REMOTION_BROWSER;
-  for (const p of ['/opt/pw-browsers/chromium']) if (fs.existsSync(p)) return p;
-  return undefined; // Remotion downloads its own headless shell
-};
-
 const main = async () => {
   const ep = loadEpisode(file);
   const build = path.join(ROOT, 'build', ep.id);
@@ -61,49 +39,10 @@ const main = async () => {
   fs.mkdirSync(out, { recursive: true });
   log(`episode ${ep.id}: ${ep.title}`);
 
-  // Defaults: Piper LibriTTS speaker 92 at lengthScale 1.05 (approved channel voice and pace).
-  const voice = { provider: 'piper', model: 'en-us-libritts-high', speaker: 92, lengthScale: 1.05, ...(ep.voice ?? {}) };
-  // BIX_TTS_PROVIDER=elevenlabs|openai switches to a paid voice (API key from the environment).
-  if (process.env.BIX_TTS_PROVIDER) voice.provider = process.env.BIX_TTS_PROVIDER;
-  if (voice.provider === 'piper') voice.model = resolveVoiceModel(voice);
-  if (process.env.BIX_VOICE_ID) voice.voiceId = process.env.BIX_VOICE_ID;
-  const sfxDir = path.join(ROOT, 'build', '_sfx');
-  if (!fs.existsSync(path.join(sfxDir, 'sting.wav'))) run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'sfx', sfxDir]);
-
-  /** TTS for every sentence (cached by content in build/<id>/tts) + timeline. */
-  const narrateAndTime = (epLike, name) => {
-    const plan = planNarration(epLike);
-    const job = {
-      voice,
-      outDir: path.join(build, 'tts'),
-      segments: plan.flatMap((p) => p.segments.map((s) => ({ id: s.id, units: s.units }))),
-    };
-    const jobFile = path.join(build, `tts-job-${name}.json`);
-    fs.writeFileSync(jobFile, JSON.stringify(job, null, 1));
-    const ttsOut = JSON.parse(run(PY, [path.join(ROOT, 'pipeline', 'tts.py'), jobFile], { capture: true }));
-    const tts = Object.fromEntries(ttsOut.segments.map((s) => [s.id, s]));
-    return buildTimeline(epLike, plan, tts);
-  };
-
-  /** Music (synthesized, deterministic) + narration + SFX -> loudness-normalised mix. */
-  const mixAudio = (manifestX, audioX, musicCfg, name) => {
-    const offset = musicCfg.offset ?? 0;
-    const musicFile = path.join(build, `music-${musicCfg.style}-${name}.wav`);
-    run(PY, [path.join(ROOT, 'pipeline', 'audio_assets.py'), 'music', musicCfg.style, String(manifestX.duration + offset + 1), musicFile,
-      '--seed', String(musicCfg.seed ?? 7)]);
-    const mixFile = path.join(build, `mix-${name}.wav`);
-    const mixJob = {
-      duration: manifestX.duration,
-      out: mixFile,
-      workDir: path.join(build, `mix-${name}`),
-      narration: audioX.narration,
-      sfx: audioX.sfx.map((f) => ({ ...f, file: path.join(sfxDir, `${f.name}.wav`) })),
-      music: { file: musicFile, gain: musicCfg.gain ?? 0.22, duck: musicCfg.duck ?? 0.55, offset, fadeOut: musicCfg.fadeOut ?? 1.5 },
-    };
-    fs.writeFileSync(path.join(build, `mix-job-${name}.json`), JSON.stringify(mixJob, null, 1));
-    run(PY, [path.join(ROOT, 'pipeline', 'mix.py'), path.join(build, `mix-job-${name}.json`)], { capture: true });
-    return mixFile;
-  };
+  // Piper LibriTTS speaker 92 at lengthScale 1.05 (approved channel voice and pace).
+  const voice = channelVoice(ep);
+  const narrateAndTime = (epLike, name) => narrateWith(epLike, name, { build, voice });
+  const mixAudio = (manifestX, audioX, musicCfg, name) => mixWith(manifestX, audioX, musicCfg, name, { build });
 
   // 1-2. narration + timeline (long episode)
   const { manifest, audio } = narrateAndTime(ep, 'long');
@@ -122,6 +61,40 @@ const main = async () => {
     log(`short ${s.short.id}: ${d.toFixed(1)} s${d < SHORT_MIN || d > SHORT_MAX ? ` — WARNING outside ${SHORT_MIN}–${SHORT_MAX} s` : ''}`);
   }
 
+  // MarMila (and any episode with inline `tiktokShorts:`): Shorts built with the TikTok rules —
+  // hook claim + title on frame 0, 15–25 s, last line loops into the first, end question,
+  // captions from frame 0, no outro. Checked here (fails the build) and again on the files.
+  const lang = langOf(ep);
+  const captionsExt = channelStrings(lang).captionsExt;
+  const ttShorts = [];
+  if (ep.tiktokShorts && ['shorts', 'meta', 'check', 'strips'].some((k) => only.has(k))) {
+    const sp = specProblems({ shorts: ep.tiktokShorts }, ep);
+    if (sp.length) throw new Error(`${ep.id}: ${sp.join('; ')}`);
+    const layout = await loadShortLayout(ROOT);
+    const problems = [];
+    for (const sh of ep.tiktokShorts) {
+      const epLike = tiktokEpisode(ep, sh);
+      const t = narrateWith(epLike, `tt${sh.n}`, { build, voice, tweakPlan: tightenPlan });
+      const { manifest: m, events } = toTiktokManifest(t.manifest, sh, t.audio.narration);
+      if (args.includes('--debug-boxes')) m.debugBoxes = true;
+      const p = [...tiktokProblems(m, events), ...(args.includes('--no-framing-check') ? [] : checkShort(layout, m, m.duration))];
+      log(`short ${sh.n}-${sh.slug} (${sh.kind ?? 'cut'}): ${m.duration.toFixed(1)} s${p.length ? `\n    PROBLEM ${[...new Set(p)].join('\n    PROBLEM ')}` : ' — OK'}`);
+      problems.push(...p.map((x) => `short ${sh.n}-${sh.slug}: ${x}`));
+      ttShorts.push({ short: sh, epLike, manifest: m, audio: t.audio });
+    }
+    if (problems.length) throw new Error(`TikTok-rule Shorts checks failed:\n  ${[...new Set(problems)].join('\n  ')}`);
+  }
+
+  // Shorts framing check: in the first 3 s Bix (and character props) must be whole inside the
+  // safe zone and every key object whole inside the frame. Fails the build otherwise.
+  if (shorts.length && ['shorts', 'strips', 'check'].some((k) => only.has(k)) && !args.includes('--no-framing-check')) {
+    const layout = await loadShortLayout(ROOT);
+    const problems = shorts.flatMap((s) => checkShort(layout, s.manifest).map((p) => `short ${s.short.id}: ${p}`));
+    if (problems.length) throw new Error(`Shorts framing check failed (first 3 s):\n  ${problems.join('\n  ')}`);
+    log('shorts framing check: OK (Bix and key objects whole and in the safe zone for the first 3 s)');
+  }
+  if (args.includes('--debug-boxes')) for (const s of shorts) s.manifest.debugBoxes = true;
+
   // 3-4. music + mix
   const mixFile = only.has('long') ? mixAudio(manifest, audio, ep.music ?? { style: 'curious' }, 'long') : null;
   if (mixFile) log('audio mixed');
@@ -130,7 +103,7 @@ const main = async () => {
   const { bundle } = await import('@remotion/bundler');
   const { renderMedia, renderStill, selectComposition } = await import('@remotion/renderer');
   const browserExecutable = findBrowser();
-  const needsRender = ['long', 'shorts', 'thumb', 'frames'].some((k) => only.has(k));
+  const needsRender = ['long', 'shorts', 'thumb', 'frames', 'strips'].some((k) => only.has(k));
   const serveUrl = needsRender ? await bundle({ entryPoint: path.join(ROOT, 'src', 'index.ts') }) : '';
   const concurrency = Math.max(1, Math.min(os.cpus().length, 8));
 
@@ -152,6 +125,26 @@ const main = async () => {
     log(`video -> ${path.relative(ROOT, final)}`);
   }
 
+  if (only.has('shorts') && ttShorts.length) {
+    fs.mkdirSync(path.join(out, 'shorts'), { recursive: true });
+    for (const s of ttShorts) {
+      const base = path.join(out, 'shorts', `${s.short.n}-${s.short.slug}`);
+      const shortMix = mixAudio(s.manifest, s.audio, s.epLike.music, `tt${s.short.n}`);
+      const comp = await selectComposition({ serveUrl, id: 'Episode', inputProps: s.manifest, browserExecutable });
+      const silent = path.join(build, `tt${s.short.n}-silent.mp4`);
+      await renderMedia({
+        composition: comp, serveUrl, codec: 'h264', outputLocation: silent, inputProps: s.manifest,
+        browserExecutable, concurrency, crf: 18, muted: true, pixelFormat: 'yuv420p',
+      });
+      // 1080x1920, 30 fps, H.264 + AAC, sized for upload
+      run('ffmpeg', ['-y', '-v', 'error', '-i', silent, '-i', shortMix, '-map', '0:v', '-map', '1:a', '-c:v', 'libx264', '-preset', 'slow', '-crf', '20',
+        '-r', '30', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', `${base}.mp4`]);
+      fs.writeFileSync(`${base}.${captionsExt}`, buildSrt(s.manifest.captions));
+      fs.writeFileSync(`${base}.txt`, sidecarText(s.short, s.manifest.duration));
+      log(`short ${s.short.n}-${s.short.slug} (${s.manifest.duration.toFixed(1)} s) -> ${path.relative(ROOT, base)}.mp4`);
+    }
+  }
+
   if (only.has('shorts') && shorts.length) {
     fs.mkdirSync(path.join(out, 'shorts'), { recursive: true });
     for (const s of shorts) {
@@ -171,8 +164,47 @@ const main = async () => {
     }
   }
 
+  // First-3-seconds strips of each Short (0, 0.5 … 3 s), for reviewing the hook and framing.
+  if (only.has('strips') && shorts.length) {
+    const dir = path.join(out, 'shorts', 'strips');
+    fs.mkdirSync(dir, { recursive: true });
+    for (const s of shorts) {
+      const comp = await selectComposition({ serveUrl, id: 'Episode', inputProps: s.manifest, browserExecutable });
+      const items = [];
+      for (let k = 0; k <= 6; k++) {
+        const tt = k * 0.5;
+        const f = path.join(build, `strip-${s.short.id}-${k}.png`);
+        const frame = Math.min(comp.durationInFrames - 1, Math.round(tt * s.manifest.fps));
+        await renderStill({ composition: comp, serveUrl, output: f, frame, inputProps: s.manifest, browserExecutable, scale: 0.5 });
+        items.push(`${tt.toFixed(1)}s=${f}`);
+      }
+      const suffix = s.manifest.debugBoxes ? '-debug' : '';
+      run(PY, [path.join(ROOT, 'pipeline', 'strip.py'), path.join(dir, `${s.short.id}-first3s${suffix}.png`), ...items]);
+    }
+    log(`strips -> ${path.relative(ROOT, dir)}`);
+  }
+
+  // TikTok-rule Shorts strips: frame 0, 0.5 s, 1 s, middle, the question and the last frame (loop check).
+  if (only.has('strips') && ttShorts.length) {
+    const dir = path.join(out, 'shorts', 'strips');
+    fs.mkdirSync(dir, { recursive: true });
+    for (const s of ttShorts) {
+      const comp = await selectComposition({ serveUrl, id: 'Episode', inputProps: s.manifest, browserExecutable });
+      const d = s.manifest.duration;
+      const items = [];
+      for (const [k, tt] of [0, 0.5, 1, d / 2, d - 1.9, d - 1 / 30].entries()) {
+        const f = path.join(build, `tt-strip-${s.short.n}-${k}.png`);
+        const frame = Math.min(comp.durationInFrames - 1, Math.round(tt * s.manifest.fps));
+        await renderStill({ composition: comp, serveUrl, output: f, frame, inputProps: s.manifest, browserExecutable, scale: 0.5 });
+        items.push(`${tt.toFixed(1)}s=${f}`);
+      }
+      run(PY, [path.join(ROOT, 'pipeline', 'strip.py'), path.join(dir, `${s.short.n}-${s.short.slug}${s.manifest.debugBoxes ? '-debug' : ''}.png`), ...items]);
+    }
+    log(`strips -> ${path.relative(ROOT, dir)}`);
+  }
+
   if (only.has('thumb') && ep.thumbnail) {
-    const props = { background: { type: 'space' }, props: [], ...ep.thumbnail };
+    const props = { background: { type: 'space' }, props: [], character: ep.character ?? 'bix2', ...ep.thumbnail };
     const comp = await selectComposition({ serveUrl, id: 'Thumbnail', inputProps: props, browserExecutable });
     const thumb = path.join(out, 'thumbnail.png');
     await renderStill({ composition: comp, serveUrl, output: thumb, inputProps: props, browserExecutable });
@@ -193,10 +225,10 @@ const main = async () => {
   }
 
   if (only.has('meta')) {
-    const meta = buildMetadata(ep, manifest, shorts);
+    const meta = buildMetadata(ep, manifest, ttShorts.length ? ttShorts : shorts);
     fs.writeFileSync(path.join(out, 'metadata.json'), JSON.stringify(meta, null, 2));
     fs.writeFileSync(path.join(out, 'metadata.md'), metadataMarkdown(meta));
-    fs.writeFileSync(path.join(out, `${ep.id}.en.srt`), buildSrt(manifest.captions));
+    fs.writeFileSync(path.join(out, `${ep.id}.${captionsExt}`), buildSrt(manifest.captions));
     log(`metadata -> ${path.relative(ROOT, path.join(out, 'metadata.md'))}`);
   }
   fs.writeFileSync(path.join(out, 'manifest.json'), JSON.stringify(manifest, null, 1));

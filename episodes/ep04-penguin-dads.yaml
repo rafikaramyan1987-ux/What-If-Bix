@@ -1,0 +1,378 @@
+# What If Bix — Episode 4 (Bix 2.0) — animal-facts season
+# Structure: (1) emperor penguin dads incubate the egg through the Antarctic winter, and WHY;
+# (2) what if YOU (human dads) had to do it; (3) lab ending + teaser (octopus).
+id: ep04-penguin-dads
+number: 4
+title: "What if dads had to sit on the egg? (the emperor penguin challenge)"
+character: bix2
+description: |
+  Emperor penguin dads balance an egg on their feet through the Antarctic winter, for about two months, without eating. How do they survive, and what if human dads had to do it?
+  Bix visits the coldest daycare on Earth: brood pouches, 20-degree penguin huddles, "penguin milk", and what fatherhood really does to human dads.
+tags: [emperor penguin, penguin dads, what if, animal facts, antarctica, penguin huddle, fatherhood, biology, science explained, nature documentary, what if bix]
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: curious, gain: 0.2, duck: 0.55, seed: 44 }
+introAfter: why-would
+outro:
+  narration: "Thanks for watching, and say thanks to a dad today. Then watch another what if right here, and subscribe. Penguin dads would."
+  background: { type: space, tint: blue }
+
+scenes:
+  # ============================================================ (1) THE FACT + WHY
+  - id: cold-open
+    chapter: "The coldest dad job"
+    background: { type: ice, mood: night, blizzard: 250 }
+    bixStart: [330, 900]
+    bixScale: 0.85
+    props:
+      - { type: penguin, x: 1150, y: 860, s: 1.3, egg: true }
+    bix:
+      - { at: 0, action: scared }
+      - { at: "@dads", action: shock }
+      - { at: "@job", action: point }
+    texts:
+      - { at: "@What", text: "WHAT IF DADS HAD TO SIT ON THE EGG?", style: title, y: 160 }
+    sfx:
+      - { name: wind, at: 0, gain: 0.5 }
+    narration: "What if dads had to sit on the egg, for the entire Antarctic winter? No food. No breaks. For emperor penguin dads, that's the job."
+
+  - id: why-would
+    background: { type: ice, mood: night, blizzard: 250 }
+    bixStart: [330, 900]
+    bixScale: 0.85
+    props:
+      - { type: penguin, x: 1150, y: 860, s: 1.3, egg: true, mood: sleepy }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@why", action: think }
+      - { at: "@YOU", action: shock }
+    narration: "Months in the dark, balancing an egg on his feet. Why would any animal do that? And could *you*?"
+
+  - id: meet-emperor
+    chapter: "Meet the emperor"
+    transition: iris
+    background: { type: ice, mood: day, aurora: false }
+    bixStart: [330, 860]
+    bixScale: 0.9
+    props:
+      - { type: penguin, x: 1000, y: 830, s: 1.35 }
+      - { type: arrow, at: "@meter", from: [1200, 830], to: [1200, 420], color: "#ffd447", label: "1.1–1.2 m", labelX: 1330, labelY: 620 }
+      - { type: badge, at: "@kilograms", until: "@500 meters", x: 1600, y: 300, r: 110, text: "22–45", sub: "kg", color: "#22d3c5" }
+      - { type: badge, at: "@500 meters", x: 1600, y: 300, r: 110, text: "500 m+", sub: "dives", color: "#2f8cff" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@largest", action: shock }
+      - { at: "@winter", action: scared }
+    narration: "Emperor penguins are the largest penguins on Earth, standing more than a meter tall and weighing between about {22 and 45|twenty-two and forty-five} kilograms, depending on the season. They're also the deepest-diving birds, reaching more than {500 meters|five hundred meters} down. And they're the only penguins that breed in the Antarctic winter."
+
+  - id: why-winter
+    chapter: "Why winter?"
+    transition: whip
+    background: { type: ice, mood: day, aurora: false }
+    bixStart: [330, 860]
+    bixScale: 0.9
+    props:
+      - { type: timeline, at: "@timing", x: 1100, y: 330, w: 1100, dur: 4, marks: [{ pos: 0, label: "Autumn: egg" }, { pos: 0.35, label: "Winter" }, { pos: 0.7, label: "Spring" }, { pos: 1, label: "Summer: chick leaves" }] }
+      - { type: penguin, x: 1350, y: 830, s: 0.9, chick: true, at: "@summer" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@timing", action: point }
+      - { at: "@summer", action: cheer }
+      - { at: "@2022", action: scared }
+    texts:
+      - { at: "@2022", text: "2022: chicks lost in 4 of 5 colonies", style: label, x: 1100, y: 560, color: "#ff4d5e" }
+    narration: "Why winter? Timing. An emperor chick takes so long to grow up that, if the egg is laid as winter begins, the chick is ready to head out to sea in summer, when food is easier to find. That plan only works if the sea ice lasts. In 2022, early ice loss in one region of Antarctica wiped out almost all the chicks in four of five colonies there."
+
+  - id: hand-off
+    chapter: "The hand-off"
+    transition: iris
+    background: { type: ice, mood: night, blizzard: 120 }
+    bixStart: [300, 900]
+    bixScale: 0.8
+    props:
+      - { type: penguin, x: 900, y: 840, s: 1.05, facing: 1 }
+      - { type: penguin, x: 1350, y: 840, s: 1.1, facing: -1, egg: true, at: "@passes" }
+      - { type: penguin, x: 900, y: 840, s: 1.05, facing: -1, from: [900, 840], to: [-300, 840], moveAt: "@sea", dur: 5, at: "@sea" }
+      - { type: burst, at: "@freeze", until: "@freeze+1.4", x: 1150, y: 360, text: "CAREFUL!", r: 130, color: "#7fd3ff" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@freeze", action: scared }
+      - { at: "@sea", action: wave }
+    narration: "In early winter, the mother lays a single egg, then carefully passes it to the father's feet. It's a delicate move: an egg left on the bare ice can freeze. Making that egg cost her a lot of energy, so she heads back to the sea to feed, for about two months."
+
+  - id: brood-pouch
+    chapter: "The brood pouch"
+    transition: whip
+    background: { type: ice, mood: night, blizzard: 180 }
+    bixStart: [330, 900]
+    bixScale: 0.85
+    props:
+      - { type: penguin, x: 1100, y: 860, s: 1.6, egg: true }
+      - { type: arrow, at: "@pouch", from: [1500, 560], to: [1180, 790], color: "#ffd447", label: "brood pouch", labelX: 1560, labelY: 520 }
+      - { type: calendar, at: "@65", x: 1650, y: 300, from: 1, to: 65, dur: 2.5, label: "DAY", s: 0.8 }
+    bix:
+      - { at: 0, action: point }
+      - { at: "@pouch", action: present }
+      - { at: "@65", action: shock }
+    narration: "Dad tucks the egg under a warm, feathered fold of belly skin called a brood pouch, right on top of his feet. And there it stays, for about {65|sixty-five} days."
+
+  - id: the-fast
+    chapter: "No food for four months"
+    transition: iris
+    background: { type: ice, mood: night, blizzard: 200 }
+    bixStart: [330, 900]
+    bixScale: 0.85
+    props:
+      - { type: penguin, x: 1050, y: 860, s: 1.3, egg: true, mood: sleepy }
+      - { type: calendar, at: "@115 days", x: 1600, y: 330, from: 1, to: 115, dur: 2.5, label: "NO FOOD", s: 0.85, color: "#ff4d5e" }
+      - { type: gauge, at: "@40 percent", x: 1600, y: 700, r: 120, from: 0, to: 40, max: 100, dur: 1.2, label: "% weight lost" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@eat", action: shock }
+      - { at: "@40 percent", action: facepalm }
+    texts:
+      - { at: "@eat", until: "@eat+1.4", text: "NO SNACKS?!", style: shout, x: 700, y: 230, rotate: -5 }
+    narration: "Here's the wild part: he doesn't eat that whole time. Counting the walk to the colony and courtship, an emperor dad can go about {115 days|one hundred fifteen days} without food, and lose up to around {40 percent|forty percent} of his body weight. That's like skipping breakfast, lunch and dinner for almost four months, while standing in a blizzard."
+
+  - id: huddle
+    chapter: "The penguin sauna"
+    transition: whip
+    background: { type: ice, mood: night, blizzard: 260 }
+    bixStart: [300, 920]
+    bixScale: 0.8
+    props:
+      - { type: huddle, x: 1150, y: 900, w: 1100, h: 200, count: 46, heat: true, heatAt: "@temperature", wave: 0 }
+    bix:
+      - { at: 0, action: scared }
+      - { at: "@Teamwork", action: point }
+      - { at: "@living", action: cheer }
+    texts:
+      - { at: "@20 degrees", text: "INSIDE: 20 °C+", style: big, x: 1150, y: 220 }
+    narration: "So how does he survive the winter? Teamwork. Thousands of males squeeze together into a giant huddle. Inside, the temperature can climb above {20 degrees|twenty degrees} Celsius, warmer than many living rooms. Huddling saves so much energy that it helps them last through the fast."
+
+  - id: huddle-wave
+    background: { type: ice, mood: night, blizzard: 260 }
+    bixStart: [300, 920]
+    bixScale: 0.8
+    props:
+      - { type: huddle, x: 1150, y: 900, w: 1100, h: 200, count: 46, heat: true, at: 0, wave: 3 }
+      - { type: arrow, at: "@wave", from: [700, 640], to: [1600, 640], color: "#ffd447", label: "shuffle wave" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@shuffles", action: laugh }
+      - { at: "@middle", action: point }
+    narration: "And nobody hogs the warm middle forever. Every 30 to 60 seconds, the whole huddle shuffles forward a few centimeters, in a wave. Over time, penguins move between the freezing edge and the cozy middle. And when it gets too toasty inside, the huddle simply breaks apart for a while."
+
+  - id: penguin-milk
+    chapter: "Penguin dad milk"
+    transition: iris
+    background: { type: ice, mood: day, aurora: false }
+    bixStart: [330, 860]
+    bixScale: 0.9
+    props:
+      - { type: penguin, x: 1100, y: 840, s: 1.4, chick: true }
+      - { type: icon, icon: heart, at: "@milky", x: 1450, y: 300, s: 0.8 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@trick", action: point }
+      - { at: "@months", action: shock }
+    texts:
+      - { at: "@milky", text: "\"penguin milk\"", style: label, x: 800, y: 260, color: "#ff6fb5" }
+    narration: "If the chick hatches before Mom is back, Dad has one more trick. He can feed it a rich, milky secretion made in his esophagus, sometimes called penguin milk. After months without eating."
+
+  - id: mom-returns
+    background: { type: ice, mood: day, aurora: false }
+    bixStart: [300, 860]
+    bixScale: 0.85
+    props:
+      - { type: penguin, x: 1050, y: 840, s: 1.2, chick: true, facing: -1 }
+      - { type: penguin, x: 1500, y: 840, s: 1.2, facing: -1, from: [2200, 840], to: [1400, 840], moveAt: 0, dur: 3 }
+      - { type: penguin, x: 1050, y: 840, s: 1.2, facing: 1, from: [1050, 840], to: [2300, 840], moveAt: "@walks", dur: 5, at: "@walks" }
+    bix:
+      - { at: 0, action: cheer }
+      - { at: "@finally", action: laugh }
+      - { at: "@kilometers", action: shock }
+    narration: "When Mom finally returns, well fed, the parents swap. Dad finally walks to the sea to eat, and the walk can be dozens of kilometers across the ice."
+
+  # ============================================================ (2) WHAT IF YOU
+  - id: human-dad-cold
+    chapter: "What if human dads had to do it?"
+    transition: whip
+    background: { type: ice, mood: night, blizzard: 300 }
+    bixStart: [760, 880]
+    bixScale: 1.0
+    props:
+      - { type: item, item: egg, at: 0, x: 790, y: 880, s: 1.6 }
+      - { type: frost, at: "@frostbite", x: 760, y: 560, r: 240 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@Bad", action: scared }
+      - { at: "@frostbite", action: shock }
+    texts:
+      - { at: "@feathers", text: "NO FEATHERS · NO BLUBBER", style: label, x: 1300, y: 230, color: "#ff4d5e" }
+    narration: "So, what if human dads had to sit on the egg? Bad news first: humans have no thick feathers and no thick fat layer for this. In an Antarctic winter blizzard, exposed skin could get frostbite in just minutes."
+
+  - id: human-dad-fast
+    background: { type: lab, board: false }
+    bixStart: [380, 820]
+    bixScale: 0.95
+    props:
+      - { type: bars, at: "@Doctors", x: 1250, y: 780, w: 760, h: 380, values: [75, 115], labels: ["Human danger zone", "Penguin dad fast"], unit: " days",
+          display: ["~45–75 days", "~115 days"], colors: ["#ff4d5e", "#22d3c5"] }
+      - { type: icon, icon: warning, at: "@home", x: 1700, y: 220, s: 0.7 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@built", action: present }
+      - { at: "@home", action: facepalm }
+    texts:
+      - { at: "@home", text: "DON'T TRY THIS", style: shout, x: 900, y: 200, rotate: -4 }
+    narration: "And the fast? Penguins are built for it, with big fat reserves and a body that slows down to save energy. Humans aren't. Doctors who care for hunger strikers report that going completely without food becomes life-threatening at around six to ten weeks. The penguin plan is four months. Please, don't try this at home."
+
+  - id: human-huddle
+    background: { type: ice, mood: night, blizzard: 200 }
+    bixStart: [400, 900]
+    bixScale: 0.85
+    props:
+      - { type: crowd, x: 1200, y: 900, w: 900, count: 22, rows: 3, s: 0.45, seed: 7 }
+    bix:
+      - { at: 0, action: scared }
+      - { at: "@huddle", action: point }
+      - { at: "@dads", action: laugh }
+    narration: "Your best move would be the penguin huddle. Every body is a little heater, and a big crowd keeps each other warm. A few thousand dads in a huddle? That's a lot of warm dads. And a lot of dad jokes."
+
+  - id: human-dads-change
+    chapter: "Human dads change too"
+    transition: iris
+    background: { type: city, mood: day }
+    bixStart: [400, 820]
+    bixScale: 0.95
+    props:
+      - { type: pal, x: 1150, y: 820, s: 0.85, facing: -1, seed: 4, hold: egg, actions: [{ at: 0, action: present }, { at: "@time", action: cheer }] }
+      - { type: gauge, at: "@testosterone", x: 1600, y: 360, r: 120, from: 80, to: 50, max: 100, dur: 1.4, label: "testosterone" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@dropped", action: shock }
+      - { at: "@time", action: think }
+    narration: "Human dads don't sit on eggs, but becoming a father does change them. A study that followed hundreds of young men in the Philippines found that their testosterone dropped after they became dads, and dropped more in dads who spent more time caring for their kids."
+
+  - id: seahorse-dads
+    background: { type: ocean, horizon: 300 }
+    bixStart: [380, 960]
+    bixScale: 0.8
+    props:
+      - { type: badge, at: "@seahorses", x: 1250, y: 520, r: 170, text: "♂", sub: "pregnant dads", color: "#ffd447" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@pregnant", action: shock }
+      - { at: "@born", action: laugh }
+    texts:
+      - { at: "@seahorses", text: "SEAHORSE DADS", style: title, y: 200 }
+    narration: "And emperor penguins aren't even the most extreme dads. Male seahorses actually get pregnant, carrying their babies in a pouch until they're born, sometimes hundreds of them at once."
+
+  # ============================================================ (3) LAB ENDING + TEASER
+  - id: lab-ending
+    chapter: "Back in the lab"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [760, 820]
+    bixScale: 1.0
+    props:
+      - { type: item, item: egg, at: 0, until: "@sandwich", x: 790, y: 820, s: 1.5 }
+      - { type: item, item: egg, at: "@sandwich", x: 1600, y: 690, s: 1.3 }
+      - { type: cactus, x: 1600, y: 818, s: 1.1, mood: happy }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@minutes", action: idle, hold: sandwich }
+      - { at: "@raising", action: facepalm, hold: sandwich }
+    texts:
+      - { at: "@minutes", text: "PENGUIN-DAD CHALLENGE: 11 MIN", style: shout, x: 760, y: 200, rotate: -4 }
+    narration: "So Bix tried the penguin-dad challenge in the lab. Egg on his feet. No snacks. He lasted eleven minutes, then got a sandwich. Newton is now raising the egg."
+    hold: 0.6
+
+  - id: teaser
+    transition: whip
+    background: { type: ocean, horizon: 300, mood: night }
+    bixStart: [400, 960]
+    bixScale: 0.8
+    props:
+      - { type: badge, at: "@three", x: 1300, y: 560, r: 150, text: "3", sub: "hearts", color: "#ff4d5e" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@blue", action: shock }
+    chips:
+      - { at: 0.1, label: "Next time", icon: bolt }
+    texts:
+      - { at: "@octopus", text: "WHAT IF YOU HAD 3 HEARTS?", style: title, y: 200 }
+    narration: "Next time on What If Bix: what if you had three hearts and blue blood, like an octopus?"
+
+shorts:
+  - id: short-no-food
+    title: "Penguin dads don't eat for about 4 months"
+    from: hand-off
+    to: the-fast
+    hook: "NO FOOD FOR 4 MONTHS?!"
+    description: "Emperor penguin dads incubate the egg on their feet through the Antarctic winter, and fast for about 115 days."
+    scenes:
+      hand-off:
+        narration: "Penguin dads don't eat for about four months. It starts in early winter, when the mother lays a single egg, then carefully passes it to the father's feet. It's a delicate move: an egg left on the bare ice can freeze. Then she heads back to the sea to feed, for about two months."
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@freeze", action: scared }
+          - { at: "@sea", action: wave }
+        texts:
+          - { at: "@months", until: "@months+1.4", text: "NO FOOD?!", style: shout, x: 760, y: 230, rotate: -5 }
+  - id: short-sauna
+    title: "Penguins built a 20 °C sauna in Antarctica"
+    from: huddle
+    to: penguin-milk
+    hook: "A PENGUIN SAUNA?!"
+    description: "Thousands of emperor penguin dads huddle through the winter. Inside, it can get warmer than 20 °C."
+    scenes:
+      huddle:
+        narration: "Penguins have a sauna in Antarctica. It's called a huddle. Thousands of males squeeze together through the winter. Inside, the temperature can climb above {20 degrees|twenty degrees} Celsius, warmer than many living rooms. Huddling saves so much energy that it helps them last through the fast."
+        props:
+          - { type: huddle, x: 1150, y: 900, w: 720, h: 170, count: 34, heat: true, heatAt: 0, wave: 0 }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@huddle", action: point }
+          - { at: "@living", action: cheer }
+        texts:
+          - { at: "@sauna", until: "@sauna+1.4", text: "SAUNA?!", style: shout, x: 700, y: 230, rotate: -5 }
+          - { at: "@20 degrees", text: "INSIDE: 20 °C+", style: big, x: 1150, y: 220 }
+  - id: short-human-dads
+    title: "What if human dads had to sit on the egg?"
+    from: human-dad-cold
+    to: human-huddle
+    hook: "HUMAN DADS VS PENGUIN DADS"
+    description: "Emperor penguin dads fast and freeze for months. Human dads would not survive the same job, and here's why."
+    scenes:
+      human-dad-cold:
+        narration: "Human dads would lose this contest. Badly. Humans have no thick feathers and no thick fat layer for this. In an Antarctic winter blizzard, exposed skin could get frostbite in just minutes."
+        bix:
+          - { at: 0, action: scared }
+          - { at: "@Badly", action: shock }
+          - { at: "@frostbite", action: shock }
+        texts:
+          - { at: "@Badly", until: "@Badly+1.4", text: "BADLY.", style: shout, x: 760, y: 230, rotate: -5 }
+          - { at: "@feathers", text: "NO FEATHERS · NO BLUBBER", style: label, x: 1300, y: 230, color: "#ff4d5e" }
+
+thumbnail:
+  title: ["DAD", "DUTY?!"]
+  accent: 1
+  background: { type: ice, mood: night, blizzard: 220 }
+  props:
+    - { type: penguin, x: 1180, y: 1000, s: 1.55, egg: true }
+  bix: { action: scared, x: 1640, y: 1180, scale: 1.9, facing: -1, t: 0.6 }
+
+sources:
+  - "Australian Antarctic Program (Australian Government), Emperor penguin — largest penguin (about 1.1–1.2 m, ~22–45 kg depending on season), winter breeding, single egg passed to the male, ~64–67-day incubation on the feet, males fast for up to ~115 days, chick feeding from an oesophageal secretion, long walks to open water, dives deeper than 500 m: https://www.antarctica.gov.au/about-antarctica/animals/penguins/emperor-penguin/"
+  - "Fretwell, P. T., Boutet, A. & Ratcliffe, N. (2023). Record low 2022 Antarctic sea ice led to catastrophic breeding failure of emperor penguins. Communications Earth & Environment 4: 273 — four of five colonies in the central/eastern Bellingshausen Sea region likely lost almost all chicks: https://doi.org/10.1038/s43247-023-00927-x"
+  - "British Antarctic Survey, Emperor penguin — the only penguin species that breeds during the Antarctic winter; chicks fledge in summer: https://www.bas.ac.uk/about/antarctica/wildlife/penguins/emperor-penguin/"
+  - "National Geographic, Emperor penguin — egg transferred to the male's feet and brood pouch; females feed at sea about two months; eggs exposed on the ice can freeze: https://www.nationalgeographic.com/animals/birds/facts/emperor-penguin"
+  - "Groscolas, R. (1986). Changes in body mass, body temperature and plasma fuel levels during the natural breeding fast in male and female emperor penguins. Journal of Comparative Physiology B 156: 521–527 — large body-mass loss (roughly 40%) over the males' long breeding fast: https://doi.org/10.1007/BF00691038"
+  - "Ancel, A., Visser, H., Handrich, Y., Masman, D. & Le Maho, Y. (1997). Energy saving in huddling penguins. Nature 385: 304–305: https://doi.org/10.1038/385304a0"
+  - "Gilbert, C., Robertson, G., Le Maho, Y., Naito, Y. & Ancel, A. (2006). Huddling behavior in emperor penguins: dynamics of huddling. Physiology & Behavior 88(4–5): 479–488 — ambient temperature inside huddles above 20 °C (up to 37.5 °C); huddles are unstable and break up regularly: https://doi.org/10.1016/j.physbeh.2006.04.024"
+  - "Zitterbart, D. P., Wienecke, B., Butler, J. P. & Fabry, B. (2011). Coordinated movements prevent jamming in an emperor penguin huddle. PLoS ONE 6(6): e20260 — small steps every 30–60 s travel through the huddle as waves: https://doi.org/10.1371/journal.pone.0020260"
+  - "U.S. National Weather Service, Wind chill chart — at extreme wind chills, frostbite can occur on exposed skin in 5 minutes or less: https://www.weather.gov/safety/cold-wind-chill-chart"
+  - "Peel, M. (1997). Hunger strikes. BMJ 315: 829–830 — death from total starvation typically occurs after about 45–75 days: https://doi.org/10.1136/bmj.315.7112.829"
+  - "Gettler, L. T., McDade, T. W., Feranil, A. B. & Kuzawa, C. W. (2011). Longitudinal evidence that fatherhood decreases testosterone in human males. PNAS 108(39): 16194–16199 (Cebu, Philippines; larger drop with more childcare): https://doi.org/10.1073/pnas.1105403108"
+  - "Stölting, K. N. & Wilson, A. B. (2007). Male pregnancy in seahorses and pipefish: beyond the mammalian model. BioEssays 29(9): 884–896 — males carry embryos in a brood pouch; brood sizes range up to hundreds or more depending on species: https://doi.org/10.1002/bies.20626"

@@ -1,0 +1,55 @@
+1
+00:00:00,000 --> 00:00:01,300
+Dans le noir complet,
+
+2
+00:00:01,320 --> 00:00:02,342
+ton corps brille.
+
+3
+00:00:02,362 --> 00:00:03,522
+Oui, le tien,
+
+4
+00:00:03,542 --> 00:00:04,578
+là, maintenant.
+
+5
+00:00:04,598 --> 00:00:06,108
+À environ 37 degrés,
+
+6
+00:00:06,128 --> 00:00:07,940
+il émet de la lumière infrarouge.
+
+7
+00:00:07,960 --> 00:00:09,420
+Invisible pour tes yeux,
+
+8
+00:00:09,440 --> 00:00:11,114
+mais pas pour une caméra thermique.
+
+9
+00:00:11,134 --> 00:00:12,013
+C’est pour ça qu’un
+
+10
+00:00:12,013 --> 00:00:13,090
+hélicoptère peut repérer
+
+11
+00:00:13,090 --> 00:00:14,614
+quelqu’un caché dans un champ,
+
+12
+00:00:14,634 --> 00:00:15,664
+même à minuit,
+
+13
+00:00:15,683 --> 00:00:16,871
+sans aucune lampe.
+
+14
+00:00:16,891 --> 00:00:17,954
+Alors souviens-toi :

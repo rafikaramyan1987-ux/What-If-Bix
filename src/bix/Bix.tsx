@@ -74,40 +74,40 @@ const GLASS_Y = 6;
 const GLASS_X = 17;
 const GLASS_R = 14.5;
 
-const Eye: React.FC<{ cx: number; face: Face; blink: boolean }> = ({ cx, face, blink }) => {
+const Eye: React.FC<{ cx: number; face: Face; blink: boolean; k?: number }> = ({ cx, face, blink, k = 1 }) => {
   const kind = blink && (face.eyes === 'open' || face.eyes === 'up' || face.eyes === 'side') ? 'closed' : face.eyes;
-  const r = kind === 'wide' ? GLASS_R + 2.5 : GLASS_R;
-  const lx = face.look[0] * 5.5;
-  const ly = (kind === 'up' ? -1 : face.look[1]) * 5;
+  const r = (kind === 'wide' ? GLASS_R + 2.5 : GLASS_R) * k;
+  const lx = face.look[0] * 5.5 * k;
+  const ly = (kind === 'up' ? -1 : face.look[1]) * 5 * k;
   let inner: React.ReactNode = null;
   if (kind === 'open' || kind === 'up' || kind === 'side') {
     inner = (
       <>
-        <circle cx={cx + lx} cy={GLASS_Y + ly} r={5.6} fill={C.ink} />
-        <circle cx={cx + lx + 1.8} cy={GLASS_Y + ly - 1.9} r={1.6} fill={C.white} />
+        <circle cx={cx + lx} cy={GLASS_Y + ly} r={5.6 * k} fill={C.ink} />
+        <circle cx={cx + lx + 1.8 * k} cy={GLASS_Y + ly - 1.9 * k} r={1.6 * k} fill={C.white} />
       </>
     );
   } else if (kind === 'wide') {
-    inner = <circle cx={cx + lx * 0.4} cy={GLASS_Y} r={3.4} fill={C.ink} />;
+    inner = <circle cx={cx + lx * 0.4} cy={GLASS_Y} r={3.4 * k} fill={C.ink} />;
   } else if (kind === 'happy') {
-    inner = <path d={`M ${cx - 7} ${GLASS_Y + 4} Q ${cx} ${GLASS_Y - 7} ${cx + 7} ${GLASS_Y + 4}`} fill="none" stroke={C.ink} strokeWidth={4} strokeLinecap="round" />;
+    inner = <path d={`M ${cx - 7 * k} ${GLASS_Y + 4 * k} Q ${cx} ${GLASS_Y - 7 * k} ${cx + 7 * k} ${GLASS_Y + 4 * k}`} fill="none" stroke={C.ink} strokeWidth={4 * k} strokeLinecap="round" />;
   } else if (kind === 'closed') {
-    inner = <path d={`M ${cx - 7} ${GLASS_Y + 1} Q ${cx} ${GLASS_Y + 5} ${cx + 7} ${GLASS_Y + 1}`} fill="none" stroke={C.ink} strokeWidth={4} strokeLinecap="round" />;
+    inner = <path d={`M ${cx - 7 * k} ${GLASS_Y + 1} Q ${cx} ${GLASS_Y + 5 * k} ${cx + 7 * k} ${GLASS_Y + 1}`} fill="none" stroke={C.ink} strokeWidth={4 * k} strokeLinecap="round" />;
   } else if (kind === 'squint') {
     inner = (
       <>
-        <circle cx={cx + lx} cy={GLASS_Y + 3} r={4.5} fill={C.ink} />
-        <path d={`M ${cx - 12} ${GLASS_Y - 1} L ${cx + 12} ${GLASS_Y - 1}`} stroke={C.ink} strokeWidth={4} strokeLinecap="round" />
+        <circle cx={cx + lx} cy={GLASS_Y + 3 * k} r={4.5 * k} fill={C.ink} />
+        <path d={`M ${cx - 12 * k} ${GLASS_Y - 1} L ${cx + 12 * k} ${GLASS_Y - 1}`} stroke={C.ink} strokeWidth={4 * k} strokeLinecap="round" />
       </>
     );
   }
   return (
     <g>
       <circle cx={cx} cy={GLASS_Y} r={r} fill={C.lens} stroke="#0d0f1c" strokeWidth={6} />
-      <clipPath id={`lens${cx}`}>
+      <clipPath id={`lens${cx}_${k}`}>
         <circle cx={cx} cy={GLASS_Y} r={r - 3} />
       </clipPath>
-      <g clipPath={`url(#lens${cx})`}>{inner}</g>
+      <g clipPath={`url(#lens${cx}_${k})`}>{inner}</g>
       <path d={`M ${cx - r * 0.55} ${GLASS_Y - r * 0.45} q ${r * 0.2} ${-r * 0.2} ${r * 0.45} ${-r * 0.22}`} stroke="#dbe9ff" strokeWidth={2.5} fill="none" strokeLinecap="round" />
     </g>
   );
@@ -190,7 +190,13 @@ export const PalHead: React.FC<{ face: Face; blink: boolean; hair: string }> = (
   </g>
 );
 
-export const Head: React.FC<{ face: Face; beanie: number; blink: boolean }> = ({ face, beanie, blink }) => (
+/** Bix's head. eyeScale / mouthScale enlarge the glasses, eyes and mouth (Bix 2.0 variants). */
+export const Head: React.FC<{ face: Face; beanie: number; blink: boolean; eyeScale?: number; mouthScale?: number }> = ({
+  face, beanie, blink, eyeScale = 1, mouthScale = 1,
+}) => {
+  const gx = GLASS_X + (eyeScale - 1) * 9;
+  const gr = GLASS_R * eyeScale;
+  return (
   <g>
     <circle cx={0} cy={0} r={R} fill={C.white} stroke={C.ink} strokeWidth={5} />
     {face.blush && (
@@ -201,13 +207,13 @@ export const Head: React.FC<{ face: Face; beanie: number; blink: boolean }> = ({
     )}
     <g transform="translate(3 0)">
       {/* glasses temples + bridge */}
-      <path d={`M ${-GLASS_X - GLASS_R} ${GLASS_Y - 2} L ${-R + 2} ${GLASS_Y - 5}`} stroke="#0d0f1c" strokeWidth={5} strokeLinecap="round" />
-      <path d={`M ${GLASS_X + GLASS_R} ${GLASS_Y - 2} L ${R - 2} ${GLASS_Y - 5}`} stroke="#0d0f1c" strokeWidth={5} strokeLinecap="round" />
-      <path d={`M ${-GLASS_X + GLASS_R - 2} ${GLASS_Y - 2} Q 0 ${GLASS_Y - 8} ${GLASS_X - GLASS_R + 2} ${GLASS_Y - 2}`} stroke="#0d0f1c" strokeWidth={5} fill="none" strokeLinecap="round" />
-      <Eye cx={-GLASS_X} face={face} blink={blink} />
-      <Eye cx={GLASS_X} face={face} blink={blink} />
+      {gx + gr < R - 2 && <path d={`M ${-gx - gr} ${GLASS_Y - 2} L ${-R + 2} ${GLASS_Y - 5}`} stroke="#0d0f1c" strokeWidth={5} strokeLinecap="round" />}
+      {gx + gr < R - 2 && <path d={`M ${gx + gr} ${GLASS_Y - 2} L ${R - 2} ${GLASS_Y - 5}`} stroke="#0d0f1c" strokeWidth={5} strokeLinecap="round" />}
+      <path d={`M ${-gx + gr - 2} ${GLASS_Y - 2} Q 0 ${GLASS_Y - 8} ${gx - gr + 2} ${GLASS_Y - 2}`} stroke="#0d0f1c" strokeWidth={5} fill="none" strokeLinecap="round" />
+      <Eye cx={-gx} face={face} blink={blink} k={eyeScale} />
+      <Eye cx={gx} face={face} blink={blink} k={eyeScale} />
     </g>
-    <g transform="translate(4 0)">
+    <g transform={`translate(4 ${(mouthScale - 1) * 6}) translate(0 30) scale(${mouthScale}) translate(0 -30)`}>
       <Mouth kind={face.mouth} />
     </g>
     {/* beanie */}
@@ -220,12 +226,15 @@ export const Head: React.FC<{ face: Face; beanie: number; blink: boolean }> = ({
         <line key={x} x1={x} y1={-36} x2={x} y2={-22} stroke={C.beanie} strokeWidth={3.5} strokeLinecap="round" />
       ))}
     </g>
-    <Brow side={-1} face={face} />
-    <Brow side={1} face={face} />
+    <g transform={`translate(0 ${-(eyeScale - 1) * 10})`}>
+      <Brow side={-1} face={face} />
+      <Brow side={1} face={face} />
+    </g>
   </g>
-);
+  );
+};
 
-const EmoteFx: React.FC<{ kind: Emote; t: number }> = ({ kind, t }) => {
+export const EmoteFx: React.FC<{ kind: Emote; t: number }> = ({ kind, t }) => {
   const txt = (s: string, x: number, y: number, size: number, fill: string, rot = 0, op = 1) => (
     <text x={x} y={y} fontFamily={FONT} fontWeight={700} fontSize={size} fill={fill} stroke={C.ink} strokeWidth={6}
       paintOrder="stroke" textAnchor="middle" transform={`rotate(${rot} ${x} ${y})`} opacity={op}>{s}</text>

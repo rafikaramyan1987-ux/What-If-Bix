@@ -1,0 +1,703 @@
+1
+00:00:00,450 --> 00:00:02,013
+Six heures du matin.
+
+2
+00:00:02,033 --> 00:00:03,915
+Prison de la Forteresse.
+
+3
+00:00:03,935 --> 00:00:05,320
+Le gardien ouvre la cellule
+
+4
+00:00:05,320 --> 00:00:06,582
+du génie le plus dangereux
+
+5
+00:00:06,582 --> 00:00:07,298
+du monde.
+
+6
+00:00:07,318 --> 00:00:08,501
+Et la cellule est…
+
+7
+00:00:08,521 --> 00:00:09,170
+vide.
+
+8
+00:00:10,520 --> 00:00:12,257
+Le Docteur Méga s’est évadé.
+
+9
+00:00:12,277 --> 00:00:12,976
+Comment ?
+
+10
+00:00:12,996 --> 00:00:14,104
+On ne le dira pas.
+
+11
+00:00:14,124 --> 00:00:15,344
+Ce n’est pas un tuto,
+
+12
+00:00:15,364 --> 00:00:16,374
+et de toute façon,
+
+13
+00:00:16,394 --> 00:00:17,956
+ce n’est pas le plus intéressant.
+
+14
+00:00:17,976 --> 00:00:19,256
+Le plus intéressant,
+
+15
+00:00:19,276 --> 00:00:20,376
+c’est ce qui se passe après.
+
+16
+00:00:23,375 --> 00:00:25,761
+D’abord, la Forteresse.
+
+17
+00:00:25,781 --> 00:00:26,926
+Elle s’inspire des vraies
+
+18
+00:00:26,926 --> 00:00:28,023
+prisons de très haute
+
+19
+00:00:28,023 --> 00:00:29,952
+sécurité, les « supermax ».
+
+20
+00:00:29,972 --> 00:00:31,257
+La sécurité y est faite
+
+21
+00:00:31,257 --> 00:00:33,382
+de couches : murs, grillages,
+
+22
+00:00:33,402 --> 00:00:34,498
+tours, caméras, portes.
+
+23
+00:00:34,518 --> 00:00:35,918
+Chaque couche suppose que la
+
+24
+00:00:35,918 --> 00:00:37,072
+précédente peut lâcher.
+
+25
+00:00:38,072 --> 00:00:39,102
+À l’intérieur,
+
+26
+00:00:39,122 --> 00:00:40,483
+des caméras regardent chaque
+
+27
+00:00:40,483 --> 00:00:42,338
+couloir, jour et nuit.
+
+28
+00:00:42,358 --> 00:00:43,331
+Les portes fonctionnent
+
+29
+00:00:43,331 --> 00:00:44,538
+souvent comme un sas :
+
+30
+00:00:44,558 --> 00:00:45,830
+la deuxième ne s’ouvre que
+
+31
+00:00:45,830 --> 00:00:47,452
+quand la première est fermée.
+
+32
+00:00:47,472 --> 00:00:48,965
+Et chaque mouvement de détenu
+
+33
+00:00:48,965 --> 00:00:49,662
+est noté,
+
+34
+00:00:49,682 --> 00:00:50,824
+minute par minute.
+
+35
+00:00:51,824 --> 00:00:53,094
+Dans ce genre de prison,
+
+36
+00:00:53,114 --> 00:00:54,443
+un détenu peut passer environ
+
+37
+00:00:54,443 --> 00:00:55,547
+vingt-trois heures par jour
+
+38
+00:00:55,547 --> 00:00:56,749
+seul dans sa cellule.
+
+39
+00:00:56,769 --> 00:00:58,029
+Le lit, le bureau,
+
+40
+00:00:58,049 --> 00:00:59,406
+même le tabouret sont souvent
+
+41
+00:00:59,406 --> 00:01:00,179
+en béton,
+
+42
+00:01:00,199 --> 00:01:01,094
+coulés dans le sol.
+
+43
+00:01:02,094 --> 00:01:03,284
+Et les détenus sont comptés
+
+44
+00:01:03,284 --> 00:01:04,534
+plusieurs fois par jour,
+
+45
+00:01:04,554 --> 00:01:05,607
+et la nuit aussi.
+
+46
+00:01:05,627 --> 00:01:06,823
+Un comptage qui ne tombe
+
+47
+00:01:06,823 --> 00:01:07,667
+pas juste,
+
+48
+00:01:07,687 --> 00:01:09,309
+et toute la prison se fige.
+
+49
+00:01:09,329 --> 00:01:10,646
+C’est exactement ce qui vient
+
+50
+00:01:10,646 --> 00:01:11,515
+de se passer.
+
+51
+00:01:11,535 --> 00:01:12,338
+Il en manque un.
+
+52
+00:01:13,688 --> 00:01:14,928
+En quelques minutes,
+
+53
+00:01:14,948 --> 00:01:16,013
+l’alerte part.
+
+54
+00:01:16,033 --> 00:01:17,039
+Les gardiens bouclent la
+
+55
+00:01:17,039 --> 00:01:18,703
+prison, puis les environs.
+
+56
+00:01:18,723 --> 00:01:19,553
+La police,
+
+57
+00:01:19,573 --> 00:01:20,613
+la gendarmerie,
+
+58
+00:01:20,633 --> 00:01:21,393
+les gares,
+
+59
+00:01:21,413 --> 00:01:22,463
+les frontières :
+
+60
+00:01:22,483 --> 00:01:23,772
+on les prévient tous.
+
+61
+00:01:23,792 --> 00:01:25,092
+Un cercle se forme autour
+
+62
+00:01:25,092 --> 00:01:26,142
+de la prison,
+
+63
+00:01:26,162 --> 00:01:28,059
+et il se resserre.
+
+64
+00:01:28,079 --> 00:01:29,509
+Premiers sur la piste :
+
+65
+00:01:29,529 --> 00:01:30,270
+les chiens.
+
+66
+00:01:30,290 --> 00:01:31,583
+Le nez d’un chien compte
+
+67
+00:01:31,583 --> 00:01:32,854
+jusqu’à trois cents millions
+
+68
+00:01:32,854 --> 00:01:34,277
+de récepteurs olfactifs.
+
+69
+00:01:34,297 --> 00:01:35,081
+Le tien ?
+
+70
+00:01:35,101 --> 00:01:36,893
+Environ six millions.
+
+71
+00:01:36,913 --> 00:01:37,901
+Cinquante fois moins.
+
+72
+00:01:39,251 --> 00:01:40,553
+Chacun de nous laisse derrière
+
+73
+00:01:40,553 --> 00:01:41,971
+lui une traînée invisible :
+
+74
+00:01:41,991 --> 00:01:43,292
+de minuscules particules de
+
+75
+00:01:43,292 --> 00:01:44,679
+peau, des odeurs.
+
+76
+00:01:44,699 --> 00:01:45,959
+Pour un chien entraîné,
+
+77
+00:01:45,979 --> 00:01:46,829
+c’est une piste,
+
+78
+00:01:46,849 --> 00:01:48,060
+aussi claire qu’une ligne
+
+79
+00:01:48,060 --> 00:01:48,929
+tracée au sol.
+
+80
+00:01:49,929 --> 00:01:51,090
+Et cette piste ne s’efface
+
+81
+00:01:51,090 --> 00:01:52,231
+pas tout de suite.
+
+82
+00:01:52,251 --> 00:01:53,385
+Un bon chien pisteur peut
+
+83
+00:01:53,385 --> 00:01:54,481
+la suivre des heures après
+
+84
+00:01:54,481 --> 00:01:55,738
+le passage de quelqu’un.
+
+85
+00:01:55,758 --> 00:01:56,902
+Le génie a beau avoir
+
+86
+00:01:56,902 --> 00:01:57,958
+une longueur d’avance,
+
+87
+00:01:57,978 --> 00:01:58,908
+son odeur,
+
+88
+00:01:58,928 --> 00:02:00,108
+elle, traîne derrière.
+
+89
+00:02:01,108 --> 00:02:01,768
+La nuit,
+
+90
+00:02:01,788 --> 00:02:03,244
+le génie pense se cacher.
+
+91
+00:02:03,264 --> 00:02:04,379
+Mais un corps humain est
+
+92
+00:02:04,379 --> 00:02:06,384
+à environ 37 degrés.
+
+93
+00:02:06,404 --> 00:02:08,306
+Il brille en infrarouge.
+
+94
+00:02:08,326 --> 00:02:09,866
+Depuis un hélicoptère,
+
+95
+00:02:09,886 --> 00:02:11,128
+une caméra thermique voit
+
+96
+00:02:11,128 --> 00:02:11,876
+cette chaleur,
+
+97
+00:02:11,896 --> 00:02:13,210
+même dans le noir complet.
+
+98
+00:02:14,210 --> 00:02:15,542
+Et les équipes se relaient.
+
+99
+00:02:15,562 --> 00:02:16,772
+Les chercheurs dorment,
+
+100
+00:02:16,792 --> 00:02:18,217
+mangent, changent de quart.
+
+101
+00:02:18,237 --> 00:02:18,997
+Le fugitif,
+
+102
+00:02:19,017 --> 00:02:20,273
+lui, est seul.
+
+103
+00:02:20,293 --> 00:02:21,430
+Il ne peut jamais vraiment
+
+104
+00:02:21,430 --> 00:02:21,989
+se reposer.
+
+105
+00:02:22,989 --> 00:02:24,629
+Son visage passe aux infos,
+
+106
+00:02:24,649 --> 00:02:25,689
+sur les téléphones,
+
+107
+00:02:25,709 --> 00:02:26,596
+dans les gares.
+
+108
+00:02:26,616 --> 00:02:27,286
+D’un coup,
+
+109
+00:02:27,306 --> 00:02:28,334
+des millions de personnes
+
+110
+00:02:28,334 --> 00:02:29,286
+deviennent des yeux.
+
+111
+00:02:29,306 --> 00:02:30,592
+Il suffit d’un seul témoin
+
+112
+00:02:30,592 --> 00:02:32,499
+qui le reconnaît dans une boulangerie.
+
+113
+00:02:32,519 --> 00:02:33,619
+Un seul appel,
+
+114
+00:02:33,639 --> 00:02:36,263
+et tout le dispositif converge.
+
+115
+00:02:36,283 --> 00:02:37,671
+Et s’il quitte le pays ?
+
+116
+00:02:37,691 --> 00:02:39,091
+Interpol peut diffuser une
+
+117
+00:02:39,091 --> 00:02:39,991
+notice rouge :
+
+118
+00:02:40,011 --> 00:02:40,881
+une demande,
+
+119
+00:02:40,901 --> 00:02:42,532
+envoyée aux polices de 196
+
+120
+00:02:42,532 --> 00:02:44,038
+pays, de le localiser et
+
+121
+00:02:44,038 --> 00:02:45,300
+de l’arrêter.
+
+122
+00:02:45,320 --> 00:02:47,076
+La planète entière devient sa prison.
+
+123
+00:02:48,076 --> 00:02:50,132
+L’histoire a déjà fait l’expérience.
+
+124
+00:02:50,152 --> 00:02:51,537
+Pendant ses vingt-neuf ans de
+
+125
+00:02:51,537 --> 00:02:53,173
+prison, Alcatraz a connu
+
+126
+00:02:53,173 --> 00:02:54,568
+trente-six hommes et quatorze
+
+127
+00:02:54,568 --> 00:02:55,884
+tentatives d’évasion.
+
+128
+00:02:55,904 --> 00:02:57,524
+Vingt-trois ont été repris,
+
+129
+00:02:57,544 --> 00:02:58,474
+six abattus,
+
+130
+00:02:58,494 --> 00:02:59,347
+deux noyés.
+
+131
+00:02:59,367 --> 00:03:00,438
+Cinq n’ont jamais été
+
+132
+00:03:00,438 --> 00:03:01,812
+retrouvés, et sont portés
+
+133
+00:03:01,812 --> 00:03:03,283
+disparus, sans doute noyés.
+
+134
+00:03:04,283 --> 00:03:06,001
+Sortir, c’est la partie que
+
+135
+00:03:06,001 --> 00:03:07,187
+tout le monde imagine.
+
+136
+00:03:07,207 --> 00:03:08,067
+Mais dehors,
+
+137
+00:03:08,087 --> 00:03:09,417
+il reste l’eau froide,
+
+138
+00:03:09,437 --> 00:03:10,187
+la faim,
+
+139
+00:03:10,207 --> 00:03:10,867
+la fatigue,
+
+140
+00:03:10,887 --> 00:03:12,391
+et le monde entier qui cherche.
+
+141
+00:03:12,411 --> 00:03:13,391
+Les murs ne sont que
+
+142
+00:03:13,391 --> 00:03:14,437
+la première couche.
+
+143
+00:03:14,457 --> 00:03:15,547
+La plus visible,
+
+144
+00:03:15,567 --> 00:03:17,847
+mais pas la plus difficile.
+
+145
+00:03:17,867 --> 00:03:19,868
+Dehors, le temps joue contre lui.
+
+146
+00:03:19,888 --> 00:03:21,208
+Il doit manger,
+
+147
+00:03:21,228 --> 00:03:22,188
+dormir, se déplacer.
+
+148
+00:03:22,208 --> 00:03:23,469
+Et chaque besoin est une
+
+149
+00:03:23,469 --> 00:03:24,753
+occasion d’être vu.
+
+150
+00:03:24,773 --> 00:03:26,520
+Le génie peut tout calculer…
+
+151
+00:03:26,540 --> 00:03:27,383
+sauf la faim.
+
+152
+00:03:28,733 --> 00:03:30,123
+Trois jours plus tard,
+
+153
+00:03:30,143 --> 00:03:31,433
+épuisé, affamé,
+
+154
+00:03:31,453 --> 00:03:32,797
+reconnu par un chauffeur de
+
+155
+00:03:32,797 --> 00:03:34,935
+bus, le Docteur Méga est repris.
+
+156
+00:03:34,955 --> 00:03:36,023
+Sans un coup de feu.
+
+157
+00:03:36,043 --> 00:03:37,271
+Juste par une équipe qui
+
+158
+00:03:37,271 --> 00:03:39,323
+ne s’est jamais arrêtée.
+
+159
+00:03:39,343 --> 00:03:40,403
+Le vrai coup de génie,
+
+160
+00:03:40,423 --> 00:03:41,113
+au fond,
+
+161
+00:03:41,133 --> 00:03:42,076
+ça aurait été de ne
+
+162
+00:03:42,076 --> 00:03:43,374
+jamais finir en prison.
+
+163
+00:03:43,394 --> 00:03:44,893
+Un cerveau comme le sien
+
+164
+00:03:44,893 --> 00:03:46,084
+aurait pu soigner,
+
+165
+00:03:46,104 --> 00:03:46,947
+inventer, construire.
+
+166
+00:03:46,967 --> 00:03:48,416
+Ça, c’est le seul plan
+
+167
+00:03:48,416 --> 00:03:49,776
+qui marche à tous les coups.
+
+168
+00:03:49,796 --> 00:03:50,656
+Et toi,
+
+169
+00:03:50,676 --> 00:03:51,802
+tu aurais choisi quel camp ?
+
+170
+00:03:53,202 --> 00:03:54,132
+Et toi,
+
+171
+00:03:54,152 --> 00:03:55,442
+tu aurais parié sur qui :
+
+172
+00:03:55,462 --> 00:03:56,192
+le génie,
+
+173
+00:03:56,212 --> 00:03:57,173
+ou l’équipe ?
+
+174
+00:03:57,193 --> 00:03:58,623
+Réponds en commentaire,
+
+175
+00:03:58,643 --> 00:03:59,937
+et abonne-toi à MarMila pour
+
+176
+00:03:59,937 --> 00:04:00,825
+le prochain et si.

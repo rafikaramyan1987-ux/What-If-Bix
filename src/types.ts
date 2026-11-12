@@ -45,6 +45,8 @@ export type Scene = {
   kind?: 'intro' | 'endscreen' | 'cta';
   /** Shorts: fixed horizontal crop centre for this scene (default: follow Bix). */
   focus?: number;
+  /** Shorts layout override: presenter (key objects framed, Bix at the presenter spot) or follow (frame Bix); subject = stage box [x0, y0, x1, y1]. */
+  shortLayout?: { mode?: 'presenter' | 'follow'; subject?: [number, number, number, number] };
 };
 
 export type CaptionWord = { text: string; start: number; end: number; emphasis?: boolean };
@@ -58,6 +60,10 @@ export type Manifest = {
   height: number;
   duration: number;
   format: 'long' | 'short';
+  /** Shorts: draw framing debug boxes (key objects, presenter spot, safe zone). */
+  debugBoxes?: boolean;
+  /** TikTok-optimised Short: snap zooms on `beats`, hard cuts, end question shown from `questionAt`. */
+  tiktok?: { beats: number[]; question: string; questionAt: number };
   scenes: Scene[];
   captions: CaptionPage[];
   /** Shorts: horizontal crop window center over the 1920-wide stage, per scene. */
@@ -66,9 +72,14 @@ export type Manifest = {
   timeOffset?: number;
   /** Shorts: banner text at the top. */
   hook?: string;
+  /** Which Bix to draw (default: Bix 2.0). */
+  character?: 'bix1' | 'bix2';
+  /** Language / channel branding: en = What If Bix (default), fr = MarMila. */
+  lang?: 'en' | 'fr';
 };
 
 export type ThumbnailProps = {
+  character?: 'bix1' | 'bix2';
   title: string[];
   accent?: number; // index of the title line drawn in the accent color
   subtitle?: string;
