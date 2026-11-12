@@ -2,6 +2,7 @@
 // What If Bix — episode builder.
 //
 //   node pipeline/build.mjs <episode.yaml> [--only long,shorts,thumb,meta,frames,strips,check] [--out out] [--frames 2,9.5,20]
+//     [--reuse-video] (remux the existing silent renders in build/<id>/ with a new audio mix, no re-render)
 //     [--debug-boxes] (Shorts: draw framing boxes) [--no-framing-check]
 //
 // Steps: parse script -> TTS (+word timings) -> timeline/manifest -> music & SFX
@@ -111,7 +112,8 @@ const main = async () => {
     const comp = await selectComposition({ serveUrl, id: 'Episode', inputProps: manifest, browserExecutable });
     const silent = path.join(build, 'video-silent.mp4');
     let last = -1;
-    await renderMedia({
+    // --reuse-video: keep the already rendered (silent) picture and only remux it with a new audio mix
+    if (!(args.includes('--reuse-video') && fs.existsSync(silent))) await renderMedia({
       composition: comp, serveUrl, codec: 'h264', outputLocation: silent, inputProps: manifest,
       browserExecutable, concurrency, crf: 18, muted: true, pixelFormat: 'yuv420p',
       onProgress: ({ progress }) => {
@@ -132,7 +134,7 @@ const main = async () => {
       const shortMix = mixAudio(s.manifest, s.audio, s.epLike.music, `tt${s.short.n}`);
       const comp = await selectComposition({ serveUrl, id: 'Episode', inputProps: s.manifest, browserExecutable });
       const silent = path.join(build, `tt${s.short.n}-silent.mp4`);
-      await renderMedia({
+      if (!(args.includes('--reuse-video') && fs.existsSync(silent))) await renderMedia({
         composition: comp, serveUrl, codec: 'h264', outputLocation: silent, inputProps: s.manifest,
         browserExecutable, concurrency, crf: 18, muted: true, pixelFormat: 'yuv420p',
       });

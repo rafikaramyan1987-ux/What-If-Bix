@@ -14,7 +14,7 @@ tags: [what if you fell into a black hole, black hole, spaghettification, event 
 lengthRange: [225, 270]
 character: bix2
 voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
-music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 707 }
+music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 707, loudnorm: two-pass }
 introAfter: not-a-vacuum
 outro:
   narration: "Would you jump into a giant one, just to see? Tell me in the comments. Next time, we stop falling up and start sinking down. Subscribe, and bring a very strong submarine."

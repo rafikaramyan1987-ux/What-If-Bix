@@ -90,6 +90,7 @@ export const mixAudio = (manifestX, audioX, musicCfg, name, { build }) => {
     narration: audioX.narration,
     sfx: audioX.sfx.map((f) => ({ ...f, file: path.join(sfx, `${f.name}.wav`) })),
     music: { file: musicFile, gain: musicCfg.gain ?? 0.22, duck: musicCfg.duck ?? 0.55, offset, fadeOut: musicCfg.fadeOut ?? 1.5 },
+    ...(musicCfg.loudnorm ? { loudnorm: musicCfg.loudnorm } : {}),
   };
   fs.writeFileSync(path.join(build, `mix-job-${name}.json`), JSON.stringify(mixJob, null, 1));
   run(PY, [path.join(ROOT, 'pipeline', 'mix.py'), path.join(build, `mix-job-${name}.json`)], { capture: true });

@@ -88,6 +88,12 @@ def srt_cues(path):
     return cues
 
 
+def last_frame(f, out):
+    # seeking right up to the end can return nothing; decode the last half second and keep the final frame
+    sh(["ffmpeg", "-y", "-v", "error", "-sseof", "-0.5", "-i", f, "-update", "1", out])
+    return out
+
+
 def frame(f, t, out):
     sh(["ffmpeg", "-y", "-v", "error", "-ss", f"{max(0, t):.3f}", "-i", f, "-frames:v", "1", out])
     return out
@@ -184,7 +190,7 @@ def check(f, out, long_range, short_range):
     stem = os.path.join(out, "frames", name[:-4])
     os.makedirs(os.path.dirname(stem), exist_ok=True)
     fr = [frame(f, 0, f"{stem}-0s.png"), frame(f, dur / 2, f"{stem}-mid.png"), frame(f, dur - 1, f"{stem}-last1s.png"),
-          frame(f, dur - 1 / 30 - 0.01, f"{stem}-lastframe.png")]
+          last_frame(f, f"{stem}-lastframe.png")]
     res["frames"] = [os.path.relpath(x, out) for x in fr[:3]]
     # loop: last frame vs first frame, picture under the hook/question banner
     if short:

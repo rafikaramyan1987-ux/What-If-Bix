@@ -14,7 +14,7 @@ tags: [what if you dove to the bottom of the mariana trench, mariana trench, cha
 lengthRange: [225, 270]
 character: bix2
 voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
-music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 808 }
+music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 808, loudnorm: two-pass }
 introAfter: how-deep
 outro:
   narration: "Would you get in the submarine? Tell me in the comments. Next time: what if every insect on Earth suddenly vanished? You might be surprised who'd miss them most. Subscribe."

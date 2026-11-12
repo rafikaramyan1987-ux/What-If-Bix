@@ -15,7 +15,7 @@ tags: [what if all the insects disappeared, insects, bees, pollination, pollinat
 lengthRange: [225, 270]
 character: bix2
 voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
-music: { style: curious, gain: 0.2, duck: 0.55, seed: 909 }
+music: { style: curious, gain: 0.2, duck: 0.55, seed: 909, loudnorm: two-pass }
 introAfter: how-many
 outro:
   narration: "Which insect would you miss the most? Tell me in the comments. Next time: what if you could see like a bee, with colours we can't even imagine? Subscribe, so you don't miss it."

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 import wave
@@ -84,6 +85,34 @@ def ffmpeg(args):
     subprocess.run(["ffmpeg", "-y", "-v", "error", *args], check=True)
 
 
+def integrated_lufs(path):
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", path, "-af", "ebur128", "-f", "null", "-"], capture_output=True, text=True)
+    import re
+    m = re.findall(r"I:\s+(-?[\d.]+) LUFS", r.stderr)
+    return float(m[-1]) if m else None
+
+
+def two_pass_loudnorm(src, out, work, target=-14.0):
+    """Exact loudness: measure, normalise linearly (no pumping), then trim the last few tenths of a dB.
+
+    The single-pass loudnorm filter (used by episodes 1–5 and MarMila) can land ~0.5–1 dB away from the
+    target on short or dynamic mixes. Episodes opt in with music.loudnorm: two-pass."""
+    import re
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-nostats", "-i", src, "-af", f"loudnorm=I={target}:TP=-1.5:LRA=11:print_format=json",
+                        "-f", "null", "-"], capture_output=True, text=True)
+    m = json.loads(re.search(r"\{[^{}]*\}\s*$", r.stderr.strip()).group(0))
+    stage = os.path.join(work, "mix_norm.wav")
+    ffmpeg(["-i", src, "-af", f"loudnorm=I={target}:TP=-1.5:LRA=11:linear=true:measured_I={m['input_i']}:measured_TP={m['input_tp']}:"
+            f"measured_LRA={m['input_lra']}:measured_thresh={m['input_thresh']}:offset={m['target_offset']}", "-ar", str(SR), stage])
+    got = integrated_lufs(stage)
+    gain = 0.0 if got is None else target - got
+    if abs(gain) > 0.1:
+        # small trim; a true-peak limiter keeps the peaks under -1.5 dBTP
+        ffmpeg(["-i", stage, "-af", f"volume={gain:.2f}dB,alimiter=limit=0.84:level=false", "-ar", str(SR), out])
+    else:
+        shutil.copyfile(stage, out)
+
+
 def run(job):
     n = int(job["duration"] * SR)
     work = job["workDir"]
@@ -130,7 +159,10 @@ def run(job):
     mix = voice + sfx + music
     pre = os.path.join(work, "mix_pre.wav")
     write_wav(pre, mix / max(1.0, np.max(np.abs(mix))))
-    ffmpeg(["-i", pre, "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", str(SR), job["out"]])
+    if job.get("loudnorm") == "two-pass":
+        two_pass_loudnorm(pre, job["out"], work)
+    else:
+        ffmpeg(["-i", pre, "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-ar", str(SR), job["out"]])
     for stem, data in (("stem_voice.wav", voice), ("stem_sfx.wav", sfx), ("stem_music.wav", music)):
         write_wav(os.path.join(work, stem), data)
     return {"out": job["out"]}

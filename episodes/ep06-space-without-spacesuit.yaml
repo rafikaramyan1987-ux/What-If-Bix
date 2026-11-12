@@ -15,7 +15,7 @@ tags: [what if you were in space without a spacesuit, space without a suit, vacu
 lengthRange: [225, 270]
 character: bix2
 voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
-music: { style: tense, gain: 0.18, duck: 0.55, seed: 606 }
+music: { style: tense, gain: 0.18, duck: 0.55, seed: 606, loudnorm: two-pass }
 introAfter: myths
 outro:
   narration: "How many seconds do you think you'd last? Tell me in the comments. Next time, we fall even farther: straight into a black hole. Subscribe, and hold on to your spaghetti."
@@ -258,7 +258,7 @@ tiktokShorts:
     youtubeTitle: "You'd have about 15 seconds in space without a suit"
     scenes:
       - like: cold-open
-        props: &st [{ type: satellite, kind: station, x: 1250, y: 420, s: 1.1 }]
+        props: &st []
         narration: "Thrown into space without a spacesuit, you'd have about fifteen *seconds*. That's it."
         bix: [{ at: 0, action: float, params: { panic: 0.7 } }]
         texts: [{ at: "@seconds", text: "≈ 15 SECONDS", style: big }]
@@ -374,22 +374,22 @@ tiktokShorts:
     scenes:
       - like: rescue
         narration: "If you fell into space without a suit, rescuers would have about *ninety* seconds to save you."
-        props: [{ type: satellite, kind: station, x: 1250, y: 420, s: 1.2 }]
+        props: [{ type: clock, x: 1250, y: 450, r: 150, time: "0:00", speed: 0.6 }]
         bix: [{ at: 0, action: shock }]
         texts: [{ at: "@ninety", text: "≈ 90 SECONDS", style: big }]
       - like: rescue
         narration: "In 1960s experiments, animals usually recovered from about ninety seconds of near vacuum. Much longer was often deadly."
-        props: [{ type: satellite, kind: station, x: 1250, y: 420, s: 1.2 }, { type: clock, x: 1650, y: 750, r: 110, time: "0:00", speed: 0.6 }]
+        props: [{ type: clock, x: 1250, y: 450, r: 150, time: "0:00", speed: 0.6 }]
         bix: [{ at: 0, action: present }, { at: "@deadly", action: scared }]
         texts: []
       - like: rescue
         narration: "Scientists think a short exposure, under about thirty seconds, may cause no lasting harm at all. Speed is everything."
-        props: [{ type: satellite, kind: station, x: 1250, y: 420, s: 1.2 }]
+        props: [{ type: clock, x: 1250, y: 450, r: 150, time: "0:00", speed: 0.6 }]
         bix: [{ at: 0, action: cheer }]
         texts: []
       - like: rescue
         narration: "So, the clock starts now:"
-        props: [{ type: satellite, kind: station, x: 1250, y: 420, s: 1.2 }]
+        props: [{ type: clock, x: 1250, y: 450, r: 150, time: "0:00", speed: 0.6 }]
         bix: [{ at: 0, action: present }]
         texts: []
 
