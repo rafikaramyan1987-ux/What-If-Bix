@@ -114,6 +114,19 @@ const GEO: Record<string, Geo> = {
   helicopter: { box: () => ({ x0: -230, y0: -90, x1: 230, y1: 70 }), s: (p) => num(p.s, 1), y: 260, move: 'ease', bob: 6 },
   coral: { box: (p) => ({ x0: -num(p.w, 700) / 2 - 20, y0: -230, x1: num(p.w, 700) / 2 + 20, y1: 24 }), s: (p) => num(p.s, 1), y: 820 },
   genius: { box: () => ({ x0: -160, y0: -470, x1: 160, y1: 10 }), s: (p) => num(p.s, 0.9), y: 820, move: 'ease' },
+  chamber: { box: () => ({ x0: -250, y0: -580, x1: 250, y1: 10 }), s: (p) => num(p.s, 1), y: 820 },
+  blackhole: { box: (p) => ({ x0: -num(p.r, 160) * 2.75, y0: -num(p.r, 160) * 1.25, x1: num(p.r, 160) * 2.75, y1: num(p.r, 160) * (p.label !== undefined ? 2.05 : 1.25) }), y: 480 },
+  sub: { box: () => ({ x0: -220, y0: -150, x1: 220, y1: 190 }), s: (p) => num(p.s, 1), y: 420, move: 'ease', bob: 6, flip: true },
+  snailfish: { box: () => ({ x0: -250, y0: -70, x1: 130, y1: 70 }), s: (p) => num(p.s, 1), y: 600, move: 'ease', bob: 8, flip: true },
+  amphipod: {
+    box: (p) => (num(p.count, 1) > 1
+      ? { x0: -num(p.spread, 260) - 100, y0: -num(p.spread, 260) / 2 - 60, x1: num(p.spread, 260) + 180, y1: num(p.spread, 260) / 2 + 50 }
+      : { x0: -100, y0: -60, x1: 180, y1: 55 }),
+    s: (p) => num(p.s, 1), y: 600,
+  },
+  bee: { box: () => ({ x0: -100, y0: -110, x1: 120, y1: 50 }), s: (p) => num(p.s, 1), y: 400, move: 'ease', bob: 10, flip: true },
+  flower: { box: (p) => ({ x0: -((num(p.count, 1) - 1) / 2) * num(p.gap, 170) - 70, y0: -290, x1: ((num(p.count, 1) - 1) / 2) * num(p.gap, 170) + 70, y1: 10 }), s: (p) => num(p.s, 1), y: 820 },
+  beetle: { box: () => ({ x0: -110, y0: -145, x1: 195, y1: 10 }), s: (p) => num(p.s, 1), y: 820, move: 'ease', flip: true },
   horseshoe: { box: (p) => ({ x0: -156, y0: -118, x1: p.blood === true ? 240 : 156, y1: 206 }), s: (p) => num(p.s, 1), y: 700 },
 };
 /** Prop types that count as key objects (framed, and checked for edge cuts). */

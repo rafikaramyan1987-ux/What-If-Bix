@@ -6,7 +6,7 @@ import { frMatches } from './lang.mjs';
 export const TIME_KEYS = new Set([
   'at', 'until', 'stopAt', 'windAt', 'roofAt', 'hoverUntil', 'shake', 'switchAt', 'crossAt', 'failAt', 'cutAt',
   'jumpAt', 'cheerAt', 'panicAt', 'spikeAt', 'shakeAt', 'moveAt', 'stateAt', 'lightsOffAt', 'eyeAt', 'blowAt', 'swapAt', 'swaps', 'bothAt', 'floatAt', 'heatAt', 'pauseAt',
-  'fallAt', 'alarmAt', 'spawnAt',
+  'fallAt', 'alarmAt', 'spawnAt', 'leakAt', 'vanishAt', 'wiltAt',
 ]);
 
 export const INTRO_SECONDS = 2;

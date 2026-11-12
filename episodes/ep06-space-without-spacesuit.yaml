@@ -1,0 +1,445 @@
+# What If Bix — Episode 6 (Bix 2.0)
+# Structure: a countdown (0 s -> 15 s -> 90 s), myth-busting (explode? freeze?), two real cases
+# (the 1966 NASA vacuum-chamber accident, Kittinger's glove), the real risk (oxygen), how suits and the
+# ISS protect astronauts, a teaser for episode 7. Family-safe: no gore, the science of what happens.
+# Every number is from the sources at the bottom.
+id: ep06-space-without-spacesuit
+number: 6
+title: "What if you were thrown into space without a spacesuit?"
+description: |
+  No helmet, no suit, just you and the vacuum of space. Would you explode? Freeze? Boil?
+  Bix counts down the real seconds, from the saliva that bubbles on your tongue to the rescue window, with a true story from a NASA vacuum chamber in 1966.
+pinnedQuestion: "How many seconds do YOU think you'd last?"
+hashtags: ["#space", "#science", "#nasa", "#whatif"]
+tags: [what if you were in space without a spacesuit, space without a suit, vacuum, ebullism, armstrong limit, astronaut, nasa, jim leblanc, space science, what if bix]
+lengthRange: [225, 270]
+character: bix2
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: tense, gain: 0.18, duck: 0.55, seed: 606, loudnorm: two-pass }
+introAfter: myths
+outro:
+  narration: "How many seconds do you think you'd last? Tell me in the comments. Next time, we fall even farther: straight into a black hole. Subscribe, and hold on to your spaghetti."
+  background: { type: space, tint: blue }
+
+scenes:
+  - id: cold-open
+    chapter: "Fifteen seconds"
+    background: { type: space, tint: blue }
+    bixStart: [960, 560]
+    props:
+      - { type: earth, x: 1500, y: 1250, r: 700, spin: 0.02, tilt: 0 }
+      - { type: satellite, kind: station, x: 420, y: 240, s: 0.9 }
+    bix:
+      - { at: 0, action: float, params: { panic: 0.7 } }
+      - { at: "@seconds", action: shock }
+    texts:
+      - { at: 0.1, text: "NO SPACESUIT?!", style: title, y: 160 }
+      - { at: "@seconds", text: "≈ 15 SECONDS", style: big, x: 960, y: 330 }
+    camera: { zoom: [1.0, 1.06], focus: [960, 540] }
+    narration: "You're in space. No helmet. No suit. You have about fifteen *seconds*. Let's count them."
+
+  - id: myths
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: boom, at: "@explode", x: 1250, y: 480 }
+      - { type: icon, icon: cross, x: 1250, y: 480, s: 1.6, at: "@explode+0.8" }
+      - { type: frost, x: 1250, y: 480, r: 200, count: 12, at: "@freeze" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@explode", action: shock }
+      - { at: "@freeze", action: shrug }
+    narration: "First, forget the movies. Exploding heads, instant ice statues: that's Hollywood. You would not *explode*. And you would not *freeze* into an ice cube in a second, either. The real danger is quieter."
+
+  - id: no-air
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: bars, at: "@kilopascals", x: 1250, y: 820, w: 640, h: 420, values: [101, 0.1], display: ["≈ 101 kPa", "≈ 0"], labels: ["Beach", "Space"], colors: ["#22d3c5", "#ff4d5e"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@kilopascals", action: point }
+      - { at: "@zero", action: shock }
+    narration: "Here's why. At the beach, the air above you presses on you with about 101 *kilopascals* of pressure. You never notice it, but your body is built for it. In space, that number is practically *zero*."
+
+  - id: oxygen
+    chapter: "The real danger: no oxygen"
+    transition: whip
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: gauge, x: 1250, y: 470, r: 170, from: 95, to: 0, max: 100, at: "@oxygen", dur: 2.5, label: "oxygen" }
+      - { type: clock, x: 1650, y: 330, r: 110, time: "0:00", speed: 0.2 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@oxygen", action: point }
+      - { at: "@out", action: sleepy }
+    texts:
+      - { at: "@seconds", text: "10 TO 15 SECONDS", style: label, x: 1250, y: 160, color: "#ff4d5e" }
+    narration: "The real enemy is *oxygen*. Or rather, the lack of it. In a near vacuum, there's no air pushing oxygen into your blood. You'd have about ten to fifteen *seconds* of useful consciousness. Then you'd pass *out*."
+
+  - id: exhale
+    background: { type: space, tint: blue }
+    bixStart: [960, 560]
+    props:
+      - { type: icon, icon: warning, x: 1400, y: 330, s: 1.4, at: "@breath" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@breath", action: shock }
+      - { at: "@out", action: point }
+    texts:
+      - { at: "@out", text: "BREATHE OUT!", style: shout, x: 1250, y: 220, rotate: -5 }
+    narration: "And one important rule: don't hold your *breath*. The air in your lungs would expand and could damage them. So you'd want to breathe *out*."
+
+  - id: boiling
+    chapter: "Saliva that boils"
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [760, 600]
+    props:
+      - { type: puff, at: "@boils", x: 820, y: 330 }
+      - { type: gauge, x: 1450, y: 450, r: 150, from: 100, to: 3, max: 100, at: 0.3, dur: 2, label: "pressure" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@boils", action: shock }
+      - { at: "@tongue", action: scared }
+    texts:
+      - { at: "@body", text: "BOILS AT BODY TEMPERATURE", style: label, x: 960, y: 160, color: "#ff7a1a" }
+    narration: "Next, something strange. With almost no pressure, water *boils* at *body* temperature. So the moisture on your *tongue* and in your eyes would start to bubble. Your blood is safe, though. Your own blood pressure keeps it from boiling."
+
+  - id: armstrong
+    background: { type: sky, mood: day, speed: 40 }
+    bixStart: [380, 820]
+    props:
+      - { type: vehicle, kind: plane, from: [2300, 360], to: [-400, 330], at: 0, dur: 6, s: 0.9, color: "#8a5cff" }
+      - { type: board, at: "@limit", x: 1200, y: 330, w: 680, h: 260, title: "Armstrong limit", size: 44, step: 0.8, lines: ["≈ 19 km up", "water boils at 37 °C"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@limit", action: point }
+    narration: "This already happens high in our own sky, at about nineteen kilometres up. Pilots call it the Armstrong *limit*. Above it, without a pressure suit, the same bubbling starts."
+
+  - id: swelling
+    chapter: "You'd swell, not pop"
+    transition: whip
+    background: { type: space, tint: blue }
+    bixStart: [960, 600]
+    bixScale: 1.0
+    props:
+      - { type: ring, at: "@twice", x: 960, y: 450, r: 230, color: "#ffd447" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@swell", action: shock }
+    texts:
+      - { at: "@twice", text: "UP TO ≈ 2× SIZE", style: label, x: 960, y: 170, color: "#ffd447" }
+    narration: "Those bubbles make your body *swell* up, maybe to about *twice* its normal size. Doctors call it ebullism. But your skin is strong. It holds you together. No popping."
+
+  - id: kittinger
+    background: { type: sky, mood: day, speed: 20, clouds: 4 }
+    bixStart: [380, 820]
+    props:
+      - { type: badge, at: "@1960", x: 1250, y: 380, r: 120, text: "1960", color: "#ffd447" }
+      - { type: icon, icon: check, x: 1600, y: 380, s: 1.3, at: "@normal" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@hand", action: shock }
+      - { at: "@normal", action: cheer }
+    narration: "It really happened to a pilot in 1960. During a record balloon flight more than thirty kilometres up, his glove lost pressure. His *hand* swelled to about twice its size. He still made his jump, and a few hours after landing, his hand was back to *normal*."
+
+  - id: chamber-1966
+    chapter: "True story: Houston, 1966"
+    transition: iris
+    background: { type: lab, board: false }
+    bixStart: [330, 820]
+    props:
+      - { type: chamber, x: 1200, y: 820, s: 1.0, leakAt: "@lost", label: "VACUUM CHAMBER" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@lost", action: shock }
+    texts:
+      - { at: "@1966", text: "NASA, HOUSTON, 1966", style: label, x: 1200, y: 160, color: "#2f8cff" }
+    narration: "And here's a true story. In December 1966, at NASA's centre in Houston, a suit tester named Jim LeBlanc was inside a vacuum chamber. Suddenly, a hose came loose, and his suit *lost* almost all its pressure."
+
+  - id: chamber-1966-b
+    background: { type: lab, board: false }
+    bixStart: [330, 820]
+    props:
+      - { type: chamber, x: 1200, y: 820, s: 1.0 }
+      - { type: clock, x: 1650, y: 330, r: 110, time: "0:00", speed: 0.4, at: "@fourteen" }
+    bix:
+      - { at: 0, action: shock }
+      - { at: "@bubble", action: scared }
+      - { at: "@recovered", action: cheer }
+    texts:
+      - { at: "@fourteen", text: "≈ 14 SECONDS", style: big, x: 1200, y: 200 }
+    narration: "He later said he felt the saliva on his tongue start to *bubble*. He passed out after about *fourteen* seconds. Normally, refilling that chamber took about half an hour. That day, his team flooded it with air in about a minute, and he *recovered*. His main complaint? Sore ears."
+
+  - id: rescue
+    chapter: "The rescue window"
+    transition: whip
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: satellite, kind: station, x: 1250, y: 420, s: 1.2 }
+      - { type: clock, x: 1650, y: 750, r: 110, time: "0:00", speed: 0.6, at: "@ninety" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@ninety", action: point }
+      - { at: "@deadly", action: scared }
+    texts:
+      - { at: "@ninety", text: "≈ 90 SECONDS", style: big, x: 1150, y: 170 }
+    narration: "So how long would rescuers have? Experiments in the 1960s found that animals usually recovered from about *ninety* seconds of near vacuum, sometimes a bit more. Much longer was often *deadly*. Scientists think a short exposure, under about thirty seconds, may cause no lasting harm at all."
+
+  - id: not-frozen
+    chapter: "Cold? Not so fast"
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [760, 600]
+    props:
+      - { type: item, item: mug, x: 1350, y: 480, s: 2.2, at: "@thermos" }
+      - { type: sun, x: 1700, y: 220, r: 110, at: "@sunburn" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@thermos", action: point }
+      - { at: "@sunburn", action: shock }
+    narration: "And the cold? Space works like a *thermos*. With no air to carry heat away, you'd cool down slowly. The bigger problem is the Sun. Without our air and ozone layer to filter it, its ultraviolet light would give you a *sunburn* far faster than on any beach."
+
+  - id: soyuz
+    chapter: "Why astronauts take it seriously"
+    transition: whip
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 1250, y: 1300, r: 800, spin: 0.02, tilt: 0 }
+      - { type: badge, at: "@1971", x: 1250, y: 330, r: 110, text: "1971", color: "#8b93ad" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@only", action: think }
+      - { at: "@suits", action: point }
+    narration: "This is why astronauts take it so seriously. In 1971, three cosmonauts on Soyuz 11 died when a valve opened about 168 kilometres up, letting the air out of their capsule. They are the *only* people ever to die in space. Since then, crews wear pressure *suits* for launch and landing."
+
+  - id: iss
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: satellite, kind: station, x: 1250, y: 450, s: 1.5 }
+    bix:
+      - { at: 0, action: float, hold: mug }
+      - { at: "@same", action: cheer, hold: mug }
+    texts:
+      - { at: "@same", text: "≈ 101 kPa, LIKE AT THE BEACH", style: label, x: 1250, y: 170, color: "#22d3c5" }
+    narration: "And on the Space Station, the cabin is kept at about the *same* air pressure as at sea level here on Earth. Which means astronauts can work in T-shirts. The station's walls hold that air in, like a giant flying bottle. Outside, it's vacuum. Inside, it's home."
+
+  - id: lab-ending
+    chapter: "So, how long would you last?"
+    transition: whip
+    background: { type: lab }
+    bixStart: [420, 820]
+    props:
+      - { type: cactus, x: 1450, y: 760, s: 1.1, mood: shock, at: 0 }
+      - { type: blackhole, x: 1150, y: 360, r: 70, at: "@black" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@seconds", action: point }
+      - { at: "@black", action: shock }
+    narration: "So: about fifteen *seconds* awake, about ninety seconds for a rescue, and no explosions. Space is dangerous, but not in the way movies show. The real killer is simple: no air to breathe. That's why every spacesuit is really a tiny, personal spaceship. Next time, we go somewhere far worse: a *black* hole."
+
+tiktokShorts:
+  - n: 1
+    kind: cut
+    slug: 15-seconds-in-space
+    hook: "15 SECONDS IN SPACE"
+    question: "Would YOU survive this? 👇"
+    tiktokCaption: "Without a spacesuit you'd have only about 10 to 15 seconds of useful consciousness. The real danger is no oxygen. #space #science #nasa"
+    youtubeTitle: "You'd have about 15 seconds in space without a suit"
+    scenes:
+      - like: cold-open
+        props: &st []
+        narration: "Thrown into space without a spacesuit, you'd have about fifteen *seconds*. That's it."
+        bix: [{ at: 0, action: float, params: { panic: 0.7 } }]
+        texts: [{ at: "@seconds", text: "≈ 15 SECONDS", style: big }]
+      - like: oxygen
+        narration: "With no air pushing oxygen into your blood, you'd stay conscious for only about ten to fifteen seconds. Then you'd pass *out*."
+        props: [{ type: gauge, x: 1250, y: 470, r: 170, from: 95, to: 0, max: 100, at: 0.3, dur: 2.5, label: "oxygen" }]
+        bix: [{ at: 0, action: point }, { at: "@out", action: sleepy }]
+        texts: []
+      - like: exhale
+        narration: "And don't hold your breath. Breathe *out*, or the air in your lungs could hurt them."
+        props: []
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@out", text: "BREATHE OUT!", style: shout, rotate: -5 }]
+      - like: cold-open
+        props: *st
+        narration: "So start counting, because"
+        bix: [{ at: 0, action: float }]
+        texts: []
+
+  - n: 2
+    kind: cut
+    slug: saliva-boils
+    hook: "YOUR SALIVA WOULD BOIL"
+    question: "Did you know this? 👇"
+    tiktokCaption: "With almost no pressure, water boils at body temperature, so the moisture on your tongue would bubble. Your blood stays safe. #space #physics #science"
+    youtubeTitle: "In space, the saliva on your tongue would boil"
+    scenes:
+      - like: boiling
+        narration: "In space without a suit, the saliva on your tongue would *boil*. Not slowly. Right away."
+        props: [{ type: puff, at: 0.6, x: 820, y: 330 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@boil", text: "IT BOILS!", style: shout, rotate: -5 }]
+      - like: boiling
+        narration: "With almost no pressure, water boils at body temperature. Not because it's hot, but because nothing is pressing on it."
+        props: [{ type: gauge, x: 1450, y: 450, r: 150, from: 100, to: 3, max: 100, at: 0.3, dur: 2, label: "pressure" }]
+        bix: [{ at: 0, action: present }]
+        texts: [{ at: "@temperature", text: "BOILS AT 37 °C", style: label, color: "#ff7a1a" }]
+      - like: boiling
+        narration: "Your blood is safe, though. Your own blood pressure keeps it from boiling. Your body is smarter than you think."
+        props: []
+        bix: [{ at: 0, action: cheer }]
+        texts: []
+      - like: boiling
+        narration: "But on your tongue? Yes,"
+        props: []
+        bix: [{ at: 0, action: float }]
+        texts: []
+
+  - n: 3
+    kind: cut
+    slug: nasa-vacuum-accident-1966
+    hook: "A REAL NASA VACUUM ACCIDENT"
+    question: "Could YOU stay calm? 👇"
+    tiktokCaption: "1966: a NASA suit tester lost pressure in a vacuum chamber. His saliva bubbled, he passed out, and he recovered. #nasa #space #history"
+    youtubeTitle: "The real NASA vacuum chamber accident of 1966"
+    scenes:
+      - like: chamber-1966
+        narration: "In 1966, a NASA suit tester *lost* his suit pressure inside a vacuum chamber."
+        props: [{ type: chamber, x: 1200, y: 820, s: 1.0, leakAt: 1.2 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@1966", text: "HOUSTON, 1966", style: label, color: "#2f8cff" }]
+      - like: chamber-1966-b
+        narration: "He felt the saliva on his tongue start to *bubble*, and passed out after about fourteen seconds."
+        props: [{ type: chamber, x: 1200, y: 820, s: 1.0 }]
+        bix: [{ at: 0, action: scared }]
+        texts: [{ at: "@fourteen", text: "≈ 14 SECONDS", style: big }]
+      - like: chamber-1966-b
+        narration: "His team flooded the chamber with air in about a minute. And he *recovered*, with nothing worse than sore ears."
+        props: [{ type: chamber, x: 1200, y: 820, s: 1.0 }]
+        bix: [{ at: 0, action: cheer }]
+        texts: []
+      - like: chamber-1966
+        narration: "It all started when, one day,"
+        props: [{ type: chamber, x: 1200, y: 820, s: 1.0 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 4
+    kind: standalone
+    slug: you-would-not-explode
+    hook: "YOU WOULD NOT EXPLODE"
+    question: "What did the movies teach YOU? 👇"
+    tiktokCaption: "In a vacuum your body would swell, maybe to about twice its size, but your skin holds you together. #space #science #movies"
+    youtubeTitle: "Why you would NOT explode in space"
+    scenes:
+      - like: swelling
+        narration: "In space without a suit, you would not *explode*. Sorry, movies. It's a myth."
+        props: []
+        bix: [{ at: 0, action: shrug }]
+        texts: [{ at: "@explode", text: "NO BOOM!", style: shout, rotate: -5 }]
+      - like: swelling
+        narration: "Tiny bubbles would make your body swell, maybe to about *twice* its size. Doctors call it ebullism."
+        bix: [{ at: 0, action: float }, { at: "@twice", action: shock }]
+        texts: [{ at: "@twice", text: "UP TO ≈ 2×", style: label, color: "#ffd447" }]
+      - like: swelling
+        narration: "But your skin is much stronger than you think. It holds you together, no popping. Still not fun, though."
+        props: []
+        bix: [{ at: 0, action: cheer }]
+        texts: []
+      - like: swelling
+        narration: "So whatever you've seen on screen,"
+        props: []
+        bix: [{ at: 0, action: float }]
+        texts: []
+
+  - n: 5
+    kind: standalone
+    slug: ninety-second-rescue
+    hook: "THE 90-SECOND RESCUE WINDOW"
+    question: "Would YOU make it in time? 👇"
+    tiktokCaption: "1960s experiments: animals usually recovered from about 90 seconds of near vacuum. Much longer was often deadly. #space #science #rescue"
+    youtubeTitle: "How long could rescuers wait in space? About 90 s"
+    scenes:
+      - like: rescue
+        narration: "If you fell into space without a suit, rescuers would have about *ninety* seconds to save you."
+        props: [{ type: clock, x: 1250, y: 450, r: 150, time: "0:00", speed: 0.6 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@ninety", text: "≈ 90 SECONDS", style: big }]
+      - like: rescue
+        narration: "In 1960s experiments, animals usually recovered from about ninety seconds of near vacuum. Much longer was often deadly."
+        props: [{ type: clock, x: 1250, y: 450, r: 150, time: "0:00", speed: 0.6 }]
+        bix: [{ at: 0, action: present }, { at: "@deadly", action: scared }]
+        texts: []
+      - like: rescue
+        narration: "Scientists think a short exposure, under about thirty seconds, may cause no lasting harm at all. Speed is everything."
+        props: [{ type: clock, x: 1250, y: 450, r: 150, time: "0:00", speed: 0.6 }]
+        bix: [{ at: 0, action: cheer }]
+        texts: []
+      - like: rescue
+        narration: "So, the clock starts now:"
+        props: [{ type: clock, x: 1250, y: 450, r: 150, time: "0:00", speed: 0.6 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 6
+    kind: standalone
+    slug: space-is-a-thermos
+    hook: "SPACE WON'T FREEZE YOU FAST"
+    question: "Hot or cold: which scares YOU more? 👇"
+    tiktokCaption: "With no air to carry heat away, space works like a thermos: you'd cool slowly. The Sun's unfiltered UV is the bigger problem. #space #science #physics"
+    youtubeTitle: "Why space wouldn't freeze you instantly"
+    scenes:
+      - like: not-frozen
+        narration: "Space would not freeze you into an ice cube. Not quickly, anyway. Even though it's cold out there."
+        props: [{ type: frost, x: 1350, y: 480, r: 200, count: 12 }]
+        bix: [{ at: 0, action: shrug }]
+        texts: [{ at: "@ice", text: "NO ICE CUBE", style: shout, rotate: -5 }]
+      - like: not-frozen
+        narration: "It works like a *thermos*. With no air to carry heat away, you'd cool down slowly."
+        props: [{ type: item, item: mug, x: 1350, y: 480, s: 2.2 }]
+        bix: [{ at: 0, action: point }]
+        texts: []
+      - like: not-frozen
+        narration: "The bigger danger is the Sun. Its unfiltered ultraviolet light would burn your skin far faster than on any beach."
+        props: [{ type: sun, x: 1350, y: 400, r: 150 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@ultraviolet", text: "UV: NO FILTER", style: label, color: "#ff7a1a" }]
+      - like: not-frozen
+        narration: "So believe it or not,"
+        props: [{ type: frost, x: 1350, y: 480, r: 200, count: 12 }]
+        bix: [{ at: 0, action: float }]
+        texts: []
+
+thumbnail:
+  title: ["NO", "SPACESUIT?!"]
+  accent: 1
+  background: { type: space, tint: blue }
+  props:
+    - { type: earth, x: 1050, y: 1250, r: 600, spin: 0.02, tilt: 0 }
+    - { type: satellite, kind: station, x: 1000, y: 330, s: 1.0 }
+  bix: { action: shock, x: 1640, y: 1230, scale: 2.4, facing: -1, t: 0.45 }
+
+sources:
+  - "Bancroft, R. W. (1966). Physiological Responses to Near-Vacuum. ASTM STP (≈ 9–15 s of useful consciousness; animal exposures): https://doi.org/10.1520/STP46440S"
+  - "Bancroft, R. W. & Dunn, J. E. (1965). Experimental animal decompressions to a near-vacuum environment. SAM-TR-65-48, NASA Technical Reports Server (dogs recovered from ~90 s–2 min exposures): https://ntrs.nasa.gov/citations/19660005051"
+  - "FAA, Hypoxia and time of useful consciousness: https://www.faa.gov/pilots/training/airman_education/topics_of_interest/hypoxia"
+  - "Murray, D. H. et al. (2013). Pathophysiology, prevention, and treatment of ebullism. Aviat. Space Environ. Med. 84(2), 89–96 (swelling, skin holds the body together, short exposures likely survivable): https://doi.org/10.3357/ASEM.3468.2013"
+  - "Armstrong limit (≈ 6.3 kPa, ≈ 19 km; exposed body fluids boil at 37 °C, blood is protected by blood pressure): https://en.wikipedia.org/wiki/Armstrong_limit"
+  - "MSD Manual Professional, Pulmonary barotrauma (why breath-holding during decompression can injure the lungs): https://www.msdmanuals.com/professional/injuries-poisoning/injury-during-diving-or-work-in-compressed-air/pulmonary-barotrauma"
+  - "Popular Science, How NASA goes to space without leaving Earth (1966 vacuum-chamber accident, Jim LeBlanc: saliva bubbling, unconscious after ~14 s, chamber repressurized, recovered): https://www.popsci.com/how-nasa-goes-to-space-without-leaving-earth/"
+  - "Smithsonian National Air and Space Museum, Space Jumper (Kittinger, 16 Aug 1960, Excelsior III: glove failure, hand swelled to ~2×, back to normal ~3 h after landing): https://airandspace.si.edu/air-and-space-quarterly/summer-2023/space-jumper"
+  - "Space exposure (vacuum is a poor conductor of heat; unfiltered UV): https://en.wikipedia.org/wiki/Space_exposure"
+  - "NASA, 50 years ago: remembering the crew of Soyuz 11 (30 June 1971, the only people to die in space): https://www.nasa.gov/feature/50-years-ago-remembering-the-crew-of-soyuz-11"
+  - "NASA OCHMO Technical Brief, Habitable atmosphere (sea-level pressure 101.3 kPa; spacecraft cabins near sea-level pressure): https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-003-habitable-atmosphere.pdf"

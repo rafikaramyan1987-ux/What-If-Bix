@@ -1,0 +1,428 @@
+# What If Bix — Episode 9 (Bix 2.0)
+# Structure: the vanishing (how many insects there are), then one day after another: pollination (what we'd
+# keep and what we'd lose), the food chain (birds), decomposition (dung), human health (a modelling estimate),
+# and the twist: insect numbers are already falling in some places. Teaser: "See like a bee" (backlog).
+# Every number is from the sources at the bottom; uncertain numbers are said with "about" / "scientists estimate".
+id: ep09-insects-disappear
+number: 9
+title: "What if all the insects disappeared?"
+description: |
+  Tonight, every insect on Earth vanishes. No more mosquitoes... but also no more bees, beetles or butterflies.
+  Bix follows what happens next: which foods we'd lose and which we'd keep, the birds left hungry, the dung that piles up, and why scientists are already watching insect numbers closely.
+pinnedQuestion: "Which insect would YOU miss the most?"
+hashtags: ["#insects", "#bees", "#nature", "#science"]
+tags: [what if all the insects disappeared, insects, bees, pollination, pollinators, dung beetles, insect decline, food chain, biodiversity, ecology, what if bix]
+lengthRange: [225, 270]
+character: bix2
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: curious, gain: 0.2, duck: 0.55, seed: 909, loudnorm: two-pass }
+introAfter: how-many
+outro:
+  narration: "Which insect would you miss the most? Tell me in the comments. Next time: what if you could see like a bee, with colours we can't even imagine? Subscribe, so you don't miss it."
+  background: { type: land, mood: sunset }
+
+scenes:
+  - id: cold-open
+    chapter: "Tonight, they vanish"
+    background: { type: land, mood: day }
+    bixStart: [420, 820]
+    props:
+      - { type: flower, x: 1250, y: 820, count: 4, gap: 170 }
+      - { type: bee, x: 1100, y: 460, s: 0.9, vanishAt: "@vanishes" }
+      - { type: bee, x: 1400, y: 380, s: 0.8, facing: -1, seed: 2, vanishAt: "@vanishes" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@vanishes", action: shock }
+    texts:
+      - { at: 0.1, text: "NO MORE INSECTS?!", style: title, y: 160 }
+    narration: "Tonight, every insect on Earth *vanishes*. Goodbye mosquitoes! Great news, right? Well... let's see what happens next."
+
+  - id: how-many
+    background: { type: land, mood: day }
+    bixStart: [420, 820]
+    props:
+      - { type: badge, at: "@quintillion", x: 1250, y: 420, r: 150, text: "10", sub: "quintillion", color: "#ffd447" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@quintillion", action: shock }
+    texts:
+      - { at: "@zeros", text: "1 FOLLOWED BY 19 ZEROS", style: label, x: 1250, y: 170, color: "#8a5cff" }
+    narration: "And that's a lot of insects. The Smithsonian estimates that about ten *quintillion* insects are alive at any one time. That's a one followed by nineteen *zeros*."
+
+  - id: species
+    chapter: "How many kinds?"
+    transition: whip
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: bars, at: "@named", x: 1200, y: 800, w: 640, h: 420, values: [1, 5.5], display: ["≈ 1 million", "≈ 5.5 million"], labels: ["named", "estimated"], colors: ["#22d3c5", "#8a5cff"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@named", action: point }
+      - { at: "@undiscovered", action: shock }
+    narration: "Scientists have *named* about a million insect species. But they estimate there are about five and a half million in total. So most of the insects that would vanish are still *undiscovered*."
+
+  - id: pollination
+    chapter: "Day one: the flowers"
+    transition: whip
+    background: { type: land, mood: day }
+    bixStart: [380, 820]
+    props:
+      - { type: flower, x: 1250, y: 820, count: 5, gap: 160, wiltAt: "@pollinate" }
+      - { type: bee, x: 1250, y: 420, s: 1.0, vanishAt: 0.4 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@pollinate", action: scared }
+    texts:
+      - { at: "@nine", text: "≈ 9 IN 10 FLOWERING PLANTS", style: label, x: 1250, y: 170, color: "#ff6fb5" }
+    narration: "The first problem is flowers. Scientists estimate that nearly *nine* in ten flowering plant species rely on animals, mostly insects, to *pollinate* them. That's around 308,000 species. No visitors, no seeds, no fruit."
+
+  - id: crops
+    chapter: "What would we still eat?"
+    transition: iris
+    background: { type: land, mood: day }
+    bixStart: [380, 820]
+    props:
+      - { type: board, at: "@three-quarters", x: 1250, y: 300, w: 720, h: 300, title: "Leading food crop types", size: 44, step: 0.9, lines: ["≈ 3/4 benefit from pollinators", "but ≈ 1/3 of the harvest by weight"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@three-quarters", action: point }
+      - { at: "@third", action: think }
+    narration: "What about our food? About *three-quarters* of the world's leading food crop types benefit at least partly from animal pollination. But by weight, those crops make up only about a *third* of what we grow. In money, scientists estimate pollinators help produce crops worth about 235 to 577 billion US dollars, every single year."
+
+  - id: staples
+    background: { type: land, mood: day, seaEnd: 0 }
+    bixStart: [380, 820]
+    props:
+      - { type: icon, icon: check, x: 1000, y: 420, s: 1.4, at: "@wheat" }
+      - { type: icon, icon: cross, x: 1500, y: 420, s: 1.4, at: "@lose" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@wheat", action: cheer }
+      - { at: "@lose", action: facepalm }
+    texts:
+      - { at: "@wind", text: "WIND-POLLINATED: STILL HERE", style: label, x: 1000, y: 170, color: "#3fcf6e" }
+    narration: "Why so little? Because staple grains like *wheat*, rice and maize are pollinated by the *wind*, or pollinate themselves. So we'd still have bread and rice. But we'd *lose* much of the variety: many fruits, vegetables, nuts and seeds."
+
+  - id: chocolate
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: badge, x: 1250, y: 500, r: 140, text: "COCOA", color: "#c98a45", rot: -6 }
+      - { type: icon, icon: heart, x: 1550, y: 330, s: 1.2, at: "@midges" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@chocolate", action: shock }
+      - { at: "@midges", action: point }
+    texts:
+      - { at: "@chocolate", text: "NO CHOCOLATE?!", style: shout, x: 1250, y: 230, rotate: -5 }
+    narration: "And brace yourself: *chocolate*. Cocoa flowers are pollinated mainly by tiny flies called *midges*, no bigger than a pinhead. No midges, no cocoa beans."
+
+  - id: almonds
+    background: { type: land, mood: day }
+    bixStart: [380, 820]
+    props:
+      - { type: tree, x: 1100, y: 820, s: 1.0 }
+      - { type: tree, x: 1400, y: 820, s: 0.9 }
+      - { type: vehicle, kind: bus, from: [2300, 822], to: [1700, 822], at: "@trucked", dur: 2.5, color: "#ffd447" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@million", action: shock }
+    texts:
+      - { at: "@million", text: "≈ 2 MILLION HIVES", style: big, x: 1250, y: 230 }
+    narration: "Farmers know how much they need bees. Every spring, about two *million* honeybee hives are brought to California's almond orchards, many of them *trucked* in from across the United States."
+
+  - id: by-hand
+    chapter: "Pollinating by hand"
+    transition: whip
+    background: { type: land, mood: day }
+    bixStart: [380, 820]
+    props:
+      - { type: pal, x: 1150, y: 820, s: 0.8, facing: -1, seed: 4, actions: [{ at: 0, action: point }] }
+      - { type: flower, x: 1450, y: 820, count: 2, gap: 160 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@hand", action: shock }
+    narration: "Could people do the bees' job? It has happened. In parts of Sichuan, in China, where heavy pesticide use helped wipe out local bees, farmers have pollinated apple and pear blossoms by *hand*. Flower, by flower, by flower. In one county there, around 2001, nearly all the apple trees were pollinated by people. Slow, tiring work that bees do for free."
+
+  - id: birds
+    chapter: "Day two: hungry birds"
+    transition: iris
+    background: { type: sky, mood: day, speed: 40 }
+    bixStart: [380, 820]
+    props:
+      - { type: bird, kind: pigeon, from: [-200, 330], to: [2200, 360], at: 0, dur: 5, s: 1.0 }
+      - { type: bird, kind: duck, from: [-300, 480], to: [2200, 430], at: 1, dur: 6, s: 0.8 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@million", action: shock }
+    texts:
+      - { at: "@million", text: "400–500 MILLION TONNES / YEAR", style: label, x: 1150, y: 170, color: "#ff7a1a" }
+    narration: "Next, the animals that eat insects. Scientists estimate that the world's insect-eating birds eat about 400 to 500 *million* tonnes of insects and other small creepy-crawlies every year. Researchers compared it to the energy a city the size of New York uses in a year. Without insects, many birds, frogs and fish would go hungry."
+
+  - id: dung
+    chapter: "Day three: the dung piles up"
+    transition: whip
+    background: { type: land, mood: day }
+    bixStart: [380, 820]
+    props:
+      - { type: beetle, x: 1250, y: 820, s: 1.1, facing: -1, from: [1500, 820], to: [1150, 820], moveAt: 0, dur: 4 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@bury", action: point }
+      - { at: "@rot", action: facepalm }
+    narration: "And then, the mess. Insects are part of nature's clean-up crew. Dung beetles, for example, break up animal dung and *bury* it back into the soil, where it feeds the ground. Without them, dung can sit on the surface, *rot* slowly, and become a home for flies."
+
+  - id: australia
+    background: { type: land, mood: sunset }
+    bixStart: [380, 820]
+    props:
+      - { type: beetle, x: 1250, y: 820, s: 1.1, facing: -1 }
+      - { type: badge, at: "@CSIRO", x: 1650, y: 330, r: 100, text: "1960s", color: "#ffd447" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@cow", action: laugh }
+      - { at: "@CSIRO", action: point }
+    narration: "Australia learned this the hard way. Its native dung beetles evolved with kangaroo droppings, and couldn't cope with big *cow* pats. So from the late 1960s, scientists at *CSIRO* brought in dozens of dung beetle species from Africa and Europe to bury the dung."
+
+  - id: health
+    chapter: "And us?"
+    transition: iris
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: board, at: "@modelling", x: 1150, y: 330, w: 720, h: 260, title: "One modelling study", size: 44, step: 0.8, lines: ["no animal pollinators:", "≈ 1.4 million extra deaths a year"] }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@modelling", action: point }
+      - { at: "@million", action: scared }
+    narration: "For people, it's not instant famine, but it's serious. One *modelling* study estimated that losing all animal pollinators could lead to about 1.4 *million* extra deaths a year, from heart disease, strokes, some cancers and missing nutrients, because healthy fruits and vegetables would become scarce."
+
+  - id: already
+    chapter: "It's already happening"
+    transition: whip
+    background: { type: land, mood: day }
+    bixStart: [380, 820]
+    props:
+      - { type: bars, at: "@three-quarters", x: 1250, y: 820, w: 620, h: 420, values: [100, 24], display: ["1989", "2016"], labels: ["then", "27 years later"], colors: ["#3fcf6e", "#ff4d5e"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@three-quarters", action: shock }
+    texts:
+      - { at: "@three-quarters", text: "≈ 76% FEWER (BY WEIGHT)", style: label, x: 1250, y: 170, color: "#ff4d5e" }
+    narration: "Here's the twist: insects don't need to vanish overnight to matter. In German nature reserves, the weight of flying insects caught in traps fell by about *three-quarters* over twenty-seven years, measured at sixty-three sites. In mid-summer, the drop was even bigger: about eighty-two percent. That's one region, not the whole world, but scientists are watching closely."
+
+  - id: lab-ending
+    chapter: "Thank an insect"
+    transition: whip
+    background: { type: lab }
+    bixStart: [420, 820]
+    props:
+      - { type: cactus, x: 1450, y: 760, s: 1.1, mood: happy, at: 0 }
+      - { type: bee, x: 1100, y: 360, s: 1.2, at: "@bee" }
+      - { type: flower, x: 1150, y: 820, count: 2, gap: 200, at: "@flowers" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@flowers", action: point }
+      - { at: "@bee", action: cheer }
+    narration: "So, a world without insects? Fewer *flowers*, hungrier birds, dung everywhere, and much less fruit on your plate. Next time you see a *bee*, maybe say thanks. Even Newton agrees. He's a cactus. He knows how hard it is to find a pollinator in the desert."
+
+tiktokShorts:
+  - n: 1
+    kind: cut
+    slug: chocolate-needs-tiny-flies
+    hook: "NO INSECTS, NO CHOCOLATE"
+    question: "Could YOU live without chocolate? 👇"
+    tiktokCaption: "Cocoa flowers are pollinated mainly by tiny midges, no bigger than a pinhead. No midges, no cocoa beans. #chocolate #insects #science"
+    youtubeTitle: "Chocolate depends on flies smaller than a pinhead"
+    scenes:
+      - like: chocolate
+        narration: "If every insect on Earth disappeared, there would be no more *chocolate*. Seriously. None."
+        props: [{ type: badge, x: 1250, y: 500, r: 140, text: "COCOA", color: "#c98a45", rot: -6 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@chocolate", text: "NO CHOCOLATE?!", style: shout, rotate: -5 }]
+      - like: chocolate
+        narration: "That's because cocoa flowers are pollinated mainly by tiny flies called *midges*, no bigger than a pinhead."
+        props: [{ type: badge, x: 1250, y: 500, r: 140, text: "COCOA", color: "#c98a45", rot: -6 }]
+        bix: [{ at: 0, action: point }]
+        texts: [{ at: "@midges", text: "TINY MIDGES", style: label, color: "#ff6fb5" }]
+      - like: chocolate
+        narration: "No midges, no pollinated flowers. No flowers, no cocoa beans. And no beans means no bars."
+        props: [{ type: badge, x: 1250, y: 500, r: 140, text: "COCOA", color: "#c98a45", rot: -6 }]
+        bix: [{ at: 0, action: facepalm }]
+        texts: []
+      - like: chocolate
+        narration: "So remember, without tiny flies,"
+        props: [{ type: badge, x: 1250, y: 500, r: 140, text: "COCOA", color: "#c98a45", rot: -6 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 2
+    kind: cut
+    slug: bread-would-survive
+    hook: "YOU'D STILL HAVE BREAD"
+    question: "Which fruit would YOU miss? 👇"
+    tiktokCaption: "Wheat, rice and maize are pollinated by wind or by themselves. We'd keep them, but lose many fruits and veggies. #food #insects #science"
+    youtubeTitle: "Without insects, you'd still have bread (but not much else)"
+    scenes:
+      - like: staples
+        narration: "If every insect on Earth vanished tomorrow, you'd still have *bread*. Here's the surprising reason."
+        props: [{ type: icon, icon: check, x: 1000, y: 420, s: 1.4 }]
+        bix: [{ at: 0, action: cheer }]
+        texts: [{ at: "@bread", text: "BREAD: SAFE", style: shout, rotate: -5 }]
+      - like: staples
+        narration: "Wheat, rice and maize don't need insects. They're pollinated by the *wind*, or pollinate themselves."
+        props: [{ type: icon, icon: check, x: 1000, y: 420, s: 1.4 }]
+        bix: [{ at: 0, action: present }]
+        texts: [{ at: "@wind", text: "WIND-POLLINATED", style: label, color: "#3fcf6e" }]
+      - like: staples
+        narration: "But you'd *lose* much of the variety: many fruits, vegetables, nuts and seeds, and lots of vitamins with them."
+        props: [{ type: icon, icon: cross, x: 1500, y: 420, s: 1.4 }]
+        bix: [{ at: 0, action: facepalm }]
+        texts: []
+      - like: staples
+        narration: "So, good news, plain toast:"
+        props: [{ type: icon, icon: check, x: 1000, y: 420, s: 1.4 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 3
+    kind: cut
+    slug: dung-beetles-saved-australia
+    hook: "AUSTRALIA IMPORTED DUNG BEETLES"
+    question: "Would YOU want this job? 👇"
+    tiktokCaption: "Australia's native dung beetles couldn't handle cow pats, so from the late 1960s CSIRO brought in dozens of species. #beetles #australia #science"
+    youtubeTitle: "Why Australia imported dung beetles"
+    scenes:
+      - like: australia
+        narration: "Australia once had to import *dung* beetles from other continents. On purpose. Here's why."
+        props: [{ type: beetle, x: 1250, y: 820, s: 1.1, facing: -1 }]
+        bix: [{ at: 0, action: laugh }]
+        texts: [{ at: "@dung", text: "DUNG BEETLES?!", style: shout, rotate: -5 }]
+      - like: australia
+        narration: "Its native beetles evolved with kangaroo droppings, and couldn't cope with big cow pats."
+        props: [{ type: beetle, x: 1250, y: 820, s: 1.1, facing: -1 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+      - like: dung
+        narration: "So from the late 1960s, scientists brought in dozens of species from Africa and Europe to bury the dung."
+        props: [{ type: beetle, x: 1250, y: 820, s: 1.1, facing: -1, from: [1500, 820], to: [1150, 820], moveAt: 0, dur: 4 }]
+        bix: [{ at: 0, action: point }]
+        texts: []
+      - like: australia
+        narration: "And that's the story of why"
+        props: [{ type: beetle, x: 1250, y: 820, s: 1.1, facing: -1 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 4
+    kind: standalone
+    slug: ten-quintillion-insects
+    hook: "10 QUINTILLION INSECTS ALIVE"
+    question: "How many are in YOUR room? 👇"
+    tiktokCaption: "The Smithsonian estimates about 10 quintillion insects are alive at any one time: a 1 followed by 19 zeros. #insects #nature #science"
+    youtubeTitle: "There are about 10 quintillion insects alive right now"
+    scenes:
+      - like: how-many
+        narration: "Right now, as you watch this, about ten *quintillion* insects are alive on Earth."
+        props: [{ type: badge, x: 1250, y: 420, r: 150, text: "10", sub: "quintillion", color: "#ffd447" }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@quintillion", text: "10 QUINTILLION", style: big }]
+      - like: how-many
+        narration: "That's a one followed by nineteen zeros. It's a rough estimate from the Smithsonian, and it's mind-blowing."
+        props: [{ type: badge, x: 1250, y: 420, r: 150, text: "10", sub: "quintillion", color: "#ffd447" }]
+        bix: [{ at: 0, action: point }]
+        texts: [{ at: "@zeros", text: "1 + 19 ZEROS", style: label, color: "#8a5cff" }]
+      - like: species
+        narration: "And there's more: scientists have named about a million insect species, but think there are about five and a half million."
+        props: [{ type: bars, x: 1200, y: 800, w: 640, h: 420, values: [1, 5.5], display: ["≈ 1 million", "≈ 5.5 million"], labels: ["named", "estimated"], colors: ["#22d3c5", "#8a5cff"] }]
+        bix: [{ at: 0, action: think }]
+        texts: []
+      - like: how-many
+        narration: "So, at this very moment,"
+        props: [{ type: badge, x: 1250, y: 420, r: 150, text: "10", sub: "quintillion", color: "#ffd447" }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 5
+    kind: standalone
+    slug: farmers-pollinate-by-hand
+    hook: "FARMERS DOING THE BEES' JOB"
+    question: "Could YOU do it all day? 👇"
+    tiktokCaption: "In parts of Sichuan, China, where bees were wiped out, farmers have pollinated apple and pear blossoms by hand. #bees #farming #science"
+    youtubeTitle: "Where bees vanished, farmers pollinate by hand"
+    scenes:
+      - like: by-hand
+        narration: "In some orchards in China, people have done the bees' job. By *hand*. Every single flower."
+        props: [{ type: pal, x: 1150, y: 820, s: 0.8, facing: -1, seed: 4, actions: [{ at: 0, action: point }] }, { type: flower, x: 1450, y: 820, count: 2, gap: 160 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@hand", text: "BY HAND!", style: shout, rotate: -5 }]
+      - like: by-hand
+        narration: "In parts of Sichuan, China, heavy pesticide use helped wipe out the local bees. The orchards went quiet."
+        props: [{ type: flower, x: 1350, y: 820, count: 3, gap: 160 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+      - like: by-hand
+        narration: "So farmers have pollinated apple and pear blossoms themselves, flower, by flower, by flower."
+        props: [{ type: pal, x: 1150, y: 820, s: 0.8, facing: -1, seed: 4, actions: [{ at: 0, action: point }] }, { type: flower, x: 1450, y: 820, count: 2, gap: 160 }]
+        bix: [{ at: 0, action: facepalm }]
+        texts: []
+      - like: by-hand
+        narration: "Because when the bees are gone,"
+        props: [{ type: pal, x: 1150, y: 820, s: 0.8, facing: -1, seed: 4, actions: [{ at: 0, action: point }] }, { type: flower, x: 1450, y: 820, count: 2, gap: 160 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 6
+    kind: standalone
+    slug: birds-eat-500-million-tonnes
+    hook: "BIRDS EAT 400 MILLION TONNES"
+    question: "Did YOU expect that number? 👇"
+    tiktokCaption: "Scientists estimate insect-eating birds eat about 400 to 500 million tonnes of insects and other arthropods every year. #birds #insects #nature"
+    youtubeTitle: "Birds eat about 400 million tonnes of insects a year"
+    scenes:
+      - like: birds
+        narration: "Every year, the world's birds eat about 400 to 500 *million* tonnes of insects. That's a scientific estimate."
+        props: &perch [{ type: bird, kind: pigeon, from: [1150, 360], to: [1180, 360], at: 0, dur: 40, s: 1.2 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@million", text: "400–500 MILLION TONNES", style: label, color: "#ff7a1a" }]
+      - like: birds
+        narration: "Researchers compared all that food to the energy a city the size of New York uses in a whole year."
+        props: [{ type: bird, kind: duck, from: [-300, 480], to: [2200, 430], at: 0, dur: 6, s: 0.8 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+      - like: birds
+        narration: "So if insects vanished, many birds would go hungry, along with frogs, fish and more."
+        props: [{ type: bird, kind: pigeon, from: [-200, 330], to: [2200, 360], at: 0, dur: 5, s: 1.0 }]
+        bix: [{ at: 0, action: scared }]
+        texts: []
+      - like: birds
+        narration: "Which is why, every single year,"
+        props: *perch
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+thumbnail:
+  title: ["INSECTS", "GONE?!"]
+  accent: 0
+  background: { type: land, mood: day }
+  props:
+    - { type: flower, x: 1000, y: 1000, count: 3, gap: 220, s: 1.3, wiltAt: 0 }
+    - { type: bee, x: 1050, y: 380, s: 1.6 }
+  bix: { action: shock, x: 1640, y: 1230, scale: 2.4, facing: -1, t: 0.45 }
+
+sources:
+  - "Smithsonian Institution, Numbers of insects (species and individuals) (about 10 quintillion insects alive at any time): https://www.si.edu/spotlight/buginfo/bugnos"
+  - "Stork, N. E. (2018). How many species of insects and other terrestrial arthropods are there on Earth? Annu. Rev. Entomol. 63, 31–45 (≈ 1 million named, ≈ 5.5 million estimated): https://doi.org/10.1146/annurev-ento-020117-043348"
+  - "Ollerton, J., Winfree, R. & Tarrant, S. (2011). How many flowering plants are pollinated by animals? Oikos 120, 321–326 (≈ 87.5%): https://nectar.northampton.ac.uk/id/eprint/3763/"
+  - "Klein, A.-M. et al. (2007). Importance of pollinators in changing landscapes for world crops. Proc. R. Soc. B 274, 303–313 (≈ 75% of leading crop types; ≈ 35% of production by volume): https://doi.org/10.1098/rspb.2006.3721"
+  - "IPBES (2016), Pollinators vital to our food supply under threat (5–8% of crop production, US$235–577 billion a year): https://ipbes.net/article/press-release-pollinators-vital-our-food-supply-under-threat"
+  - "National Academies (2007), Status of Pollinators in North America, ch. 6 (wheat, rice and maize are wind- or self-pollinated): https://nap.nationalacademies.org/read/11761/chapter/6"
+  - "Ríos-Moyano, R. et al. (2023). Cocoa pollination review (cocoa pollinated mainly by Forcipomyia midges). Agronomía Mesoamericana: https://doi.org/10.15517/am.2023.52280"
+  - "USDA Economic Research Service, Amber Waves (2018), Driven by almonds, pollination services now exceed honey as a source of beekeeper revenue (≈ 2 million colonies for California almonds): https://www.ers.usda.gov/amber-waves/2018/july/driven-by-almonds-pollination-services-now-exceed-honey-as-a-source-of-beekeeper-revenue"
+  - "Partap, U. & Ya, T. (2012). The human pollinators of fruit crops in Maoxian County, Sichuan, China. Mountain Research and Development 32(2), 176–186: https://doi.org/10.1659/MRD-JOURNAL-D-11-00108.1"
+  - "Nyffeler, M., Şekercioğlu, Ç. H. & Whelan, C. J. (2018). Insectivorous birds consume an estimated 400–500 million tons of prey annually. The Science of Nature 105, 47: https://doi.org/10.1007/s00114-018-1571-z"
+  - "University of Basel (2018), Insectivorous birds consume annually as much energy as the city of New York (press release for Nyffeler et al. 2018): https://www.unibas.ch/en/News-Events/News/Uni-Research/Insectivorous-birds-consume-annually-as-much-energy-as-the-city-of-New-York.html"
+  - "CSIRO, Dung beetles (Australian Dung Beetle Project: species introduced from the late 1960s to bury cattle dung): https://www.csiro.au/en/research/animals/livestock/dung-beetles"
+  - "Smith, M. R. et al. (2015). Effects of decreases of animal pollinators on human nutrition and global health: a modelling analysis. The Lancet 386, 1964–1972 (≈ 1.42 million extra deaths a year with full pollinator loss): https://doi.org/10.1016/S0140-6736(15)61085-6"
+  - "Hallmann, C. A. et al. (2017). More than 75 percent decline over 27 years in total flying insect biomass in protected areas. PLOS ONE 12(10), e0185809: https://doi.org/10.1371/journal.pone.0185809"

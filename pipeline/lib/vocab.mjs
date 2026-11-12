@@ -11,6 +11,7 @@ export const PROPS = [
   'cable', 'satellite', 'moon', 'sun', 'orbit', 'tide', 'hurricane', 'brain', 'item', 'burst', 'icon', 'vehicle',
   'confetti', 'crack', 'building', 'badge', 'cactus', 'bird', 'frost', 'dolphin', 'halfbrain', 'penguin', 'huddle', 'octopus', 'vial', 'horseshoe',
   'earthcut', 'prison', 'dog', 'helicopter', 'coral', 'genius',
+  'chamber', 'blackhole', 'sub', 'snailfish', 'amphipod', 'bee', 'flower', 'beetle',
 ];
 export const ITEMS = ['sandwich', 'mug', 'phone', 'clipboard', 'pillow', 'laptop', 'book', 'coin', 'egg'];
 export const SFX = ['whoosh', 'pop', 'boing', 'screech', 'boom', 'ding', 'tick', 'rumble', 'wind', 'splash', 'thud', 'sparkle', 'swish', 'zip', 'sting'];

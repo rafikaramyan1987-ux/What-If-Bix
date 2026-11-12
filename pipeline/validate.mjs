@@ -20,7 +20,9 @@ export const WORDS_PER_SEC = 3.5;
 // estimate counts letters per sentence (a digit the voice reads out counts as ~6 letters) (fitted on 109 synthesized sentences: rmse 0.31 s per sentence).
 export const FR_SEC_PER_LETTER = 0.0636;
 export const FR_SEC_PER_SENTENCE = 0.11;
-const spokenWords = (units) => units.reduce((n, u) => n + Math.max(1, u.spoken.split(/\s+/).filter(Boolean).length), 0);
+// a number the voice reads out ("10,935" -> "ten thousand nine hundred thirty-five") counts as several words
+const tokenWords = (tok) => (/\d/.test(tok) ? 0.5 + 0.6 * (tok.match(/\d/g) ?? []).length : 1);
+const spokenWords = (units) => units.reduce((n, u) => n + Math.max(1, u.spoken.split(/\s+/).filter(Boolean).reduce((k, t) => k + tokenWords(t), 0)), 0);
 /** Seconds of speech (no pauses) for a list of TTS segments. */
 export const speechSeconds = (segs, lang = 'en') =>
   lang === 'fr'
@@ -92,11 +94,15 @@ export const frenchTypoProblems = (s) => {
   return out;
 };
 
-/** MarMila rules: 6 TikTok-rule Shorts (cut + standalone, all different, 15–25 s), long-video metadata, typography. */
-const checkFrench = (ep, errors, warnings) => {
+/**
+ * Episodes with inline `tiktokShorts:` (MarMila, and What If Bix from episode 6): 6 TikTok-rule Shorts (cut +
+ * standalone, all different, 15–25 s), long-video metadata (end question, hashtags) and, in French, typography.
+ */
+const checkTiktokPack = (ep, errors, warnings, lang) => {
+  const fr = lang === 'fr';
   const shorts = ep.tiktokShorts ?? [];
   if (shorts.length !== SHORTS_PER_EPISODE_FR) errors.push(`${SHORTS_PER_EPISODE_FR} tiktokShorts are required (has ${shorts.length})`);
-  if (ep.shorts?.length) errors.push('French episodes use tiktokShorts (TikTok rules), not classic shorts');
+  if (ep.shorts?.length) errors.push('episodes with tiktokShorts (TikTok rules) must not also have classic shorts');
   errors.push(...specProblems({ shorts }, ep));
   const kinds = shorts.map((s) => s.kind ?? 'cut');
   if (kinds.filter((k) => k === 'cut').length < 2) errors.push('at least 2 Shorts must be cut from the episode (kind: cut)');
@@ -113,7 +119,7 @@ const checkFrench = (ep, errors, warnings) => {
     let est = 0;
     try {
       const epLike = tiktokEpisode(ep, sh);
-      checkRefs(epLike.scenes, errors, `${tag}: `, 'fr');
+      checkRefs(epLike.scenes, errors, `${tag}: `, lang);
       est = estimateTiktok(ep, sh);
     } catch (e) {
       errors.push(`${tag}: ${e.message}`);
@@ -121,18 +127,20 @@ const checkFrench = (ep, errors, warnings) => {
     if (est < TT_MIN + TT_EST_MARGIN || est > TT_MAX - TT_EST_MARGIN) errors.push(`${tag}: estimated ${est.toFixed(1)} s is outside ${TT_MIN + TT_EST_MARGIN}–${TT_MAX - TT_EST_MARGIN} s`);
     const tags = String(sh.tiktokCaption ?? '').match(/#[\p{L}\p{N}_]+/gu) ?? [];
     if (new Set(['#Shorts', ...tags]).size > 5) errors.push(`${tag}: more than 5 hashtags once #Shorts is added`);
-    for (const key of ['hook', 'question', 'youtubeTitle', 'tiktokCaption']) for (const p of frenchTypoProblems(sh[key] ?? '')) errors.push(`${tag} ${key}: ${p}`);
+    if (fr) for (const key of ['hook', 'question', 'youtubeTitle', 'tiktokCaption']) for (const p of frenchTypoProblems(sh[key] ?? '')) errors.push(`${tag} ${key}: ${p}`);
+    if (!fr && !/\?\s*\S*$/.test(sh.question ?? '')) errors.push(`${tag}: the end question must end with "?"`);
   }
   // the 6 Shorts must all be different: no two share more than 35% of their narration
   const narr = shorts.map((sh) => sh.scenes.map((s) => s.narration ?? ep.scenes.find((x) => x.id === s.like)?.narration ?? '').join(' '));
   for (let i = 0; i < narr.length; i++) for (let j = i + 1; j < narr.length; j++) {
-    const sim = similarity(narr[i], narr[j], 'fr');
+    const sim = similarity(narr[i], narr[j], lang);
     if (sim > 0.35) errors.push(`shorts ${shorts[i].n} and ${shorts[j].n} are too similar (${(sim * 100).toFixed(0)}% shared narration)`);
   }
   if (!ep.pinnedQuestion || !/\?/.test(ep.pinnedQuestion)) errors.push('pinnedQuestion (a question for the pinned comment) is required');
   const h = ep.hashtags ?? [];
   if (h.length < 3 || h.length > 5) errors.push('3–5 hashtags are required for the long video');
-  if ([...ep.title].length > 70) warnings.push('title longer than 70 characters (keep French titles short)');
+  if ([...ep.title].length > 70) (fr ? warnings : errors).push('title longer than 70 characters');
+  if (!fr) return;
   for (const p of [ep.title, ep.pinnedQuestion ?? '', ...(ep.scenes.flatMap((s) => (s.texts ?? []).map((t) => t.text)))].flatMap(frenchTypoProblems)) errors.push(p);
 };
 
@@ -155,12 +163,14 @@ export const checkEpisode = (file) => {
   if (!isSample) {
     videoSec += INTRO_SEC + ENDSCREEN_SEC;
     if (!ep.outro?.narration) errors.push('outro.narration (spoken over the end screen) is required');
-    if (videoSec < 240 || videoSec > 360) errors.push(`estimated length ${(videoSec / 60).toFixed(2)} min is outside 4–6 min`);
+    // `lengthRange: [min, max]` (seconds) overrides the default 4–6 min (What If Bix episodes 6+: 3:45–4:30)
+    const [lo, hi] = Array.isArray(ep.lengthRange) ? ep.lengthRange : [240, 360];
+    if (videoSec < lo || videoSec > hi) errors.push(`estimated length ${(videoSec / 60).toFixed(2)} min is outside ${(lo / 60).toFixed(2)}–${(hi / 60).toFixed(2)} min`);
     const chapters = ep.scenes.filter((s) => s.chapter);
     if (!ep.scenes[0].chapter) errors.push('the first scene must have a chapter (YouTube chapters start at 0:00)');
     if (chapters.length < 3) errors.push('at least 3 chapters are required');
     const shorts = ep.shorts ?? [];
-    if (lang === 'fr') checkFrench(ep, errors, warnings);
+    if (ep.tiktokShorts || lang === 'fr') checkTiktokPack(ep, errors, warnings, lang);
     else if (shorts.length < 2 || shorts.length > 3) errors.push('2–3 shorts are required');
     for (const sh of shorts) {
       let sep;

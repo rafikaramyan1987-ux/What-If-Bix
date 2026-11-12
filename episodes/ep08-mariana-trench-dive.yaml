@@ -1,0 +1,438 @@
+# What If Bix — Episode 8 (Bix 2.0)
+# Structure: a dive, floor by floor (light fades -> midnight zone -> the fish limit -> the bottom), the
+# pressure, the first dive (Trieste, 1960), what lives at the bottom, what humans left there, the later
+# dives, and a teaser for episode 9. Every number is from the sources at the bottom (NOAA first).
+id: ep08-mariana-trench-dive
+number: 8
+title: "What if you dove to the bottom of the Mariana Trench?"
+description: |
+  Eleven kilometres of water above your head, total darkness, and over a thousand times the pressure you feel right now.
+  Bix dives to Challenger Deep: the light that disappears, the fish that can't go deeper, the first dive in 1960, the strange animals at the bottom, and what humans already left down there.
+pinnedQuestion: "Would YOU get in the submarine?"
+hashtags: ["#ocean", "#deepsea", "#science", "#whatif"]
+tags: [what if you dove to the bottom of the mariana trench, mariana trench, challenger deep, deep sea, ocean pressure, trieste, snailfish, amphipod, deep ocean, ocean science, what if bix]
+lengthRange: [225, 270]
+character: bix2
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 808, loudnorm: two-pass }
+introAfter: how-deep
+outro:
+  narration: "Would you get in the submarine? Tell me in the comments. Next time: what if every insect on Earth suddenly vanished? You might be surprised who'd miss them most. Subscribe."
+  background: { type: ocean, horizon: 300, mood: night }
+
+scenes:
+  - id: cold-open
+    chapter: "Eleven kilometres down"
+    background: { type: plain, color: "#071633" }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: sub, x: 1150, y: 420, s: 1.0, light: true }
+    bix:
+      - { at: 0, action: scared }
+      - { at: "@crush", action: shock }
+    texts:
+      - { at: 0.1, text: "11 KM DOWN?!", style: title, y: 160 }
+    camera: { zoom: [1.0, 1.06], focus: [960, 540] }
+    narration: "You're sinking. Above you, about eleven kilometres of water. Around you, total darkness. And a pressure more than a thousand times stronger than up here, ready to *crush* anything not built for it."
+
+  - id: how-deep
+    background: { type: ocean, horizon: 300 }
+    bixStart: [380, 860]
+    bixScale: 0.85
+    props:
+      - { type: bars, at: "@Everest", x: 1250, y: 860, w: 700, h: 520, values: [8849, 10935], display: ["8,849 m", "≈ 10,935 m"], labels: ["Everest", "Challenger Deep"], colors: ["#8b93ad", "#2f8cff"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@Everest", action: point }
+      - { at: "@underwater", action: shock }
+    narration: "Welcome to the Mariana Trench, in the Pacific Ocean. Its deepest spot, Challenger Deep, is about 10,935 metres down. Drop Mount *Everest* in, and its peak would still be about two kilometres *underwater*."
+
+  - id: how-formed
+    background: { type: ocean, horizon: 300 }
+    bixStart: [380, 860]
+    bixScale: 0.85
+    props:
+      - { type: arrow, at: "@dives", from: [1500, 520], to: [1150, 820], color: "#ff7a1a", bend: 30, label: "plate", labelX: 1400, labelY: 600 }
+      - { type: board, at: "@long", x: 1250, y: 300, w: 640, h: 220, title: "Mariana Trench", size: 44, step: 0.8, lines: ["≈ 2,500 km long", "Pacific Ocean"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@dives", action: point }
+      - { at: "@long", action: shock }
+    narration: "How did such a hole form? Here, one huge piece of Earth's crust, a tectonic plate, *dives* underneath another one, and bends the sea floor down. The trench it leaves is about 2,500 kilometres *long*. A deep scar, hidden under the Pacific."
+
+  - id: light-fades
+    chapter: "Where the light ends"
+    transition: whip
+    background: { type: ocean, horizon: 120 }
+    bixStart: [960, 560]
+    props:
+      - { type: sub, x: 1450, y: 400, s: 0.7 }
+      - { type: board, at: "@200", x: 600, y: 330, w: 520, h: 220, title: "Light", size: 42, step: 0.8, lines: ["≈ 200 m: mostly gone", "≈ 1,000 m: pitch black"] }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@200", action: point }
+      - { at: "@black", action: scared }
+    narration: "As you sink, the sunlight fades fast. Most of it is gone by about *200* metres. Below about a thousand metres, it's pitch *black*. Scientists call it the midnight zone. And you're not even a tenth of the way down."
+
+  - id: glow
+    background: { type: plain, color: "#06122a" }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: confetti, at: "@light", dur: 6, count: 40 }
+      - { type: snailfish, x: 1250, y: 480, s: 0.9, at: "@animals" }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@light", action: shock }
+    texts:
+      - { at: "@bioluminescence", text: "BIOLUMINESCENCE", style: label, x: 1250, y: 170, color: "#22d3c5" }
+    narration: "But it's not completely dark everywhere. Many deep-sea *animals* make their own *light*, with chemistry inside their bodies. It's called *bioluminescence*. Flashes, glowing lures, even light used as camouflage."
+
+  - id: pressure
+    chapter: "The pressure"
+    transition: iris
+    background: { type: plain, color: "#071633" }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: gauge, x: 1250, y: 480, r: 180, from: 0, to: 98, max: 100, at: "@thousand", dur: 2.5, label: "pressure" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@thousand", action: shock }
+      - { at: "@tons", action: scared }
+    texts:
+      - { at: "@thousand", text: "> 1,000× SURFACE PRESSURE", style: label, x: 1250, y: 160, color: "#ff4d5e" }
+    narration: "Now the real problem. Ever felt your ears hurt at the bottom of a swimming pool? That's just a few metres of water. At the bottom of the trench, the water pressure is more than a *thousand* times what you feel right now. That's about eight *tons* pressing on every square inch. Roughly like a big elephant standing on your thumb."
+
+  - id: trieste
+    chapter: "The first dive: 1960"
+    transition: whip
+    background: { type: ocean, horizon: 300 }
+    bixStart: [380, 860]
+    bixScale: 0.85
+    props:
+      - { type: sub, x: 1250, y: 400, s: 1.1, label: "TRIESTE", from: [1250, 300], to: [1250, 520], moveAt: 0, dur: 8 }
+      - { type: badge, at: "@1960", x: 1700, y: 760, r: 100, text: "1960", color: "#ffd447" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@1960", action: point }
+    narration: "Humans first made it in January *1960*. Two explorers, Don Walsh and Jacques Piccard, sank to the bottom in a vessel called the Trieste. The trip down took almost five hours."
+
+  - id: trieste-crack
+    background: { type: plain, color: "#071633" }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: sub, x: 1250, y: 450, s: 1.1, label: "TRIESTE", light: true }
+      - { type: crack, x: 1290, y: 560, w: 120, at: "@cracked" }
+      - { type: boom, at: "@bang", x: 1290, y: 520 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@bang", action: shock }
+      - { at: "@minutes", action: cheer }
+    texts:
+      - { at: "@minutes", text: "≈ 20 MINUTES ON THE BOTTOM", style: label, x: 1250, y: 160, color: "#22d3c5" }
+    narration: "On the way down, an outer window *cracked* with a loud *bang*. They kept going anyway. They spent about twenty *minutes* on the bottom, looking out into the dark, and then began the long climb back up to the surface."
+
+  - id: fish-limit
+    chapter: "Even fish give up"
+    transition: iris
+    background: { type: plain, color: "#06122a" }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: snailfish, x: 1250, y: 480, s: 1.2, from: [1550, 480], to: [1150, 480], moveAt: 0, dur: 4 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@snailfish", action: point }
+      - { at: "@deeper", action: shock }
+    texts:
+      - { at: "@8,336", text: "8,336 m", style: big, x: 1250, y: 220 }
+    narration: "Here's something wild. Fish can't live all the way down. The deepest fish ever filmed was a small *snailfish*, at 8,336 metres, off Japan. Scientists think fish can't survive much *deeper* than about 8,200 to 8,400 metres."
+
+  - id: fish-why
+    background: { type: plain, color: "#06122a" }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: snailfish, x: 1250, y: 480, s: 1.2 }
+      - { type: icon, icon: warning, x: 1250, y: 260, s: 1.2, at: "@water" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@water", action: point }
+    narration: "Why? To protect their cells from the pressure, deep fish load up on a special molecule. But the deeper they go, the more they need. Past a certain depth, scientists think their bodies would pull in too much *water*. So below that line: no fish."
+
+  - id: bottom-life
+    chapter: "Who lives at the bottom?"
+    transition: whip
+    background: { type: plain, color: "#050d20" }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: amphipod, x: 1250, y: 520, s: 1.0, count: 6, spread: 260 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@amphipods", action: point }
+    texts:
+      - { at: "@amphipods", text: "AMPHIPODS", style: label, x: 1250, y: 170, color: "#ff7a1a" }
+    narration: "But life doesn't stop. At the very bottom, scientists have found shrimp-like scavengers called *amphipods*, giant single-celled blobs called xenophyophores, and see-through sea cucumbers. Life, eleven kilometres down."
+
+  - id: wood-eaters
+    background: { type: plain, color: "#050d20" }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: amphipod, x: 1250, y: 520, s: 1.3 }
+      - { type: tree, x: 1650, y: 820, s: 0.6, at: "@wood" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@wood", action: shock }
+      - { at: "@sugar", action: laugh }
+    narration: "One of those amphipods even makes its own special enzyme that turns *wood* into *sugar*. So when bits of sunken plants drift down, dinner is served."
+
+  - id: plastic
+    chapter: "We got there first... with trash"
+    transition: iris
+    background: { type: plain, color: "#050d20" }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: icon, icon: warning, x: 1250, y: 450, s: 1.6, at: "@plastic" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@plastic", action: facepalm }
+      - { at: "@pollution", action: scared }
+    texts:
+      - { at: "@10,898", text: "10,898 m", style: big, x: 1250, y: 220 }
+    narration: "And here's the sad part. A *plastic* bag was spotted almost eleven kilometres down, at 10,898 metres. And amphipods from the trench were found carrying human *pollution*, chemicals made in factories far away."
+
+  - id: later-dives
+    chapter: "Who else has been there?"
+    transition: whip
+    background: { type: ocean, horizon: 300 }
+    bixStart: [380, 860]
+    bixScale: 0.85
+    props:
+      - { type: sub, x: 1250, y: 420, s: 0.9, label: "2012" }
+      - { type: timeline, at: "@2012", x: 1100, y: 800, w: 1100, marks: [{ pos: 0, label: "1960" }, { pos: 0.6, label: "2012" }, { pos: 0.88, label: "2019" }, { pos: 1, label: "2020" }] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@2012", action: point }
+      - { at: "@woman", action: cheer }
+    narration: "Since then, more explorers have followed. In *2012*, filmmaker James Cameron made the first solo dive, reaching about 10,908 metres. In 2019, Victor Vescovo's sub, Limiting Factor, made several dives there. And in 2020, former astronaut Kathy Sullivan became the first *woman* to reach the bottom. She's also the first person to have walked in space and been to the deepest point of the ocean. From the top of the sky, to the bottom of the sea."
+
+  - id: lab-ending
+    chapter: "Would you go?"
+    transition: whip
+    background: { type: lab }
+    bixStart: [420, 820]
+    props:
+      - { type: cactus, x: 1450, y: 760, s: 1.1, mood: shock, at: 0 }
+      - { type: bee, x: 1150, y: 360, s: 1.2, at: "@insect" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@suit", action: shrug }
+      - { at: "@insect", action: shock }
+    narration: "So let's recap. About eleven kilometres of water. More than a thousand times the pressure. No light, no fish at the bottom, but still life, and sadly, still our trash. So could you dive there? Only inside a very strong sub, built just for this. Without one, no diving *suit* could protect you. Next time, a smaller question with a huge answer: what if every *insect* on Earth disappeared?"
+
+tiktokShorts:
+  - n: 1
+    kind: cut
+    slug: everest-would-sink
+    hook: "EVEREST WOULD DISAPPEAR HERE"
+    question: "Would YOU dive this deep? 👇"
+    tiktokCaption: "Challenger Deep is about 10,935 m deep. Drop Mount Everest in and its peak would still be about 2 km underwater. #ocean #deepsea #science"
+    youtubeTitle: "Mount Everest would vanish in the Mariana Trench"
+    scenes:
+      - like: how-deep
+        narration: "Drop Mount *Everest* into the Mariana Trench, and it would completely disappear under the waves."
+        props: [{ type: bars, x: 1250, y: 860, w: 700, h: 520, values: [8849, 10935], display: ["8,849 m", "≈ 10,935 m"], labels: ["Everest", "Challenger Deep"], colors: ["#8b93ad", "#2f8cff"] }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@disappear", text: "GONE!", style: shout, rotate: -5 }]
+      - like: how-deep
+        narration: "The trench's deepest spot, Challenger Deep, is about 10,935 metres down. Everest is 8,849 metres tall."
+        props: [{ type: bars, x: 1250, y: 860, w: 700, h: 520, values: [8849, 10935], display: ["8,849 m", "≈ 10,935 m"], labels: ["Everest", "Challenger Deep"], colors: ["#8b93ad", "#2f8cff"] }]
+        bix: [{ at: 0, action: point }]
+        texts: []
+      - like: how-deep
+        narration: "So its peak would still be about two kilometres *underwater*. The ocean there is deeper than the tallest mountain on Earth is tall."
+        props: [{ type: bars, x: 1250, y: 860, w: 700, h: 520, values: [8849, 10935], display: ["8,849 m", "≈ 10,935 m"], labels: ["Everest", "Challenger Deep"], colors: ["#8b93ad", "#2f8cff"] }]
+        bix: [{ at: 0, action: present }]
+        texts: [{ at: "@underwater", text: "≈ 2 km OF WATER ON TOP", style: label, color: "#2f8cff" }]
+      - like: how-deep
+        narration: "That's why, yes,"
+        props: [{ type: bars, x: 1250, y: 860, w: 700, h: 520, values: [8849, 10935], display: ["8,849 m", "≈ 10,935 m"], labels: ["Everest", "Challenger Deep"], colors: ["#8b93ad", "#2f8cff"] }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 2
+    kind: cut
+    slug: eight-tons-per-square-inch
+    hook: "8 TONS ON EVERY SQUARE INCH"
+    question: "Could YOUR body take it? 👇"
+    tiktokCaption: "At the bottom of the Mariana Trench the pressure is over 1,000 times what you feel now: about 8 tons per square inch. #ocean #pressure #science"
+    youtubeTitle: "The crushing pressure at the bottom of the ocean"
+    scenes:
+      - like: pressure
+        narration: "At the bottom of the Mariana Trench, about eight *tons* of water press on every single square inch."
+        props: [{ type: gauge, x: 1250, y: 480, r: 180, from: 98, to: 98, max: 100, label: "pressure" }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@tons", text: "8 TONS!", style: shout, rotate: -5 }]
+      - like: pressure
+        narration: "That's more than a *thousand* times the pressure you feel right now. Roughly like a big elephant standing on your thumb."
+        props: [{ type: gauge, x: 1250, y: 480, r: 180, from: 98, to: 98, max: 100, label: "pressure" }]
+        bix: [{ at: 0, action: present }, { at: "@elephant", action: scared }]
+        texts: [{ at: "@thousand", text: "> 1,000×", style: label, color: "#ff4d5e" }]
+      - like: trieste-crack
+        narration: "Only a few very strong subs, built just for this, have ever made it there, and back again."
+        props: [{ type: sub, x: 1250, y: 450, s: 1.1, light: true }]
+        bix: [{ at: 0, action: think }]
+        texts: []
+      - like: pressure
+        narration: "Because down there, remember:"
+        props: [{ type: gauge, x: 1250, y: 480, r: 180, from: 0, to: 0, max: 100, label: "pressure" }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 3
+    kind: cut
+    slug: first-dive-1960
+    hook: "THE WINDOW CRACKED AT 9 KM"
+    question: "Would YOU have turned back? 👇"
+    tiktokCaption: "1960: on the way to the deepest point on Earth, Trieste's outer window cracked with a bang. They kept going. #ocean #history #science"
+    youtubeTitle: "1960: the window cracked, and they kept diving"
+    scenes:
+      - like: trieste-crack
+        narration: "In 1960, about nine kilometres under the sea, their window *cracked* with a loud bang."
+        props: [{ type: sub, x: 1250, y: 450, s: 1.1, label: "TRIESTE", light: true }, { type: crack, x: 1290, y: 560, w: 120, at: 1.2 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@cracked", text: "CRACK!", style: shout, rotate: -5 }]
+      - like: trieste
+        narration: "Don Walsh and Jacques Piccard were diving to the deepest point on Earth, in a vessel called the Trieste."
+        props: [{ type: sub, x: 1250, y: 400, s: 1.1, label: "TRIESTE" }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+      - like: trieste-crack
+        narration: "They kept going anyway, reached the bottom of the ocean, and spent about twenty minutes there."
+        props: [{ type: sub, x: 1250, y: 450, s: 1.1, label: "TRIESTE", light: true }]
+        bix: [{ at: 0, action: cheer }]
+        texts: [{ at: "@twenty", text: "≈ 20 MIN ON THE BOTTOM", style: label, color: "#22d3c5" }]
+      - like: trieste-crack
+        narration: "And it was all just after"
+        props: [{ type: sub, x: 1250, y: 450, s: 1.1, label: "TRIESTE", light: true }]
+        bix: [{ at: 0, action: think }]
+        texts: []
+
+  - n: 4
+    kind: standalone
+    slug: fish-cant-go-deeper
+    hook: "FISH CAN'T LIVE THIS DEEP"
+    question: "What do YOU think lives below? 👇"
+    tiktokCaption: "Deepest fish ever filmed: a snailfish at 8,336 m. Scientists think fish can't live much deeper than about 8,200–8,400 m. #deepsea #fish #science"
+    youtubeTitle: "Why no fish lives at the bottom of the ocean"
+    scenes:
+      - like: fish-limit
+        narration: "Below about eight kilometres down in the ocean, scientists think no fish can survive. None at all."
+        props: [{ type: snailfish, x: 1250, y: 480, s: 1.2 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@fish", text: "NO FISH?!", style: shout, rotate: -5 }]
+      - like: fish-limit
+        narration: "The deepest fish ever filmed was a small *snailfish*, at 8,336 metres, off Japan."
+        props: [{ type: snailfish, x: 1250, y: 480, s: 1.2 }]
+        bix: [{ at: 0, action: point }]
+        texts: [{ at: "@snailfish", text: "8,336 m", style: big }]
+      - like: fish-why
+        narration: "To survive the pressure, deep fish need a special molecule in their cells, and past a certain depth they'd need far too much of it."
+        props: [{ type: snailfish, x: 1250, y: 480, s: 1.2 }]
+        bix: [{ at: 0, action: think }]
+        texts: []
+      - like: fish-limit
+        narration: "So, past that line,"
+        props: [{ type: snailfish, x: 1250, y: 480, s: 1.2 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 5
+    kind: standalone
+    slug: plastic-bag-11-km-down
+    hook: "A PLASTIC BAG, 11 KM DOWN"
+    question: "How did it get there? 👇"
+    tiktokCaption: "A plastic bag was spotted at 10,898 m in the Mariana Trench, and trench animals carry factory pollution. #ocean #plastic #science"
+    youtubeTitle: "A plastic bag at the bottom of the Mariana Trench"
+    scenes:
+      - like: plastic
+        narration: "Almost eleven kilometres down, at the bottom of the ocean, someone found a *plastic* bag."
+        props: [{ type: icon, icon: warning, x: 1250, y: 450, s: 1.6 }]
+        bix: [{ at: 0, action: facepalm }]
+        texts: [{ at: "@plastic", text: "10,898 m", style: big }]
+      - like: plastic
+        narration: "It was spotted at 10,898 metres, in the Mariana Trench, one of the most remote places on our entire planet."
+        props: [{ type: icon, icon: warning, x: 1250, y: 450, s: 1.6 }]
+        bix: [{ at: 0, action: point }]
+        texts: []
+      - like: bottom-life
+        narration: "And tiny animals from the trench were found carrying chemical *pollution* made in factories."
+        props: [{ type: amphipod, x: 1250, y: 520, s: 1.0, count: 6, spread: 260 }]
+        bix: [{ at: 0, action: scared }]
+        texts: []
+      - like: plastic
+        narration: "So even at the very bottom of the sea,"
+        props: [{ type: icon, icon: warning, x: 1250, y: 450, s: 1.6 }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 6
+    kind: standalone
+    slug: wood-eating-amphipod
+    hook: "IT TURNS WOOD INTO SUGAR"
+    question: "What would YOU eat down there? 👇"
+    tiktokCaption: "A tiny amphipod from the Mariana Trench makes its own enzyme that turns wood into sugar. #deepsea #animals #science"
+    youtubeTitle: "This deep-sea creature turns wood into sugar"
+    scenes:
+      - like: wood-eaters
+        narration: "At the very bottom of the ocean lives a tiny creature that turns *wood* into *sugar*."
+        props: [{ type: amphipod, x: 1250, y: 520, s: 1.3 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@sugar", text: "WOOD → SUGAR", style: shout, rotate: -5 }]
+      - like: wood-eaters
+        narration: "It's a shrimp-like scavenger called an amphipod, from the Mariana Trench, almost eleven kilometres down, in total darkness."
+        props: [{ type: amphipod, x: 1250, y: 520, s: 1.3 }]
+        bix: [{ at: 0, action: point }]
+        texts: []
+      - like: wood-eaters
+        narration: "It makes its own special enzyme, so when bits of sunken plants drift down, dinner is served."
+        props: [{ type: amphipod, x: 1250, y: 520, s: 1.3 }, { type: tree, x: 1650, y: 820, s: 0.6 }]
+        bix: [{ at: 0, action: laugh }]
+        texts: []
+      - like: wood-eaters
+        narration: "Which is how, in the dark,"
+        props: [{ type: amphipod, x: 1250, y: 520, s: 1.3 }]
+        bix: [{ at: 0, action: think }]
+        texts: []
+
+thumbnail:
+  title: ["11 KM", "DOWN?!"]
+  accent: 0
+  background: { type: plain, color: "#071633" }
+  props:
+    - { type: sub, x: 1050, y: 470, s: 1.3, light: true }
+    - { type: snailfish, x: 900, y: 860, s: 0.9 }
+  bix: { action: shock, x: 1640, y: 1230, scale: 2.4, facing: -1, t: 0.45 }
+
+sources:
+  - "NOAA Ocean Service, How deep is the ocean? (Challenger Deep ≈ 10,935 m; pressure > 1,000× sea level, about 8 tons per square inch; Everest comparison): https://oceanservice.noaa.gov/facts/oceandepth.html"
+  - "NOAA Ocean Service, How far does light travel in the ocean? (little light below 200 m; none below ~1,000 m): https://oceanservice.noaa.gov/facts/light_travel.html"
+  - "U.S. Navy, Naval History and Heritage Command, H-Gram 041: Trieste reaches Challenger Deep, 23 Jan 1960 (Walsh and Piccard; window cracked on the way down; ~20 minutes on the bottom; ~4 h 48 min descent): https://history.navy.mil/about-us/leadership/director/directors-corner/h-grams/h-gram-041/h-041-6.html"
+  - "USGS, This Dynamic Earth: Understanding plate motions (the Mariana Trench marks where the Pacific Plate sinks beneath another plate): https://pubs.usgs.gov/gip/dynamic/understanding.html"
+  - "Live Science, How deep is the Mariana Trench? (about 2,550 km long): https://www.livescience.com/how-deep-is-the-mariana-trench"
+  - "NOAA Ocean Service, What is bioluminescence? (many deep-sea animals produce their own light): https://oceanservice.noaa.gov/facts/bioluminescence.html"
+  - "Yancey, P. H. et al. (2014). Marine fish may be biochemically constrained from inhabiting the deepest ocean depths. PNAS 111(12), 4461–4465 (fish limit ~8,200 m): https://doi.org/10.1073/pnas.1322003111"
+  - "NPR / WHYY (2023), Deepest fish ever filmed: a snailfish at 8,336 m off Japan (UWA and Tokyo University of Marine Science and Technology): https://whyy.org/npr-story/deepest-fish-japan-photograph/"
+  - "UC San Diego (2011), Researchers identify mysterious life forms in the extreme deep sea (xenophyophores in the Mariana Trench): https://today.ucsd.edu/story/researchers_identify_mysterious_life_forms_in_the_extreme_deep_sea"
+  - "Kobayashi, H. et al. (2012). A Novel Enzyme from the Deep-Sea Amphipod Hirondellea gigas (Challenger Deep) converts cellulose into glucose. PLoS ONE 7(8), e42727: https://doi.org/10.1371/journal.pone.0042727"
+  - "Chiba, S. et al. (2018). Human footprint in the abyss: 30 year records of deep-sea plastic debris. Marine Policy 96, 204–212 (plastic bag at 10,898 m): https://doi.org/10.1016/j.marpol.2018.03.022"
+  - "Jamieson, A. J. et al. (2017). Bioaccumulation of persistent organic pollutants in the deepest ocean fauna. Nature Ecology & Evolution 1, 0051: https://doi.org/10.1038/s41559-016-0051"
+  - "National Geographic (2012), James Cameron's solo dive to Challenger Deep: https://www.nationalgeographic.com/news/2012/3/120325-james-cameron-mariana-trench-challenger-deep-deepest-science-sub/"
+  - "Smithsonian Magazine (2020), Kathy Sullivan becomes the first woman to reach Challenger Deep: https://www.smithsonianmag.com/smart-news/kathy-sullivan-becomes-first-woman-reach-challenger-deep-180975061/"
+  - "The Maritime Executive (2019), Five Deeps Expedition: deepest-ever submarine dives at Challenger Deep: https://maritime-executive.com/article/deepest-ever-submarine-dive-made-by-five-deeps-expedition"

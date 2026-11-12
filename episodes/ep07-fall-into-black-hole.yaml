@@ -1,0 +1,500 @@
+# What If Bix — Episode 7 (Bix 2.0)
+# Structure: myth-busting opener, what a black hole is, the fall (spaghettification), the twist (small vs
+# giant black holes), real photos (EHT), what a friend sees (time dilation), are we safe, LIGO, teaser.
+# Every number is from the sources at the bottom (checked against NASA / ESA / ESO / EHT / LIGO).
+id: ep07-fall-into-black-hole
+number: 7
+title: "What if you fell into a black hole?"
+description: |
+  You fall toward a black hole. What actually happens to you, and what does a friend watching from far away see?
+  Bix explains spaghettification, why a giant black hole is "gentler" than a small one, the first real black hole photos, and why you'd look frozen in time.
+pinnedQuestion: "Would YOU jump into a giant black hole to see what's inside?"
+hashtags: ["#blackhole", "#space", "#science", "#whatif"]
+tags: [what if you fell into a black hole, black hole, spaghettification, event horizon, event horizon telescope, sagittarius a, m87, time dilation, ligo, space, physics, what if bix]
+lengthRange: [225, 270]
+character: bix2
+voice: { provider: piper, model: en-us-libritts-high, speaker: 92, lengthScale: 1.05 }
+music: { style: dreamy, gain: 0.2, duck: 0.55, seed: 707, loudnorm: two-pass }
+introAfter: not-a-vacuum
+outro:
+  narration: "Would you jump into a giant one, just to see? Tell me in the comments. Next time, we stop falling up and start sinking down. Subscribe, and bring a very strong submarine."
+  background: { type: space, tint: purple }
+
+scenes:
+  - id: cold-open
+    chapter: "The fall begins"
+    background: { type: space, tint: purple }
+    bixStart: [420, 880]
+    bixScale: 0.9
+    props:
+      - { type: blackhole, x: 1250, y: 470, r: 150 }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0.8 } }
+      - { at: "@spaghetti", action: shock }
+    texts:
+      - { at: 0.1, text: "WHAT IF YOU FELL IN?", style: title, y: 160 }
+      - { at: "@spaghetti", text: "SPAGHETTI?!", style: shout, x: 1250, y: 850, rotate: -6 }
+    camera: { zoom: [1.0, 1.08], focus: [1100, 520] }
+    narration: "You're falling into a black hole. And the first thing it does to you... is stretch you like *spaghetti*."
+
+  - id: not-a-vacuum
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: blackhole, x: 1150, y: 470, r: 110 }
+      - { type: orbit, x: 1150, y: 470, rx: 560, ry: 200, body: dot, r: 22, period: 6, color: "#2f8cff" }
+    bix:
+      - { at: 0, action: shrug }
+      - { at: "@vacuum", action: laugh }
+      - { at: "@cold", action: scared }
+    texts:
+      - { at: "@vacuum", text: "MYTH: IT SUCKS", style: label, x: 1150, y: 160, color: "#ff4d5e" }
+    narration: "But first, a myth. Black holes don't suck things in like a *vacuum* cleaner. If the Sun were swapped for a black hole with the same mass, Earth would keep orbiting just as before. It would just get very dark, and very *cold*."
+
+  - id: what-is
+    chapter: "What a black hole is"
+    transition: whip
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: sun, x: 1150, y: 380, r: 150, at: 0 }
+      - { type: blackhole, x: 1500, y: 420, r: 40, at: "@squeeze" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@squeeze", action: point }
+      - { at: "@kilometres", action: shock }
+    texts:
+      - { at: "@kilometres", text: "≈ 3 km", style: big, x: 1500, y: 260 }
+    narration: "A black hole is matter squeezed so tightly that its gravity traps everything. If you could *squeeze* the Sun into one, it would be only about three *kilometres* in radius."
+
+  - id: birth
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: sun, x: 1200, y: 450, r: 220, until: "@collapses" }
+      - { type: boom, at: "@collapses", x: 1200, y: 450 }
+      - { type: blackhole, x: 1200, y: 450, r: 60, at: "@collapses+0.3" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@collapses", action: shock }
+    texts:
+      - { at: "@heavier", text: "MUCH HEAVIER THAN THE SUN", style: label, x: 1200, y: 150, color: "#ff7a1a" }
+    narration: "Many black holes are born when a giant star, much *heavier* than our Sun, runs out of fuel. Its core *collapses* under its own weight, and keeps collapsing, into a point of incredible density."
+
+  - id: marble-earth
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: earth, x: 1150, y: 420, r: 170, spin: 0.08, until: "@millimetres" }
+      - { type: blackhole, x: 1150, y: 420, r: 26, at: "@millimetres" }
+      - { type: item, item: coin, x: 1150, y: 640, s: 1.4, at: "@marble" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@millimetres", action: shock }
+      - { at: "@marble", action: laugh }
+    texts:
+      - { at: "@millimetres", text: "≈ 9 mm", style: big, x: 1150, y: 260 }
+    narration: "And Earth? About nine *millimetres*. Smaller than a *marble*. Same mass, unbelievably small."
+
+  - id: horizon
+    background: { type: space, tint: purple }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: blackhole, x: 1200, y: 470, r: 170 }
+      - { type: ring, at: "@horizon", x: 1200, y: 470, r: 185, color: "#ff6fb5" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@horizon", action: point }
+      - { at: "@light", action: shock }
+    texts:
+      - { at: "@horizon", text: "EVENT HORIZON", style: label, x: 1200, y: 170, color: "#ff6fb5" }
+    narration: "Its edge is called the event *horizon*. It's not a wall or a surface. It's a point of no return. Once you're inside it, nothing can get back out. Not even *light*. That's why it's black."
+
+  - id: spaghetti
+    chapter: "Spaghettification"
+    transition: whip
+    background: { type: space, tint: purple }
+    bixStart: [760, 640]
+    props:
+      - { type: blackhole, x: 1600, y: 540, r: 140 }
+      - { type: arrow, at: "@feet", from: [760, 800], to: [1100, 800], color: "#ff4d5e", label: "STRONG", labelX: 930, labelY: 760 }
+      - { type: arrow, at: "@head", from: [760, 440], to: [900, 440], color: "#ffd447", label: "weaker", labelX: 830, labelY: 400 }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0.6 } }
+      - { at: "@stretches", action: tumble }
+    texts:
+      - { at: "@spaghettification", text: "SPAGHETTIFICATION", style: shout, x: 960, y: 200, rotate: -4 }
+    narration: "Now, the fall. Gravity pulls much harder on your *feet*, which are closer, than on your *head*. That difference *stretches* you long and thin. Scientists really call it *spaghettification*."
+
+  - id: small-one
+    chapter: "Small black hole or giant?"
+    transition: iris
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: blackhole, x: 1200, y: 470, r: 70 }
+      - { type: badge, at: "@ten", x: 1650, y: 320, r: 100, text: "×10", sub: "Suns", color: "#ffd447" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@apart", action: scared }
+    narration: "Here's the twist. The size of the black hole changes everything. Near a small one, about *ten* times the Sun's mass, you'd be stretched *apart* well before you even reached the edge."
+
+  - id: giant-one
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: blackhole, x: 1250, y: 520, r: 330 }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@gentle", action: shrug }
+      - { at: "@win", action: shock }
+    texts:
+      - { at: "@supermassive", text: "SUPERMASSIVE", style: label, x: 1250, y: 140, color: "#8a5cff" }
+    narration: "But near a *supermassive* black hole, the stretching at the edge is so *gentle* that you could cross it without feeling anything special at first. Deeper in, though, the stretching would still *win*."
+
+  - id: m87
+    chapter: "We have photos"
+    transition: whip
+    background: { type: space, tint: purple }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: blackhole, x: 1200, y: 470, r: 160, label: "M87*" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@image", action: cheer }
+      - { at: "@billion", action: shock }
+    texts:
+      - { at: "@billion", text: "6.5 BILLION SUNS", style: big, x: 1200, y: 190 }
+    narration: "And we've actually seen them. In 2019, the Event Horizon Telescope showed the first *image* of a black hole, called M87 star. It's about 55 million light-years away, and about 6.5 *billion* times the mass of the Sun. The light in that photo left it about 55 million years ago, long before there were any humans to see it."
+
+  - id: telescope
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 1200, y: 500, r: 260, spin: 0.08 }
+      - { type: satellite, kind: satellite, x: 1200, y: 190, s: 0.7 }
+      - { type: ring, at: "@linked", x: 1200, y: 500, r: 280, color: "#22d3c5" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@linked", action: point }
+      - { at: "@Earth", action: cheer }
+    texts:
+      - { at: "@Earth", text: "A TELESCOPE THE SIZE OF EARTH", style: label, x: 1200, y: 150, color: "#22d3c5" }
+    narration: "How do you photograph something that's black? Astronomers *linked* radio telescopes all around the world into one giant virtual telescope, as big as the *Earth*."
+
+  - id: sgra
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: blackhole, x: 1200, y: 470, r: 120, label: "Sgr A*" }
+      - { type: orbit, x: 1200, y: 470, rx: 380, ry: 140, body: dot, r: 16, period: 4, at: "@Mercury", color: "#ffd447" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@Milky", action: point }
+      - { at: "@Mercury", action: shock }
+    texts:
+      - { at: "@million", text: "4 MILLION SUNS", style: label, x: 1200, y: 160, color: "#ffd447" }
+    narration: "In 2022 we saw Sagittarius A star, the black hole at the centre of our own *Milky* Way. About 27,000 light-years away, about 4 *million* times the Sun's mass. And its dark centre would fit inside the orbit of *Mercury*."
+
+  - id: same-size
+    background: { type: space, tint: purple }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: blackhole, x: 900, y: 470, r: 110, label: "M87*" }
+      - { type: blackhole, x: 1550, y: 470, r: 110, label: "Sgr A*" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@thousand", action: shock }
+      - { at: "@same", action: laugh }
+    texts:
+      - { at: "@thousand", text: "≈ 1,000× BIGGER", style: label, x: 900, y: 170, color: "#ffd447" }
+    narration: "Fun twist: M87 star is about a *thousand* times bigger than our galaxy's black hole. But it's so much farther away that, in the sky, both look about the *same* size."
+
+  - id: friend-view
+    chapter: "What your friend sees"
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [1150, 560]
+    bixScale: 0.7
+    props:
+      - { type: blackhole, x: 1500, y: 560, r: 160 }
+      - { type: satellite, kind: station, x: 380, y: 300, s: 0.9 }
+      - { type: pal, x: 380, y: 520, s: 0.7, facing: 1, seed: 3, actions: [{ at: 0, action: point }, { at: "@frozen", action: shock }] }
+    bix:
+      - { at: 0, action: float }
+      - { at: "@slow", action: sleepy }
+    texts:
+      - { at: "@frozen", text: "FROZEN?!", style: shout, x: 1150, y: 230, rotate: -5 }
+    narration: "Now imagine a friend watching you fall from far away. To them, you'd seem to *slow* down, turn redder and dimmer, and fade away, as if *frozen* near the edge."
+
+  - id: your-view
+    background: { type: space, tint: purple }
+    bixStart: [960, 560]
+    bixScale: 0.85
+    props:
+      - { type: speedlines, count: 18, y: 540, spread: 900 }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0.4 } }
+      - { at: "@falling", action: shrug }
+    texts:
+      - { at: "@time", text: "GRAVITY STRETCHES TIME", style: label, x: 960, y: 170, color: "#22d3c5" }
+    narration: "That's because gravity stretches *time* and light. From your own point of view, nothing freezes at all. You just keep *falling*."
+
+  - id: nearest
+    chapter: "Is one coming for us?"
+    transition: whip
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: earth, x: 700, y: 470, r: 120, spin: 0.08 }
+      - { type: blackhole, x: 1650, y: 400, r: 60, label: "Gaia BH1" }
+      - { type: arrow, at: "@light-years", from: [850, 470], to: [1550, 420], color: "#ff6fb5", label: "≈ 1,560 light-years", labelX: 1200, labelY: 380 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@light-years", action: point }
+      - { at: "@far", action: laugh }
+    narration: "Should we worry? The nearest black hole we know of, Gaia BH1, is about 1,560 *light-years* away. Scientists think there are probably closer ones we haven't found yet. But close, in space, is still very, very *far*."
+
+  - id: ligo
+    chapter: "When black holes collide"
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: blackhole, x: 1050, y: 470, r: 70 }
+      - { type: blackhole, x: 1450, y: 470, r: 60 }
+      - { type: ring, at: "@waves", x: 1250, y: 470, r: 300, color: "#22d3c5" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@waves", action: shock }
+    texts:
+      - { at: "@2015", text: "36 + 29 SUNS", style: label, x: 1250, y: 160, color: "#ffd447" }
+    narration: "Sometimes black holes crash into each other. On the 14th of September, 2015, LIGO detected gravitational *waves* for the first time, from two black holes, about 36 and 29 times the Sun's mass, merging."
+
+  - id: ligo-power
+    background: { type: space, tint: purple }
+    bixStart: [380, 880]
+    bixScale: 0.85
+    props:
+      - { type: blackhole, x: 1250, y: 470, r: 100 }
+      - { type: boom, at: "@power", x: 1250, y: 470 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@power", action: shock }
+      - { at: "@together", action: cheer }
+    narration: "About three Suns' worth of mass turned into ripples in space itself. For a split second, that gave off more *power* than all the stars in the visible universe, put *together*."
+
+  - id: lab-ending
+    chapter: "So, could you survive?"
+    transition: whip
+    background: { type: lab }
+    bixStart: [420, 820]
+    props:
+      - { type: cactus, x: 1450, y: 760, s: 1.1, mood: shock, at: 0 }
+      - { type: sub, x: 1150, y: 360, s: 0.8, at: "@down", label: "NEXT" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@giant", action: point }
+      - { at: "@down", action: shock }
+    narration: "So, could you survive falling into a black hole? Pick a *giant* one, and you'd at least enjoy the view for a while. A small one? Not a great idea. Either way, the black hole wins in the end. Next time, we go the other way. *Down*. About eleven kilometres down, to the very bottom of the ocean, where the water itself becomes the danger."
+
+tiktokShorts:
+  - n: 1
+    kind: cut
+    slug: spaghettification
+    hook: "BLACK HOLES MAKE YOU SPAGHETTI"
+    question: "Would YOU risk it? 👇"
+    tiktokCaption: "Near a black hole, gravity pulls your feet much harder than your head. Scientists call it spaghettification. #blackhole #space #science"
+    youtubeTitle: "A black hole would turn you into spaghetti"
+    scenes:
+      - like: spaghetti
+        props: &bh1 [{ type: blackhole, x: 1600, y: 540, r: 140 }]
+        narration: "A black hole would turn you into *spaghetti*. Really. That's not a joke, it's physics."
+        bix: [{ at: 0, action: tumble }]
+        texts: [{ at: "@spaghetti", text: "SPAGHETTI!", style: shout, rotate: -5 }]
+      - like: spaghetti
+        narration: "Gravity pulls much harder on your *feet*, which are closer, than on your head. That difference stretches you long and thin."
+        bix: [{ at: 0, action: fly, params: { panic: 0.6 } }, { at: "@stretches", action: tumble }]
+        texts: [{ at: "@feet", text: "FEET: STRONGER PULL", style: label, color: "#ff4d5e" }]
+      - like: small-one
+        narration: "Near a small black hole, about ten times the Sun's mass, it happens before you even reach the edge."
+        props: [{ type: blackhole, x: 1200, y: 470, r: 70 }]
+        bix: [{ at: 0, action: scared }]
+        texts: []
+      - like: spaghetti
+        props: *bh1
+        narration: "Scientists have a real name for it:"
+        bix: [{ at: 0, action: fly, params: { panic: 0.6 } }]
+        texts: []
+
+  - n: 2
+    kind: cut
+    slug: black-holes-dont-suck
+    hook: "BLACK HOLES DON'T SUCK"
+    question: "Did you think they did? 👇"
+    tiktokCaption: "Swap the Sun for a black hole of the same mass and Earth keeps orbiting. It just gets dark and cold. #blackhole #space #physics"
+    youtubeTitle: "Black holes don't suck things in (here's why)"
+    scenes:
+      - like: not-a-vacuum
+        narration: "Black holes don't *suck* things in. Not like a vacuum cleaner, anyway. Here's the proof."
+        bix: [{ at: 0, action: shrug }]
+        texts: [{ at: "@suck", text: "MYTH!", style: shout, rotate: -5 }]
+      - like: not-a-vacuum
+        narration: "Swap the Sun for a black hole with the same mass, and Earth would keep orbiting, just as before."
+        bix: [{ at: 0, action: present }, { at: "@orbiting", action: point }]
+        texts: [{ at: "@orbiting", text: "SAME ORBIT", style: label, color: "#22d3c5" }]
+      - like: not-a-vacuum
+        narration: "It would just get very dark, and very *cold*. Gravity depends on mass, not on being a black hole."
+        bix: [{ at: 0, action: scared }]
+        texts: []
+      - like: not-a-vacuum
+        narration: "So, no. Repeat after me:"
+        bix: [{ at: 0, action: laugh }]
+        texts: []
+
+  - n: 3
+    kind: standalone
+    slug: earth-the-size-of-a-marble
+    hook: "EARTH SQUEEZED: 9 MILLIMETRES"
+    question: "What would YOU squeeze? 👇"
+    tiktokCaption: "Squeeze the Sun into a black hole: about 3 km in radius. Earth? About 9 mm, smaller than a marble. #blackhole #space #science"
+    youtubeTitle: "Earth as a black hole would be smaller than a marble"
+    scenes:
+      - like: marble-earth
+        narration: "If you squeezed the whole Earth into a black hole, it would be about nine *millimetres* across its radius."
+        props: [{ type: earth, x: 1150, y: 420, r: 170, spin: 0.08 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@millimetres", text: "≈ 9 mm", style: big }]
+      - like: what-is
+        narration: "Same mass, squeezed so tightly that not even light escapes. The Sun would be about three kilometres in radius."
+        props: [{ type: sun, x: 1150, y: 380, r: 150 }, { type: blackhole, x: 1500, y: 420, r: 40 }]
+        bix: [{ at: 0, action: present }, { at: "@Sun", action: point }]
+        texts: [{ at: "@kilometres", text: "SUN: ≈ 3 km", style: label, color: "#ffd447" }]
+      - like: marble-earth
+        narration: "And Earth? Smaller than a *marble*. A whole planet, in your pocket. With all its mass."
+        props: [{ type: blackhole, x: 1150, y: 420, r: 26 }, { type: item, item: coin, x: 1150, y: 640, s: 1.4 }]
+        bix: [{ at: 0, action: laugh }]
+        texts: []
+      - like: marble-earth
+        narration: "So, believe it or not:"
+        props: [{ type: earth, x: 1150, y: 420, r: 170, spin: 0.08 }]
+        bix: [{ at: 0, action: think }]
+        texts: []
+
+  - n: 4
+    kind: standalone
+    slug: frozen-in-time
+    hook: "YOU'D LOOK FROZEN IN TIME"
+    question: "Who would YOU want watching? 👇"
+    tiktokCaption: "Seen from far away, someone falling into a black hole seems to slow down, redden and fade, as if frozen. #blackhole #relativity #science"
+    youtubeTitle: "Falling into a black hole, you'd look frozen in time"
+    scenes:
+      - like: friend-view
+        props: &fv [{ type: blackhole, x: 1350, y: 480, r: 130 }, { type: pal, x: 820, y: 820, s: 0.6, facing: 1, seed: 3, actions: [{ at: 0, action: point }] }]
+        narration: "Fall into a black hole, and your friends watching from far away would see you *freeze* in time. Like a paused video."
+        bix: [{ at: 0, action: sleepy }]
+        texts: [{ at: "@freeze", text: "FROZEN?!", style: shout, rotate: -5 }]
+      - like: friend-view
+        props: *fv
+        narration: "From far away, you'd seem to slow down, turn redder and dimmer, and fade away near the edge."
+        bix: [{ at: 0, action: float }, { at: "@fade", action: sleepy }]
+        texts: []
+      - like: your-view
+        narration: "But for you, nothing freezes. Gravity stretches *time* and light. You just keep falling."
+        bix: [{ at: 0, action: fly, params: { panic: 0.4 } }]
+        texts: [{ at: "@time", text: "GRAVITY STRETCHES TIME", style: label, color: "#22d3c5" }]
+      - like: friend-view
+        props: *fv
+        narration: "Which means that, from outside,"
+        bix: [{ at: 0, action: float }]
+        texts: []
+
+  - n: 5
+    kind: standalone
+    slug: our-galaxys-black-hole
+    hook: "OUR GALAXY HIDES A MONSTER"
+    question: "Did you know it was there? 👇"
+    tiktokCaption: "Sagittarius A*: about 4 million Suns, about 27,000 light-years away, at the centre of the Milky Way. #blackhole #milkyway #space"
+    youtubeTitle: "The black hole at the centre of our galaxy"
+    scenes:
+      - like: sgra
+        narration: "Right in the centre of our own galaxy, there's a black hole with the mass of about four *million* Suns."
+        props: [{ type: blackhole, x: 1200, y: 470, r: 120, label: "Sgr A*" }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@million", text: "4 MILLION SUNS", style: big }]
+      - like: sgra
+        narration: "It's called Sagittarius A star, about 27,000 light-years from us. In 2022, astronomers finally showed its image, using telescopes all around the world."
+        props: [{ type: blackhole, x: 1200, y: 470, r: 120, label: "Sgr A*" }]
+        bix: [{ at: 0, action: present }, { at: "@image", action: cheer }]
+        texts: []
+      - like: sgra
+        narration: "And its dark centre would fit inside the orbit of *Mercury*."
+        props: [{ type: blackhole, x: 1200, y: 470, r: 120, label: "Sgr A*" }, { type: orbit, x: 1200, y: 470, rx: 380, ry: 140, body: dot, r: 16, period: 4, color: "#ffd447" }]
+        bix: [{ at: 0, action: point }]
+        texts: []
+      - like: sgra
+        narration: "So yes, right now:"
+        props: [{ type: blackhole, x: 1200, y: 470, r: 120, label: "Sgr A*" }]
+        bix: [{ at: 0, action: present }]
+        texts: []
+
+  - n: 6
+    kind: standalone
+    slug: brighter-than-all-stars
+    hook: "MORE POWER THAN EVERY STAR"
+    question: "Can YOU imagine that? 👇"
+    tiktokCaption: "When two black holes merged in 2015, about 3 Suns of mass became gravitational waves, briefly outshining every star. #ligo #blackhole #space"
+    youtubeTitle: "Two black holes briefly outshone every star"
+    scenes:
+      - like: ligo-power
+        narration: "For a split second, two black holes gave off more *power* than every star in the visible universe."
+        props: [{ type: blackhole, x: 1250, y: 470, r: 100 }, { type: boom, at: 0.3, x: 1250, y: 470 }]
+        bix: [{ at: 0, action: shock }]
+        texts: [{ at: "@power", text: "MORE THAN EVERY STAR", style: shout, rotate: -5 }]
+      - like: ligo
+        narration: "In 2015, LIGO caught two black holes, about 36 and 29 times the Sun's mass, crashing together."
+        props: [{ type: blackhole, x: 1050, y: 470, r: 70 }, { type: blackhole, x: 1450, y: 470, r: 60 }]
+        bix: [{ at: 0, action: present }]
+        texts: [{ at: "@crashing", text: "36 + 29 SUNS", style: label, color: "#ffd447" }]
+      - like: ligo
+        narration: "About three Suns of mass turned into *ripples* in space itself, and those ripples crossed the universe to reach us."
+        props: [{ type: blackhole, x: 1250, y: 470, r: 90 }, { type: ring, at: "@ripples", x: 1250, y: 470, r: 300, color: "#22d3c5" }]
+        bix: [{ at: 0, action: point }]
+        texts: []
+      - like: ligo-power
+        narration: "And that's how, in one instant,"
+        props: [{ type: blackhole, x: 1250, y: 470, r: 100 }]
+        bix: [{ at: 0, action: think }]
+        texts: []
+
+thumbnail:
+  title: ["SPAGHETTI", "ME?!"]
+  accent: 0
+  background: { type: space, tint: purple }
+  props:
+    - { type: blackhole, x: 1100, y: 600, r: 230 }
+  bix: { action: shock, x: 1640, y: 1230, scale: 2.4, facing: -1, t: 0.45 }
+
+sources:
+  - "NASA Science, What happens when something gets too close to a black hole? (spaghettification; small vs supermassive black holes): https://science.nasa.gov/universe/black-holes/what-happens-when-something-gets-too-close-to-a-black-hole/"
+  - "NASA, What are black holes? (nothing, not even light, escapes from inside the event horizon): https://www.nasa.gov/universe/what-are-black-holes/"
+  - "NASA Imagine the Universe, Black holes (Schwarzschild radius of the Sun ≈ 3 km): https://imagine.gsfc.nasa.gov/science/objects/black_holes2.html"
+  - "NASA Imagine the Universe, If the Sun became a black hole, Earth's orbit would not change: https://imagine.gsfc.nasa.gov/educators/blackholes/imagine/page26.html"
+  - "ESO / EHT, Astronomers capture first image of a black hole (M87*, ~55 million light-years, ~6.5 billion solar masses, 2019): https://www.eso.org/public/news/eso1907/"
+  - "ESO / EHT, Astronomers reveal first image of the black hole at the heart of our galaxy (Sgr A*, ~27,000 light-years, 2022): https://www.eso.org/public/news/eso2208-eht-mw/"
+  - "Event Horizon Telescope Collaboration (2022). First Sagittarius A* EHT results I. ApJL 930, L12 (~4 million solar masses): https://doi.org/10.3847/2041-8213/ac6674"
+  - "NASA HEASARC, Sgr A* imaged by the EHT (the dark centre would fit within Mercury's orbit): https://heasarc.gsfc.nasa.gov/docs/objects/heapow/archive/compact_objects/sgra_eht.html"
+  - "NASA Science / Hubble, Death spiral around a black hole (outside observers see infalling matter redden, dim and seem to freeze): https://science.nasa.gov/missions/hubble/death-spiral-around-a-black-hole-yields-tantalizing-evidence-of-an-event-horizon/"
+  - "ESA, Gaia discovers a new family of black holes (Gaia BH1, ~1,560 light-years): https://www.esa.int/Science_Exploration/Space_Science/Gaia/Gaia_discovers_a_new_family_of_black_holes"
+  - "Abbott, B. P. et al. (LIGO & Virgo, 2016). Observation of Gravitational Waves from a Binary Black Hole Merger. Phys. Rev. Lett. 116, 061102 (GW150914: ~36 and ~29 solar masses; ~3 solar masses radiated; peak power above all visible stars): https://doi.org/10.1103/PhysRevLett.116.061102"
