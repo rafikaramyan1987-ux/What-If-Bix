@@ -88,7 +88,9 @@ describe('MarMila episodes', () => {
       expect(meta.files.captions).toBe(`${ep.id}.fr.srt`);
       expect(meta.defaultLanguage).toBe('fr');
       expect(meta.channel).toBe('MarMila');
-      expect(frenchTypoProblems(meta.description)).toEqual([]);
+      // our own text is typeset; quoted source titles (often English) stay as published
+      expect(meta.description.split('\n').filter((l) => !l.startsWith('•')).flatMap(frenchTypoProblems)).toEqual([]);
+      expect(meta.description).not.toMatch(/undefined/);
       expect(meta.description).toMatch(/Voix off/);
       expect(meta.hashtags.length).toBeGreaterThanOrEqual(3);
       expect(meta.hashtags.length).toBeLessThanOrEqual(5);

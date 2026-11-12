@@ -117,30 +117,30 @@ export const buildMetadata = (ep, manifest, shorts = []) => {
  * 3–5 hashtags incl. #Shorts, pinned-comment question).
  */
 export const buildFrenchMetadata = (ep, manifest, shorts = []) => {
-  const ch = channelStrings('fr', ep.voice?.model);
+  const ch = channelStrings('fr', ep.voice?.model ?? 'fr_FR-siwis-medium');
   const chapters = buildChapters(manifest);
   const tags = [...new Set([...(ep.tags ?? []), ...ch.baseTags])];
   let tagChars = 0;
   const tagsFit = tags.filter((t) => (tagChars += t.length + 1) <= 480);
   const hashtags = ep.hashtags ?? ['#etsi', '#science', '#marmila'];
+  // French typography on our own text; source titles (often English) are quoted as they are
   const compose = (srcLines) => [
-    (ep.description ?? '').trim(),
+    frTypo((ep.description ?? '').trim()),
     '',
     chapters.length ? ch.chapters : '',
-    ...chapters.map((c) => `${fmtTime(c.time)} ${c.title}`),
+    ...chapters.map((c) => frTypo(`${fmtTime(c.time)} ${c.title}`)),
     '',
     ch.sources,
     ...srcLines,
     '',
-    ...ch.credits,
+    ...ch.credits.map(frTypo),
     '',
     hashtags.join(' '),
   ]
     .join('\n')
     .replace(/\n{3,}/g, '\n\n');
-  let description = compose((ep.sources ?? []).map((s) => `• ${shortSource(s)}`));
+  let description = compose((ep.sources ?? []).map((s) => `• ${shortSource(s).replace(/:\s(https?:\/\/)/, '\u00a0: $1')}`));
   if (description.length > 4900) description = compose((ep.sources ?? []).map((x) => `• ${String(x).match(/https?:\/\/\S+/)?.[0] ?? String(x).slice(0, 80)}`));
-  description = frTypo(description);
   return {
     id: ep.id,
     channel: ch.channel,
@@ -178,6 +178,7 @@ export const buildFrenchMetadata = (ep, manifest, shorts = []) => {
 };
 
 export const metadataMarkdown = (meta) => {
+  const fr = meta.defaultLanguage === 'fr';
   const lines = [
     `# ${meta.title}`,
     '',
@@ -185,7 +186,7 @@ export const metadataMarkdown = (meta) => {
       ? `**Durée :** ${fmtTime(meta.duration)} · **Catégorie :** Éducation · **Conçu pour les enfants :** Non · **Langue :** Français · **Chaîne :** ${meta.channel}`
       : `**Duration:** ${fmtTime(meta.duration)} · **Category:** Education · **Made for kids:** No · **Language:** English`,
     '',
-    '## Title',
+    fr ? '## Titre' : '## Title',
     '',
     '```',
     meta.title,
@@ -197,7 +198,7 @@ export const metadataMarkdown = (meta) => {
     meta.description,
     '```',
     '',
-    '## Tags',
+    fr ? '## Mots-clés' : '## Tags',
     '',
     '```',
     meta.tags.join(', '),
