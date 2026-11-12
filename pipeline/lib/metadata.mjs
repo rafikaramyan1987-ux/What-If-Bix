@@ -127,10 +127,10 @@ export const buildFrenchMetadata = (ep, manifest, shorts = []) => {
   const compose = (srcLines) => [
     frTypo((ep.description ?? '').trim()),
     '',
-    chapters.length ? ch.chapters : '',
+    chapters.length ? frTypo(ch.chapters) : '',
     ...chapters.map((c) => frTypo(`${fmtTime(c.time)} ${c.title}`)),
     '',
-    ch.sources,
+    frTypo(ch.sources),
     ...srcLines,
     '',
     ...ch.credits.map(frTypo),
