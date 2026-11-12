@@ -2,6 +2,7 @@ import React from 'react';
 import { C, FONT, TITLE_FONT } from '../theme';
 import { CaptionPage, ChipSpec, TextSpec } from '../types';
 import { clamp, easeOut, formatNumber, popIn } from '../util';
+import { LangContext } from '../lang';
 
 // ---------------------------------------------------------------- on-screen text
 
@@ -15,6 +16,7 @@ const STYLE: Record<NonNullable<TextSpec['style']>, { size: number; font: string
 
 /** fit (Shorts): shrink to `width` px (and to `maxSize` px font) and centre the text vertically on `cy`. */
 export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number; fit?: { width: number; cy: number; maxSize?: number } }> = ({ spec, t, stageW = 1920, fit }) => {
+  const lang = React.useContext(LangContext);
   const st = STYLE[spec.style ?? 'label'];
   const lt = t - spec.at;
   const until = spec.until ?? 1e9;
@@ -25,7 +27,7 @@ export const OnScreenText: React.FC<{ spec: TextSpec; t: number; stageW?: number
   if (spec.count) {
     const c = spec.count;
     const v = c.from + (c.to - c.from) * easeOut(lt / (c.dur ?? 1.2));
-    text = `${c.prefix ?? ''}${formatNumber(v, c.decimals ?? 0)}${c.suffix ?? ''}`;
+    text = `${c.prefix ?? ''}${formatNumber(v, c.decimals ?? 0, lang)}${c.suffix ?? ''}`;
   }
   const lines = text.split('\n');
   const longest = Math.max(...lines.map((l) => l.length));

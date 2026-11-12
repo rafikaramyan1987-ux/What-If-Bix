@@ -1,0 +1,540 @@
+# MarMila — Épisode 2 (français)
+# Personnage 100 % fictif : le « Docteur Méga », jamais une vraie personne.
+# Structure : un compte à rebours de ses plans, chacun contré par une vraie règle du monde réel
+# (personne ne fait tout seul, les grands projets demandent des foules, la règle des deux
+# personnes, des millions d'autres cerveaux, la fatigue, la coopération internationale),
+# puis une chute et un teaser pour l'épisode 3 (la prison).
+# Aucune méthode de crime, aucune arme : on montre ce qu'il NE peut PAS faire, et pourquoi.
+id: fr02-genie-mechant
+number: 2
+language: fr
+channel: marmila
+title: "Et si le génie le plus intelligent du monde devenait méchant ?"
+description: |
+  Imagine la personne la plus intelligente de la planète. Et un matin, elle décide de devenir méchante. Que pourrait-elle vraiment faire ?
+  Bix suit le Docteur Méga, un génie 100 % inventé, et découvre pourquoi l'intelligence ne suffit pas pour dominer le monde : un grille-pain en neuf mois, des projets de 400 000 personnes, des verrous à deux clés, dix millions d'autres cerveaux… et un ennemi que personne ne bat : le sommeil.
+tags: [et si, génie maléfique, intelligence, qi, science, vulgarisation, cybersécurité, coopération, histoire fictive, marmila]
+hashtags: ["#etsi", "#genie", "#science", "#histoire"]
+pinnedQuestion: "Si tu étais un génie, tu ferais quoi de ton cerveau ?"
+character: bix2
+music: { style: tense, gain: 0.18, duck: 0.55, seed: 202 }
+introAfter: meet-mega
+outro:
+  narration: "La suite ? Le Docteur Méga est enfermé dans la prison la plus sûre du monde. Il prépare quelque chose. Abonne-toi à MarMila pour ne pas rater l'épisode."
+  background: { type: night-city }
+
+scenes:
+  # ------------------------------------------------------------- ouverture
+  - id: cold-open
+    chapter: "Le génie qui tourne mal"
+    background: { type: lab, board: false }
+    bixStart: [400, 820]
+    props:
+      - { type: genius, x: 1250, y: 820, s: 1.0, facing: -1, evil: false, until: "@méchante", actions: [{ at: 0, action: present }] }
+      - { type: genius, x: 1250, y: 820, s: 1.0, facing: -1, at: "@méchante", actions: [{ at: 0, action: laugh }] }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@méchante", action: scared }
+    texts:
+      - { at: "@intelligente", text: "ET SI LE GÉNIE DEVENAIT MÉCHANT ?", style: title, y: 160 }
+    camera: { zoom: [1.0, 1.06], focus: [900, 560] }
+    narration: "Imagine la personne la plus intelligente du monde. Et un matin, elle se lève… et décide de devenir *méchante*."
+
+  - id: meet-mega
+    background: { type: lab, board: false }
+    bixStart: [400, 820]
+    props:
+      - { type: genius, x: 1250, y: 820, s: 1.0, facing: -1, actions: [{ at: 0, action: laugh }, { at: "@inventé", action: present }] }
+      - { type: badge, at: "@inventé", x: 1650, y: 330, r: 100, text: "100 %", sub: "fictif", color: "#22d3c5" }
+    bix:
+      - { at: 0, action: shrug }
+      - { at: "@inventé", action: point }
+    texts:
+      - { at: "@Méga", text: "DOCTEUR MÉGA", style: shout, x: 1250, y: 230, rotate: -5 }
+    narration: "Voici le Docteur Méga. Rassure-toi, il est complètement *inventé*. Mais tout ce qui va lui arriver repose sur de vrais faits. Alors, que pourrait-il vraiment faire ?"
+
+  - id: could-do
+    background: { type: lab }
+    bixStart: [400, 820]
+    props:
+      - { type: genius, x: 1250, y: 820, s: 0.9, facing: -1, actions: [{ at: 0, action: present }, { at: "@gens", action: shrug }] }
+      - { type: board, at: "@honnêtes", x: 960, y: 335, w: 720, h: 330, title: "Un génie peut…", size: 44, step: 1.1, lines: ["apprendre très vite", "voir des erreurs", "convaincre"] }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@gens", action: point }
+    narration: "Soyons *honnêtes* : un génie peut faire beaucoup. Apprendre très vite, repérer des erreurs que personne ne voit, convaincre avec de bons arguments. Mais pour changer le monde, il faut des machines, du temps, et surtout des *gens*. Voyons ses plans, un par un."
+
+  # ------------------------------------------------------------- plan 1 : tout faire seul
+  - id: plan-alone
+    chapter: "Plan 1 : tout faire tout seul"
+    transition: whip
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: genius, x: 1150, y: 820, s: 0.9, facing: -1, actions: [{ at: 0, action: present }, { at: "@seul", action: cheer }] }
+      - { type: board, at: "@plan", x: 960, y: 335, w: 700, h: 300, title: "PLAN 1", size: 46, step: 0.8, lines: ["Tout construire", "TOUT SEUL"] }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@seul", action: facepalm }
+    narration: "Premier *plan* : tout construire lui-même. Il est le plus intelligent, non ? Il n'a besoin de personne. Il fera tout. *Seul*."
+
+  - id: toaster
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: calendar, x: 1150, y: 420, s: 1.0, from: 1, to: 9, at: "@neuf", dur: 2, label: "mois" }
+      - { type: badge, at: "@livres", x: 1600, y: 600, r: 110, text: "1 187 £", color: "#ffd447" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@grille-pain", action: laugh }
+      - { at: "@neuf", action: shock }
+    texts:
+      - { at: "@grille-pain", text: "UN GRILLE-PAIN", style: shout, x: 1150, y: 200, rotate: -5 }
+    narration: "Problème. En 2009, un designer a essayé de fabriquer un simple *grille-pain* à partir de zéro : extraire le métal, faire le plastique, tout. Ça lui a pris *neuf* mois et plus de mille livres. Et le grille-pain a fondu au premier essai."
+
+  - id: nobody-alone
+    background: { type: city }
+    bixStart: [400, 820]
+    props:
+      - { type: crowd, x: 1200, y: 820, w: 1100, count: 26, rows: 3, s: 0.42, seed: 7, cheerAt: "@ensemble" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@ensemble", action: cheer }
+    texts:
+      - { at: "@personne", text: "Personne ne fait tout seul", style: label, x: 1200, y: 260, color: "#22d3c5" }
+    narration: "La leçon : notre monde est trop compliqué pour une seule tête. *Personne* ne sait tout fabriquer. Même un grille-pain, on le fait ensemble."
+
+  # ------------------------------------------------------------- plan 2 : une armée d'aides
+  - id: plan-army
+    chapter: "Plan 2 : recruter des milliers d'aides"
+    transition: whip
+    background: { type: night-city }
+    bixStart: [350, 820]
+    props:
+      - { type: genius, x: 1050, y: 820, s: 0.85, facing: -1, actions: [{ at: 0, action: point }] }
+      - { type: crowd, at: "@aides", x: 1450, y: 820, w: 700, count: 14, rows: 2, s: 0.4, seed: 3 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@aides", action: shock }
+    narration: "Deuxième plan : recruter des *aides*. Beaucoup d'aides. Parce que les grands projets demandent des foules entières."
+
+  - id: apollo
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    props:
+      - { type: moon, x: 1500, y: 300, r: 140 }
+      - { type: satellite, kind: station, x: 1000, y: 420, s: 1.0, at: "@Apollo" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@personnes", action: shock }
+    texts:
+      - { at: "@personnes", text: "≈ 400 000 PERSONNES", style: big, x: 1150, y: 760 }
+    narration: "Pour aller sur la Lune, le programme *Apollo* a fait travailler environ {400 000|quatre cent mille} personnes. Ingénieurs, couturières, programmeuses, soudeurs. Une armée, mais une armée de volontaires."
+
+  - id: helpers-talk
+    background: { type: night-city }
+    bixStart: [350, 820]
+    props:
+      - { type: pal, x: 1100, y: 820, s: 0.8, facing: -1, seed: 4, actions: [{ at: 0, action: idle }, { at: "@refuser", action: shrug }] }
+      - { type: pal, x: 1350, y: 820, s: 0.78, facing: -1, seed: 6, actions: [{ at: 0, action: idle }, { at: "@prévenir", action: point }], hold: phone }
+      - { type: icon, icon: warning, x: 1350, y: 380, s: 1.2, at: "@prévenir" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@refuser", action: point }
+      - { at: "@prévenir", action: laugh }
+    narration: "Et c'est là que ça coince. Plus il a d'aides, plus il y a de gens qui peuvent *refuser*, parler, ou tout simplement *prévenir* quelqu'un. Un secret partagé par mille personnes ne reste pas secret longtemps."
+
+  # ------------------------------------------------------------- plan 3 : le grand bouton
+  - id: plan-button
+    chapter: "Plan 3 : appuyer sur le grand bouton"
+    transition: whip
+    background: { type: lab, board: false }
+    bixStart: [330, 820]
+    props:
+      - { type: genius, x: 1200, y: 820, s: 0.9, facing: -1, actions: [{ at: 0, action: point }, { at: "@deux", action: shock }] }
+      - { type: server, x: 1550, y: 820, s: 0.9, count: 3 }
+    bix:
+      - { at: 0, action: idle }
+      - { at: "@deux", action: laugh }
+    texts:
+      - { at: "@deux", text: "IL FAUT DEUX CLÉS", style: shout, x: 1200, y: 230, rotate: -5 }
+    narration: "Troisième plan : prendre le contrôle des systèmes les plus sensibles. Sauf que beaucoup d'entre eux suivent une vieille règle : pour les actions critiques, il faut *deux* personnes. Deux clés, deux codes, deux accords."
+
+  - id: two-person
+    background: { type: lab, board: false }
+    bixStart: [330, 820]
+    props:
+      - { type: pal, x: 1100, y: 820, s: 0.8, facing: -1, seed: 2, actions: [{ at: 0, action: present }] }
+      - { type: pal, x: 1500, y: 820, s: 0.8, facing: -1, seed: 5, actions: [{ at: 0, action: idle }, { at: "@non", action: shrug }] }
+      - { type: icon, icon: cross, x: 1500, y: 380, s: 1.2, at: "@non" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@non", action: cheer }
+    narration: "Même si le Docteur Méga convainc une personne, il en faut une deuxième, qui ne le connaît pas forcément, et qui peut dire *non*. Les systèmes sérieux sont pensés pour qu'aucune tête ne décide seule."
+
+  - id: hackers-good
+    background: { type: night-city }
+    bixStart: [350, 820]
+    props:
+      - { type: server, x: 1350, y: 820, s: 0.9, count: 3 }
+      - { type: pal, x: 1000, y: 820, s: 0.75, facing: 1, seed: 1, hold: laptop, actions: [{ at: 0, action: idle }, { at: "@failles", action: point }] }
+      - { type: badge, at: "@payent", x: 1650, y: 330, r: 100, text: "$$$", color: "#3fcf6e" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@payent", action: shock }
+    narration: "Et contre les pirates, il y a… d'autres pirates, gentils ceux-là. Des entreprises *payent* des chercheurs pour trouver leurs *failles* avant les méchants. Rien que chez Google, ça représente des millions de dollars par an."
+
+  # ------------------------------------------------------------- l'adversaire
+  - id: ten-million
+    chapter: "Il n'est pas seul à être intelligent"
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [380, 880]
+    props:
+      - { type: earth, x: 1150, y: 560, r: 260, spin: 0.06 }
+      - { type: crowd, at: "@millions", x: 1150, y: 980, w: 1300, count: 40, rows: 2, s: 0.3, seed: 11, cheerAt: "@millions" }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@millions", action: cheer }
+    texts:
+      - { at: "@millions", text: "+ DE 10 MILLIONS", style: big, x: 1150, y: 230 }
+    narration: "Autre détail gênant pour lui : être un génie, ce n'est pas être *unique*. Statistiquement, environ une personne sur huit cents a un QI de cent quarante-cinq ou plus. Sur huit milliards d'humains, ça fait plus de dix *millions* de cerveaux brillants."
+
+  - id: ten-million-2
+    background: { type: lab, board: false }
+    bixStart: [330, 820]
+    props:
+      - { type: genius, x: 1500, y: 820, s: 0.85, facing: -1, actions: [{ at: 0, action: shock }] }
+      - { type: pal, x: 1000, y: 820, s: 0.8, facing: 1, seed: 8, hold: clipboard, actions: [{ at: 0, action: point }] }
+      - { type: pal, x: 1180, y: 820, s: 0.78, facing: 1, seed: 9, hold: book, actions: [{ at: 0, action: think }] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@équipe", action: laugh }
+    narration: "Et presque tous sont de l'autre côté. Chercheuses, ingénieurs, enquêteurs. Le Docteur Méga ne joue pas contre une personne. Il joue contre une *équipe* de dix millions. Et cette équipe-là ne dort jamais en même temps."
+
+  # ------------------------------------------------------------- l'ennemi invisible
+  - id: sleep
+    chapter: "Son pire ennemi : le sommeil"
+    transition: whip
+    background: { type: bedroom, mood: night, clock: "3:00", clockSpeed: 0.3 }
+    bixStart: [600, 820]
+    props:
+      - { type: genius, x: 1150, y: 820, s: 0.85, facing: -1, actions: [{ at: 0, action: idle }, { at: "@watts", action: sleepy }] }
+      - { type: brain, x: 1150, y: 330, s: 0.9, state: ok, stateAt: "@fatigue", state2: tired }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@watts", action: point }
+      - { at: "@fatigue", action: sleepy }
+    texts:
+      - { at: "@watts", text: "≈ 20 WATTS", style: label, x: 1150, y: 170, color: "#ffd447" }
+    narration: "Et puis, il y a un ennemi que personne ne bat. Même le plus grand cerveau du monde tourne avec environ vingt *watts*, comme une petite ampoule. Et il se fatigue."
+
+  - id: sleep-2
+    background: { type: bedroom, mood: night, clock: "3:00", clockSpeed: 0.3 }
+    bixStart: [600, 820]
+    props:
+      - { type: genius, x: 1150, y: 820, s: 0.85, facing: -1, actions: [{ at: 0, action: sleepy }] }
+      - { type: clock, x: 1550, y: 380, r: 120, time: "3:00", speed: 0.5 }
+    bix:
+      - { at: 0, action: sleepy }
+      - { at: "@alcool", action: shock }
+    texts:
+      - { at: "@heures", text: "17 À 19 HEURES ÉVEILLÉ", style: label, x: 1150, y: 200, color: "#8a5cff" }
+    narration: "Une étude a montré qu'après dix-sept à dix-neuf heures sans dormir, nos performances chutent autant qu'avec un peu d'alcool dans le sang. Un génie épuisé fait des erreurs de débutant. Et ses adversaires, eux, se relaient."
+
+  # ------------------------------------------------------------- la fin
+  - id: world-answer
+    chapter: "Comment le monde l'arrête"
+    transition: iris
+    background: { type: space, tint: blue }
+    bixStart: [380, 880]
+    props:
+      - { type: earth, x: 1150, y: 540, r: 280, spin: 0.08 }
+      - { type: badge, at: "@196", x: 1600, y: 300, r: 110, text: "196", sub: "pays", color: "#ffd447" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@196", action: point }
+    texts:
+      - { at: "@Interpol", text: "INTERPOL", style: label, x: 1150, y: 170, color: "#2f8cff" }
+    narration: "Finalement, le monde a une arme contre les méchants : la coopération. *Interpol* relie les polices de {196|cent quatre-vingt-seize} pays. Une seule erreur, une seule trace, et c'est toute la planète qui le cherche. Les enquêteurs partagent les infos, les signalements, les visages."
+
+  - id: caught
+    background: { type: night-city }
+    bixStart: [350, 820]
+    props:
+      - { type: genius, x: 1250, y: 820, s: 0.9, facing: -1, actions: [{ at: 0, action: run }, { at: "@arrêté", action: facepalm }] }
+      - { type: helicopter, x: 1250, y: 230, s: 0.9, light: true, at: "@arrêté" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@arrêté", action: cheer }
+    texts:
+      - { at: "@arrêté", text: "ARRÊTÉ !", style: shout, x: 1250, y: 450, rotate: -6 }
+    narration: "Fatigué, trahi par une aide, repéré par une équipe de gentils génies… le Docteur Méga est *arrêté*. Son intelligence ne l'a pas sauvé. Parce qu'un cerveau, aussi brillant soit-il, reste un seul cerveau."
+
+  - id: moral
+    chapter: "La vraie leçon"
+    transition: whip
+    background: { type: lab }
+    bixStart: [400, 820]
+    props:
+      - { type: cactus, x: 1450, y: 760, s: 1.1, mood: wink, at: 0 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@ensemble", action: cheer }
+      - { at: "@prison", action: shock }
+    narration: "La vraie leçon ? L'intelligence, c'est puissant… mais ce qui change le monde, c'est quand beaucoup de cerveaux travaillent *ensemble*. Quant au Docteur Méga, il est maintenant dans la prison la plus sûre du monde. Pour l'instant. Et ça, c'est une autre histoire."
+
+# ======================================================================= Shorts (règles TikTok)
+tiktokShorts:
+  - n: 1
+    kind: cut
+    slug: grille-pain-neuf-mois
+    hook: "Neuf mois pour un grille-pain"
+    question: "Tu saurais en fabriquer un ?"
+    tiktokCaption: "Fabriquer un grille-pain à partir de zéro : neuf mois de travail, et il a fondu au premier essai 🍞 #science #genie #etsi"
+    youtubeTitle: "Un génie ne peut même pas faire un grille-pain"
+    scenes:
+      - like: toaster
+        narration: "Neuf mois. C'est le temps qu'il a fallu pour fabriquer un simple *grille-pain* à partir de zéro."
+        props:
+          - { type: calendar, x: 1150, y: 420, s: 1.0, from: 1, to: 9, at: 0.3, dur: 2, label: "mois" }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@grille-pain", text: "UN GRILLE-PAIN", style: shout, rotate: -5 }
+      - like: toaster
+        narration: "Extraire le métal, faire le plastique, tout. Plus de mille livres dépensées. Et au premier essai… il a *fondu*."
+        props:
+          - { type: badge, x: 1600, y: 600, r: 110, text: "1 187 £", color: "#ffd447" }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@fondu", action: laugh }
+        texts:
+          - { at: "@fondu", text: "FONDU !", style: shout, rotate: 6 }
+      - like: nobody-alone
+        narration: "Même le plus grand génie du monde ne sait pas tout fabriquer seul. Personne ne le sait."
+        props:
+          - { type: crowd, x: 1200, y: 820, w: 1100, count: 26, rows: 3, s: 0.42, seed: 7 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@Personne", action: cheer }
+        texts:
+          - { at: "@Personne", text: "Personne ne fait tout seul", style: label, color: "#22d3c5" }
+      - like: toaster
+        narration: "La preuve :"
+        props:
+          - { type: calendar, x: 1150, y: 420, s: 1.0, from: 1, to: 1, label: "mois" }
+        bix:
+          - { at: 0, action: shrug }
+        texts: []
+
+  - n: 2
+    kind: cut
+    slug: dix-millions-de-genies
+    hook: "Le génie n'est jamais seul"
+    question: "Tu serais dans quelle équipe ?"
+    tiktokCaption: "Environ 1 personne sur 800 a un QI de 145 ou plus : sur Terre, ça fait plus de 10 millions de cerveaux 🧠 #genie #science #etsi"
+    youtubeTitle: "Plus de 10 millions de génies sur Terre"
+    scenes:
+      - like: ten-million
+        narration: "Sur Terre, il y a plus de dix *millions* de génies. Et ils ne sont pas tous méchants, heureusement."
+        props:
+          - { type: earth, x: 1150, y: 560, r: 260, spin: 0.06 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@millions", text: "+ DE 10 MILLIONS", style: big }
+      - like: ten-million
+        narration: "Environ une personne sur huit cents a un QI de cent quarante-cinq ou plus. Sur huit milliards d'humains, fais le calcul."
+        props:
+          - { type: earth, x: 1150, y: 560, r: 260, spin: 0.06 }
+        bix:
+          - { at: 0, action: think }
+          - { at: "@calcul", action: point }
+        texts:
+          - { at: "@huit", text: "1 SUR 800", style: label, color: "#8a5cff" }
+      - like: ten-million-2
+        narration: "Alors un génie méchant ne jouerait jamais contre une personne. Il jouerait contre une *équipe* entière."
+        bix:
+          - { at: 0, action: present }
+          - { at: "@équipe", action: laugh }
+      - like: ten-million
+        narration: "Parce que, oui,"
+        props:
+          - { type: earth, x: 1150, y: 560, r: 260, spin: 0.06 }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 3
+    kind: cut
+    slug: regle-des-deux-cles
+    hook: "Il faut toujours deux clés"
+    question: "Tu aurais dit non ?"
+    tiktokCaption: "Pour les actions critiques, beaucoup de systèmes exigent deux personnes : la règle des deux clés 🔑🔑 #securite #science #etsi"
+    youtubeTitle: "La règle qui bloque n'importe quel génie"
+    scenes:
+      - like: plan-button
+        narration: "Pour les actions les plus critiques, il faut *deux* personnes."
+        props:
+          - { type: server, x: 1550, y: 820, s: 0.9, count: 3 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@deux", text: "IL FAUT DEUX CLÉS", style: shout, rotate: -5 }
+      - like: two-person
+        narration: "Deux clés, deux codes, deux accords. Même si un génie méchant convainc la première, la deuxième peut dire *non*."
+        bix:
+          - { at: 0, action: present }
+          - { at: "@non", action: cheer }
+      - like: two-person
+        narration: "Les systèmes sérieux sont pensés pour qu'aucune tête ne décide seule. Pas même la plus brillante. Surtout pas la plus brillante."
+        props:
+          - { type: pal, x: 1100, y: 820, s: 0.8, facing: -1, seed: 2, actions: [{ at: 0, action: present }] }
+          - { type: pal, x: 1500, y: 820, s: 0.8, facing: -1, seed: 5, actions: [{ at: 0, action: shrug }] }
+        bix:
+          - { at: 0, action: point }
+      - like: plan-button
+        narration: "C'est la règle :"
+        props:
+          - { type: server, x: 1550, y: 820, s: 0.9, count: 3 }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 4
+    kind: standalone
+    slug: cerveau-vingt-watts
+    hook: "Ton cerveau : 20 watts"
+    question: "Tu dors combien d'heures ?"
+    tiktokCaption: "Ton cerveau fonctionne avec environ 20 watts, comme une petite ampoule. Et il a besoin de dormir 💡😴 #cerveau #sommeil #science #etsi"
+    youtubeTitle: "Ton cerveau consomme autant qu'une ampoule"
+    scenes:
+      - like: sleep
+        narration: "Ton cerveau tourne avec environ vingt *watts*. Comme une petite ampoule."
+        props:
+          - { type: brain, x: 1150, y: 330, s: 0.9, state: ok }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@watts", text: "≈ 20 WATTS", style: big }
+      - like: sleep
+        narration: "Pourtant, il dévore environ un cinquième de toute l'énergie de ton corps. Et comme toute machine, il s'use."
+        props:
+          - { type: brain, x: 1150, y: 330, s: 0.9, state: ok, stateAt: "@s'use", state2: tired }
+        bix:
+          - { at: 0, action: point }
+          - { at: "@cinquième", action: shock }
+        texts:
+          - { at: "@cinquième", text: "≈ 20 % DE TON ÉNERGIE", style: label, color: "#ff7a1a" }
+      - like: sleep-2
+        narration: "Après dix-sept à dix-neuf heures éveillé, tu réagis à peu près comme avec un peu d'alcool dans le sang. Même un génie."
+        bix:
+          - { at: 0, action: sleepy }
+          - { at: "@génie", action: facepalm }
+      - like: sleep
+        narration: "Alors, avant de dormir, souviens-toi :"
+        props:
+          - { type: brain, x: 1150, y: 330, s: 0.9, state: ok }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 5
+    kind: standalone
+    slug: quatre-cent-mille-apollo
+    hook: "400 000 personnes pour la Lune"
+    question: "Tu aurais fait quel métier ?"
+    tiktokCaption: "Le programme Apollo a fait travailler environ 400 000 personnes. Aucun génie n'y serait arrivé seul 🚀 #apollo #lune #espace #science"
+    youtubeTitle: "Il a fallu 400 000 personnes pour aller sur la Lune"
+    scenes:
+      - like: apollo
+        narration: "Pour aller sur la Lune, il a fallu environ {400 000|quatre cent mille} personnes."
+        props: &apolloProps
+          - { type: moon, x: 1500, y: 300, r: 140 }
+          - { type: satellite, kind: station, x: 1000, y: 420, s: 1.0 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@personnes", text: "≈ 400 000", style: big }
+      - like: apollo
+        narration: "Ingénieurs, couturières pour les combinaisons, programmeuses, soudeurs. Chacun avec sa petite pièce du puzzle."
+        props: *apolloProps
+        bix:
+          - { at: 0, action: present }
+          - { at: "@puzzle", action: point }
+        texts:
+          - { at: "@puzzle", text: "Une pièce chacun", style: label, color: "#22d3c5" }
+      - like: nobody-alone
+        narration: "Aucun cerveau, même génial, n'aurait pu le faire seul. Les grands exploits sont toujours des exploits d'*équipe*."
+        props:
+          - { type: crowd, x: 1200, y: 820, w: 1100, count: 26, rows: 3, s: 0.42, seed: 7 }
+        bix:
+          - { at: 0, action: cheer }
+        texts: []
+      - like: apollo
+        narration: "Retiens bien ce chiffre :"
+        props: *apolloProps
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 6
+    kind: standalone
+    slug: hackers-payes
+    hook: "Payés pour pirater, légalement"
+    question: "Tu aimerais faire ce métier ?"
+    tiktokCaption: "Des entreprises payent des chercheurs pour trouver leurs failles avant les méchants 💻🛡️ #cybersecurite #tech #science #etsi"
+    youtubeTitle: "Ces pirates sont payés pour nous protéger"
+    scenes:
+      - like: hackers-good
+        narration: "Il existe des pirates *payés* pour pirater. Légalement."
+        props:
+          - { type: server, x: 1350, y: 820, s: 0.9, count: 3 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@payés", text: "LÉGALEMENT !", style: shout, rotate: -5 }
+      - like: hackers-good
+        narration: "Des entreprises les récompensent quand ils trouvent une *faille*, avant les méchants. Rien que chez Google, ça fait des millions de dollars par an."
+        props:
+          - { type: server, x: 1350, y: 820, s: 0.9, count: 3 }
+          - { type: badge, x: 1650, y: 330, r: 100, text: "$$$", color: "#3fcf6e" }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@millions", action: shock }
+      - like: hackers-good
+        narration: "Chaque faille trouvée par un gentil, c'est une porte fermée au nez d'un méchant. Et une récompense en plus."
+        props:
+          - { type: server, x: 1350, y: 820, s: 0.9, count: 3 }
+          - { type: pal, x: 1000, y: 820, s: 0.75, facing: 1, seed: 1, hold: laptop, actions: [{ at: 0, action: cheer }] }
+        bix:
+          - { at: 0, action: cheer }
+        texts: []
+      - like: hackers-good
+        narration: "Alors oui,"
+        props:
+          - { type: server, x: 1350, y: 820, s: 0.9, count: 3 }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+thumbnail:
+  title: ["GÉNIE", "MÉCHANT ?"]
+  accent: 1
+  subtitle: "que ferait-il ?"
+  background: { type: lab, board: false }
+  props:
+    - { type: genius, x: 1050, y: 1000, s: 1.4, facing: 1, actions: [{ at: 0, action: laugh }] }
+  bix: { action: shock, x: 1650, y: 1230, scale: 2.3, facing: -1, t: 0.45 }
+
+sources:
+  - "Thwaites, T. The Toaster Project (2009-2010 : un grille-pain fabriqué à partir de zéro, 9 mois, 1 187,54 £; il a fondu au premier essai) : https://www.thomasthwaites.com/the-toaster-project/"
+  - "NASA, Apollo program (environ 400 000 personnes ont travaillé sur Apollo) : https://www.nasa.gov/the-apollo-program/"
+  - "NIST SP 800-53 Rev. 5, AC-3(2) Dual Authorization (règle des deux personnes pour les actions critiques) : https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final"
+  - "Google Security Blog, Vulnerability Reward Program 2024 in review (millions de dollars versés aux chercheurs en sécurité) : https://security.googleblog.com/2025/03/vulnerability-reward-program-2024-in.html"
+  - "Wechsler / loi normale du QI (moyenne 100, écart type 15 : environ 0,13 % des personnes ont un QI de 145 ou plus) : https://en.wikipedia.org/wiki/IQ_classification"
+  - "Nations unies, World Population Prospects 2024 (environ 8,2 milliards d'humains) : https://population.un.org/wpp/"
+  - "Raichle, M. E. & Gusnard, D. A. (2002). Appraising the brain's energy budget. PNAS 99(16), 10237–10239 (le cerveau ≈ 2 % du poids, ≈ 20 % de l'énergie, ≈ 20 W) : https://doi.org/10.1073/pnas.172399499"
+  - "Williamson, A. M. & Feyer, A.-M. (2000). Moderate sleep deprivation produces impairments in cognitive and motor performance equivalent to legally prescribed levels of alcohol intoxication. Occup. Environ. Med. 57, 649–655 : https://doi.org/10.1136/oem.57.10.649"
+  - "INTERPOL, Member countries (196 pays membres) : https://www.interpol.int/en/Who-we-are/Member-countries"

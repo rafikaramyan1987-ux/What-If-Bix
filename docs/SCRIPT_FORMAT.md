@@ -237,3 +237,33 @@ Shorts are not a crop of the long video. Each scene is re-laid out for the verti
 - Per-scene override: `shortLayout: { mode: presenter|follow, subject: [x0, y0, x1, y1] }` (subject = a stage box to frame).
 
 **Framing check:** `build.mjs` refuses to render Shorts if, at any time in the first 3 s, Bix or a character prop (`pal`, `penguin`, `dolphin`, `octopus`) is not whole inside the safe zone, or another key object is cut by the frame edge. Run it alone with `--only check`. Use `--only strips` to render first-3-second strips, and `--debug-boxes` to draw the boxes.
+
+
+## French episodes (MarMila)
+
+Add `language: fr` and `channel: marmila`. Everything else is the same format, plus:
+
+```yaml
+language: fr
+channel: marmila
+hashtags: ["#etsi", "#lune", "#espace", "#science"]   # 3–5, at the end of the description
+pinnedQuestion: "Sans la Lune, qu'est-ce qui te manquerait le plus ?"
+tiktokShorts:                       # exactly 6, instead of `shorts:`
+  - n: 1
+    kind: cut                       # cut (from the episode) | standalone (mini-story on the same topic)
+    slug: marees-trois-fois
+    hook: "Sans Lune, la mer s'endort"          # ≤ 6 words, on screen from frame 0
+    question: "Tu habites près de la mer ?"      # last 2 s + pinned comment
+    tiktokCaption: "… #lune #ocean #science"     # description text + 3–4 hashtags (#Shorts is added)
+    youtubeTitle: "Sans la Lune, les marées s'effondrent"   # ≤ 60 characters
+    scenes:                         # like: <scene id> + overrides; the last scene reuses the first one (loop)
+      - { like: tides, narration: "Sans la Lune, les marées seraient environ *trois* fois plus faibles." }
+```
+
+- Write normal French: the factory adds the typography (espace fine insécable before `? ! ;`, espace insécable before
+  `:` and inside `« »`, between digit groups and before units, typographic apostrophes) to captions, on-screen texts,
+  titles and descriptions. The voice gets plain text.
+- `@word` cues accept accents and elisions: `"@éloigne"` matches *s'éloigne*, `"@animaux"` matches *d'animaux*, and
+  `"@kilomètres"` matches `{384 400 kilomètres|…}`.
+- Write numbers the voice must read in words with `{shown|spoken}`.
+- Counters (`count:`) and charts format numbers the French way (384 400, 3,8).

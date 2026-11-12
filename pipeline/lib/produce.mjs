@@ -22,13 +22,24 @@ export const resolveVoiceModel = (voice) => {
   const name = voice.model ?? 'en-us-libritts-high';
   if (name.endsWith('.onnx') && fs.existsSync(name)) return name;
   const p = path.join(ROOT, 'models', 'piper', `${name}.onnx`);
+  // Local previews only: BIX_VOICE_FALLBACK=fr-siwis-medium uses the older GitHub-release export of the
+  // same voice when Hugging Face is unreachable (it lacks the nasal-vowel marker: never publish with it).
+  const fb = process.env.BIX_VOICE_FALLBACK && path.join(ROOT, 'models', 'piper', `${process.env.BIX_VOICE_FALLBACK}.onnx`);
+  if (!fs.existsSync(p) && fb && fs.existsSync(fb)) {
+    console.warn(`[bix] WARNING voice ${name} not found, using ${process.env.BIX_VOICE_FALLBACK} for a local preview`);
+    return fb;
+  }
   if (!fs.existsSync(p)) throw new Error(`voice model ${p} not found — run: bash pipeline/fetch_voice.sh ${name}`);
   return p;
 };
 
 /** Channel voice: Piper LibriTTS speaker 92 at lengthScale 1.05, unless the script or environment says otherwise. */
+/** MarMila voice: Piper fr_FR "siwis" (medium, CC BY 4.0), picked by pipeline/voice_compare.py (docs/marmila/VOICE.md). */
+export const FR_VOICE = { provider: 'piper', model: 'fr_FR-siwis-medium', lengthScale: 1.0 };
+
 export const channelVoice = (ep) => {
-  const voice = { provider: 'piper', model: 'en-us-libritts-high', speaker: 92, lengthScale: 1.05, ...(ep.voice ?? {}) };
+  const base = ep.language === 'fr' ? FR_VOICE : { provider: 'piper', model: 'en-us-libritts-high', speaker: 92, lengthScale: 1.05 };
+  const voice = { ...base, ...(ep.voice ?? {}) };
   // BIX_TTS_PROVIDER=elevenlabs|openai switches to a paid voice (API key from the environment).
   if (process.env.BIX_TTS_PROVIDER) voice.provider = process.env.BIX_TTS_PROVIDER;
   if (voice.provider === 'piper') voice.model = resolveVoiceModel(voice);

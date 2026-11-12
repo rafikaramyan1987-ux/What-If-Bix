@@ -47,6 +47,7 @@ export const shortEpisode = (ep, sh) => {
     title: sh.title,
     voice: ep.voice,
     character: ep.character,
+    ...(ep.language ? { language: ep.language } : {}),
     music: { ...(ep.music ?? { style: 'curious' }), offset: sh.musicOffset ?? SHORT_MUSIC_OFFSET },
     scenes: [...scenes, ctaScene(sh.cta ?? DEFAULT_CTA)],
     short: sh,

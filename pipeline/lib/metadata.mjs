@@ -1,4 +1,5 @@
 // YouTube metadata, chapters, SRT captions and Shorts manifests.
+import { channelStrings, frTypo, langOf } from './lang.mjs';
 
 export const fmtTime = (sec) => {
   const s = Math.max(0, Math.floor(sec));
@@ -63,6 +64,7 @@ export const CREDIT_LINES = [
 ];
 
 export const buildMetadata = (ep, manifest, shorts = []) => {
+  if (langOf(ep) === 'fr') return buildFrenchMetadata(ep, manifest, shorts);
   const chapters = buildChapters(manifest);
   const sources = (ep.sources ?? []).map((s) => `• ${shortSource(s)}`);
   const tags = [...new Set([...(ep.tags ?? []), 'what if', 'what if bix', 'science', 'animation'])];
@@ -109,11 +111,79 @@ export const buildMetadata = (ep, manifest, shorts = []) => {
   };
 };
 
+/**
+ * MarMila (French) metadata: French labels and credits, French typography everywhere,
+ * captions as <id>.fr.srt, and one entry per TikTok-rule Short (title, description,
+ * 3–5 hashtags incl. #Shorts, pinned-comment question).
+ */
+export const buildFrenchMetadata = (ep, manifest, shorts = []) => {
+  const ch = channelStrings('fr', ep.voice?.model);
+  const chapters = buildChapters(manifest);
+  const tags = [...new Set([...(ep.tags ?? []), ...ch.baseTags])];
+  let tagChars = 0;
+  const tagsFit = tags.filter((t) => (tagChars += t.length + 1) <= 480);
+  const hashtags = ep.hashtags ?? ['#etsi', '#science', '#marmila'];
+  const compose = (srcLines) => [
+    (ep.description ?? '').trim(),
+    '',
+    chapters.length ? ch.chapters : '',
+    ...chapters.map((c) => `${fmtTime(c.time)} ${c.title}`),
+    '',
+    ch.sources,
+    ...srcLines,
+    '',
+    ...ch.credits,
+    '',
+    hashtags.join(' '),
+  ]
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n');
+  let description = compose((ep.sources ?? []).map((s) => `• ${shortSource(s)}`));
+  if (description.length > 4900) description = compose((ep.sources ?? []).map((x) => `• ${String(x).match(/https?:\/\/\S+/)?.[0] ?? String(x).slice(0, 80)}`));
+  description = frTypo(description);
+  return {
+    id: ep.id,
+    channel: ch.channel,
+    title: ep.title,
+    description,
+    tags: tagsFit,
+    hashtags,
+    pinnedComment: ep.pinnedQuestion ?? null,
+    chapters: chapters.map((c) => ({ time: fmtTime(c.time), seconds: Math.round(c.time), title: c.title })),
+    duration: manifest.duration,
+    categoryId: 27,
+    madeForKids: false,
+    defaultLanguage: 'fr',
+    files: { video: `${ep.id}.mp4`, thumbnail: 'thumbnail.png', captions: `${ep.id}.${ch.captionsExt}` },
+    shorts: shorts.map((s) => {
+      const sh = s.short;
+      const tagsOf = (String(sh.tiktokCaption ?? '').match(/#[\p{L}\p{N}_]+/gu) ?? []);
+      const shTags = [...new Set(['#Shorts', ...tagsOf])].slice(0, 5);
+      const caption = String(sh.tiktokCaption ?? '').replace(/#[\p{L}\p{N}_]+/gu, '').replace(/\s+$/,'').trim();
+      return {
+        id: `${sh.n}-${sh.slug}`,
+        n: sh.n,
+        kind: sh.kind ?? 'cut',
+        file: `shorts/${sh.n}-${sh.slug}.mp4`,
+        captions: `shorts/${sh.n}-${sh.slug}.${ch.captionsExt}`,
+        title: sh.youtubeTitle,
+        hook: sh.hook,
+        description: frTypo(`${caption}\n\n${ch.fullEpisode(ep.title)}\n\n${ch.credits.join('\n')}\n\n${shTags.join(' ')}`),
+        hashtags: shTags,
+        pinnedComment: sh.question,
+        duration: s.manifest.duration,
+      };
+    }),
+  };
+};
+
 export const metadataMarkdown = (meta) => {
   const lines = [
     `# ${meta.title}`,
     '',
-    `**Duration:** ${fmtTime(meta.duration)} · **Category:** Education · **Made for kids:** No · **Language:** English`,
+    meta.defaultLanguage === 'fr'
+      ? `**Durée :** ${fmtTime(meta.duration)} · **Catégorie :** Éducation · **Conçu pour les enfants :** Non · **Langue :** Français · **Chaîne :** ${meta.channel}`
+      : `**Duration:** ${fmtTime(meta.duration)} · **Category:** Education · **Made for kids:** No · **Language:** English`,
     '',
     '## Title',
     '',
@@ -138,6 +208,8 @@ export const metadataMarkdown = (meta) => {
   ];
   for (const s of meta.shorts) {
     lines.push(`### ${s.file} (${s.duration.toFixed(1)} s)`, '', '```', s.title, '```', '', '```', s.description, '```', '');
+    if (s.pinnedComment) lines.push(`Commentaire épinglé : ${s.pinnedComment}`, '');
   }
+  if (meta.pinnedComment) lines.push('## Commentaire épinglé', '', '```', meta.pinnedComment, '```', '');
   return lines.join('\n');
 };

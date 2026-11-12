@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import YAML from 'yaml';
 
 import { BACKGROUNDS, BIX_ACTIONS, CHIP_ICONS, ITEMS, MUSIC_STYLES, PROPS, SFX, TEXT_STYLES, TRANSITIONS } from './vocab.mjs';
+import { frTypo, LANGUAGES, normWordFor, plainSpaces, unitSplitter } from './lang.mjs';
 
 export { BACKGROUNDS, BIX_ACTIONS, PROPS, SFX };
 
@@ -26,16 +27,17 @@ export const PAUSE = {
  * @param {string} text
  * @returns {{display: string, spoken: string, emphasis: boolean, beat?: number}[]}
  */
-export const parseNarration = (text) => {
+export const parseNarration = (text, lang = 'en') => {
   const subs = [];
-  const marked = text
+  const fr = lang === 'fr';
+  const marked = (fr ? frTypo(text) : text)
     .replace(/\[beat(?:\s+(\d*\.?\d+))?\]/gi, (_, secs) => ` \u0003${secs ?? PAUSE.beat}\u0004 `)
     .replace(/\{([^{}|]*)\|([^{}]*)\}/g, (_, d, s) => {
       subs.push([d, s]);
       return `\u0001${subs.length - 1}\u0002`;
     });
   const out = [];
-  for (const chunk of marked.split(/\s+/).filter(Boolean)) {
+  for (const chunk of marked.split(unitSplitter(lang)).filter(Boolean)) {
     const beat = chunk.match(/^\u0003([\d.]+)\u0004$/);
     if (beat) {
       if (out.length) out[out.length - 1].beat = (out[out.length - 1].beat ?? 0) + parseFloat(beat[1]);
@@ -49,7 +51,8 @@ export const parseNarration = (text) => {
     }
     const restore = (which) => c.replace(/\u0001(\d+)\u0002/g, (_, i) => subs[Number(i)][which]);
     const display = restore(0);
-    const spoken = restore(1);
+    // French: the voice gets plain spaces and straight apostrophes; captions keep the typography
+    const spoken = fr ? plainSpaces(restore(1)).replace(/’/g, "'").trim() : restore(1);
     if (display.length || spoken.length) out.push({ display, spoken, emphasis });
   }
   return out;
@@ -95,12 +98,8 @@ export const segmentUnits = (units) => {
   return out;
 };
 
-/** Normalise a word for "@word" matching. */
-export const normWord = (w) =>
-  String(w)
-    .toLowerCase()
-    .replace(/[’‘]/g, "'")
-    .replace(/^[^a-z0-9]+|[^a-z0-9]+$/g, '');
+/** Normalise a word for "@word" matching (French: accents and typographic spaces too). */
+export const normWord = (w, lang = 'en') => normWordFor(w, lang);
 
 const fail = (file, msg) => {
   throw new Error(`${file}: ${msg}`);
@@ -123,7 +122,7 @@ export const parseEpisode = (raw, file = 'episode') => {
   }
   const ep = YAML.parse(yamlText);
   validateEpisode(ep, file);
-  return ep;
+  return ep.language === 'fr' ? applyFrenchTypography(ep) : ep;
 };
 
 export const validateEpisode = (ep, file = 'episode') => {
@@ -163,6 +162,7 @@ export const validateEpisode = (ep, file = 'episode') => {
       if (!SFX.includes(fx.name)) fail(file, `${where}: unknown sfx "${fx.name}"`);
     }
   });
+  if (ep.language !== undefined && !LANGUAGES.includes(ep.language)) fail(file, `language must be one of ${LANGUAGES.join(', ')}`);
   if (ep.character && !['bix1', 'bix2'].includes(ep.character)) fail(file, `character must be bix1 or bix2`);
   if (ep.music?.style && !MUSIC_STYLES.includes(ep.music.style)) fail(file, `unknown music style "${ep.music.style}"`);
   for (const sh of ep.shorts ?? []) {
@@ -174,4 +174,25 @@ export const validateEpisode = (ep, file = 'episode') => {
   if (ep.introAfter && !ids.has(ep.introAfter)) fail(file, `introAfter "${ep.introAfter}" is not a scene id`);
   if (ep.sources !== undefined && !Array.isArray(ep.sources)) fail(file, 'sources must be a list');
   return true;
+};
+
+// Text fields that are shown on screen or published (narration is handled by parseNarration).
+const SHOWN_KEYS = new Set(['text', 'label', 'title', 'lines', 'labels', 'sub', 'display', 'subtitle', 'hook', 'question', 'youtubeTitle', 'tiktokCaption', 'description', 'pinnedQuestion']);
+
+const typoDeep = (v, key = '') => {
+  if (typeof v === 'string') return SHOWN_KEYS.has(key) ? frTypo(v) : v;
+  if (Array.isArray(v)) return v.map((x) => (typeof x === 'string' ? (SHOWN_KEYS.has(key) ? frTypo(x) : x) : typoDeep(x)));
+  if (v && typeof v === 'object') {
+    const out = {};
+    for (const [k, x] of Object.entries(v)) out[k] = k === 'narration' || k === 'sources' ? x : typoDeep(x, k);
+    return out;
+  }
+  return v;
+};
+
+/** French episodes: French typography (espaces insécables, apostrophes) on every shown text. */
+export const applyFrenchTypography = (ep) => {
+  const out = typoDeep(ep);
+  out.title = frTypo(ep.title);
+  return out;
 };

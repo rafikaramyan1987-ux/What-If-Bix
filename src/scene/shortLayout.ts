@@ -108,12 +108,18 @@ const GEO: Record<string, Geo> = {
   bird: { box: () => ({ x0: -116, y0: -78, x1: 78, y1: 32 }), s: (p) => num(p.s, 1), move: 'linear', bob: 8, dur: 3, from: [-200, 300], to: [2200, 300], flipDir: true },
   octopus: { box: (p) => ({ x0: -235, y0: p.swim === true ? -265 : -245, x1: 235, y1: 285 }), s: (p) => num(p.s, 1), y: 560, move: 'ease', bob: 14 },
   vial: { box: (p) => ({ x0: -50, y0: -138, x1: 50, y1: p.label !== undefined ? 170 : 116 }), s: (p) => num(p.s, 1), y: 500 },
+  earthcut: { box: (p) => ({ x0: -num(p.r, 380) - 20, y0: -num(p.r, 380) - 20, x1: num(p.r, 380) * (p.labels === true ? 1.75 : 1) + 20, y1: num(p.r, 380) + 20 }), y: 540 },
+  prison: { box: () => ({ x0: -460, y0: -430, x1: 460, y1: 20 }), s: (p) => num(p.s, 1), y: 820 },
+  dog: { box: () => ({ x0: -120, y0: -150, x1: 180, y1: 10 }), s: (p) => num(p.s, 1), y: 820, move: 'ease', flip: true },
+  helicopter: { box: () => ({ x0: -230, y0: -90, x1: 230, y1: 70 }), s: (p) => num(p.s, 1), y: 260, move: 'ease', bob: 6 },
+  coral: { box: (p) => ({ x0: -num(p.w, 700) / 2 - 20, y0: -230, x1: num(p.w, 700) / 2 + 20, y1: 24 }), s: (p) => num(p.s, 1), y: 820 },
+  genius: { box: () => ({ x0: -160, y0: -470, x1: 160, y1: 10 }), s: (p) => num(p.s, 0.9), y: 820, move: 'ease' },
   horseshoe: { box: (p) => ({ x0: -156, y0: -118, x1: p.blood === true ? 240 : 156, y1: 206 }), s: (p) => num(p.s, 1), y: 700 },
 };
 /** Prop types that count as key objects (framed, and checked for edge cuts). */
 export const KEY_TYPES = Object.keys(GEO);
 /** Key objects that are characters (must stay inside the safe zone, like Bix). */
-export const CHARACTER_TYPES = ['pal', 'penguin', 'dolphin', 'octopus'];
+export const CHARACTER_TYPES = ['pal', 'penguin', 'dolphin', 'octopus', 'dog', 'genius'];
 
 /** Key objects the camera frames at time t: visible now, or popping in within the next BLEND seconds. */
 const framed = (p: Spec, t: number) =>

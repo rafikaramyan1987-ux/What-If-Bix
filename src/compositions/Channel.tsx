@@ -6,6 +6,11 @@ import { Background } from '../scene/backgrounds';
 import { C, FONT, TITLE_FONT } from '../theme';
 import { Spec } from '../types';
 import { clamp, easeInOut, easeOut, popIn, rng } from '../util';
+import { Lang, LangContext, useBrand } from '../lang';
+import { SubscribeButton } from './ShortsUI';
+
+/** MarMila end screen: the animated ABONNE-TOI button (s from the end-screen start; mirrored in pipeline/lib/timeline.mjs ENDSCREEN_ANIM). */
+export const ENDSCREEN_ANIM = { popAt: 1.0, bellAt: 1.35, pressAt: 3.2 };
 
 const happy: Face = { eyes: 'happy', mouth: 'laugh', brow: 0.6, browTilt: 0, look: [0, 0], blush: true };
 const grin: Face = { eyes: 'open', mouth: 'grin', brow: 0.4, browTilt: 0.2, look: [0.2, -0.1], blush: false };
@@ -31,6 +36,7 @@ const Doodles: React.FC<{ t: number; seed?: number; w?: number; h?: number; coun
 
 /** 2-second channel intro sting (drawn on the 1920x1080 stage, t in seconds from start). */
 export const IntroArt: React.FC<{ t: number }> = ({ t }) => {
+  const b = useBrand();
   const headIn = popIn((t - 0.08) / 0.35);
   const beanieDrop = easeOut((t - 0.0) / 0.3);
   const w1 = popIn((t - 0.45) / 0.3);
@@ -50,9 +56,9 @@ export const IntroArt: React.FC<{ t: number }> = ({ t }) => {
           <CharacterHead face={t > 0.9 && t < 1.1 ? { ...happy, eyes: 'closed' } : t > 0.5 ? happy : grin} beanie={Math.sin(t * 20) * 6 * (1 - clamp(t / 0.8))} blink={false} />
         </g>
         <text x={1310} y={470} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={210 * w1} fill={C.yellow} stroke={C.ink} strokeWidth={22}
-          paintOrder="stroke" transform="rotate(-5 1310 470)">WHAT IF</text>
-        <text x={1310} y={700} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={260 * w2} fill={C.white} stroke={C.ink} strokeWidth={24}
-          paintOrder="stroke" transform="rotate(-5 1310 700)">BIX</text>
+          paintOrder="stroke" transform="rotate(-5 1310 470)">{b.introTop}</text>
+        <text x={1310} y={700} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={b.introBottomSize * w2} fill={C.white} stroke={C.ink} strokeWidth={24}
+          paintOrder="stroke" transform="rotate(-5 1310 700)">{b.introBottom}</text>
       </g>
       {out > 0 && <circle cx={960} cy={540} r={1200 * out} fill={C.night} opacity={out} />}
     </g>
@@ -61,6 +67,8 @@ export const IntroArt: React.FC<{ t: number }> = ({ t }) => {
 
 /** End screen art: two video slots + subscribe slot (YouTube end-screen elements go on top). */
 export const EndScreenArt: React.FC<{ t: number; background?: Spec; dur?: number }> = ({ t, background, dur = 20 }) => {
+  const b = useBrand();
+  const fr = React.useContext(LangContext) === 'fr';
   const actions: { at: number; action: BixAction; facing: 1 | -1 }[] = [
     { at: 0, action: 'wave', facing: 1 },
     { at: 3, action: 'point', facing: -1 },
@@ -84,41 +92,51 @@ export const EndScreenArt: React.FC<{ t: number; background?: Spec; dur?: number
     <g>
       <Background spec={background ?? { type: 'space', tint: 'purple' }} t={t} />
       <rect width={1920} height={1080} fill={C.space1} opacity={0.55} />
-      <text x={960} y={150} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={110 * popIn(t / 0.4)} fill={C.yellow} stroke={C.ink} strokeWidth={14}
-        paintOrder="stroke">MORE WHAT IFS?</text>
-      {slot(480, 'WATCH NEXT', (t - 0.3) / 0.4)}
-      {slot(1440, 'BIX RECOMMENDS', (t - 0.5) / 0.4)}
+      <text x={960} y={150} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={b.endTitleSize * popIn(t / 0.4)} fill={C.yellow} stroke={C.ink} strokeWidth={14}
+        paintOrder="stroke">{b.endTitle}</text>
+      {slot(480, b.watchNext, (t - 0.3) / 0.4)}
+      {slot(1440, b.recommends, (t - 0.5) / 0.4)}
       <g transform={`translate(960 ${800}) scale(${popIn((t - 0.7) / 0.4)})`}>
         <circle r={100} fill="#00000033" stroke="#ffffff" strokeWidth={8} strokeDasharray="22 14" />
-        <text y={14} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={34} fill="#fff">SUBSCRIBE</text>
+        <text y={b.subscribeSlotSize * 0.4} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={b.subscribeSlotSize} fill="#fff">{b.subscribeSlot}</text>
       </g>
+      {fr && (
+        // animated ABONNE-TOI button under the left slot: pops in, the bell rings, it gets pressed, then pulses gently
+        <g transform="translate(480 835)">
+          <SubscribeButton t={t - ENDSCREEN_ANIM.popAt} press={ENDSCREEN_ANIM.pressAt - ENDSCREEN_ANIM.popAt} scale={0.62} />
+        </g>
+      )}
       <Character x={960} y={690} scale={0.6} facing={cur.facing} pose={o.pose} face={o.face} emote="none" t={t} airborne={o.pose.bob} />
       {t > dur - 0.6 && <rect width={1920} height={1080} fill="#000" opacity={clamp((t - (dur - 0.6)) / 0.6)} />}
     </g>
   );
 };
 
-export const IntroSting: React.FC = () => {
+export const IntroSting: React.FC<{ lang?: Lang }> = ({ lang = 'en' }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   return (
-    <AbsoluteFill style={{ background: C.night }}>
-      <svg width={1920} height={1080} viewBox="0 0 1920 1080">
-        <IntroArt t={f / fps} />
-      </svg>
-    </AbsoluteFill>
+    <LangContext.Provider value={lang}>
+      <AbsoluteFill style={{ background: C.night }}>
+        <svg width={1920} height={1080} viewBox="0 0 1920 1080">
+          <IntroArt t={f / fps} />
+        </svg>
+      </AbsoluteFill>
+    </LangContext.Provider>
   );
 };
 
-export const EndScreenTemplate: React.FC = () => {
+export const EndScreenTemplate: React.FC<{ lang?: Lang }> = ({ lang = 'en' }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   return (
-    <AbsoluteFill style={{ background: C.night }}>
-      <svg width={1920} height={1080} viewBox="0 0 1920 1080">
-        <EndScreenArt t={f / fps} />
-      </svg>
-    </AbsoluteFill>
+    <LangContext.Provider value={lang}>
+      <AbsoluteFill style={{ background: C.night }}>
+        <svg width={1920} height={1080} viewBox="0 0 1920 1080">
+          <EndScreenArt t={f / fps} />
+        </svg>
+      </AbsoluteFill>
+    </LangContext.Provider>
   );
 };
 
@@ -142,8 +160,15 @@ export const Avatar: React.FC = () => (
 );
 
 /** Channel banner 2560x1440; everything important sits inside the 1546x423 safe area. */
-export const Banner: React.FC = () => {
+export const Banner: React.FC<{ lang?: Lang }> = ({ lang = 'en' }) => (
+  <LangContext.Provider value={lang}>
+    <BannerArt />
+  </LangContext.Provider>
+);
+
+const BannerArt: React.FC = () => {
   const o = actionPose('point', 1, 1);
+  const b = useBrand();
   return (
     <AbsoluteFill style={{ background: C.space1 }}>
       <svg width="100%" height="100%" viewBox="0 0 2560 1440">
@@ -166,9 +191,9 @@ export const Banner: React.FC = () => {
           <circle cx={-20} cy={-14} r={16} fill="#c4c6d6" />
         </g>
         <text x={1350} y={700} textAnchor="middle" fontFamily={TITLE_FONT} fontSize={176} fill={C.yellow} stroke={C.ink} strokeWidth={22} paintOrder="stroke"
-          transform="rotate(-3 1350 700)">WHAT IF BIX</text>
+          transform="rotate(-3 1350 700)">{b.bannerTitle}</text>
         <text x={1350} y={810} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={64} fill={C.white} stroke={C.ink} strokeWidth={10}
-          paintOrder="stroke">Absurd questions. Real science.</text>
+          paintOrder="stroke">{b.bannerTagline}</text>
         <Character x={560} y={900} scale={1.0} facing={1} pose={o.pose} face={o.face} t={1} shadow={false} />
       </svg>
     </AbsoluteFill>

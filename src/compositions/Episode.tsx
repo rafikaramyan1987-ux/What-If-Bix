@@ -8,6 +8,7 @@ import { bixState, keyObjects, mapBox, Pacing, presenter, SAFE_BOX, shortFraming
 import { C, FONT, TITLE_FONT } from '../theme';
 import { Manifest, Scene } from '../types';
 import { clamp, easeInOut } from '../util';
+import { LangContext } from '../lang';
 
 const TRANSITION = 0.4;
 /** Shorts: on-screen texts sit in one band between the hook banner and the subject zone. */
@@ -136,9 +137,11 @@ const Band: React.FC<{ t: number }> = ({ t }) => (
 );
 
 export const Episode: React.FC<Manifest> = (m) => (
-  <CharacterContext.Provider value={m.character ?? 'bix2'}>
-    <EpisodeInner {...m} />
-  </CharacterContext.Provider>
+  <LangContext.Provider value={m.lang ?? 'en'}>
+    <CharacterContext.Provider value={m.character ?? 'bix2'}>
+      <EpisodeInner {...m} />
+    </CharacterContext.Provider>
+  </LangContext.Provider>
 );
 
 const EpisodeInner: React.FC<Manifest> = (m) => {

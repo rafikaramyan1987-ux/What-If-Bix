@@ -64,6 +64,7 @@ export const tiktokEpisode = (ep, sh) => {
     title: sh.youtubeTitle,
     voice: ep.voice,
     character: ep.character,
+    ...(ep.language ? { language: ep.language } : {}),
     music: { ...(ep.music ?? { style: 'curious' }), ...TT_MUSIC, offset: sh.musicOffset ?? 19.2, fadeOut: 0 },
     scenes,
     short: sh,
@@ -120,6 +121,8 @@ export const longestGap = (events, end) => {
 /** Finish a TikTok Short manifest. */
 export const toTiktokManifest = (manifest, sh, narration) => {
   const m = { ...manifest, format: 'short', width: 1080, height: 1920, timeOffset: 0, hook: sh.hook.toUpperCase(), scenes: showFromFrameZero(manifest.scenes) };
+  // MarMila: the first caption page is on screen from frame 0 (no blank first frames)
+  if (manifest.lang === 'fr' && m.captions.length) m.captions = [{ ...m.captions[0], start: 0 }, ...m.captions.slice(1)];
   const { beats, events } = pacingBeats(m, narration);
   m.tiktok = { beats, question: sh.question, questionAt: Math.max(0, m.duration - QUESTION_SECONDS) };
   return { manifest: m, events };
@@ -128,6 +131,7 @@ export const toTiktokManifest = (manifest, sh, narration) => {
 /** Production checks on a finished manifest (empty = OK). */
 export const tiktokProblems = (manifest, events) => {
   const out = [];
+  if (manifest.lang === 'fr' && !(manifest.captions[0]?.start <= 0)) out.push('captions must be visible from frame 0');
   const d = manifest.duration;
   if (d < TT_MIN || d >= TT_MAX) out.push(`length ${d.toFixed(1)} s is outside ${TT_MIN}–${TT_MAX} s`);
   const first = manifest.captions[0]?.words[0]?.start ?? Infinity;
@@ -147,3 +151,6 @@ export const sidecarText = (sh, duration) => [
   `Length: ${duration.toFixed(1)} s`,
   '',
 ].join('\n');
+
+/** The TikTok-rule Shorts spec of an episode: inline `tiktokShorts:` (MarMila) or shorts-tiktok/<id>/shorts.yaml. */
+export const tiktokSpecOf = (ep, file) => (ep.tiktokShorts ? { episode: ep.id, shorts: ep.tiktokShorts } : file && fs.existsSync(file) ? loadTiktokSpec(file) : null);

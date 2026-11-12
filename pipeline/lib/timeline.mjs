@@ -1,16 +1,20 @@
 // Turns a parsed episode + narration timings into the render manifest and audio plan.
 import { normWord, parseNarration, segmentUnits } from './script.mjs';
+import { frMatches } from './lang.mjs';
 
 // Keys whose numeric values are scene-relative times (converted to absolute).
 export const TIME_KEYS = new Set([
   'at', 'until', 'stopAt', 'windAt', 'roofAt', 'hoverUntil', 'shake', 'switchAt', 'crossAt', 'failAt', 'cutAt',
   'jumpAt', 'cheerAt', 'panicAt', 'spikeAt', 'shakeAt', 'moveAt', 'stateAt', 'lightsOffAt', 'eyeAt', 'blowAt', 'swapAt', 'swaps', 'bothAt', 'floatAt', 'heatAt', 'pauseAt',
+  'fallAt', 'alarmAt', 'spawnAt',
 ]);
 
 export const INTRO_SECONDS = 2;
 export const SCENE_LEAD = 0.5;
 export const SCENE_TAIL = 0.5;
 export const ENDSCREEN_SECONDS = 20;
+/** MarMila end screen: when the animated ABONNE-TOI button pops in, rings and is pressed (s from the end-screen start; mirrored in Channel.tsx). */
+export const ENDSCREEN_ANIM = { popAt: 1.0, bellAt: 1.35, pressAt: 3.2 };
 
 /**
  * Scenes in render order. Full episodes (those with an `outro`) get the channel
@@ -32,7 +36,7 @@ export const expandScenes = (ep) => {
 /** Prepare TTS segments for every scene. */
 export const planNarration = (ep) =>
   expandScenes(ep).map((s, si) => {
-    const units = parseNarration(s.narration);
+    const units = parseNarration(s.narration, ep.language);
     const segs = segmentUnits(units).map((g, gi) => ({ id: `s${si}_${gi}`, ...g }));
     return { scene: s.id, units, segments: segs };
   });
@@ -65,8 +69,8 @@ export const resolveTime = (ref, ctx) => {
   }
   if (body === 'start') return ctx.start + offset;
   if (body === 'end') return ctx.end + offset;
-  const key = normWord(body);
-  const hits = ctx.words.filter((w) => w.key === key);
+  const key = normWord(body, ctx.lang);
+  const hits = ctx.lang === 'fr' ? ctx.words.filter((w) => frMatches(w.key, key)) : ctx.words.filter((w) => w.key === key);
   const w = hits[nth - 1];
   if (!w) throw new Error(`scene "${ctx.id}": no word "${body}"${nth > 1 ? ` #${nth}` : ''} in narration (ref "${ref}")`);
   return (useEnd ? w.end : w.start) + offset;
@@ -196,7 +200,7 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
       seg.units.forEach((u, ui) => {
         const tm = r.units[ui];
         sceneWords.push({
-          text: u.display, key: normWord(u.display), start: t + tm.start, end: t + tm.end,
+          text: u.display, key: normWord(u.display, ep.language), start: t + tm.start, end: t + tm.end,
           emphasis: u.emphasis, segEnd: ui === seg.units.length - 1, scene: si,
         });
       });
@@ -221,7 +225,7 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
   const duration = Math.round(cursor * fps) / fps;
 
   const outScenes = scenes.map(({ src: s, start, end, words: w }, si) => {
-    const ctx = { id: s.id, start, end, words: w };
+    const ctx = { id: s.id, start, end, words: w, lang: ep.language };
     const r = (v) => resolveDeep(v ?? [], ctx);
     const scene = {
       id: s.id,
@@ -241,6 +245,12 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
       ...(s.shortLayout ? { shortLayout: resolveDeep(s.shortLayout, ctx) } : {}),
     };
     if (s.kind === 'intro') sfx.push({ name: 'sting', at: start, gain: 0.8 });
+    // MarMila end screen: the ABONNE-TOI button pops in, the bell rings, the button gets pressed
+    if (s.kind === 'endscreen' && ep.language === 'fr') {
+      const e = ENDSCREEN_ANIM;
+      sfx.push({ name: 'pop', at: start + e.popAt, gain: 0.55 }, { name: 'ding', at: start + e.bellAt, gain: 0.5 },
+        { name: 'pop', at: start + e.pressAt, gain: 0.5 }, { name: 'sparkle', at: start + e.pressAt + 0.05, gain: 0.4 });
+    }
     const explicit = r(s.sfx);
     const auto = s.autoSfx === false ? [] : AUTO_SFX(scene);
     sfx.push(...auto, ...explicit);
@@ -258,6 +268,7 @@ export const buildTimeline = (ep, plan, tts, opts = {}) => {
       duration,
       format: 'long',
       character: ep.character ?? 'bix2',
+      ...(ep.language && ep.language !== 'en' ? { lang: ep.language } : {}),
       scenes: outScenes,
       captions,
     },

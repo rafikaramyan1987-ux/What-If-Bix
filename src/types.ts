@@ -74,6 +74,8 @@ export type Manifest = {
   hook?: string;
   /** Which Bix to draw (default: Bix 2.0). */
   character?: 'bix1' | 'bix2';
+  /** Language / channel branding: en = What If Bix (default), fr = MarMila. */
+  lang?: 'en' | 'fr';
 };
 
 export type ThumbnailProps = {

@@ -1,0 +1,547 @@
+# MarMila — Épisode 4 (français)
+# Structure : une chute, étape par étape (départ -> croûte -> manteau -> noyau -> l'autre côté),
+# avec à chaque étage un « mais en vrai… » (chaleur, pression, air, rotation), puis le record
+# réel du trou le plus profond, et une fin au labo.
+id: fr04-trou-traverse-terre
+number: 4
+language: fr
+channel: marmila
+title: "Et si tu tombais dans un trou qui traverse la Terre ?"
+description: |
+  Imagine un trou qui traverse toute la planète, d'un côté à l'autre. Tu sautes. Que se passe-t-il ?
+  Bix fait le voyage : 12 742 km de chute, une vitesse de près de 28 000 km/h au centre, environ 6 000 °C dans le noyau, une pression de plus de 3 millions de fois celle de l'air… et un aller simple d'à peine plus d'une demi-heure. Puis la réalité : le trou le plus profond jamais creusé n'atteint même pas 13 km.
+tags: [et si, trou à travers la terre, centre de la terre, noyau, gravité, physique, puits de kola, vulgarisation, science, marmila]
+hashtags: ["#etsi", "#terre", "#physique", "#science"]
+pinnedQuestion: "Tu sauterais dans le trou ?"
+character: bix2
+music: { style: curious, gain: 0.2, duck: 0.55, seed: 404 }
+introAfter: jump
+outro:
+  narration: "Si tu ressortais de l'autre côté, tu atterrirais où ? Dis-le en commentaire. Et abonne-toi à MarMila : le prochain et si va encore plus loin."
+  background: { type: space, tint: blue }
+
+scenes:
+  # ------------------------------------------------------------- ouverture
+  - id: cold-open
+    chapter: "Le trou"
+    background: { type: land, mood: day }
+    bixStart: [700, 820]
+    props:
+      - { type: crack, x: 1100, y: 830, w: 360, at: 0 }
+      - { type: puff, at: "@sautes", x: 1100, y: 820 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@sautes", action: jump }
+      - { at: "@sautes+0.6", action: tumble, from: [700, 820], to: [1100, 1300], dur: 0.8 }
+    texts:
+      - { at: "@trou", text: "ET SI TU TOMBAIS DANS CE TROU ?", style: title, y: 160 }
+    narration: "Imagine un *trou* qui traverse toute la Terre. D'un côté à l'autre. Tu t'approches, tu regardes en bas… et tu *sautes*."
+
+  - id: jump
+    background: { type: space, tint: blue }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: "@combien", period: 8 }
+    bix:
+      - { at: 0, action: shock }
+      - { at: "@combien", action: point }
+    texts:
+      - { at: "@kilomètres", text: "12 742 km", style: big, x: 1150, y: 215 }
+    narration: "Devant toi : {12 742 kilomètres|douze mille sept cent quarante-deux kilomètres} de chute, jusqu'à l'autre bout de la planète. Combien de temps pour traverser ? Et surtout… est-ce que tu ressors ?"
+
+  # ------------------------------------------------------------- la chute idéale
+  - id: ideal
+    chapter: "La chute parfaite"
+    transition: whip
+    background: { type: lab }
+    bixStart: [330, 820]
+    props:
+      - { type: board, at: "@règles", x: 960, y: 335, w: 720, h: 330, title: "Règles du jeu", size: 44, step: 0.9, lines: ["pas d'air", "pas de chaleur", "pas de rotation"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@règles", action: point }
+      - { at: "@triche", action: laugh }
+    narration: "Commençons par tricher un peu. Trois *règles* : pas d'air dans le trou, pas de chaleur, et une Terre qui ne tourne pas. On *triche*, oui. Mais c'est comme ça qu'on comprend la physique."
+
+  - id: falling
+    background: { type: space, tint: blue }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: 0, period: 10 }
+      - { type: arrow, at: "@accélères", from: [1500, 200], to: [1500, 520], color: "#ff6fb5", label: "plus vite", labelX: 1620, labelY: 360 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@accélères", action: shock }
+    narration: "Tu tombes, et tu *accélères*. La gravité te tire vers le centre. Mais plus tu descends, plus il y a de Terre au-dessus de toi, qui te tire vers le haut. La force diminue… sans jamais s'inverser avant le centre."
+
+  - id: crust
+    background: { type: space, tint: blue }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, labels: true }
+      - { type: item, item: egg, x: 1650, y: 760, s: 1.8, at: "@pomme" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@croûte", action: point }
+      - { at: "@pomme", action: laugh }
+    texts:
+      - { at: "@croûte", text: "CROÛTE : 5 À 70 km", style: label, x: 1150, y: 120, color: "#9c6b3c" }
+    narration: "Les premiers kilomètres, c'est la *croûte*. Sous les océans, elle fait à peine cinq à dix kilomètres d'épaisseur. Sous les montagnes, jusqu'à soixante-dix. À l'échelle de la Terre, c'est une pellicule, plus fine que la peau d'une *pomme*. Dessous, le manteau : de la roche chaude, qui coule très, très lentement."
+
+  - id: center-speed
+    background: { type: space, tint: blue }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: -2.5, period: 10 }
+      - { type: gauge, x: 1650, y: 330, r: 140, from: 0, to: 95, max: 100, at: "@centre", dur: 1.5, label: "km/h" }
+    bix:
+      - { at: 0, action: point }
+      - { at: "@kilomètres", action: shock }
+    texts:
+      - { at: "@kilomètres", text: "≈ 28 000 km/h", style: big, x: 1150, y: 215 }
+    narration: "Au *centre*, tu files à près de {28 000 kilomètres|vingt-huit mille kilomètres} à l'heure. À peu près la vitesse de la Station spatiale internationale. Et là, tu ne t'arrêtes pas : tu remontes, en ralentissant, vers l'autre côté."
+
+  - id: other-side
+    background: { type: space, tint: blue }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: -4.6, period: 10 }
+      - { type: clock, x: 1650, y: 330, r: 130, time: "12:00", speed: 3, at: "@minutes" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@minutes", action: cheer }
+    texts:
+      - { at: "@minutes", text: "≈ 38 MINUTES", style: big, x: 1150, y: 215 }
+    narration: "Tu arrives pile à la surface d'en face, à vitesse nulle. Le voyage ? Environ quarante-deux minutes si la Terre était uniforme. Avec sa vraie densité, des physiciens ont calculé environ trente-huit *minutes*. Moins qu'un épisode de série."
+
+  - id: yoyo
+    background: { type: space, tint: blue }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: 0, period: 3 }
+    bix:
+      - { at: 0, action: laugh }
+      - { at: "@attrape", action: point }
+    narration: "Et si personne ne t'*attrape* là-haut ? Tu retombes. Et tu fais l'aller-retour. Encore et encore. Un yoyo humain, pour toujours."
+
+  - id: gravity-train
+    background: { type: city }
+    bixStart: [380, 820]
+    props:
+      - { type: vehicle, kind: bus, from: [-500, 822], to: [2400, 822], at: "@train", dur: 3.2, color: "#8a5cff" }
+      - { type: board, at: "@minutes", x: 1150, y: 300, w: 700, h: 260, title: "Train gravitationnel", size: 44, step: 0.8, lines: ["tunnel droit, sans moteur", "≈ 42 min, quelle que soit la distance"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@train", action: shock }
+      - { at: "@minutes", action: point }
+    narration: "Les physiciens adorent ce problème. Ils ont même imaginé un *train* gravitationnel : un tunnel tout droit entre deux villes, sans moteur. Le train tombe, puis remonte. Et dans une Terre uniforme, le trajet prendrait environ quarante-deux *minutes*, quelle que soit la distance."
+
+  # ------------------------------------------------------------- en vrai : l'air
+  - id: air
+    chapter: "En vrai 1 : l'air"
+    transition: whip
+    background: { type: sky, speed: 2400 }
+    bixStart: [960, 520]
+    props:
+      - { type: speedlines, count: 20, y: 540, spread: 900 }
+      - { type: gauge, x: 1550, y: 420, r: 130, from: 0, to: 20, max: 100, at: "@air", dur: 1.0, label: "km/h" }
+    bix:
+      - { at: 0, action: fly, params: { panic: 0.7 } }
+      - { at: "@freine", action: tumble }
+    texts:
+      - { at: "@kilomètres", text: "≈ 200 km/h MAX", style: label, x: 960, y: 170, color: "#ff7a1a" }
+    narration: "Maintenant, la réalité. D'abord, l'*air*. Dans un trou plein d'air, il te *freine*. Comme un parachutiste, tu plafonnes vers {200 kilomètres|deux cents kilomètres} à l'heure. Tu n'atteindrais jamais l'autre côté : tu finirais par flotter… coincé au centre."
+
+  # ------------------------------------------------------------- en vrai : la chaleur
+  - id: heat
+    chapter: "En vrai 2 : la chaleur"
+    transition: iris
+    background: { type: space, tint: purple }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, labels: true }
+      - { type: ring, at: "@degrés", x: 1150, y: 590, r: 90, color: "#ff4d5e" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@degrés", action: shock }
+      - { at: "@Soleil", action: scared }
+    texts:
+      - { at: "@degrés", text: "≈ 6 000 °C", style: big, x: 1150, y: 215 }
+    narration: "Ensuite, la *chaleur*. Plus tu descends, plus il fait chaud : près de la surface, on gagne environ vingt-cinq à trente degrés par kilomètre. Au centre, le noyau atteint environ {6 000 degrés|six mille degrés}. À peu près la température de la surface du *Soleil*."
+
+  - id: heat-2
+    background: { type: space, tint: purple }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, labels: true }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@solide", action: shock }
+    narration: "Le plus fou ? Le noyau interne est *solide*. Du fer, à six mille degrés, et pourtant solide. Pourquoi ? À cause de la pression."
+
+  # ------------------------------------------------------------- en vrai : la pression
+  - id: pressure
+    chapter: "En vrai 3 : la pression"
+    transition: whip
+    background: { type: ocean, horizon: 200 }
+    bixStart: [600, 820]
+    props:
+      - { type: bars, at: "@millions", x: 1300, y: 860, w: 620, h: 420, values: [1, 3600000], display: ["1", "3,6 millions"], labels: ["Ici", "Au centre"], colors: ["#22d3c5", "#ff4d5e"] }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@millions", action: scared }
+    texts:
+      - { at: "@millions", text: "× 3,6 MILLIONS", style: shout, x: 1300, y: 230, rotate: -5 }
+    narration: "Au centre de la Terre, la pression est environ trois virgule six *millions* de fois celle de l'air que tu respires. Imagine tout le poids de la planète, appuyé sur un seul point."
+
+  - id: pressure-2
+    background: { type: ocean, horizon: 200 }
+    bixStart: [600, 820]
+    props:
+      - { type: item, item: egg, x: 1300, y: 600, s: 2.4, at: 0 }
+      - { type: puff, at: "@écrase", x: 1300, y: 600 }
+    bix:
+      - { at: 0, action: point }
+      - { at: "@écrase", action: facepalm }
+    narration: "Aucun matériau connu ne tiendrait un tunnel ouvert là-dedans. Les parois se refermeraient. Le trou s'*écrase* avant même que tu sautes."
+
+  # ------------------------------------------------------------- en vrai : la rotation
+  - id: rotation
+    chapter: "En vrai 4 : la Terre tourne"
+    transition: iris
+    background: { type: space, tint: blue }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, spin: true, fallAt: 0, period: 10 }
+      - { type: arrow, at: "@paroi", from: [1300, 330], to: [1205, 600], color: "#ff4d5e", bend: 30 }
+    bix:
+      - { at: 0, action: think }
+      - { at: "@paroi", action: shock }
+      - { at: "@pôle", action: point }
+    narration: "Et la Terre tourne. En surface, tu files vers l'est avec le sol. En descendant, tu gardes cette vitesse, mais le trou, lui, va moins vite près du centre. Résultat : tu cognes la *paroi*. Seule solution : creuser d'un *pôle* à l'autre."
+
+  # ------------------------------------------------------------- les antipodes
+  - id: antipode
+    chapter: "Tu ressortirais où ?"
+    transition: whip
+    background: { type: ocean, horizon: 560 }
+    bixStart: [400, 860]
+    props:
+      - { type: earth, x: 1250, y: 520, r: 260, spin: 0.05, band: 0.4 }
+      - { type: ring, at: "@Pacifique", x: 1330, y: 640, r: 40, color: "#ff6fb5" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@Pacifique", action: shock }
+      - { at: "@Nouvelle-Zélande", action: laugh }
+    texts:
+      - { at: "@Pacifique", text: "PLOUF !", style: shout, x: 1250, y: 180, rotate: -6 }
+    narration: "Et si tu partais de France ? Le point exactement opposé, ce qu'on appelle les antipodes, tombe en plein océan *Pacifique*, au sud-est de la Nouvelle-*Zélande*. Prévois un maillot."
+
+  # ------------------------------------------------------------- le vrai record
+  - id: kola
+    chapter: "Le vrai trou le plus profond"
+    transition: whip
+    background: { type: ice, mood: day }
+    bixStart: [400, 820]
+    props:
+      - { type: building, x: 1250, y: 820, w: 260, h: 420, color: "#ff7a1a" }
+      - { type: badge, at: "@262", x: 1650, y: 330, r: 110, text: "12,3 km", color: "#ffd447" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@Kola", action: point }
+      - { at: "@262", action: shock }
+    narration: "Et dans la vraie vie ? Le trou le plus profond jamais creusé, c'est le puits de *Kola*, en Russie. Après près de vingt ans de forage, il a atteint {12 262 mètres|douze mille deux cent soixante-deux mètres}. Puis il a fallu s'arrêter."
+
+  - id: kola-2
+    background: { type: space, tint: blue }
+    bixStart: [380, 900]
+    bixScale: 0.85
+    props:
+      - { type: earthcut, x: 1150, y: 590, r: 320, tunnel: false }
+      - { type: ring, at: "@degrés", x: 1150, y: 275, r: 22, color: "#ff4d5e" }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@degrés", action: point }
+      - { at: "@pour", action: facepalm }
+    texts:
+      - { at: "@pour", text: "0,2 % DU CHEMIN", style: big, x: 1150, y: 300 }
+    narration: "En bas, il faisait environ {180 degrés|cent quatre-vingts degrés}, et la roche devenait trop molle pour les outils. Et tout ça, c'est à peine deux dixièmes *pour* cent du chemin jusqu'au centre."
+
+  # ------------------------------------------------------------- fin au labo
+  - id: lab-ending
+    chapter: "Le voyage dans la tête"
+    transition: whip
+    background: { type: lab }
+    bixStart: [400, 820]
+    props:
+      - { type: cactus, x: 1450, y: 760, s: 1.1, mood: shock, at: 0 }
+      - { type: earthcut, x: 960, y: 330, r: 170, at: "@tête", fallAt: "@tête", period: 4 }
+    bix:
+      - { at: 0, action: present }
+      - { at: "@tête", action: think }
+      - { at: "@calcul", action: cheer }
+    narration: "Alors non, personne ne traversera la Terre. Mais grâce à la physique, on peut faire le voyage dans sa *tête*. Trente-huit minutes de chute, en un seul *calcul*. Pas mal, pour un trou qui n'existe pas. La prochaine fois que tu creuses à la plage, pense au voyage."
+
+# ======================================================================= Shorts (règles TikTok)
+tiktokShorts:
+  - n: 1
+    kind: cut
+    slug: trente-huit-minutes
+    hook: "38 minutes pour traverser la Terre"
+    question: "Tu sauterais ?"
+    tiktokCaption: "Dans un trou à travers la Terre, sans air, la traversée durerait environ 38 minutes 🌍 #physique #terre #science #etsi"
+    youtubeTitle: "Traverser la Terre en 38 minutes"
+    scenes:
+      - like: other-side
+        narration: "Il te faudrait trente-huit *minutes* pour traverser la Terre en tombant. Moins qu'un épisode de série."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: -1, period: 10 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@minutes", text: "≈ 38 MINUTES", style: big }
+      - like: falling
+        narration: "Tu sautes dans le trou. Tu *accélères* jusqu'au centre. Puis tu ralentis en remontant de l'autre côté."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: 0, period: 10 }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@accélères", action: shock }
+      - like: center-speed
+        narration: "Au milieu, tu files à près de {28 000 kilomètres|vingt-huit mille kilomètres} à l'heure."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: -2.5, period: 10 }
+        bix:
+          - { at: 0, action: point }
+        texts:
+          - { at: "@kilomètres", text: "≈ 28 000 km/h", style: big }
+      - like: other-side
+        narration: "Sans air ni chaleur, bien sûr. Et donc,"
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: -1, period: 10 }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 2
+    kind: cut
+    slug: noyau-six-mille-degres
+    hook: "Chaud comme le Soleil"
+    question: "Tu préfères chaud ou froid ?"
+    tiktokCaption: "Le noyau de la Terre atteint environ 6 000 °C, à peu près la surface du Soleil 🔥 #terre #noyau #science #etsi"
+    youtubeTitle: "Le centre de la Terre, chaud comme le Soleil"
+    scenes:
+      - like: heat
+        narration: "Le centre de la Terre est aussi chaud que la surface du *Soleil*. Pas une image : presque la même température."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, labels: true }
+        bix:
+          - { at: 0, action: shock }
+          - { at: "@Soleil", action: scared }
+        texts:
+          - { at: "@Soleil", text: "≈ 6 000 °C", style: big }
+      - like: heat
+        narration: "Environ {6 000 degrés|six mille degrés}, dans le noyau. Juste sous tes pieds, à six mille quatre cents kilomètres."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, labels: true }
+          - { type: ring, x: 1150, y: 590, r: 90, color: "#ff4d5e" }
+        bix:
+          - { at: 0, action: point }
+        texts: []
+      - like: heat-2
+        narration: "Et pourtant, le noyau interne est *solide*. Du fer écrasé par une pression énorme."
+        bix:
+          - { at: 0, action: think }
+          - { at: "@solide", action: shock }
+      - like: heat
+        narration: "Alors oui, sous tes pieds, c'est vrai :"
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, labels: true }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 3
+    kind: cut
+    slug: puits-de-kola
+    hook: "Le trou record : 12 km"
+    question: "Tu savais que c'était si peu ?"
+    tiktokCaption: "Le puits de Kola, 12 262 m : le trou le plus profond jamais creusé. À peine 0,2 % du chemin vers le centre 🕳️ #terre #science #etsi"
+    youtubeTitle: "Le trou le plus profond du monde fait 12 km"
+    scenes:
+      - like: kola
+        narration: "Le trou le plus profond jamais creusé par l'humanité fait à peine douze kilomètres."
+        props:
+          - { type: building, x: 1250, y: 820, w: 260, h: 420, color: "#ff7a1a" }
+          - { type: badge, x: 1650, y: 330, r: 110, text: "12,3 km", color: "#ffd447" }
+        bix:
+          - { at: 0, action: shock }
+        texts: []
+      - like: kola
+        narration: "C'est le puits de *Kola*, en Russie : {12 262 mètres|douze mille deux cent soixante-deux mètres}, après près de vingt ans de forage."
+        props:
+          - { type: building, x: 1250, y: 820, w: 260, h: 420, color: "#ff7a1a" }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@Kola", action: point }
+      - like: kola-2
+        narration: "En bas, cent quatre-vingts degrés. Et seulement deux dixièmes *pour* cent du chemin vers le centre."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, tunnel: false }
+        bix:
+          - { at: 0, action: facepalm }
+        texts:
+          - { at: "@pour", text: "0,2 % DU CHEMIN", style: big }
+      - like: kola
+        narration: "Donc, retiens :"
+        props:
+          - { type: building, x: 1250, y: 820, w: 260, h: 420, color: "#ff7a1a" }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 4
+    kind: standalone
+    slug: yoyo-humain
+    hook: "Tu deviendrais un yoyo humain"
+    question: "Tu tiendrais combien d'allers-retours ?"
+    tiktokCaption: "Sans air, si personne ne t'attrape, tu ferais l'aller-retour à travers la Terre pour toujours 🪀 #physique #gravite #etsi #science"
+    youtubeTitle: "Dans un trou à travers la Terre, tu deviens un yoyo"
+    scenes:
+      - like: yoyo
+        narration: "Dans un trou à travers la Terre, tu deviendrais un *yoyo* humain."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: -1, period: 3 }
+        bix:
+          - { at: 0, action: laugh }
+        texts:
+          - { at: "@yoyo", text: "UN YOYO ?!", style: shout, rotate: -5 }
+      - like: yoyo
+        narration: "Sans air pour te freiner, tu tombes jusqu'au centre, tu remontes de l'autre côté, et tu t'arrêtes pile à la surface. Environ trente-huit minutes."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: -1, period: 3 }
+        bix:
+          - { at: 0, action: point }
+      - like: yoyo
+        narration: "Si personne ne t'attrape, tu retombes. Aller, retour. Pour toujours. Sans air, rien ne t'arrête."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: -1, period: 3 }
+        bix:
+          - { at: 0, action: shrug }
+      - like: yoyo
+        narration: "Et ça recommence :"
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: -1, period: 3 }
+        bix:
+          - { at: 0, action: laugh }
+        texts: []
+
+  - n: 5
+    kind: standalone
+    slug: antipodes-pacifique
+    hook: "Creuse depuis la France : plouf"
+    question: "Et depuis chez toi ?"
+    tiktokCaption: "Les antipodes de la France tombent en plein Pacifique, près de la Nouvelle-Zélande 🌊 #geographie #terre #etsi #science"
+    youtubeTitle: "Si tu creuses depuis la France, tu tombes dans l'eau"
+    scenes:
+      - like: antipode
+        narration: "Si tu creuses tout droit depuis la France, tu ressors au milieu de l'océan."
+        props:
+          - { type: earth, x: 1250, y: 520, r: 260, spin: 0.05, band: 0.4 }
+        bix:
+          - { at: 0, action: shock }
+        texts:
+          - { at: "@océan", text: "PLOUF !", style: shout, rotate: -6 }
+      - like: antipode
+        narration: "Le point exactement opposé, les *antipodes*, tombe en plein *Pacifique*, au sud-est de la Nouvelle-Zélande."
+        props:
+          - { type: earth, x: 1250, y: 520, r: 260, spin: 0.05, band: 0.4 }
+          - { type: ring, at: "@Pacifique", x: 1330, y: 640, r: 40, color: "#ff6fb5" }
+        bix:
+          - { at: 0, action: present }
+          - { at: "@Pacifique", action: point }
+        texts: []
+      - like: antipode
+        narration: "Normal : l'océan recouvre environ soixante et onze pour cent de la planète. La plupart des antipodes tombent dans l'eau. Prévois un maillot."
+        props:
+          - { type: earth, x: 1250, y: 520, r: 260, spin: 0.05, band: 0.4 }
+        bix:
+          - { at: 0, action: laugh }
+        texts:
+          - { at: "@onze", text: "≈ 71 % D'OCÉAN", style: label, color: "#2f8cff" }
+      - like: antipode
+        narration: "Alors, avant de creuser :"
+        props:
+          - { type: earth, x: 1250, y: 520, r: 260, spin: 0.05, band: 0.4 }
+        bix:
+          - { at: 0, action: present }
+        texts: []
+
+  - n: 6
+    kind: standalone
+    slug: air-te-freine
+    hook: "Tu resterais coincé au centre"
+    question: "Tu ferais quoi, coincé là ?"
+    tiktokCaption: "Avec de l'air dans le trou, tu plafonnerais vers 200 km/h et tu finirais coincé au centre de la Terre 🪂 #physique #terre #etsi #science"
+    youtubeTitle: "Pourquoi tu resterais coincé au centre de la Terre"
+    scenes:
+      - like: air
+        narration: "Si tu tombais dans un trou à travers la Terre, tu resterais *coincé* au centre."
+        props:
+          - { type: speedlines, count: 20, y: 540, spread: 900 }
+        bix:
+          - { at: 0, action: fly, params: { panic: 0.7 } }
+        texts:
+          - { at: "@coincé", text: "COINCÉ !", style: shout, rotate: -5 }
+      - like: air
+        narration: "La faute à l'air. Comme un parachutiste, il te freine, et tu plafonnes vers {200 kilomètres|deux cents kilomètres} à l'heure."
+        props:
+          - { type: speedlines, count: 20, y: 540, spread: 900 }
+        bix:
+          - { at: 0, action: tumble }
+        texts:
+          - { at: "@kilomètres", text: "≈ 200 km/h MAX", style: label, color: "#ff7a1a" }
+      - like: yoyo
+        narration: "À chaque passage, tu remontes un peu moins haut. Encore, et encore. Jusqu'à flotter au milieu de la planète."
+        props:
+          - { type: earthcut, x: 1150, y: 590, r: 320, fallAt: 0, period: 3, damp: 0.6 }
+        bix:
+          - { at: 0, action: shrug }
+        texts: []
+      - like: air
+        narration: "Bref, la morale :"
+        props:
+          - { type: speedlines, count: 20, y: 540, spread: 900 }
+        bix:
+          - { at: 0, action: fly, params: { panic: 0.7 } }
+        texts: []
+
+thumbnail:
+  title: ["UN TROU", "À TRAVERS", "LA TERRE"]
+  accent: 2
+  background: { type: space, tint: blue }
+  props:
+    - { type: earthcut, x: 1100, y: 560, r: 380, fallAt: 0, period: 8 }
+  bix: { action: shock, x: 1650, y: 1230, scale: 2.3, facing: -1, t: 0.45 }
+
+sources:
+  - "NASA Science, Earth facts (diamètre équatorial ≈ 12 756 km, diamètre moyen ≈ 12 742 km; océans ≈ 71 % de la surface) : https://science.nasa.gov/earth/facts/"
+  - "USGS, Earth's crust (5 à 10 km sous les océans, jusqu'à ≈ 70 km sous les grandes montagnes; manteau de roche chaude qui flue lentement) : https://www.usgs.gov/programs/earthquake-hazards/science/earths-crust"
+  - "Cooper, P. W. (1966). Through the Earth in Forty Minutes. American Journal of Physics 34, 68–70 (≈ 42 min dans une Terre uniforme, sans frottement) : https://doi.org/10.1119/1.1972773"
+  - "Klotz, A. R. (2015). The gravity tunnel in a non-uniform Earth. American Journal of Physics 83, 231–237 (≈ 38 min avec la vraie densité de la Terre) : https://doi.org/10.1119/1.4898780"
+  - "Wikipedia, Gravity train (vitesse maximale ≈ 7,9 km/s ≈ 28 000 km/h au centre dans le modèle uniforme; rotation : seul un tunnel pôle à pôle évite les parois) : https://en.wikipedia.org/wiki/Gravity_train"
+  - "NASA Glenn Research Center, Terminal Velocity (un parachutiste plafonne vers 200 km/h) : https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/termvel/"
+  - "Anzellini, S. et al. (2013). Melting of Iron at Earth's Inner Core Boundary Based on Fast X-ray Diffraction. Science 340, 464–466 (≈ 6 000 °C, comme la surface du Soleil) : https://doi.org/10.1126/science.1233514"
+  - "Encyclopaedia Britannica, Geothermal gradient (≈ 25 à 30 °C par kilomètre près de la surface) : https://www.britannica.com/science/geothermal-gradient"
+  - "Encyclopaedia Britannica, Inner core (noyau interne solide, fer-nickel, pression ≈ 3,6 millions d'atmosphères) : https://www.britannica.com/science/inner-core"
+  - "Wikipedia, Kola Superdeep Borehole (12 262 m en 1989, forage commencé en 1970; ≈ 180 °C au fond) : https://en.wikipedia.org/wiki/Kola_Superdeep_Borehole"
+  - "Antipodes Map / Wikipedia, Antipodes (l'antipode de la France est dans le Pacifique, au sud-est de la Nouvelle-Zélande) : https://en.wikipedia.org/wiki/Antipodes"

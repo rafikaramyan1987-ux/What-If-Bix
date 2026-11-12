@@ -6,6 +6,7 @@ import { Spec } from '../types';
 import { clamp, easeInOut, easeOut, formatNumber, num, popIn, rng, smooth, str, vec } from '../util';
 import { Held } from '../props/Held';
 import { GROUND_Y } from './backgrounds';
+import { LangContext } from '../lang';
 
 type PP = { spec: Spec; t: number };
 const appearK = (spec: Spec, t: number, d = 0.35) => (spec.at === undefined ? 1 : popIn((t - num(spec.at, 0)) / d));
@@ -84,6 +85,7 @@ export const Crowd: React.FC<PP> = ({ spec, t }) => {
 
 /** Animated bar chart. values/labels arrays; bars grow from `at`. */
 export const Bars: React.FC<PP> = ({ spec, t }) => {
+  const lang = React.useContext(LangContext);
   if (!started(spec, t)) return null;
   const values = arr<number>(spec.values, [1, 2, 3]);
   const labels = arr<string>(spec.labels, []);
@@ -108,7 +110,7 @@ export const Bars: React.FC<PP> = ({ spec, t }) => {
             <rect x={cx - bw / 2} y={-bh} width={bw} height={bh} rx={10} fill={colors[i % colors.length]} stroke={C.ink} strokeWidth={6} />
             {k > 0.2 && (
               <text x={cx} y={-bh - 18} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={42} fill={C.white} stroke={C.ink} strokeWidth={8}
-                paintOrder="stroke">{display[i] !== undefined && k > 0.95 ? display[i] : `${formatNumber(v * k, num(spec.decimals, 0))}${unit}`}</text>
+                paintOrder="stroke">{display[i] !== undefined && k > 0.95 ? display[i] : `${formatNumber(v * k, num(spec.decimals, 0), lang)}${unit}`}</text>
             )}
             {labels[i] && (
               <text x={cx} y={56} textAnchor="middle" fontFamily={FONT} fontWeight={700} fontSize={36} fill={C.white} stroke={C.ink} strokeWidth={7}

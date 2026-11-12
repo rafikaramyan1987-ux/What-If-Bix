@@ -18,6 +18,11 @@ You write one YAML script per episode. The factory turns it into:
 | Metadata | `metadata.md` / `metadata.json`: title, description with chapters, sources and credits, tags, Shorts titles |
 | Captions | `.en.srt` for the long video and every Short |
 
+**French channel MarMila:** the same factory renders French episodes (`language: fr`): French narration
+(Piper `fr_FR-siwis-medium`), French on-screen text and typography, `.fr.srt` captions, French metadata, MarMila
+branding, 6 TikTok-rule Shorts per episode and a 2-week posting pack. See [docs/marmila/](docs/marmila/README.md).
+The ready-to-schedule pack is in [`posting/marmila-2weeks/`](posting/marmila-2weeks).
+
 Episode 1 renders are attached to the pull request in [`docs/episode1/`](docs/episode1). Channel assets are in
 [`docs/channel/`](docs/channel). Step-1 style test: [`docs/step1/`](docs/step1).
 
