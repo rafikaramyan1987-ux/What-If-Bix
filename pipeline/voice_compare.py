@@ -92,7 +92,8 @@ def main(out: str):
             w.setsampwidth(2)
             w.setframerate(sr)
             w.writeframes((np.clip(audio, -1, 1) * 32767).astype("<i2").tobytes())
-        segs, _ = asr.transcribe(wav, language="fr", beam_size=5)
+        a16 = librosa.resample(audio.astype(np.float32), orig_sr=sr, target_sr=16000)
+        segs, _ = asr.transcribe(a16, language="fr", beam_size=5)
         hyp_text = " ".join(s.text for s in segs).strip()
         f0, voiced, _ = librosa.pyin(audio.astype(np.float64), fmin=60, fmax=400, sr=sr)
         f0 = f0[~np.isnan(f0)]
